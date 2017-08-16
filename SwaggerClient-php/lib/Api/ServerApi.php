@@ -89,7 +89,7 @@ class ServerApi
      * @param \Swagger\Client\Model\Server $server  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2001
+     * @return \Swagger\Client\Model\ServerListResponse
      */
     public function createServer($server = null)
     {
@@ -105,11 +105,11 @@ class ServerApi
      * @param \Swagger\Client\Model\Server $server  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createServerWithHttpInfo($server = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->createServerRequest($server);
 
         try {
@@ -154,7 +154,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2001', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -209,7 +209,7 @@ class ServerApi
      */
     public function createServerAsyncWithHttpInfo($server = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->createServerRequest($server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -748,7 +748,7 @@ class ServerApi
      * @param string $server_id Id of server to return (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2001
+     * @return \Swagger\Client\Model\ServerListResponse
      */
     public function serverDetails($server_id)
     {
@@ -764,11 +764,11 @@ class ServerApi
      * @param string $server_id Id of server to return (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function serverDetailsWithHttpInfo($server_id)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->serverDetailsRequest($server_id);
 
         try {
@@ -813,7 +813,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2001', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -848,7 +848,7 @@ class ServerApi
      */
     public function serverDetailsAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->serverDetailsRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -973,7 +973,7 @@ class ServerApi
      * @param \Swagger\Client\Model\Server $server  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2001
+     * @return \Swagger\Client\Model\ServerListResponse
      */
     public function updateServer($server_id, $server = null)
     {
@@ -990,11 +990,11 @@ class ServerApi
      * @param \Swagger\Client\Model\Server $server  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateServerWithHttpInfo($server_id, $server = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->updateServerRequest($server_id, $server);
 
         try {
@@ -1039,7 +1039,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 202:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2001', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1092,7 +1092,7 @@ class ServerApi
      */
     public function updateServerAsyncWithHttpInfo($server_id, $server = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->updateServerRequest($server_id, $server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

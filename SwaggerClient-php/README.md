@@ -91,19 +91,19 @@ Class | Method | HTTP request | Description
  - [ErrorError](docs/Model/ErrorError.md)
  - [ErrorStatus](docs/Model/ErrorStatus.md)
  - [InlineResponse200](docs/Model/InlineResponse200.md)
- - [InlineResponse2001](docs/Model/InlineResponse2001.md)
- - [InlineResponse2002](docs/Model/InlineResponse2002.md)
- - [InlineResponse2002Storages](docs/Model/InlineResponse2002Storages.md)
  - [InlineResponse200Servers](docs/Model/InlineResponse200Servers.md)
  - [IpAddress](docs/Model/IpAddress.md)
  - [Server](docs/Model/Server.md)
  - [ServerIpAddresses](docs/Model/ServerIpAddresses.md)
+ - [ServerListResponse](docs/Model/ServerListResponse.md)
  - [ServerStorageDevices](docs/Model/ServerStorageDevices.md)
  - [ServerTags](docs/Model/ServerTags.md)
  - [Storage](docs/Model/Storage.md)
  - [StorageBackups](docs/Model/StorageBackups.md)
  - [StorageDevice](docs/Model/StorageDevice.md)
  - [StorageServers](docs/Model/StorageServers.md)
+ - [SuccessStoragesResponse](docs/Model/SuccessStoragesResponse.md)
+ - [SuccessStoragesResponseStorages](docs/Model/SuccessStoragesResponseStorages.md)
 
 
 ## Documentation For Authorization

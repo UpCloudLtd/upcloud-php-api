@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **listStorages**
-> \Swagger\Client\Model\InlineResponse2002 listStorages()
+> \Swagger\Client\Model\SuccessStoragesResponse listStorages()
 
 List of storages
 
@@ -33,7 +33,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2002**](../Model/InlineResponse2002.md)
+[**\Swagger\Client\Model\SuccessStoragesResponse**](../Model/SuccessStoragesResponse.md)
 
 ### Authorization
 

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **createServer**
-> \Swagger\Client\Model\InlineResponse2001 createServer($server)
+> \Swagger\Client\Model\ServerListResponse createServer($server)
 
 Create server
 
@@ -41,7 +41,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
+[**\Swagger\Client\Model\ServerListResponse**](../Model/ServerListResponse.md)
 
 ### Authorization
 
@@ -138,7 +138,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **serverDetails**
-> \Swagger\Client\Model\InlineResponse2001 serverDetails($server_id)
+> \Swagger\Client\Model\ServerListResponse serverDetails($server_id)
 
 Server details
 
@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
+[**\Swagger\Client\Model\ServerListResponse**](../Model/ServerListResponse.md)
 
 ### Authorization
 
@@ -181,7 +181,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **updateServer**
-> \Swagger\Client\Model\InlineResponse2001 updateServer($server_id, $server)
+> \Swagger\Client\Model\ServerListResponse updateServer($server_id, $server)
 
 Modify server
 
@@ -212,7 +212,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
+[**\Swagger\Client\Model\ServerListResponse**](../Model/ServerListResponse.md)
 
 ### Authorization
 
