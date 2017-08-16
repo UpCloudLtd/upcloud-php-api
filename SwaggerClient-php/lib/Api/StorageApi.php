@@ -82,7 +82,7 @@ class StorageApi
     }
 
     /**
-     * Operation storageGet
+     * Operation listStorages
      *
      * List of storages
      *
@@ -90,14 +90,14 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2002
      */
-    public function storageGet()
+    public function listStorages()
     {
-        list($response) = $this->storageGetWithHttpInfo();
+        list($response) = $this->listStoragesWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation storageGetWithHttpInfo
+     * Operation listStoragesWithHttpInfo
      *
      * List of storages
      *
@@ -105,10 +105,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2002, HTTP status code, HTTP response headers (array of strings)
      */
-    public function storageGetWithHttpInfo()
+    public function listStoragesWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2002';
-        $request = $this->storageGetRequest();
+        $request = $this->listStoragesRequest();
 
         try {
 
@@ -161,32 +161,32 @@ class StorageApi
     }
 
     /**
-     * Operation storageGetAsync
+     * Operation listStoragesAsync
      *
      * List of storages
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageGetAsync()
+    public function listStoragesAsync()
     {
-        return $this->storageGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->listStoragesAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation storageGetAsyncWithHttpInfo
+     * Operation listStoragesAsyncWithHttpInfo
      *
      * List of storages
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageGetAsyncWithHttpInfo()
+    public function listStoragesAsyncWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2002';
-        $request = $this->storageGetRequest();
+        $request = $this->listStoragesRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +217,12 @@ class StorageApi
     }
 
     /**
-     * Create request for operation 'storageGet'
+     * Create request for operation 'listStorages'
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function storageGetRequest()
+    protected function listStoragesRequest()
     {
 
         $resourcePath = '/storage';

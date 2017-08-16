@@ -57,12 +57,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\Api\ServerApi();
+$server = new \Swagger\Client\Model\Server(); // \Swagger\Client\Model\Server | 
 
 try {
-    $result = $api_instance->serverGet();
+    $result = $api_instance->createServer($server);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling ServerApi->serverGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ServerApi->createServer: ', $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -74,12 +75,12 @@ All URIs are relative to *http://localhost/1.2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ServerApi* | [**serverGet**](docs/Api/ServerApi.md#serverget) | **GET** /server | List of servers
-*ServerApi* | [**serverPost**](docs/Api/ServerApi.md#serverpost) | **POST** /server | Create server
-*ServerApi* | [**serverServerIdDelete**](docs/Api/ServerApi.md#serverserveriddelete) | **DELETE** /server/{serverId} | Delete server
-*ServerApi* | [**serverServerIdGet**](docs/Api/ServerApi.md#serverserveridget) | **GET** /server/{serverId} | Server details
-*ServerApi* | [**serverServerIdPut**](docs/Api/ServerApi.md#serverserveridput) | **PUT** /server/{serverId} | Modify server
-*StorageApi* | [**storageGet**](docs/Api/StorageApi.md#storageget) | **GET** /storage | List of storages
+*ServerApi* | [**createServer**](docs/Api/ServerApi.md#createserver) | **POST** /server | Create server
+*ServerApi* | [**deleteServer**](docs/Api/ServerApi.md#deleteserver) | **DELETE** /server/{serverId} | Delete server
+*ServerApi* | [**listServers**](docs/Api/ServerApi.md#listservers) | **GET** /server | List of servers
+*ServerApi* | [**serverDetails**](docs/Api/ServerApi.md#serverdetails) | **GET** /server/{serverId} | Server details
+*ServerApi* | [**updateServer**](docs/Api/ServerApi.md#updateserver) | **PUT** /server/{serverId} | Modify server
+*StorageApi* | [**listStorages**](docs/Api/StorageApi.md#liststorages) | **GET** /storage | List of storages
 
 
 ## Documentation For Models

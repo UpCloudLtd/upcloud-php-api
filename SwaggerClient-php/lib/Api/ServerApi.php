@@ -82,218 +82,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverGet
-     *
-     * List of servers
-     *
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse200
-     */
-    public function serverGet()
-    {
-        list($response) = $this->serverGetWithHttpInfo();
-        return $response;
-    }
-
-    /**
-     * Operation serverGetWithHttpInfo
-     *
-     * List of servers
-     *
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse200, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function serverGetWithHttpInfo()
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse200';
-        $request = $this->serverGetRequest();
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse200', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation serverGetAsync
-     *
-     * List of servers
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverGetAsync()
-    {
-        return $this->serverGetAsyncWithHttpInfo()->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation serverGetAsyncWithHttpInfo
-     *
-     * List of servers
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverGetAsyncWithHttpInfo()
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse200';
-        $request = $this->serverGetRequest();
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'serverGet'
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function serverGetRequest()
-    {
-
-        $resourcePath = '/server';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation serverPost
+     * Operation createServer
      *
      * Create server
      *
@@ -302,14 +91,14 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2001
      */
-    public function serverPost($server = null)
+    public function createServer($server = null)
     {
-        list($response) = $this->serverPostWithHttpInfo($server);
+        list($response) = $this->createServerWithHttpInfo($server);
         return $response;
     }
 
     /**
-     * Operation serverPostWithHttpInfo
+     * Operation createServerWithHttpInfo
      *
      * Create server
      *
@@ -318,10 +107,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
      */
-    public function serverPostWithHttpInfo($server = null)
+    public function createServerWithHttpInfo($server = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->serverPostRequest($server);
+        $request = $this->createServerRequest($server);
 
         try {
 
@@ -394,7 +183,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverPostAsync
+     * Operation createServerAsync
      *
      * Create server
      *
@@ -402,15 +191,15 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverPostAsync($server = null)
+    public function createServerAsync($server = null)
     {
-        return $this->serverPostAsyncWithHttpInfo($server)->then(function ($response) {
+        return $this->createServerAsyncWithHttpInfo($server)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation serverPostAsyncWithHttpInfo
+     * Operation createServerAsyncWithHttpInfo
      *
      * Create server
      *
@@ -418,10 +207,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverPostAsyncWithHttpInfo($server = null)
+    public function createServerAsyncWithHttpInfo($server = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->serverPostRequest($server);
+        $request = $this->createServerRequest($server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -452,13 +241,13 @@ class ServerApi
     }
 
     /**
-     * Create request for operation 'serverPost'
+     * Create request for operation 'createServer'
      *
      * @param \Swagger\Client\Model\Server $server  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function serverPostRequest($server = null)
+    protected function createServerRequest($server = null)
     {
 
         $resourcePath = '/server';
@@ -534,7 +323,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverServerIdDelete
+     * Operation deleteServer
      *
      * Delete server
      *
@@ -543,13 +332,13 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function serverServerIdDelete($server_id)
+    public function deleteServer($server_id)
     {
-        $this->serverServerIdDeleteWithHttpInfo($server_id);
+        $this->deleteServerWithHttpInfo($server_id);
     }
 
     /**
-     * Operation serverServerIdDeleteWithHttpInfo
+     * Operation deleteServerWithHttpInfo
      *
      * Delete server
      *
@@ -558,10 +347,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function serverServerIdDeleteWithHttpInfo($server_id)
+    public function deleteServerWithHttpInfo($server_id)
     {
         $returnType = '';
-        $request = $this->serverServerIdDeleteRequest($server_id);
+        $request = $this->deleteServerRequest($server_id);
 
         try {
 
@@ -612,7 +401,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverServerIdDeleteAsync
+     * Operation deleteServerAsync
      *
      * Delete server
      *
@@ -620,15 +409,15 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdDeleteAsync($server_id)
+    public function deleteServerAsync($server_id)
     {
-        return $this->serverServerIdDeleteAsyncWithHttpInfo($server_id)->then(function ($response) {
+        return $this->deleteServerAsyncWithHttpInfo($server_id)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation serverServerIdDeleteAsyncWithHttpInfo
+     * Operation deleteServerAsyncWithHttpInfo
      *
      * Delete server
      *
@@ -636,10 +425,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdDeleteAsyncWithHttpInfo($server_id)
+    public function deleteServerAsyncWithHttpInfo($server_id)
     {
         $returnType = '';
-        $request = $this->serverServerIdDeleteRequest($server_id);
+        $request = $this->deleteServerRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -656,17 +445,17 @@ class ServerApi
     }
 
     /**
-     * Create request for operation 'serverServerIdDelete'
+     * Create request for operation 'deleteServer'
      *
      * @param string $server_id Id of server to delete (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function serverServerIdDeleteRequest($server_id)
+    protected function deleteServerRequest($server_id)
     {
         // verify the required parameter 'server_id' is set
         if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdDelete');
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling deleteServer');
         }
 
         $resourcePath = '/server/{serverId}';
@@ -741,7 +530,218 @@ class ServerApi
     }
 
     /**
-     * Operation serverServerIdGet
+     * Operation listServers
+     *
+     * List of servers
+     *
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\InlineResponse200
+     */
+    public function listServers()
+    {
+        list($response) = $this->listServersWithHttpInfo();
+        return $response;
+    }
+
+    /**
+     * Operation listServersWithHttpInfo
+     *
+     * List of servers
+     *
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\InlineResponse200, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listServersWithHttpInfo()
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse200';
+        $request = $this->listServersRequest();
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse200', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listServersAsync
+     *
+     * List of servers
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listServersAsync()
+    {
+        return $this->listServersAsyncWithHttpInfo()->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation listServersAsyncWithHttpInfo
+     *
+     * List of servers
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listServersAsyncWithHttpInfo()
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse200';
+        $request = $this->listServersRequest();
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'listServers'
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function listServersRequest()
+    {
+
+        $resourcePath = '/server';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation serverDetails
      *
      * Server details
      *
@@ -750,14 +750,14 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2001
      */
-    public function serverServerIdGet($server_id)
+    public function serverDetails($server_id)
     {
-        list($response) = $this->serverServerIdGetWithHttpInfo($server_id);
+        list($response) = $this->serverDetailsWithHttpInfo($server_id);
         return $response;
     }
 
     /**
-     * Operation serverServerIdGetWithHttpInfo
+     * Operation serverDetailsWithHttpInfo
      *
      * Server details
      *
@@ -766,10 +766,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
      */
-    public function serverServerIdGetWithHttpInfo($server_id)
+    public function serverDetailsWithHttpInfo($server_id)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->serverServerIdGetRequest($server_id);
+        $request = $this->serverDetailsRequest($server_id);
 
         try {
 
@@ -822,7 +822,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverServerIdGetAsync
+     * Operation serverDetailsAsync
      *
      * Server details
      *
@@ -830,15 +830,15 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdGetAsync($server_id)
+    public function serverDetailsAsync($server_id)
     {
-        return $this->serverServerIdGetAsyncWithHttpInfo($server_id)->then(function ($response) {
+        return $this->serverDetailsAsyncWithHttpInfo($server_id)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation serverServerIdGetAsyncWithHttpInfo
+     * Operation serverDetailsAsyncWithHttpInfo
      *
      * Server details
      *
@@ -846,10 +846,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdGetAsyncWithHttpInfo($server_id)
+    public function serverDetailsAsyncWithHttpInfo($server_id)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->serverServerIdGetRequest($server_id);
+        $request = $this->serverDetailsRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -880,17 +880,17 @@ class ServerApi
     }
 
     /**
-     * Create request for operation 'serverServerIdGet'
+     * Create request for operation 'serverDetails'
      *
      * @param string $server_id Id of server to return (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function serverServerIdGetRequest($server_id)
+    protected function serverDetailsRequest($server_id)
     {
         // verify the required parameter 'server_id' is set
         if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdGet');
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverDetails');
         }
 
         $resourcePath = '/server/{serverId}';
@@ -965,7 +965,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverServerIdPut
+     * Operation updateServer
      *
      * Modify server
      *
@@ -975,14 +975,14 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2001
      */
-    public function serverServerIdPut($server_id, $server = null)
+    public function updateServer($server_id, $server = null)
     {
-        list($response) = $this->serverServerIdPutWithHttpInfo($server_id, $server);
+        list($response) = $this->updateServerWithHttpInfo($server_id, $server);
         return $response;
     }
 
     /**
-     * Operation serverServerIdPutWithHttpInfo
+     * Operation updateServerWithHttpInfo
      *
      * Modify server
      *
@@ -992,10 +992,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
      */
-    public function serverServerIdPutWithHttpInfo($server_id, $server = null)
+    public function updateServerWithHttpInfo($server_id, $server = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->serverServerIdPutRequest($server_id, $server);
+        $request = $this->updateServerRequest($server_id, $server);
 
         try {
 
@@ -1064,7 +1064,7 @@ class ServerApi
     }
 
     /**
-     * Operation serverServerIdPutAsync
+     * Operation updateServerAsync
      *
      * Modify server
      *
@@ -1073,15 +1073,15 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdPutAsync($server_id, $server = null)
+    public function updateServerAsync($server_id, $server = null)
     {
-        return $this->serverServerIdPutAsyncWithHttpInfo($server_id, $server)->then(function ($response) {
+        return $this->updateServerAsyncWithHttpInfo($server_id, $server)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation serverServerIdPutAsyncWithHttpInfo
+     * Operation updateServerAsyncWithHttpInfo
      *
      * Modify server
      *
@@ -1090,10 +1090,10 @@ class ServerApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdPutAsyncWithHttpInfo($server_id, $server = null)
+    public function updateServerAsyncWithHttpInfo($server_id, $server = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->serverServerIdPutRequest($server_id, $server);
+        $request = $this->updateServerRequest($server_id, $server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -1124,18 +1124,18 @@ class ServerApi
     }
 
     /**
-     * Create request for operation 'serverServerIdPut'
+     * Create request for operation 'updateServer'
      *
      * @param string $server_id Id of server to modify (required)
      * @param \Swagger\Client\Model\Server $server  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function serverServerIdPutRequest($server_id, $server = null)
+    protected function updateServerRequest($server_id, $server = null)
     {
         // verify the required parameter 'server_id' is set
         if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdPut');
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling updateServer');
         }
 
         $resourcePath = '/server/{serverId}';

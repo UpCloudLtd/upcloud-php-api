@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**storageGet**](StorageApi.md#storageGet) | **GET** /storage | List of storages
+[**listStorages**](StorageApi.md#listStorages) | **GET** /storage | List of storages
 
 
-# **storageGet**
-> \Swagger\Client\Model\InlineResponse2002 storageGet()
+# **listStorages**
+> \Swagger\Client\Model\InlineResponse2002 listStorages()
 
 List of storages
 
@@ -20,10 +20,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\Api\StorageApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
-    $result = $api_instance->storageGet();
+    $result = $api_instance->listStorages();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling StorageApi->storageGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling StorageApi->listStorages: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```
