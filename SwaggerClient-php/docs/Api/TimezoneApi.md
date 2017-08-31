@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**timezoneGet**](TimezoneApi.md#timezoneGet) | **GET** /timezone | List timezones
+[**listTimezones**](TimezoneApi.md#listTimezones) | **GET** /timezone | List timezones
 
 
-# **timezoneGet**
-> \Swagger\Client\Model\InlineResponse2002 timezoneGet()
+# **listTimezones**
+> \Swagger\Client\Model\InlineResponse2002 listTimezones()
 
 List timezones
 
@@ -22,10 +22,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\Api\TimezoneApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
-    $result = $api_instance->timezoneGet();
+    $result = $api_instance->listTimezones();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling TimezoneApi->timezoneGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling TimezoneApi->listTimezones: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```

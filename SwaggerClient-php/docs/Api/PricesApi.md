@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**priceGet**](PricesApi.md#priceGet) | **GET** /price | List prices
+[**listPrices**](PricesApi.md#listPrices) | **GET** /price | List prices
 
 
-# **priceGet**
-> \Swagger\Client\Model\InlineResponse200 priceGet()
+# **listPrices**
+> \Swagger\Client\Model\InlineResponse200 listPrices()
 
 List prices
 
@@ -22,10 +22,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\Api\PricesApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
-    $result = $api_instance->priceGet();
+    $result = $api_instance->listPrices();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling PricesApi->priceGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling PricesApi->listPrices: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```

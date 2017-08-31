@@ -82,7 +82,7 @@ class PricesApi
     }
 
     /**
-     * Operation priceGet
+     * Operation listPrices
      *
      * List prices
      *
@@ -90,14 +90,14 @@ class PricesApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse200
      */
-    public function priceGet()
+    public function listPrices()
     {
-        list($response) = $this->priceGetWithHttpInfo();
+        list($response) = $this->listPricesWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation priceGetWithHttpInfo
+     * Operation listPricesWithHttpInfo
      *
      * List prices
      *
@@ -105,10 +105,10 @@ class PricesApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse200, HTTP status code, HTTP response headers (array of strings)
      */
-    public function priceGetWithHttpInfo()
+    public function listPricesWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse200';
-        $request = $this->priceGetRequest();
+        $request = $this->listPricesRequest();
 
         try {
 
@@ -161,32 +161,32 @@ class PricesApi
     }
 
     /**
-     * Operation priceGetAsync
+     * Operation listPricesAsync
      *
      * List prices
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function priceGetAsync()
+    public function listPricesAsync()
     {
-        return $this->priceGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->listPricesAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation priceGetAsyncWithHttpInfo
+     * Operation listPricesAsyncWithHttpInfo
      *
      * List prices
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function priceGetAsyncWithHttpInfo()
+    public function listPricesAsyncWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse200';
-        $request = $this->priceGetRequest();
+        $request = $this->listPricesRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +217,12 @@ class PricesApi
     }
 
     /**
-     * Create request for operation 'priceGet'
+     * Create request for operation 'listPrices'
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function priceGetRequest()
+    protected function listPricesRequest()
     {
 
         $resourcePath = '/price';

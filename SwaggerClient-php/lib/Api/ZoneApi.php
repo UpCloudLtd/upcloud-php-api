@@ -82,7 +82,7 @@ class ZoneApi
     }
 
     /**
-     * Operation zoneGet
+     * Operation listZones
      *
      * List available zones
      *
@@ -90,14 +90,14 @@ class ZoneApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2001
      */
-    public function zoneGet()
+    public function listZones()
     {
-        list($response) = $this->zoneGetWithHttpInfo();
+        list($response) = $this->listZonesWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation zoneGetWithHttpInfo
+     * Operation listZonesWithHttpInfo
      *
      * List available zones
      *
@@ -105,10 +105,10 @@ class ZoneApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
      */
-    public function zoneGetWithHttpInfo()
+    public function listZonesWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->zoneGetRequest();
+        $request = $this->listZonesRequest();
 
         try {
 
@@ -161,32 +161,32 @@ class ZoneApi
     }
 
     /**
-     * Operation zoneGetAsync
+     * Operation listZonesAsync
      *
      * List available zones
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function zoneGetAsync()
+    public function listZonesAsync()
     {
-        return $this->zoneGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->listZonesAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation zoneGetAsyncWithHttpInfo
+     * Operation listZonesAsyncWithHttpInfo
      *
      * List available zones
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function zoneGetAsyncWithHttpInfo()
+    public function listZonesAsyncWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2001';
-        $request = $this->zoneGetRequest();
+        $request = $this->listZonesRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +217,12 @@ class ZoneApi
     }
 
     /**
-     * Create request for operation 'zoneGet'
+     * Create request for operation 'listZones'
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function zoneGetRequest()
+    protected function listZonesRequest()
     {
 
         $resourcePath = '/zone';

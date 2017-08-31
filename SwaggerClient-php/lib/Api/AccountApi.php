@@ -82,7 +82,7 @@ class AccountApi
     }
 
     /**
-     * Operation accountGet
+     * Operation getAccount
      *
      * Account information
      *
@@ -90,14 +90,14 @@ class AccountApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Account
      */
-    public function accountGet()
+    public function getAccount()
     {
-        list($response) = $this->accountGetWithHttpInfo();
+        list($response) = $this->getAccountWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation accountGetWithHttpInfo
+     * Operation getAccountWithHttpInfo
      *
      * Account information
      *
@@ -105,10 +105,10 @@ class AccountApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Account, HTTP status code, HTTP response headers (array of strings)
      */
-    public function accountGetWithHttpInfo()
+    public function getAccountWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\Account';
-        $request = $this->accountGetRequest();
+        $request = $this->getAccountRequest();
 
         try {
 
@@ -161,32 +161,32 @@ class AccountApi
     }
 
     /**
-     * Operation accountGetAsync
+     * Operation getAccountAsync
      *
      * Account information
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function accountGetAsync()
+    public function getAccountAsync()
     {
-        return $this->accountGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->getAccountAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation accountGetAsyncWithHttpInfo
+     * Operation getAccountAsyncWithHttpInfo
      *
      * Account information
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function accountGetAsyncWithHttpInfo()
+    public function getAccountAsyncWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\Account';
-        $request = $this->accountGetRequest();
+        $request = $this->getAccountRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +217,12 @@ class AccountApi
     }
 
     /**
-     * Create request for operation 'accountGet'
+     * Create request for operation 'getAccount'
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function accountGetRequest()
+    protected function getAccountRequest()
     {
 
         $resourcePath = '/account';

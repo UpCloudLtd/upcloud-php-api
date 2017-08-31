@@ -82,7 +82,7 @@ class TimezoneApi
     }
 
     /**
-     * Operation timezoneGet
+     * Operation listTimezones
      *
      * List timezones
      *
@@ -90,14 +90,14 @@ class TimezoneApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2002
      */
-    public function timezoneGet()
+    public function listTimezones()
     {
-        list($response) = $this->timezoneGetWithHttpInfo();
+        list($response) = $this->listTimezonesWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation timezoneGetWithHttpInfo
+     * Operation listTimezonesWithHttpInfo
      *
      * List timezones
      *
@@ -105,10 +105,10 @@ class TimezoneApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2002, HTTP status code, HTTP response headers (array of strings)
      */
-    public function timezoneGetWithHttpInfo()
+    public function listTimezonesWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2002';
-        $request = $this->timezoneGetRequest();
+        $request = $this->listTimezonesRequest();
 
         try {
 
@@ -161,32 +161,32 @@ class TimezoneApi
     }
 
     /**
-     * Operation timezoneGetAsync
+     * Operation listTimezonesAsync
      *
      * List timezones
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function timezoneGetAsync()
+    public function listTimezonesAsync()
     {
-        return $this->timezoneGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->listTimezonesAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation timezoneGetAsyncWithHttpInfo
+     * Operation listTimezonesAsyncWithHttpInfo
      *
      * List timezones
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function timezoneGetAsyncWithHttpInfo()
+    public function listTimezonesAsyncWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2002';
-        $request = $this->timezoneGetRequest();
+        $request = $this->listTimezonesRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +217,12 @@ class TimezoneApi
     }
 
     /**
-     * Create request for operation 'timezoneGet'
+     * Create request for operation 'listTimezones'
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function timezoneGetRequest()
+    protected function listTimezonesRequest()
     {
 
         $resourcePath = '/timezone';

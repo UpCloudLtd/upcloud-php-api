@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**zoneGet**](ZoneApi.md#zoneGet) | **GET** /zone | List available zones
+[**listZones**](ZoneApi.md#listZones) | **GET** /zone | List available zones
 
 
-# **zoneGet**
-> \Swagger\Client\Model\InlineResponse2001 zoneGet()
+# **listZones**
+> \Swagger\Client\Model\InlineResponse2001 listZones()
 
 List available zones
 
@@ -22,10 +22,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\Api\ZoneApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
-    $result = $api_instance->zoneGet();
+    $result = $api_instance->listZones();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling ZoneApi->zoneGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ZoneApi->listZones: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```

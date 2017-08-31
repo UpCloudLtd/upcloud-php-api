@@ -82,33 +82,35 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressGet
+     * Operation addIp
      *
-     * List IP addresses
+     * Assign IP address
      *
+     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2006
+     * @return \Swagger\Client\Model\InlineResponse2011
      */
-    public function ipAddressGet()
+    public function addIp($ip_address = null)
     {
-        list($response) = $this->ipAddressGetWithHttpInfo();
+        list($response) = $this->addIpWithHttpInfo($ip_address);
         return $response;
     }
 
     /**
-     * Operation ipAddressGetWithHttpInfo
+     * Operation addIpWithHttpInfo
      *
-     * List IP addresses
+     * Assign IP address
      *
+     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ipAddressGetWithHttpInfo()
+    public function addIpWithHttpInfo($ip_address = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2006';
-        $request = $this->ipAddressGetRequest();
+        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $request = $this->addIpRequest($ip_address);
 
         try {
 
@@ -151,8 +153,28 @@ class IPAddressApi
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2006', $e->getResponseHeaders());
+                case 201:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2011', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -161,32 +183,34 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressGetAsync
+     * Operation addIpAsync
      *
-     * List IP addresses
+     * Assign IP address
      *
+     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressGetAsync()
+    public function addIpAsync($ip_address = null)
     {
-        return $this->ipAddressGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->addIpAsyncWithHttpInfo($ip_address)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation ipAddressGetAsyncWithHttpInfo
+     * Operation addIpAsyncWithHttpInfo
      *
-     * List IP addresses
+     * Assign IP address
      *
+     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressGetAsyncWithHttpInfo()
+    public function addIpAsyncWithHttpInfo($ip_address = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2006';
-        $request = $this->ipAddressGetRequest();
+        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $request = $this->addIpRequest($ip_address);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +241,13 @@ class IPAddressApi
     }
 
     /**
-     * Create request for operation 'ipAddressGet'
+     * Create request for operation 'addIp'
      *
+     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function ipAddressGetRequest()
+    protected function addIpRequest($ip_address = null)
     {
 
         $resourcePath = '/ip_address';
@@ -234,6 +259,11 @@ class IPAddressApi
 
 
 
+        // body params
+        $_tempBody = null;
+        if (isset($ip_address)) {
+            $_tempBody = $ip_address;
+        }
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
@@ -285,7 +315,7 @@ class IPAddressApi
         );
 
         return new Request(
-            'GET',
+            'POST',
             $url,
             $headers,
             $httpBody
@@ -293,7 +323,7 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressIpDelete
+     * Operation deleteIp
      *
      * Release IP address
      *
@@ -302,13 +332,13 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function ipAddressIpDelete($ip)
+    public function deleteIp($ip)
     {
-        $this->ipAddressIpDeleteWithHttpInfo($ip);
+        $this->deleteIpWithHttpInfo($ip);
     }
 
     /**
-     * Operation ipAddressIpDeleteWithHttpInfo
+     * Operation deleteIpWithHttpInfo
      *
      * Release IP address
      *
@@ -317,10 +347,10 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ipAddressIpDeleteWithHttpInfo($ip)
+    public function deleteIpWithHttpInfo($ip)
     {
         $returnType = '';
-        $request = $this->ipAddressIpDeleteRequest($ip);
+        $request = $this->deleteIpRequest($ip);
 
         try {
 
@@ -375,7 +405,7 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressIpDeleteAsync
+     * Operation deleteIpAsync
      *
      * Release IP address
      *
@@ -383,15 +413,15 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressIpDeleteAsync($ip)
+    public function deleteIpAsync($ip)
     {
-        return $this->ipAddressIpDeleteAsyncWithHttpInfo($ip)->then(function ($response) {
+        return $this->deleteIpAsyncWithHttpInfo($ip)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation ipAddressIpDeleteAsyncWithHttpInfo
+     * Operation deleteIpAsyncWithHttpInfo
      *
      * Release IP address
      *
@@ -399,10 +429,10 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressIpDeleteAsyncWithHttpInfo($ip)
+    public function deleteIpAsyncWithHttpInfo($ip)
     {
         $returnType = '';
-        $request = $this->ipAddressIpDeleteRequest($ip);
+        $request = $this->deleteIpRequest($ip);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -419,17 +449,17 @@ class IPAddressApi
     }
 
     /**
-     * Create request for operation 'ipAddressIpDelete'
+     * Create request for operation 'deleteIp'
      *
      * @param string $ip Ip address (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function ipAddressIpDeleteRequest($ip)
+    protected function deleteIpRequest($ip)
     {
         // verify the required parameter 'ip' is set
         if ($ip === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $ip when calling ipAddressIpDelete');
+            throw new \InvalidArgumentException('Missing the required parameter $ip when calling deleteIp');
         }
 
         $resourcePath = '/ip_address/{ip}';
@@ -504,7 +534,7 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressIpGet
+     * Operation getDetails
      *
      * Get IP address details
      *
@@ -513,14 +543,14 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2011
      */
-    public function ipAddressIpGet($ip)
+    public function getDetails($ip)
     {
-        list($response) = $this->ipAddressIpGetWithHttpInfo($ip);
+        list($response) = $this->getDetailsWithHttpInfo($ip);
         return $response;
     }
 
     /**
-     * Operation ipAddressIpGetWithHttpInfo
+     * Operation getDetailsWithHttpInfo
      *
      * Get IP address details
      *
@@ -529,10 +559,10 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ipAddressIpGetWithHttpInfo($ip)
+    public function getDetailsWithHttpInfo($ip)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2011';
-        $request = $this->ipAddressIpGetRequest($ip);
+        $request = $this->getDetailsRequest($ip);
 
         try {
 
@@ -585,7 +615,7 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressIpGetAsync
+     * Operation getDetailsAsync
      *
      * Get IP address details
      *
@@ -593,15 +623,15 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressIpGetAsync($ip)
+    public function getDetailsAsync($ip)
     {
-        return $this->ipAddressIpGetAsyncWithHttpInfo($ip)->then(function ($response) {
+        return $this->getDetailsAsyncWithHttpInfo($ip)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation ipAddressIpGetAsyncWithHttpInfo
+     * Operation getDetailsAsyncWithHttpInfo
      *
      * Get IP address details
      *
@@ -609,10 +639,10 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressIpGetAsyncWithHttpInfo($ip)
+    public function getDetailsAsyncWithHttpInfo($ip)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2011';
-        $request = $this->ipAddressIpGetRequest($ip);
+        $request = $this->getDetailsRequest($ip);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -643,17 +673,17 @@ class IPAddressApi
     }
 
     /**
-     * Create request for operation 'ipAddressIpGet'
+     * Create request for operation 'getDetails'
      *
      * @param string $ip Ip address (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function ipAddressIpGetRequest($ip)
+    protected function getDetailsRequest($ip)
     {
         // verify the required parameter 'ip' is set
         if ($ip === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $ip when calling ipAddressIpGet');
+            throw new \InvalidArgumentException('Missing the required parameter $ip when calling getDetails');
         }
 
         $resourcePath = '/ip_address/{ip}';
@@ -728,7 +758,218 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressIpPut
+     * Operation listIps
+     *
+     * List IP addresses
+     *
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\InlineResponse2006
+     */
+    public function listIps()
+    {
+        list($response) = $this->listIpsWithHttpInfo();
+        return $response;
+    }
+
+    /**
+     * Operation listIpsWithHttpInfo
+     *
+     * List IP addresses
+     *
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listIpsWithHttpInfo()
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse2006';
+        $request = $this->listIpsRequest();
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2006', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listIpsAsync
+     *
+     * List IP addresses
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listIpsAsync()
+    {
+        return $this->listIpsAsyncWithHttpInfo()->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation listIpsAsyncWithHttpInfo
+     *
+     * List IP addresses
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listIpsAsyncWithHttpInfo()
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse2006';
+        $request = $this->listIpsRequest();
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'listIps'
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function listIpsRequest()
+    {
+
+        $resourcePath = '/ip_address';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation modifyIp
      *
      * Modify IP address
      *
@@ -738,14 +979,14 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2011
      */
-    public function ipAddressIpPut($ip, $ip_address = null)
+    public function modifyIp($ip, $ip_address = null)
     {
-        list($response) = $this->ipAddressIpPutWithHttpInfo($ip, $ip_address);
+        list($response) = $this->modifyIpWithHttpInfo($ip, $ip_address);
         return $response;
     }
 
     /**
-     * Operation ipAddressIpPutWithHttpInfo
+     * Operation modifyIpWithHttpInfo
      *
      * Modify IP address
      *
@@ -755,10 +996,10 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ipAddressIpPutWithHttpInfo($ip, $ip_address = null)
+    public function modifyIpWithHttpInfo($ip, $ip_address = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2011';
-        $request = $this->ipAddressIpPutRequest($ip, $ip_address);
+        $request = $this->modifyIpRequest($ip, $ip_address);
 
         try {
 
@@ -831,7 +1072,7 @@ class IPAddressApi
     }
 
     /**
-     * Operation ipAddressIpPutAsync
+     * Operation modifyIpAsync
      *
      * Modify IP address
      *
@@ -840,15 +1081,15 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressIpPutAsync($ip, $ip_address = null)
+    public function modifyIpAsync($ip, $ip_address = null)
     {
-        return $this->ipAddressIpPutAsyncWithHttpInfo($ip, $ip_address)->then(function ($response) {
+        return $this->modifyIpAsyncWithHttpInfo($ip, $ip_address)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation ipAddressIpPutAsyncWithHttpInfo
+     * Operation modifyIpAsyncWithHttpInfo
      *
      * Modify IP address
      *
@@ -857,10 +1098,10 @@ class IPAddressApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ipAddressIpPutAsyncWithHttpInfo($ip, $ip_address = null)
+    public function modifyIpAsyncWithHttpInfo($ip, $ip_address = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2011';
-        $request = $this->ipAddressIpPutRequest($ip, $ip_address);
+        $request = $this->modifyIpRequest($ip, $ip_address);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -891,18 +1132,18 @@ class IPAddressApi
     }
 
     /**
-     * Create request for operation 'ipAddressIpPut'
+     * Create request for operation 'modifyIp'
      *
      * @param string $ip Ip address (required)
      * @param \Swagger\Client\Model\IpAddress1 $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function ipAddressIpPutRequest($ip, $ip_address = null)
+    protected function modifyIpRequest($ip, $ip_address = null)
     {
         // verify the required parameter 'ip' is set
         if ($ip === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $ip when calling ipAddressIpPut');
+            throw new \InvalidArgumentException('Missing the required parameter $ip when calling modifyIp');
         }
 
         $resourcePath = '/ip_address/{ip}';
@@ -975,247 +1216,6 @@ class IPAddressApi
 
         return new Request(
             'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation ipAddressPost
-     *
-     * Assign IP address
-     *
-     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2011
-     */
-    public function ipAddressPost($ip_address = null)
-    {
-        list($response) = $this->ipAddressPostWithHttpInfo($ip_address);
-        return $response;
-    }
-
-    /**
-     * Operation ipAddressPostWithHttpInfo
-     *
-     * Assign IP address
-     *
-     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function ipAddressPostWithHttpInfo($ip_address = null)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
-        $request = $this->ipAddressPostRequest($ip_address);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2011', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation ipAddressPostAsync
-     *
-     * Assign IP address
-     *
-     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function ipAddressPostAsync($ip_address = null)
-    {
-        return $this->ipAddressPostAsyncWithHttpInfo($ip_address)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation ipAddressPostAsyncWithHttpInfo
-     *
-     * Assign IP address
-     *
-     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function ipAddressPostAsyncWithHttpInfo($ip_address = null)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
-        $request = $this->ipAddressPostRequest($ip_address);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'ipAddressPost'
-     *
-     * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function ipAddressPostRequest($ip_address = null)
-    {
-
-        $resourcePath = '/ip_address';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // body params
-        $_tempBody = null;
-        if (isset($ip_address)) {
-            $_tempBody = $ip_address;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
             $url,
             $headers,
             $httpBody

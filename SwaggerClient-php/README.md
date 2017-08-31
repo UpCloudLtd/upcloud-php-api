@@ -59,10 +59,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\Api\AccountApi();
 
 try {
-    $result = $api_instance->accountGet();
+    $result = $api_instance->getAccount();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling AccountApi->accountGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AccountApi->getAccount: ', $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -74,62 +74,62 @@ All URIs are relative to *http://localhost/1.2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AccountApi* | [**accountGet**](docs/Api/AccountApi.md#accountget) | **GET** /account | Account information
-*FirewallApi* | [**serverServerIdFirewallRuleFirewallRuleNumberDelete**](docs/Api/FirewallApi.md#serverserveridfirewallrulefirewallrulenumberdelete) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
-*FirewallApi* | [**serverServerIdFirewallRuleFirewallRuleNumberGet**](docs/Api/FirewallApi.md#serverserveridfirewallrulefirewallrulenumberget) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
+*AccountApi* | [**getAccount**](docs/Api/AccountApi.md#getaccount) | **GET** /account | Account information
+*FirewallApi* | [**createFirewallRule**](docs/Api/FirewallApi.md#createfirewallrule) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
+*FirewallApi* | [**deleteFirewallRule**](docs/Api/FirewallApi.md#deletefirewallrule) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
+*FirewallApi* | [**getFirewallRule**](docs/Api/FirewallApi.md#getfirewallrule) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
 *FirewallApi* | [**serverServerIdFirewallRuleGet**](docs/Api/FirewallApi.md#serverserveridfirewallruleget) | **GET** /server/{serverId}/firewall_rule | List firewall rules
-*FirewallApi* | [**serverServerIdFirewallRulePost**](docs/Api/FirewallApi.md#serverserveridfirewallrulepost) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
-*IPAddressApi* | [**ipAddressGet**](docs/Api/IPAddressApi.md#ipaddressget) | **GET** /ip_address | List IP addresses
-*IPAddressApi* | [**ipAddressIpDelete**](docs/Api/IPAddressApi.md#ipaddressipdelete) | **DELETE** /ip_address/{ip} | Release IP address
-*IPAddressApi* | [**ipAddressIpGet**](docs/Api/IPAddressApi.md#ipaddressipget) | **GET** /ip_address/{ip} | Get IP address details
-*IPAddressApi* | [**ipAddressIpPut**](docs/Api/IPAddressApi.md#ipaddressipput) | **PUT** /ip_address/{ip} | Modify IP address
-*IPAddressApi* | [**ipAddressPost**](docs/Api/IPAddressApi.md#ipaddresspost) | **POST** /ip_address | Assign IP address
-*PlanApi* | [**planGet**](docs/Api/PlanApi.md#planget) | **GET** /plan | List available plans
-*PricesApi* | [**priceGet**](docs/Api/PricesApi.md#priceget) | **GET** /price | List prices
+*IPAddressApi* | [**addIp**](docs/Api/IPAddressApi.md#addip) | **POST** /ip_address | Assign IP address
+*IPAddressApi* | [**deleteIp**](docs/Api/IPAddressApi.md#deleteip) | **DELETE** /ip_address/{ip} | Release IP address
+*IPAddressApi* | [**getDetails**](docs/Api/IPAddressApi.md#getdetails) | **GET** /ip_address/{ip} | Get IP address details
+*IPAddressApi* | [**listIps**](docs/Api/IPAddressApi.md#listips) | **GET** /ip_address | List IP addresses
+*IPAddressApi* | [**modifyIp**](docs/Api/IPAddressApi.md#modifyip) | **PUT** /ip_address/{ip} | Modify IP address
+*PlanApi* | [**listPlans**](docs/Api/PlanApi.md#listplans) | **GET** /plan | List available plans
+*PricesApi* | [**listPrices**](docs/Api/PricesApi.md#listprices) | **GET** /price | List prices
+*ServerApi* | [**assignTag**](docs/Api/ServerApi.md#assigntag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
+*ServerApi* | [**attachStorage**](docs/Api/ServerApi.md#attachstorage) | **POST** /server/{serverId}/storage/attach | Attach storage
+*ServerApi* | [**createFirewallRule**](docs/Api/ServerApi.md#createfirewallrule) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
 *ServerApi* | [**createServer**](docs/Api/ServerApi.md#createserver) | **POST** /server | Create server
+*ServerApi* | [**deleteFirewallRule**](docs/Api/ServerApi.md#deletefirewallrule) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
 *ServerApi* | [**deleteServer**](docs/Api/ServerApi.md#deleteserver) | **DELETE** /server/{serverId} | Delete server
+*ServerApi* | [**detachStorage**](docs/Api/ServerApi.md#detachstorage) | **POST** /server/{serverId}/storage/detach | Detach storage
+*ServerApi* | [**ejectCdrom**](docs/Api/ServerApi.md#ejectcdrom) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
+*ServerApi* | [**getFirewallRule**](docs/Api/ServerApi.md#getfirewallrule) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
+*ServerApi* | [**listServerConfigurations**](docs/Api/ServerApi.md#listserverconfigurations) | **GET** /server_size | List server configurations
 *ServerApi* | [**listServers**](docs/Api/ServerApi.md#listservers) | **GET** /server | List of servers
+*ServerApi* | [**loadCdrom**](docs/Api/ServerApi.md#loadcdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
+*ServerApi* | [**modifyServer**](docs/Api/ServerApi.md#modifyserver) | **PUT** /server/{serverId} | Modify server
+*ServerApi* | [**restartServer**](docs/Api/ServerApi.md#restartserver) | **POST** /server/{serverId}/restart | Restart server
 *ServerApi* | [**serverDetails**](docs/Api/ServerApi.md#serverdetails) | **GET** /server/{serverId} | Get server details
-*ServerApi* | [**serverServerIdFirewallRuleFirewallRuleNumberDelete**](docs/Api/ServerApi.md#serverserveridfirewallrulefirewallrulenumberdelete) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
-*ServerApi* | [**serverServerIdFirewallRuleFirewallRuleNumberGet**](docs/Api/ServerApi.md#serverserveridfirewallrulefirewallrulenumberget) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
 *ServerApi* | [**serverServerIdFirewallRuleGet**](docs/Api/ServerApi.md#serverserveridfirewallruleget) | **GET** /server/{serverId}/firewall_rule | List firewall rules
-*ServerApi* | [**serverServerIdFirewallRulePost**](docs/Api/ServerApi.md#serverserveridfirewallrulepost) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
-*ServerApi* | [**serverServerIdRestartPost**](docs/Api/ServerApi.md#serverserveridrestartpost) | **POST** /server/{serverId}/restart | Restart server
-*ServerApi* | [**serverServerIdStartPost**](docs/Api/ServerApi.md#serverserveridstartpost) | **POST** /server/{serverId}/start | Start server
-*ServerApi* | [**serverServerIdStopPost**](docs/Api/ServerApi.md#serverserveridstoppost) | **POST** /server/{serverId}/stop | Stop server
-*ServerApi* | [**serverServerIdStorageAttachPost**](docs/Api/ServerApi.md#serverserveridstorageattachpost) | **POST** /server/{serverId}/storage/attach | Attach storage
-*ServerApi* | [**serverServerIdStorageCdromEjectPost**](docs/Api/ServerApi.md#serverserveridstoragecdromejectpost) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
-*ServerApi* | [**serverServerIdStorageCdromLoadPost**](docs/Api/ServerApi.md#serverserveridstoragecdromloadpost) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
-*ServerApi* | [**serverServerIdStorageDetachPost**](docs/Api/ServerApi.md#serverserveridstoragedetachpost) | **POST** /server/{serverId}/storage/detach | Detach storage
-*ServerApi* | [**serverServerIdTagTagListPost**](docs/Api/ServerApi.md#serverserveridtagtaglistpost) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
-*ServerApi* | [**serverServerIdUntagTagNamePost**](docs/Api/ServerApi.md#serverserveriduntagtagnamepost) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
-*ServerApi* | [**serverSizeGet**](docs/Api/ServerApi.md#serversizeget) | **GET** /server_size | List server configurations
-*ServerApi* | [**updateServer**](docs/Api/ServerApi.md#updateserver) | **PUT** /server/{serverId} | Modify server
+*ServerApi* | [**startServer**](docs/Api/ServerApi.md#startserver) | **POST** /server/{serverId}/start | Start server
+*ServerApi* | [**stopServer**](docs/Api/ServerApi.md#stopserver) | **POST** /server/{serverId}/stop | Stop server
+*ServerApi* | [**untag**](docs/Api/ServerApi.md#untag) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
+*StorageApi* | [**attachStorage**](docs/Api/StorageApi.md#attachstorage) | **POST** /server/{serverId}/storage/attach | Attach storage
+*StorageApi* | [**backupStorage**](docs/Api/StorageApi.md#backupstorage) | **POST** /storage/{storageId}/backup | Create backup
+*StorageApi* | [**cancelOperation**](docs/Api/StorageApi.md#canceloperation) | **POST** /storage/{storageId}/cancel | Cancel storage operation
+*StorageApi* | [**cloneStorage**](docs/Api/StorageApi.md#clonestorage) | **POST** /storage/{storageId}/clone | Clone storage
+*StorageApi* | [**createStorage**](docs/Api/StorageApi.md#createstorage) | **POST** /storage | Create storage
+*StorageApi* | [**deleteStorage**](docs/Api/StorageApi.md#deletestorage) | **DELETE** /storage/{storageId} | Delete storage
+*StorageApi* | [**detachStorage**](docs/Api/StorageApi.md#detachstorage) | **POST** /server/{serverId}/storage/detach | Detach storage
+*StorageApi* | [**ejectCdrom**](docs/Api/StorageApi.md#ejectcdrom) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
+*StorageApi* | [**favoriteStorage**](docs/Api/StorageApi.md#favoritestorage) | **POST** /storage/{storageId}/favorite | Add storage to favorites
+*StorageApi* | [**getStorageDetails**](docs/Api/StorageApi.md#getstoragedetails) | **GET** /storage/{storageId} | Get storage details
+*StorageApi* | [**listStorageTypes**](docs/Api/StorageApi.md#liststoragetypes) | **GET** /storage/{type} | List of storages by type
 *StorageApi* | [**listStorages**](docs/Api/StorageApi.md#liststorages) | **GET** /storage | List of storages
-*StorageApi* | [**listStorages_0**](docs/Api/StorageApi.md#liststorages_0) | **GET** /storage/{type} | List of storages by type
-*StorageApi* | [**serverServerIdStorageAttachPost**](docs/Api/StorageApi.md#serverserveridstorageattachpost) | **POST** /server/{serverId}/storage/attach | Attach storage
-*StorageApi* | [**serverServerIdStorageCdromEjectPost**](docs/Api/StorageApi.md#serverserveridstoragecdromejectpost) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
-*StorageApi* | [**serverServerIdStorageCdromLoadPost**](docs/Api/StorageApi.md#serverserveridstoragecdromloadpost) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
-*StorageApi* | [**serverServerIdStorageDetachPost**](docs/Api/StorageApi.md#serverserveridstoragedetachpost) | **POST** /server/{serverId}/storage/detach | Detach storage
-*StorageApi* | [**storagePost**](docs/Api/StorageApi.md#storagepost) | **POST** /storage | Create storage
-*StorageApi* | [**storageStorageIdBackupPost**](docs/Api/StorageApi.md#storagestorageidbackuppost) | **POST** /storage/{storageId}/backup | Create backup
-*StorageApi* | [**storageStorageIdCancelPost**](docs/Api/StorageApi.md#storagestorageidcancelpost) | **POST** /storage/{storageId}/cancel | Cancel storage operation
-*StorageApi* | [**storageStorageIdClonePost**](docs/Api/StorageApi.md#storagestorageidclonepost) | **POST** /storage/{storageId}/clone | Clone storage
-*StorageApi* | [**storageStorageIdDelete**](docs/Api/StorageApi.md#storagestorageiddelete) | **DELETE** /storage/{storageId} | Delete storage
-*StorageApi* | [**storageStorageIdFavoriteDelete**](docs/Api/StorageApi.md#storagestorageidfavoritedelete) | **DELETE** /storage/{storageId}/favorite | Remove storage from favorites
-*StorageApi* | [**storageStorageIdFavoritePost**](docs/Api/StorageApi.md#storagestorageidfavoritepost) | **POST** /storage/{storageId}/favorite | Add storage to favorites
-*StorageApi* | [**storageStorageIdGet**](docs/Api/StorageApi.md#storagestorageidget) | **GET** /storage/{storageId} | Get storage details
-*StorageApi* | [**storageStorageIdPut**](docs/Api/StorageApi.md#storagestorageidput) | **PUT** /storage/{storageId} | Modify storage
-*StorageApi* | [**storageStorageIdRestorePost**](docs/Api/StorageApi.md#storagestorageidrestorepost) | **POST** /storage/{storageId}/restore | Restore backup
-*StorageApi* | [**storageStorageIdTemplatizePost**](docs/Api/StorageApi.md#storagestorageidtemplatizepost) | **POST** /storage/{storageId}/templatize | Templatize storage
-*TagApi* | [**serverServerIdTagTagListPost**](docs/Api/TagApi.md#serverserveridtagtaglistpost) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
-*TagApi* | [**serverServerIdUntagTagNamePost**](docs/Api/TagApi.md#serverserveriduntagtagnamepost) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
-*TagApi* | [**tagGet**](docs/Api/TagApi.md#tagget) | **GET** /tag | List existing tags
-*TagApi* | [**tagPost**](docs/Api/TagApi.md#tagpost) | **POST** /tag | Create a new tag
-*TagApi* | [**tagTagNameDelete**](docs/Api/TagApi.md#tagtagnamedelete) | **DELETE** /tag/{tagName} | Delete tag
-*TagApi* | [**tagTagNamePut**](docs/Api/TagApi.md#tagtagnameput) | **PUT** /tag/{tagName} | Modify existing tag
-*TimezoneApi* | [**timezoneGet**](docs/Api/TimezoneApi.md#timezoneget) | **GET** /timezone | List timezones
-*ZoneApi* | [**zoneGet**](docs/Api/ZoneApi.md#zoneget) | **GET** /zone | List available zones
+*StorageApi* | [**loadCdrom**](docs/Api/StorageApi.md#loadcdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
+*StorageApi* | [**modifyStorage**](docs/Api/StorageApi.md#modifystorage) | **PUT** /storage/{storageId} | Modify storage
+*StorageApi* | [**restoreStorage**](docs/Api/StorageApi.md#restorestorage) | **POST** /storage/{storageId}/restore | Restore backup
+*StorageApi* | [**templatizeStorage**](docs/Api/StorageApi.md#templatizestorage) | **POST** /storage/{storageId}/templatize | Templatize storage
+*StorageApi* | [**unfavoriteStorage**](docs/Api/StorageApi.md#unfavoritestorage) | **DELETE** /storage/{storageId}/favorite | Remove storage from favorites
+*TagApi* | [**assignTag**](docs/Api/TagApi.md#assigntag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
+*TagApi* | [**createTag**](docs/Api/TagApi.md#createtag) | **POST** /tag | Create a new tag
+*TagApi* | [**deleteTag**](docs/Api/TagApi.md#deletetag) | **DELETE** /tag/{tagName} | Delete tag
+*TagApi* | [**listTags**](docs/Api/TagApi.md#listtags) | **GET** /tag | List existing tags
+*TagApi* | [**modifyTag**](docs/Api/TagApi.md#modifytag) | **PUT** /tag/{tagName} | Modify existing tag
+*TagApi* | [**untag**](docs/Api/TagApi.md#untag) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
+*TimezoneApi* | [**listTimezones**](docs/Api/TimezoneApi.md#listtimezones) | **GET** /timezone | List timezones
+*ZoneApi* | [**listZones**](docs/Api/ZoneApi.md#listzones) | **GET** /zone | List available zones
 
 
 ## Documentation For Models

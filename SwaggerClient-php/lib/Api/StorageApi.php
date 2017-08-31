@@ -82,6 +82,2588 @@ class StorageApi
     }
 
     /**
+     * Operation attachStorage
+     *
+     * Attach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\ServerListResponse
+     */
+    public function attachStorage($server_id, $storage_device)
+    {
+        list($response) = $this->attachStorageWithHttpInfo($server_id, $storage_device);
+        return $response;
+    }
+
+    /**
+     * Operation attachStorageWithHttpInfo
+     *
+     * Attach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function attachStorageWithHttpInfo($server_id, $storage_device)
+    {
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
+        $request = $this->attachStorageRequest($server_id, $storage_device);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation attachStorageAsync
+     *
+     * Attach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function attachStorageAsync($server_id, $storage_device)
+    {
+        return $this->attachStorageAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation attachStorageAsyncWithHttpInfo
+     *
+     * Attach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function attachStorageAsyncWithHttpInfo($server_id, $storage_device)
+    {
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
+        $request = $this->attachStorageRequest($server_id, $storage_device);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'attachStorage'
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function attachStorageRequest($server_id, $storage_device)
+    {
+        // verify the required parameter 'server_id' is set
+        if ($server_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling attachStorage');
+        }
+        // verify the required parameter 'storage_device' is set
+        if ($storage_device === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_device when calling attachStorage');
+        }
+
+        $resourcePath = '/server/{serverId}/storage/attach';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($server_id !== null) {
+            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($storage_device)) {
+            $_tempBody = $storage_device;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation backupStorage
+     *
+     * Create backup
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\InlineResponse201
+     */
+    public function backupStorage($storage_id, $storage = null)
+    {
+        list($response) = $this->backupStorageWithHttpInfo($storage_id, $storage);
+        return $response;
+    }
+
+    /**
+     * Operation backupStorageWithHttpInfo
+     *
+     * Create backup
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function backupStorageWithHttpInfo($storage_id, $storage = null)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->backupStorageRequest($storage_id, $storage);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation backupStorageAsync
+     *
+     * Create backup
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function backupStorageAsync($storage_id, $storage = null)
+    {
+        return $this->backupStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation backupStorageAsyncWithHttpInfo
+     *
+     * Create backup
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function backupStorageAsyncWithHttpInfo($storage_id, $storage = null)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->backupStorageRequest($storage_id, $storage);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'backupStorage'
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function backupStorageRequest($storage_id, $storage = null)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling backupStorage');
+        }
+
+        $resourcePath = '/storage/{storageId}/backup';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($storage)) {
+            $_tempBody = $storage;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation cancelOperation
+     *
+     * Cancel storage operation
+     *
+     * @param string $storage_id Strage id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function cancelOperation($storage_id)
+    {
+        $this->cancelOperationWithHttpInfo($storage_id);
+    }
+
+    /**
+     * Operation cancelOperationWithHttpInfo
+     *
+     * Cancel storage operation
+     *
+     * @param string $storage_id Strage id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function cancelOperationWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->cancelOperationRequest($storage_id);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation cancelOperationAsync
+     *
+     * Cancel storage operation
+     *
+     * @param string $storage_id Strage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cancelOperationAsync($storage_id)
+    {
+        return $this->cancelOperationAsyncWithHttpInfo($storage_id)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation cancelOperationAsyncWithHttpInfo
+     *
+     * Cancel storage operation
+     *
+     * @param string $storage_id Strage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cancelOperationAsyncWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->cancelOperationRequest($storage_id);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'cancelOperation'
+     *
+     * @param string $storage_id Strage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function cancelOperationRequest($storage_id)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling cancelOperation');
+        }
+
+        $resourcePath = '/storage/{storageId}/cancel';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation cloneStorage
+     *
+     * Clone storage
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\InlineResponse201
+     */
+    public function cloneStorage($storage_id, $storage = null)
+    {
+        list($response) = $this->cloneStorageWithHttpInfo($storage_id, $storage);
+        return $response;
+    }
+
+    /**
+     * Operation cloneStorageWithHttpInfo
+     *
+     * Clone storage
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function cloneStorageWithHttpInfo($storage_id, $storage = null)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->cloneStorageRequest($storage_id, $storage);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation cloneStorageAsync
+     *
+     * Clone storage
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cloneStorageAsync($storage_id, $storage = null)
+    {
+        return $this->cloneStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation cloneStorageAsyncWithHttpInfo
+     *
+     * Clone storage
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cloneStorageAsyncWithHttpInfo($storage_id, $storage = null)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->cloneStorageRequest($storage_id, $storage);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'cloneStorage'
+     *
+     * @param string $storage_id Storage id (required)
+     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function cloneStorageRequest($storage_id, $storage = null)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling cloneStorage');
+        }
+
+        $resourcePath = '/storage/{storageId}/clone';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($storage)) {
+            $_tempBody = $storage;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation createStorage
+     *
+     * Create storage
+     *
+     * @param \Swagger\Client\Model\Storage $storage  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\InlineResponse201
+     */
+    public function createStorage($storage)
+    {
+        list($response) = $this->createStorageWithHttpInfo($storage);
+        return $response;
+    }
+
+    /**
+     * Operation createStorageWithHttpInfo
+     *
+     * Create storage
+     *
+     * @param \Swagger\Client\Model\Storage $storage  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createStorageWithHttpInfo($storage)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->createStorageRequest($storage);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createStorageAsync
+     *
+     * Create storage
+     *
+     * @param \Swagger\Client\Model\Storage $storage  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createStorageAsync($storage)
+    {
+        return $this->createStorageAsyncWithHttpInfo($storage)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation createStorageAsyncWithHttpInfo
+     *
+     * Create storage
+     *
+     * @param \Swagger\Client\Model\Storage $storage  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createStorageAsyncWithHttpInfo($storage)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->createStorageRequest($storage);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'createStorage'
+     *
+     * @param \Swagger\Client\Model\Storage $storage  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function createStorageRequest($storage)
+    {
+        // verify the required parameter 'storage' is set
+        if ($storage === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage when calling createStorage');
+        }
+
+        $resourcePath = '/storage';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($storage)) {
+            $_tempBody = $storage;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteStorage
+     *
+     * Delete storage
+     *
+     * @param string $storage_id  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deleteStorage($storage_id)
+    {
+        $this->deleteStorageWithHttpInfo($storage_id);
+    }
+
+    /**
+     * Operation deleteStorageWithHttpInfo
+     *
+     * Delete storage
+     *
+     * @param string $storage_id  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteStorageWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->deleteStorageRequest($storage_id);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteStorageAsync
+     *
+     * Delete storage
+     *
+     * @param string $storage_id  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteStorageAsync($storage_id)
+    {
+        return $this->deleteStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation deleteStorageAsyncWithHttpInfo
+     *
+     * Delete storage
+     *
+     * @param string $storage_id  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteStorageAsyncWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->deleteStorageRequest($storage_id);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'deleteStorage'
+     *
+     * @param string $storage_id  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function deleteStorageRequest($storage_id)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling deleteStorage');
+        }
+
+        $resourcePath = '/storage/{storageId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'DELETE',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation detachStorage
+     *
+     * Detach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\ServerListResponse
+     */
+    public function detachStorage($server_id, $storage_device)
+    {
+        list($response) = $this->detachStorageWithHttpInfo($server_id, $storage_device);
+        return $response;
+    }
+
+    /**
+     * Operation detachStorageWithHttpInfo
+     *
+     * Detach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function detachStorageWithHttpInfo($server_id, $storage_device)
+    {
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
+        $request = $this->detachStorageRequest($server_id, $storage_device);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation detachStorageAsync
+     *
+     * Detach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function detachStorageAsync($server_id, $storage_device)
+    {
+        return $this->detachStorageAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation detachStorageAsyncWithHttpInfo
+     *
+     * Detach storage
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function detachStorageAsyncWithHttpInfo($server_id, $storage_device)
+    {
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
+        $request = $this->detachStorageRequest($server_id, $storage_device);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'detachStorage'
+     *
+     * @param string $server_id Server id (required)
+     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function detachStorageRequest($server_id, $storage_device)
+    {
+        // verify the required parameter 'server_id' is set
+        if ($server_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling detachStorage');
+        }
+        // verify the required parameter 'storage_device' is set
+        if ($storage_device === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_device when calling detachStorage');
+        }
+
+        $resourcePath = '/server/{serverId}/storage/detach';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($server_id !== null) {
+            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($storage_device)) {
+            $_tempBody = $storage_device;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation ejectCdrom
+     *
+     * Eject CD-ROM
+     *
+     * @param string $server_id Server id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\ServerListResponse
+     */
+    public function ejectCdrom($server_id)
+    {
+        list($response) = $this->ejectCdromWithHttpInfo($server_id);
+        return $response;
+    }
+
+    /**
+     * Operation ejectCdromWithHttpInfo
+     *
+     * Eject CD-ROM
+     *
+     * @param string $server_id Server id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function ejectCdromWithHttpInfo($server_id)
+    {
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
+        $request = $this->ejectCdromRequest($server_id);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 402:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 409:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation ejectCdromAsync
+     *
+     * Eject CD-ROM
+     *
+     * @param string $server_id Server id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function ejectCdromAsync($server_id)
+    {
+        return $this->ejectCdromAsyncWithHttpInfo($server_id)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation ejectCdromAsyncWithHttpInfo
+     *
+     * Eject CD-ROM
+     *
+     * @param string $server_id Server id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function ejectCdromAsyncWithHttpInfo($server_id)
+    {
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
+        $request = $this->ejectCdromRequest($server_id);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'ejectCdrom'
+     *
+     * @param string $server_id Server id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function ejectCdromRequest($server_id)
+    {
+        // verify the required parameter 'server_id' is set
+        if ($server_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling ejectCdrom');
+        }
+
+        $resourcePath = '/server/{serverId}/storage/cdrom/eject';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($server_id !== null) {
+            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation favoriteStorage
+     *
+     * Add storage to favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function favoriteStorage($storage_id)
+    {
+        $this->favoriteStorageWithHttpInfo($storage_id);
+    }
+
+    /**
+     * Operation favoriteStorageWithHttpInfo
+     *
+     * Add storage to favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function favoriteStorageWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->favoriteStorageRequest($storage_id);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation favoriteStorageAsync
+     *
+     * Add storage to favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function favoriteStorageAsync($storage_id)
+    {
+        return $this->favoriteStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation favoriteStorageAsyncWithHttpInfo
+     *
+     * Add storage to favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function favoriteStorageAsyncWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->favoriteStorageRequest($storage_id);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'favoriteStorage'
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function favoriteStorageRequest($storage_id)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling favoriteStorage');
+        }
+
+        $resourcePath = '/storage/{storageId}/favorite';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getStorageDetails
+     *
+     * Get storage details
+     *
+     * @param string $storage_id  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\InlineResponse201
+     */
+    public function getStorageDetails($storage_id)
+    {
+        list($response) = $this->getStorageDetailsWithHttpInfo($storage_id);
+        return $response;
+    }
+
+    /**
+     * Operation getStorageDetailsWithHttpInfo
+     *
+     * Get storage details
+     *
+     * @param string $storage_id  (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getStorageDetailsWithHttpInfo($storage_id)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->getStorageDetailsRequest($storage_id);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getStorageDetailsAsync
+     *
+     * Get storage details
+     *
+     * @param string $storage_id  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getStorageDetailsAsync($storage_id)
+    {
+        return $this->getStorageDetailsAsyncWithHttpInfo($storage_id)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation getStorageDetailsAsyncWithHttpInfo
+     *
+     * Get storage details
+     *
+     * @param string $storage_id  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getStorageDetailsAsyncWithHttpInfo($storage_id)
+    {
+        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $request = $this->getStorageDetailsRequest($storage_id);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'getStorageDetails'
+     *
+     * @param string $storage_id  (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getStorageDetailsRequest($storage_id)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling getStorageDetails');
+        }
+
+        $resourcePath = '/storage/{storageId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listStorageTypes
+     *
+     * List of storages by type
+     *
+     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\SuccessStoragesResponse
+     */
+    public function listStorageTypes($type)
+    {
+        list($response) = $this->listStorageTypesWithHttpInfo($type);
+        return $response;
+    }
+
+    /**
+     * Operation listStorageTypesWithHttpInfo
+     *
+     * List of storages by type
+     *
+     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\SuccessStoragesResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listStorageTypesWithHttpInfo($type)
+    {
+        $returnType = '\Swagger\Client\Model\SuccessStoragesResponse';
+        $request = $this->listStorageTypesRequest($type);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\SuccessStoragesResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listStorageTypesAsync
+     *
+     * List of storages by type
+     *
+     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listStorageTypesAsync($type)
+    {
+        return $this->listStorageTypesAsyncWithHttpInfo($type)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation listStorageTypesAsyncWithHttpInfo
+     *
+     * List of storages by type
+     *
+     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listStorageTypesAsyncWithHttpInfo($type)
+    {
+        $returnType = '\Swagger\Client\Model\SuccessStoragesResponse';
+        $request = $this->listStorageTypesRequest($type);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'listStorageTypes'
+     *
+     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function listStorageTypesRequest($type)
+    {
+        // verify the required parameter 'type' is set
+        if ($type === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $type when calling listStorageTypes');
+        }
+
+        $resourcePath = '/storage/{type}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($type !== null) {
+            $resourcePath = str_replace('{' . 'Type' . '}', ObjectSerializer::toPathValue($type), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation listStorages
      *
      * List of storages
@@ -293,261 +2875,37 @@ class StorageApi
     }
 
     /**
-     * Operation listStorages_0
+     * Operation loadCdrom
      *
-     * List of storages by type
-     *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\SuccessStoragesResponse
-     */
-    public function listStorages_0($type)
-    {
-        list($response) = $this->listStorages_0WithHttpInfo($type);
-        return $response;
-    }
-
-    /**
-     * Operation listStorages_0WithHttpInfo
-     *
-     * List of storages by type
-     *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\SuccessStoragesResponse, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listStorages_0WithHttpInfo($type)
-    {
-        $returnType = '\Swagger\Client\Model\SuccessStoragesResponse';
-        $request = $this->listStorages_0Request($type);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\SuccessStoragesResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listStorages_0Async
-     *
-     * List of storages by type
-     *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listStorages_0Async($type)
-    {
-        return $this->listStorages_0AsyncWithHttpInfo($type)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation listStorages_0AsyncWithHttpInfo
-     *
-     * List of storages by type
-     *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listStorages_0AsyncWithHttpInfo($type)
-    {
-        $returnType = '\Swagger\Client\Model\SuccessStoragesResponse';
-        $request = $this->listStorages_0Request($type);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'listStorages_0'
-     *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listStorages_0Request($type)
-    {
-        // verify the required parameter 'type' is set
-        if ($type === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $type when calling listStorages_0');
-        }
-
-        $resourcePath = '/storage/{type}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($type !== null) {
-            $resourcePath = str_replace('{' . 'Type' . '}', ObjectSerializer::toPathValue($type), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation serverServerIdStorageAttachPost
-     *
-     * Attach storage
+     * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\ServerListResponse
      */
-    public function serverServerIdStorageAttachPost($server_id, $storage_device)
+    public function loadCdrom($server_id, $storage_device = null)
     {
-        list($response) = $this->serverServerIdStorageAttachPostWithHttpInfo($server_id, $storage_device);
+        list($response) = $this->loadCdromWithHttpInfo($server_id, $storage_device);
         return $response;
     }
 
     /**
-     * Operation serverServerIdStorageAttachPostWithHttpInfo
+     * Operation loadCdromWithHttpInfo
      *
-     * Attach storage
+     * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function serverServerIdStorageAttachPostWithHttpInfo($server_id, $storage_device)
+    public function loadCdromWithHttpInfo($server_id, $storage_device = null)
     {
         $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageAttachPostRequest($server_id, $storage_device);
+        $request = $this->loadCdromRequest($server_id, $storage_device);
 
         try {
 
@@ -620,36 +2978,36 @@ class StorageApi
     }
 
     /**
-     * Operation serverServerIdStorageAttachPostAsync
+     * Operation loadCdromAsync
      *
-     * Attach storage
+     * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdStorageAttachPostAsync($server_id, $storage_device)
+    public function loadCdromAsync($server_id, $storage_device = null)
     {
-        return $this->serverServerIdStorageAttachPostAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
+        return $this->loadCdromAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation serverServerIdStorageAttachPostAsyncWithHttpInfo
+     * Operation loadCdromAsyncWithHttpInfo
      *
-     * Attach storage
+     * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
+     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function serverServerIdStorageAttachPostAsyncWithHttpInfo($server_id, $storage_device)
+    public function loadCdromAsyncWithHttpInfo($server_id, $storage_device = null)
     {
         $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageAttachPostRequest($server_id, $storage_device);
+        $request = $this->loadCdromRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -680,520 +3038,18 @@ class StorageApi
     }
 
     /**
-     * Create request for operation 'serverServerIdStorageAttachPost'
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function serverServerIdStorageAttachPostRequest($server_id, $storage_device)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdStorageAttachPost');
-        }
-        // verify the required parameter 'storage_device' is set
-        if ($storage_device === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_device when calling serverServerIdStorageAttachPost');
-        }
-
-        $resourcePath = '/server/{serverId}/storage/attach';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage_device)) {
-            $_tempBody = $storage_device;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromEjectPost
-     *
-     * Eject CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\ServerListResponse
-     */
-    public function serverServerIdStorageCdromEjectPost($server_id)
-    {
-        list($response) = $this->serverServerIdStorageCdromEjectPostWithHttpInfo($server_id);
-        return $response;
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromEjectPostWithHttpInfo
-     *
-     * Eject CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function serverServerIdStorageCdromEjectPostWithHttpInfo($server_id)
-    {
-        $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageCdromEjectPostRequest($server_id);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromEjectPostAsync
-     *
-     * Eject CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverServerIdStorageCdromEjectPostAsync($server_id)
-    {
-        return $this->serverServerIdStorageCdromEjectPostAsyncWithHttpInfo($server_id)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromEjectPostAsyncWithHttpInfo
-     *
-     * Eject CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverServerIdStorageCdromEjectPostAsyncWithHttpInfo($server_id)
-    {
-        $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageCdromEjectPostRequest($server_id);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'serverServerIdStorageCdromEjectPost'
-     *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function serverServerIdStorageCdromEjectPostRequest($server_id)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdStorageCdromEjectPost');
-        }
-
-        $resourcePath = '/server/{serverId}/storage/cdrom/eject';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromLoadPost
-     *
-     * Load CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\ServerListResponse
-     */
-    public function serverServerIdStorageCdromLoadPost($server_id, $storage_device = null)
-    {
-        list($response) = $this->serverServerIdStorageCdromLoadPostWithHttpInfo($server_id, $storage_device);
-        return $response;
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromLoadPostWithHttpInfo
-     *
-     * Load CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function serverServerIdStorageCdromLoadPostWithHttpInfo($server_id, $storage_device = null)
-    {
-        $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageCdromLoadPostRequest($server_id, $storage_device);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromLoadPostAsync
-     *
-     * Load CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverServerIdStorageCdromLoadPostAsync($server_id, $storage_device = null)
-    {
-        return $this->serverServerIdStorageCdromLoadPostAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation serverServerIdStorageCdromLoadPostAsyncWithHttpInfo
-     *
-     * Load CD-ROM
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverServerIdStorageCdromLoadPostAsyncWithHttpInfo($server_id, $storage_device = null)
-    {
-        $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageCdromLoadPostRequest($server_id, $storage_device);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'serverServerIdStorageCdromLoadPost'
+     * Create request for operation 'loadCdrom'
      *
      * @param string $server_id Server id (required)
      * @param \Swagger\Client\Model\StorageDevice1 $storage_device  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function serverServerIdStorageCdromLoadPostRequest($server_id, $storage_device = null)
+    protected function loadCdromRequest($server_id, $storage_device = null)
     {
         // verify the required parameter 'server_id' is set
         if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdStorageCdromLoadPost');
+            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling loadCdrom');
         }
 
         $resourcePath = '/server/{serverId}/storage/cdrom/load';
@@ -1273,2066 +3129,7 @@ class StorageApi
     }
 
     /**
-     * Operation serverServerIdStorageDetachPost
-     *
-     * Detach storage
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\ServerListResponse
-     */
-    public function serverServerIdStorageDetachPost($server_id, $storage_device)
-    {
-        list($response) = $this->serverServerIdStorageDetachPostWithHttpInfo($server_id, $storage_device);
-        return $response;
-    }
-
-    /**
-     * Operation serverServerIdStorageDetachPostWithHttpInfo
-     *
-     * Detach storage
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function serverServerIdStorageDetachPostWithHttpInfo($server_id, $storage_device)
-    {
-        $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageDetachPostRequest($server_id, $storage_device);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation serverServerIdStorageDetachPostAsync
-     *
-     * Detach storage
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverServerIdStorageDetachPostAsync($server_id, $storage_device)
-    {
-        return $this->serverServerIdStorageDetachPostAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation serverServerIdStorageDetachPostAsyncWithHttpInfo
-     *
-     * Detach storage
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function serverServerIdStorageDetachPostAsyncWithHttpInfo($server_id, $storage_device)
-    {
-        $returnType = '\Swagger\Client\Model\ServerListResponse';
-        $request = $this->serverServerIdStorageDetachPostRequest($server_id, $storage_device);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'serverServerIdStorageDetachPost'
-     *
-     * @param string $server_id Server id (required)
-     * @param \Swagger\Client\Model\StorageDevice $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function serverServerIdStorageDetachPostRequest($server_id, $storage_device)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdStorageDetachPost');
-        }
-        // verify the required parameter 'storage_device' is set
-        if ($storage_device === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_device when calling serverServerIdStorageDetachPost');
-        }
-
-        $resourcePath = '/server/{serverId}/storage/detach';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage_device)) {
-            $_tempBody = $storage_device;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storagePost
-     *
-     * Create storage
-     *
-     * @param \Swagger\Client\Model\Storage $storage  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
-     */
-    public function storagePost($storage)
-    {
-        list($response) = $this->storagePostWithHttpInfo($storage);
-        return $response;
-    }
-
-    /**
-     * Operation storagePostWithHttpInfo
-     *
-     * Create storage
-     *
-     * @param \Swagger\Client\Model\Storage $storage  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storagePostWithHttpInfo($storage)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storagePostRequest($storage);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storagePostAsync
-     *
-     * Create storage
-     *
-     * @param \Swagger\Client\Model\Storage $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storagePostAsync($storage)
-    {
-        return $this->storagePostAsyncWithHttpInfo($storage)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storagePostAsyncWithHttpInfo
-     *
-     * Create storage
-     *
-     * @param \Swagger\Client\Model\Storage $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storagePostAsyncWithHttpInfo($storage)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storagePostRequest($storage);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storagePost'
-     *
-     * @param \Swagger\Client\Model\Storage $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storagePostRequest($storage)
-    {
-        // verify the required parameter 'storage' is set
-        if ($storage === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage when calling storagePost');
-        }
-
-        $resourcePath = '/storage';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdBackupPost
-     *
-     * Create backup
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
-     */
-    public function storageStorageIdBackupPost($storage_id, $storage = null)
-    {
-        list($response) = $this->storageStorageIdBackupPostWithHttpInfo($storage_id, $storage);
-        return $response;
-    }
-
-    /**
-     * Operation storageStorageIdBackupPostWithHttpInfo
-     *
-     * Create backup
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdBackupPostWithHttpInfo($storage_id, $storage = null)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdBackupPostRequest($storage_id, $storage);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdBackupPostAsync
-     *
-     * Create backup
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdBackupPostAsync($storage_id, $storage = null)
-    {
-        return $this->storageStorageIdBackupPostAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdBackupPostAsyncWithHttpInfo
-     *
-     * Create backup
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdBackupPostAsyncWithHttpInfo($storage_id, $storage = null)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdBackupPostRequest($storage_id, $storage);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdBackupPost'
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage4 $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdBackupPostRequest($storage_id, $storage = null)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdBackupPost');
-        }
-
-        $resourcePath = '/storage/{storageId}/backup';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdCancelPost
-     *
-     * Cancel storage operation
-     *
-     * @param string $storage_id Strage id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function storageStorageIdCancelPost($storage_id)
-    {
-        $this->storageStorageIdCancelPostWithHttpInfo($storage_id);
-    }
-
-    /**
-     * Operation storageStorageIdCancelPostWithHttpInfo
-     *
-     * Cancel storage operation
-     *
-     * @param string $storage_id Strage id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdCancelPostWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdCancelPostRequest($storage_id);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdCancelPostAsync
-     *
-     * Cancel storage operation
-     *
-     * @param string $storage_id Strage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdCancelPostAsync($storage_id)
-    {
-        return $this->storageStorageIdCancelPostAsyncWithHttpInfo($storage_id)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdCancelPostAsyncWithHttpInfo
-     *
-     * Cancel storage operation
-     *
-     * @param string $storage_id Strage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdCancelPostAsyncWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdCancelPostRequest($storage_id);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdCancelPost'
-     *
-     * @param string $storage_id Strage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdCancelPostRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdCancelPost');
-        }
-
-        $resourcePath = '/storage/{storageId}/cancel';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdClonePost
-     *
-     * Clone storage
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
-     */
-    public function storageStorageIdClonePost($storage_id, $storage = null)
-    {
-        list($response) = $this->storageStorageIdClonePostWithHttpInfo($storage_id, $storage);
-        return $response;
-    }
-
-    /**
-     * Operation storageStorageIdClonePostWithHttpInfo
-     *
-     * Clone storage
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdClonePostWithHttpInfo($storage_id, $storage = null)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdClonePostRequest($storage_id, $storage);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdClonePostAsync
-     *
-     * Clone storage
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdClonePostAsync($storage_id, $storage = null)
-    {
-        return $this->storageStorageIdClonePostAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdClonePostAsyncWithHttpInfo
-     *
-     * Clone storage
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdClonePostAsyncWithHttpInfo($storage_id, $storage = null)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdClonePostRequest($storage_id, $storage);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdClonePost'
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Swagger\Client\Model\Storage2 $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdClonePostRequest($storage_id, $storage = null)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdClonePost');
-        }
-
-        $resourcePath = '/storage/{storageId}/clone';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdDelete
-     *
-     * Delete storage
-     *
-     * @param string $storage_id  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function storageStorageIdDelete($storage_id)
-    {
-        $this->storageStorageIdDeleteWithHttpInfo($storage_id);
-    }
-
-    /**
-     * Operation storageStorageIdDeleteWithHttpInfo
-     *
-     * Delete storage
-     *
-     * @param string $storage_id  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdDeleteWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdDeleteRequest($storage_id);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdDeleteAsync
-     *
-     * Delete storage
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdDeleteAsync($storage_id)
-    {
-        return $this->storageStorageIdDeleteAsyncWithHttpInfo($storage_id)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdDeleteAsyncWithHttpInfo
-     *
-     * Delete storage
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdDeleteAsyncWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdDeleteRequest($storage_id);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdDelete'
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdDeleteRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdDelete');
-        }
-
-        $resourcePath = '/storage/{storageId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdFavoriteDelete
-     *
-     * Remove storage from favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function storageStorageIdFavoriteDelete($storage_id)
-    {
-        $this->storageStorageIdFavoriteDeleteWithHttpInfo($storage_id);
-    }
-
-    /**
-     * Operation storageStorageIdFavoriteDeleteWithHttpInfo
-     *
-     * Remove storage from favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdFavoriteDeleteWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdFavoriteDeleteRequest($storage_id);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdFavoriteDeleteAsync
-     *
-     * Remove storage from favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdFavoriteDeleteAsync($storage_id)
-    {
-        return $this->storageStorageIdFavoriteDeleteAsyncWithHttpInfo($storage_id)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdFavoriteDeleteAsyncWithHttpInfo
-     *
-     * Remove storage from favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdFavoriteDeleteAsyncWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdFavoriteDeleteRequest($storage_id);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdFavoriteDelete'
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdFavoriteDeleteRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdFavoriteDelete');
-        }
-
-        $resourcePath = '/storage/{storageId}/favorite';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdFavoritePost
-     *
-     * Add storage to favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function storageStorageIdFavoritePost($storage_id)
-    {
-        $this->storageStorageIdFavoritePostWithHttpInfo($storage_id);
-    }
-
-    /**
-     * Operation storageStorageIdFavoritePostWithHttpInfo
-     *
-     * Add storage to favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdFavoritePostWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdFavoritePostRequest($storage_id);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdFavoritePostAsync
-     *
-     * Add storage to favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdFavoritePostAsync($storage_id)
-    {
-        return $this->storageStorageIdFavoritePostAsyncWithHttpInfo($storage_id)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdFavoritePostAsyncWithHttpInfo
-     *
-     * Add storage to favorites
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdFavoritePostAsyncWithHttpInfo($storage_id)
-    {
-        $returnType = '';
-        $request = $this->storageStorageIdFavoritePostRequest($storage_id);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdFavoritePost'
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdFavoritePostRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdFavoritePost');
-        }
-
-        $resourcePath = '/storage/{storageId}/favorite';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdGet
-     *
-     * Get storage details
-     *
-     * @param string $storage_id  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
-     */
-    public function storageStorageIdGet($storage_id)
-    {
-        list($response) = $this->storageStorageIdGetWithHttpInfo($storage_id);
-        return $response;
-    }
-
-    /**
-     * Operation storageStorageIdGetWithHttpInfo
-     *
-     * Get storage details
-     *
-     * @param string $storage_id  (required)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function storageStorageIdGetWithHttpInfo($storage_id)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdGetRequest($storage_id);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation storageStorageIdGetAsync
-     *
-     * Get storage details
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdGetAsync($storage_id)
-    {
-        return $this->storageStorageIdGetAsyncWithHttpInfo($storage_id)->then(function ($response) {
-            return $response[0];
-        });
-    }
-
-    /**
-     * Operation storageStorageIdGetAsyncWithHttpInfo
-     *
-     * Get storage details
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function storageStorageIdGetAsyncWithHttpInfo($storage_id)
-    {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdGetRequest($storage_id);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'storageStorageIdGet'
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function storageStorageIdGetRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdGet');
-        }
-
-        $resourcePath = '/storage/{storageId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation storageStorageIdPut
+     * Operation modifyStorage
      *
      * Modify storage
      *
@@ -3342,14 +3139,14 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse201
      */
-    public function storageStorageIdPut($storage_id, $storage)
+    public function modifyStorage($storage_id, $storage)
     {
-        list($response) = $this->storageStorageIdPutWithHttpInfo($storage_id, $storage);
+        list($response) = $this->modifyStorageWithHttpInfo($storage_id, $storage);
         return $response;
     }
 
     /**
-     * Operation storageStorageIdPutWithHttpInfo
+     * Operation modifyStorageWithHttpInfo
      *
      * Modify storage
      *
@@ -3359,10 +3156,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
      */
-    public function storageStorageIdPutWithHttpInfo($storage_id, $storage)
+    public function modifyStorageWithHttpInfo($storage_id, $storage)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdPutRequest($storage_id, $storage);
+        $request = $this->modifyStorageRequest($storage_id, $storage);
 
         try {
 
@@ -3435,7 +3232,7 @@ class StorageApi
     }
 
     /**
-     * Operation storageStorageIdPutAsync
+     * Operation modifyStorageAsync
      *
      * Modify storage
      *
@@ -3444,15 +3241,15 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageStorageIdPutAsync($storage_id, $storage)
+    public function modifyStorageAsync($storage_id, $storage)
     {
-        return $this->storageStorageIdPutAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+        return $this->modifyStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation storageStorageIdPutAsyncWithHttpInfo
+     * Operation modifyStorageAsyncWithHttpInfo
      *
      * Modify storage
      *
@@ -3461,10 +3258,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageStorageIdPutAsyncWithHttpInfo($storage_id, $storage)
+    public function modifyStorageAsyncWithHttpInfo($storage_id, $storage)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdPutRequest($storage_id, $storage);
+        $request = $this->modifyStorageRequest($storage_id, $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -3495,22 +3292,22 @@ class StorageApi
     }
 
     /**
-     * Create request for operation 'storageStorageIdPut'
+     * Create request for operation 'modifyStorage'
      *
      * @param string $storage_id  (required)
      * @param \Swagger\Client\Model\Storage1 $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function storageStorageIdPutRequest($storage_id, $storage)
+    protected function modifyStorageRequest($storage_id, $storage)
     {
         // verify the required parameter 'storage_id' is set
         if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdPut');
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling modifyStorage');
         }
         // verify the required parameter 'storage' is set
         if ($storage === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage when calling storageStorageIdPut');
+            throw new \InvalidArgumentException('Missing the required parameter $storage when calling modifyStorage');
         }
 
         $resourcePath = '/storage/{storageId}';
@@ -3590,7 +3387,7 @@ class StorageApi
     }
 
     /**
-     * Operation storageStorageIdRestorePost
+     * Operation restoreStorage
      *
      * Restore backup
      *
@@ -3599,13 +3396,13 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function storageStorageIdRestorePost($storage_id)
+    public function restoreStorage($storage_id)
     {
-        $this->storageStorageIdRestorePostWithHttpInfo($storage_id);
+        $this->restoreStorageWithHttpInfo($storage_id);
     }
 
     /**
-     * Operation storageStorageIdRestorePostWithHttpInfo
+     * Operation restoreStorageWithHttpInfo
      *
      * Restore backup
      *
@@ -3614,10 +3411,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function storageStorageIdRestorePostWithHttpInfo($storage_id)
+    public function restoreStorageWithHttpInfo($storage_id)
     {
         $returnType = '';
-        $request = $this->storageStorageIdRestorePostRequest($storage_id);
+        $request = $this->restoreStorageRequest($storage_id);
 
         try {
 
@@ -3672,7 +3469,7 @@ class StorageApi
     }
 
     /**
-     * Operation storageStorageIdRestorePostAsync
+     * Operation restoreStorageAsync
      *
      * Restore backup
      *
@@ -3680,15 +3477,15 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageStorageIdRestorePostAsync($storage_id)
+    public function restoreStorageAsync($storage_id)
     {
-        return $this->storageStorageIdRestorePostAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->restoreStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation storageStorageIdRestorePostAsyncWithHttpInfo
+     * Operation restoreStorageAsyncWithHttpInfo
      *
      * Restore backup
      *
@@ -3696,10 +3493,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageStorageIdRestorePostAsyncWithHttpInfo($storage_id)
+    public function restoreStorageAsyncWithHttpInfo($storage_id)
     {
         $returnType = '';
-        $request = $this->storageStorageIdRestorePostRequest($storage_id);
+        $request = $this->restoreStorageRequest($storage_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -3716,17 +3513,17 @@ class StorageApi
     }
 
     /**
-     * Create request for operation 'storageStorageIdRestorePost'
+     * Create request for operation 'restoreStorage'
      *
      * @param string $storage_id Storage id (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function storageStorageIdRestorePostRequest($storage_id)
+    protected function restoreStorageRequest($storage_id)
     {
         // verify the required parameter 'storage_id' is set
         if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdRestorePost');
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling restoreStorage');
         }
 
         $resourcePath = '/storage/{storageId}/restore';
@@ -3801,7 +3598,7 @@ class StorageApi
     }
 
     /**
-     * Operation storageStorageIdTemplatizePost
+     * Operation templatizeStorage
      *
      * Templatize storage
      *
@@ -3811,14 +3608,14 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse201
      */
-    public function storageStorageIdTemplatizePost($storage_id, $storage = null)
+    public function templatizeStorage($storage_id, $storage = null)
     {
-        list($response) = $this->storageStorageIdTemplatizePostWithHttpInfo($storage_id, $storage);
+        list($response) = $this->templatizeStorageWithHttpInfo($storage_id, $storage);
         return $response;
     }
 
     /**
-     * Operation storageStorageIdTemplatizePostWithHttpInfo
+     * Operation templatizeStorageWithHttpInfo
      *
      * Templatize storage
      *
@@ -3828,10 +3625,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
      */
-    public function storageStorageIdTemplatizePostWithHttpInfo($storage_id, $storage = null)
+    public function templatizeStorageWithHttpInfo($storage_id, $storage = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdTemplatizePostRequest($storage_id, $storage);
+        $request = $this->templatizeStorageRequest($storage_id, $storage);
 
         try {
 
@@ -3904,7 +3701,7 @@ class StorageApi
     }
 
     /**
-     * Operation storageStorageIdTemplatizePostAsync
+     * Operation templatizeStorageAsync
      *
      * Templatize storage
      *
@@ -3913,15 +3710,15 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageStorageIdTemplatizePostAsync($storage_id, $storage = null)
+    public function templatizeStorageAsync($storage_id, $storage = null)
     {
-        return $this->storageStorageIdTemplatizePostAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+        return $this->templatizeStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation storageStorageIdTemplatizePostAsyncWithHttpInfo
+     * Operation templatizeStorageAsyncWithHttpInfo
      *
      * Templatize storage
      *
@@ -3930,10 +3727,10 @@ class StorageApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function storageStorageIdTemplatizePostAsyncWithHttpInfo($storage_id, $storage = null)
+    public function templatizeStorageAsyncWithHttpInfo($storage_id, $storage = null)
     {
         $returnType = '\Swagger\Client\Model\InlineResponse201';
-        $request = $this->storageStorageIdTemplatizePostRequest($storage_id, $storage);
+        $request = $this->templatizeStorageRequest($storage_id, $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -3964,18 +3761,18 @@ class StorageApi
     }
 
     /**
-     * Create request for operation 'storageStorageIdTemplatizePost'
+     * Create request for operation 'templatizeStorage'
      *
      * @param string $storage_id Storage id (required)
      * @param \Swagger\Client\Model\Storage3 $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function storageStorageIdTemplatizePostRequest($storage_id, $storage = null)
+    protected function templatizeStorageRequest($storage_id, $storage = null)
     {
         // verify the required parameter 'storage_id' is set
         if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling storageStorageIdTemplatizePost');
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling templatizeStorage');
         }
 
         $resourcePath = '/storage/{storageId}/templatize';
@@ -4048,6 +3845,209 @@ class StorageApi
 
         return new Request(
             'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation unfavoriteStorage
+     *
+     * Remove storage from favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function unfavoriteStorage($storage_id)
+    {
+        $this->unfavoriteStorageWithHttpInfo($storage_id);
+    }
+
+    /**
+     * Operation unfavoriteStorageWithHttpInfo
+     *
+     * Remove storage from favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function unfavoriteStorageWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->unfavoriteStorageRequest($storage_id);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 400:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Error', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation unfavoriteStorageAsync
+     *
+     * Remove storage from favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function unfavoriteStorageAsync($storage_id)
+    {
+        return $this->unfavoriteStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation unfavoriteStorageAsyncWithHttpInfo
+     *
+     * Remove storage from favorites
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function unfavoriteStorageAsyncWithHttpInfo($storage_id)
+    {
+        $returnType = '';
+        $request = $this->unfavoriteStorageRequest($storage_id);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'unfavoriteStorage'
+     *
+     * @param string $storage_id Storage id (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function unfavoriteStorageRequest($storage_id)
+    {
+        // verify the required parameter 'storage_id' is set
+        if ($storage_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling unfavoriteStorage');
+        }
+
+        $resourcePath = '/storage/{storageId}/favorite';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($storage_id !== null) {
+            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
+        }
+
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'DELETE',
             $url,
             $headers,
             $httpBody

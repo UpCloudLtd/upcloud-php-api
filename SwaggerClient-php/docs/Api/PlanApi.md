@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**planGet**](PlanApi.md#planGet) | **GET** /plan | List available plans
+[**listPlans**](PlanApi.md#listPlans) | **GET** /plan | List available plans
 
 
-# **planGet**
-> \Swagger\Client\Model\InlineResponse2003 planGet()
+# **listPlans**
+> \Swagger\Client\Model\InlineResponse2003 listPlans()
 
 List available plans
 
@@ -22,10 +22,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\Api\PlanApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
-    $result = $api_instance->planGet();
+    $result = $api_instance->listPlans();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling PlanApi->planGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling PlanApi->listPlans: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```

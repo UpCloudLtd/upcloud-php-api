@@ -82,7 +82,7 @@ class PlanApi
     }
 
     /**
-     * Operation planGet
+     * Operation listPlans
      *
      * List available plans
      *
@@ -90,14 +90,14 @@ class PlanApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\InlineResponse2003
      */
-    public function planGet()
+    public function listPlans()
     {
-        list($response) = $this->planGetWithHttpInfo();
+        list($response) = $this->listPlansWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation planGetWithHttpInfo
+     * Operation listPlansWithHttpInfo
      *
      * List available plans
      *
@@ -105,10 +105,10 @@ class PlanApi
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
      */
-    public function planGetWithHttpInfo()
+    public function listPlansWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2003';
-        $request = $this->planGetRequest();
+        $request = $this->listPlansRequest();
 
         try {
 
@@ -161,32 +161,32 @@ class PlanApi
     }
 
     /**
-     * Operation planGetAsync
+     * Operation listPlansAsync
      *
      * List available plans
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function planGetAsync()
+    public function listPlansAsync()
     {
-        return $this->planGetAsyncWithHttpInfo()->then(function ($response) {
+        return $this->listPlansAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
         });
     }
 
     /**
-     * Operation planGetAsyncWithHttpInfo
+     * Operation listPlansAsyncWithHttpInfo
      *
      * List available plans
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function planGetAsyncWithHttpInfo()
+    public function listPlansAsyncWithHttpInfo()
     {
         $returnType = '\Swagger\Client\Model\InlineResponse2003';
-        $request = $this->planGetRequest();
+        $request = $this->listPlansRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -217,12 +217,12 @@ class PlanApi
     }
 
     /**
-     * Create request for operation 'planGet'
+     * Create request for operation 'listPlans'
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function planGetRequest()
+    protected function listPlansRequest()
     {
 
         $resourcePath = '/plan';
