@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **listTimezones**
-> \Swagger\Client\Model\InlineResponse2002 listTimezones()
+> \Swagger\Client\Model\TimezoneListResponse listTimezones()
 
 List timezones
 
@@ -35,7 +35,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2002**](../Model/InlineResponse2002.md)
+[**\Swagger\Client\Model\TimezoneListResponse**](../Model/TimezoneListResponse.md)
 
 ### Authorization
 

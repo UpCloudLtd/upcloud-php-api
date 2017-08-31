@@ -89,7 +89,7 @@ class IPAddressApi
      * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2011
+     * @return \Swagger\Client\Model\AssignIpResponse
      */
     public function addIp($ip_address = null)
     {
@@ -105,11 +105,11 @@ class IPAddressApi
      * @param \Swagger\Client\Model\IpAddress $ip_address  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addIpWithHttpInfo($ip_address = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $returnType = '\Swagger\Client\Model\AssignIpResponse';
         $request = $this->addIpRequest($ip_address);
 
         try {
@@ -154,7 +154,7 @@ class IPAddressApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2011', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\AssignIpResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -209,7 +209,7 @@ class IPAddressApi
      */
     public function addIpAsyncWithHttpInfo($ip_address = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $returnType = '\Swagger\Client\Model\AssignIpResponse';
         $request = $this->addIpRequest($ip_address);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -541,7 +541,7 @@ class IPAddressApi
      * @param string $ip Ip address (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2011
+     * @return \Swagger\Client\Model\AssignIpResponse
      */
     public function getDetails($ip)
     {
@@ -557,11 +557,11 @@ class IPAddressApi
      * @param string $ip Ip address (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getDetailsWithHttpInfo($ip)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $returnType = '\Swagger\Client\Model\AssignIpResponse';
         $request = $this->getDetailsRequest($ip);
 
         try {
@@ -606,7 +606,7 @@ class IPAddressApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2011', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\AssignIpResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -641,7 +641,7 @@ class IPAddressApi
      */
     public function getDetailsAsyncWithHttpInfo($ip)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $returnType = '\Swagger\Client\Model\AssignIpResponse';
         $request = $this->getDetailsRequest($ip);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -764,7 +764,7 @@ class IPAddressApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2006
+     * @return \Swagger\Client\Model\IpAddressListResponse
      */
     public function listIps()
     {
@@ -779,11 +779,11 @@ class IPAddressApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\IpAddressListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listIpsWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2006';
+        $returnType = '\Swagger\Client\Model\IpAddressListResponse';
         $request = $this->listIpsRequest();
 
         try {
@@ -828,7 +828,7 @@ class IPAddressApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2006', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\IpAddressListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -861,7 +861,7 @@ class IPAddressApi
      */
     public function listIpsAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2006';
+        $returnType = '\Swagger\Client\Model\IpAddressListResponse';
         $request = $this->listIpsRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -977,7 +977,7 @@ class IPAddressApi
      * @param \Swagger\Client\Model\IpAddress1 $ip_address  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2011
+     * @return \Swagger\Client\Model\AssignIpResponse
      */
     public function modifyIp($ip, $ip_address = null)
     {
@@ -994,11 +994,11 @@ class IPAddressApi
      * @param \Swagger\Client\Model\IpAddress1 $ip_address  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function modifyIpWithHttpInfo($ip, $ip_address = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $returnType = '\Swagger\Client\Model\AssignIpResponse';
         $request = $this->modifyIpRequest($ip, $ip_address);
 
         try {
@@ -1043,7 +1043,7 @@ class IPAddressApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 202:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2011', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\AssignIpResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1100,7 +1100,7 @@ class IPAddressApi
      */
     public function modifyIpAsyncWithHttpInfo($ip, $ip_address = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2011';
+        $returnType = '\Swagger\Client\Model\AssignIpResponse';
         $request = $this->modifyIpRequest($ip, $ip_address);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

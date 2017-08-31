@@ -103,7 +103,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getFirewallRule**
-> \Swagger\Client\Model\InlineResponse2008 getFirewallRule($server_id, $firewall_rule_number)
+> \Swagger\Client\Model\FirewallRuleDetailsResponse getFirewallRule($server_id, $firewall_rule_number)
 
 Get firewall rule details
 
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2008**](../Model/InlineResponse2008.md)
+[**\Swagger\Client\Model\FirewallRuleDetailsResponse**](../Model/FirewallRuleDetailsResponse.md)
 
 ### Authorization
 
@@ -150,7 +150,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **serverServerIdFirewallRuleGet**
-> \Swagger\Client\Model\InlineResponse2007 serverServerIdFirewallRuleGet($server_id)
+> \Swagger\Client\Model\FirewallRuleListResponse serverServerIdFirewallRuleGet($server_id)
 
 List firewall rules
 
@@ -181,7 +181,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2007**](../Model/InlineResponse2007.md)
+[**\Swagger\Client\Model\FirewallRuleListResponse**](../Model/FirewallRuleListResponse.md)
 
 ### Authorization
 

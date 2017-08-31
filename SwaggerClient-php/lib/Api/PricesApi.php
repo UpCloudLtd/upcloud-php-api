@@ -88,7 +88,7 @@ class PricesApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse200
+     * @return \Swagger\Client\Model\PriceListResponse
      */
     public function listPrices()
     {
@@ -103,11 +103,11 @@ class PricesApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse200, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\PriceListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listPricesWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse200';
+        $returnType = '\Swagger\Client\Model\PriceListResponse';
         $request = $this->listPricesRequest();
 
         try {
@@ -152,7 +152,7 @@ class PricesApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse200', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\PriceListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -185,7 +185,7 @@ class PricesApi
      */
     public function listPricesAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse200';
+        $returnType = '\Swagger\Client\Model\PriceListResponse';
         $request = $this->listPricesRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

@@ -1996,7 +1996,7 @@ class ServerApi
      * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2008
+     * @return \Swagger\Client\Model\FirewallRuleDetailsResponse
      */
     public function getFirewallRule($server_id, $firewall_rule_number)
     {
@@ -2013,11 +2013,11 @@ class ServerApi
      * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\FirewallRuleDetailsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getFirewallRuleWithHttpInfo($server_id, $firewall_rule_number)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2008';
+        $returnType = '\Swagger\Client\Model\FirewallRuleDetailsResponse';
         $request = $this->getFirewallRuleRequest($server_id, $firewall_rule_number);
 
         try {
@@ -2062,7 +2062,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2008', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\FirewallRuleDetailsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -2119,7 +2119,7 @@ class ServerApi
      */
     public function getFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule_number)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2008';
+        $returnType = '\Swagger\Client\Model\FirewallRuleDetailsResponse';
         $request = $this->getFirewallRuleRequest($server_id, $firewall_rule_number);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -2251,7 +2251,7 @@ class ServerApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2004
+     * @return \Swagger\Client\Model\ConfigurationListResponse
      */
     public function listServerConfigurations()
     {
@@ -2266,11 +2266,11 @@ class ServerApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\ConfigurationListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listServerConfigurationsWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2004';
+        $returnType = '\Swagger\Client\Model\ConfigurationListResponse';
         $request = $this->listServerConfigurationsRequest();
 
         try {
@@ -2315,7 +2315,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2004', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ConfigurationListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -2348,7 +2348,7 @@ class ServerApi
      */
     public function listServerConfigurationsAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2004';
+        $returnType = '\Swagger\Client\Model\ConfigurationListResponse';
         $request = $this->listServerConfigurationsRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -2462,7 +2462,7 @@ class ServerApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2005
+     * @return \Swagger\Client\Model\ServerListResponse
      */
     public function listServers()
     {
@@ -2477,11 +2477,11 @@ class ServerApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listServersWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2005';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->listServersRequest();
 
         try {
@@ -2526,7 +2526,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2005', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ServerListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -2559,7 +2559,7 @@ class ServerApi
      */
     public function listServersAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2005';
+        $returnType = '\Swagger\Client\Model\ServerListResponse';
         $request = $this->listServersRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -3660,7 +3660,7 @@ class ServerApi
      * @param string $server_id Server id (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2007
+     * @return \Swagger\Client\Model\FirewallRuleListResponse
      */
     public function serverServerIdFirewallRuleGet($server_id)
     {
@@ -3676,11 +3676,11 @@ class ServerApi
      * @param string $server_id Server id (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2007, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\FirewallRuleListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function serverServerIdFirewallRuleGetWithHttpInfo($server_id)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2007';
+        $returnType = '\Swagger\Client\Model\FirewallRuleListResponse';
         $request = $this->serverServerIdFirewallRuleGetRequest($server_id);
 
         try {
@@ -3725,7 +3725,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2007', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\FirewallRuleListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -3760,7 +3760,7 @@ class ServerApi
      */
     public function serverServerIdFirewallRuleGetAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2007';
+        $returnType = '\Swagger\Client\Model\FirewallRuleListResponse';
         $request = $this->serverServerIdFirewallRuleGetRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

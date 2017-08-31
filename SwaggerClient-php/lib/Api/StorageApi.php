@@ -348,7 +348,7 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage4 $storage  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
+     * @return \Swagger\Client\Model\CreateStorageResponse
      */
     public function backupStorage($storage_id, $storage = null)
     {
@@ -365,11 +365,11 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage4 $storage  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function backupStorageWithHttpInfo($storage_id, $storage = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->backupStorageRequest($storage_id, $storage);
 
         try {
@@ -414,7 +414,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateStorageResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -471,7 +471,7 @@ class StorageApi
      */
     public function backupStorageAsyncWithHttpInfo($storage_id, $storage = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->backupStorageRequest($storage_id, $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -813,7 +813,7 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage2 $storage  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
+     * @return \Swagger\Client\Model\CreateStorageResponse
      */
     public function cloneStorage($storage_id, $storage = null)
     {
@@ -830,11 +830,11 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage2 $storage  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function cloneStorageWithHttpInfo($storage_id, $storage = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->cloneStorageRequest($storage_id, $storage);
 
         try {
@@ -879,7 +879,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateStorageResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -936,7 +936,7 @@ class StorageApi
      */
     public function cloneStorageAsyncWithHttpInfo($storage_id, $storage = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->cloneStorageRequest($storage_id, $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1066,7 +1066,7 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage $storage  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
+     * @return \Swagger\Client\Model\CreateStorageResponse
      */
     public function createStorage($storage)
     {
@@ -1082,11 +1082,11 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage $storage  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createStorageWithHttpInfo($storage)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->createStorageRequest($storage);
 
         try {
@@ -1131,7 +1131,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateStorageResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1182,7 +1182,7 @@ class StorageApi
      */
     public function createStorageAsyncWithHttpInfo($storage)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->createStorageRequest($storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -2223,7 +2223,7 @@ class StorageApi
      * @param string $storage_id  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
+     * @return \Swagger\Client\Model\CreateStorageResponse
      */
     public function getStorageDetails($storage_id)
     {
@@ -2239,11 +2239,11 @@ class StorageApi
      * @param string $storage_id  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getStorageDetailsWithHttpInfo($storage_id)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->getStorageDetailsRequest($storage_id);
 
         try {
@@ -2288,7 +2288,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateStorageResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -2323,7 +2323,7 @@ class StorageApi
      */
     public function getStorageDetailsAsyncWithHttpInfo($storage_id)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->getStorageDetailsRequest($storage_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -3137,7 +3137,7 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage1 $storage  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
+     * @return \Swagger\Client\Model\CreateStorageResponse
      */
     public function modifyStorage($storage_id, $storage)
     {
@@ -3154,11 +3154,11 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage1 $storage  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function modifyStorageWithHttpInfo($storage_id, $storage)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->modifyStorageRequest($storage_id, $storage);
 
         try {
@@ -3203,7 +3203,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 202:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateStorageResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -3260,7 +3260,7 @@ class StorageApi
      */
     public function modifyStorageAsyncWithHttpInfo($storage_id, $storage)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->modifyStorageRequest($storage_id, $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -3606,7 +3606,7 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage3 $storage  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse201
+     * @return \Swagger\Client\Model\CreateStorageResponse
      */
     public function templatizeStorage($storage_id, $storage = null)
     {
@@ -3623,11 +3623,11 @@ class StorageApi
      * @param \Swagger\Client\Model\Storage3 $storage  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse201, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function templatizeStorageWithHttpInfo($storage_id, $storage = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->templatizeStorageRequest($storage_id, $storage);
 
         try {
@@ -3672,7 +3672,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse201', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateStorageResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -3729,7 +3729,7 @@ class StorageApi
      */
     public function templatizeStorageAsyncWithHttpInfo($storage_id, $storage = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse201';
+        $returnType = '\Swagger\Client\Model\CreateStorageResponse';
         $request = $this->templatizeStorageRequest($storage_id, $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

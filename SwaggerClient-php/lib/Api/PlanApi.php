@@ -88,7 +88,7 @@ class PlanApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2003
+     * @return \Swagger\Client\Model\AvailablePlanListResponse
      */
     public function listPlans()
     {
@@ -103,11 +103,11 @@ class PlanApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\AvailablePlanListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listPlansWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2003';
+        $returnType = '\Swagger\Client\Model\AvailablePlanListResponse';
         $request = $this->listPlansRequest();
 
         try {
@@ -152,7 +152,7 @@ class PlanApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2003', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\AvailablePlanListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -185,7 +185,7 @@ class PlanApi
      */
     public function listPlansAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2003';
+        $returnType = '\Swagger\Client\Model\AvailablePlanListResponse';
         $request = $this->listPlansRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

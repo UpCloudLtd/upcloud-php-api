@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **listZones**
-> \Swagger\Client\Model\InlineResponse2001 listZones()
+> \Swagger\Client\Model\ZoneListResponse listZones()
 
 List available zones
 
@@ -35,7 +35,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
+[**\Swagger\Client\Model\ZoneListResponse**](../Model/ZoneListResponse.md)
 
 ### Authorization
 

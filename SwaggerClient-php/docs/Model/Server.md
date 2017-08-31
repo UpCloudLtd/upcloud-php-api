@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **firewall** | **string** | The state of the server firewall rules. | [optional] [default to 'on']
 **host** | **float** |  | [optional] 
 **hostname** | **string** | A valid hostname, e.g. host.example.com. The maximum length is 128 characters. | [optional] 
-**ip_addresses** | [**\Swagger\Client\Model\InlineResponse2006IpAddresses**](InlineResponse2006IpAddresses.md) |  | [optional] 
+**ip_addresses** | [**\Swagger\Client\Model\IpAddressListResponseIpAddresses**](IpAddressListResponseIpAddresses.md) |  | [optional] 
 **license** | **float** |  | [optional] 
 **memory_amount** | **float** | The amount of main memory in megabytes. See List server configurations. | [optional] 
 **nic_model** | **string** | The model of the server&#39;s network interfaces. | [optional] [default to 'e1000']

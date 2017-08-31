@@ -88,7 +88,7 @@ class ZoneApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2001
+     * @return \Swagger\Client\Model\ZoneListResponse
      */
     public function listZones()
     {
@@ -103,11 +103,11 @@ class ZoneApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\ZoneListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listZonesWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ZoneListResponse';
         $request = $this->listZonesRequest();
 
         try {
@@ -152,7 +152,7 @@ class ZoneApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2001', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ZoneListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -185,7 +185,7 @@ class ZoneApi
      */
     public function listZonesAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2001';
+        $returnType = '\Swagger\Client\Model\ZoneListResponse';
         $request = $this->listZonesRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

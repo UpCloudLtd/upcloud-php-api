@@ -71,7 +71,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **backupStorage**
-> \Swagger\Client\Model\InlineResponse201 backupStorage($storage_id, $storage)
+> \Swagger\Client\Model\CreateStorageResponse backupStorage($storage_id, $storage)
 
 Create backup
 
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Swagger\Client\Model\CreateStorageResponse**](../Model/CreateStorageResponse.md)
 
 ### Authorization
 
@@ -162,7 +162,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **cloneStorage**
-> \Swagger\Client\Model\InlineResponse201 cloneStorage($storage_id, $storage)
+> \Swagger\Client\Model\CreateStorageResponse cloneStorage($storage_id, $storage)
 
 Clone storage
 
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Swagger\Client\Model\CreateStorageResponse**](../Model/CreateStorageResponse.md)
 
 ### Authorization
 
@@ -209,7 +209,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createStorage**
-> \Swagger\Client\Model\InlineResponse201 createStorage($storage)
+> \Swagger\Client\Model\CreateStorageResponse createStorage($storage)
 
 Create storage
 
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Swagger\Client\Model\CreateStorageResponse**](../Model/CreateStorageResponse.md)
 
 ### Authorization
 
@@ -434,7 +434,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getStorageDetails**
-> \Swagger\Client\Model\InlineResponse201 getStorageDetails($storage_id)
+> \Swagger\Client\Model\CreateStorageResponse getStorageDetails($storage_id)
 
 Get storage details
 
@@ -465,7 +465,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Swagger\Client\Model\CreateStorageResponse**](../Model/CreateStorageResponse.md)
 
 ### Authorization
 
@@ -608,7 +608,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **modifyStorage**
-> \Swagger\Client\Model\InlineResponse201 modifyStorage($storage_id, $storage)
+> \Swagger\Client\Model\CreateStorageResponse modifyStorage($storage_id, $storage)
 
 Modify storage
 
@@ -641,7 +641,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Swagger\Client\Model\CreateStorageResponse**](../Model/CreateStorageResponse.md)
 
 ### Authorization
 
@@ -699,7 +699,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **templatizeStorage**
-> \Swagger\Client\Model\InlineResponse201 templatizeStorage($storage_id, $storage)
+> \Swagger\Client\Model\CreateStorageResponse templatizeStorage($storage_id, $storage)
 
 Templatize storage
 
@@ -732,7 +732,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Swagger\Client\Model\CreateStorageResponse**](../Model/CreateStorageResponse.md)
 
 ### Authorization
 

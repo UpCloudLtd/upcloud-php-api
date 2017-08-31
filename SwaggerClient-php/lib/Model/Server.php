@@ -60,7 +60,7 @@ class Server implements ArrayAccess
         'firewall' => 'string',
         'host' => 'float',
         'hostname' => 'string',
-        'ip_addresses' => '\Swagger\Client\Model\InlineResponse2006IpAddresses',
+        'ip_addresses' => '\Swagger\Client\Model\IpAddressListResponseIpAddresses',
         'license' => 'float',
         'memory_amount' => 'float',
         'nic_model' => 'string',
@@ -532,7 +532,7 @@ class Server implements ArrayAccess
 
     /**
      * Gets ip_addresses
-     * @return \Swagger\Client\Model\InlineResponse2006IpAddresses
+     * @return \Swagger\Client\Model\IpAddressListResponseIpAddresses
      */
     public function getIpAddresses()
     {
@@ -541,7 +541,7 @@ class Server implements ArrayAccess
 
     /**
      * Sets ip_addresses
-     * @param \Swagger\Client\Model\InlineResponse2006IpAddresses $ip_addresses
+     * @param \Swagger\Client\Model\IpAddressListResponseIpAddresses $ip_addresses
      * @return $this
      */
     public function setIpAddresses($ip_addresses)

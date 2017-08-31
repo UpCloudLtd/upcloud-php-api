@@ -338,7 +338,7 @@ class TagApi
      * @param \Swagger\Client\Model\Tag $tag  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse20010
+     * @return \Swagger\Client\Model\CreateNewTagResponse
      */
     public function createTag($tag)
     {
@@ -354,11 +354,11 @@ class TagApi
      * @param \Swagger\Client\Model\Tag $tag  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse20010, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createTagWithHttpInfo($tag)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse20010';
+        $returnType = '\Swagger\Client\Model\CreateNewTagResponse';
         $request = $this->createTagRequest($tag);
 
         try {
@@ -403,7 +403,7 @@ class TagApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse20010', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateNewTagResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
@@ -446,7 +446,7 @@ class TagApi
      */
     public function createTagAsyncWithHttpInfo($tag)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse20010';
+        $returnType = '\Swagger\Client\Model\CreateNewTagResponse';
         $request = $this->createTagRequest($tag);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -773,7 +773,7 @@ class TagApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2009
+     * @return \Swagger\Client\Model\TagListResponse
      */
     public function listTags()
     {
@@ -788,11 +788,11 @@ class TagApi
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2009, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\TagListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function listTagsWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2009';
+        $returnType = '\Swagger\Client\Model\TagListResponse';
         $request = $this->listTagsRequest();
 
         try {
@@ -837,7 +837,7 @@ class TagApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse2009', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\TagListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -870,7 +870,7 @@ class TagApi
      */
     public function listTagsAsyncWithHttpInfo()
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2009';
+        $returnType = '\Swagger\Client\Model\TagListResponse';
         $request = $this->listTagsRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -986,7 +986,7 @@ class TagApi
      * @param \Swagger\Client\Model\Tag1 $tag  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse20010
+     * @return \Swagger\Client\Model\CreateNewTagResponse
      */
     public function modifyTag($tag_name, $tag)
     {
@@ -1003,11 +1003,11 @@ class TagApi
      * @param \Swagger\Client\Model\Tag1 $tag  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse20010, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function modifyTagWithHttpInfo($tag_name, $tag)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse20010';
+        $returnType = '\Swagger\Client\Model\CreateNewTagResponse';
         $request = $this->modifyTagRequest($tag_name, $tag);
 
         try {
@@ -1052,7 +1052,7 @@ class TagApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\InlineResponse20010', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\CreateNewTagResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1105,7 +1105,7 @@ class TagApi
      */
     public function modifyTagAsyncWithHttpInfo($tag_name, $tag)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse20010';
+        $returnType = '\Swagger\Client\Model\CreateNewTagResponse';
         $request = $this->modifyTagRequest($tag_name, $tag);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

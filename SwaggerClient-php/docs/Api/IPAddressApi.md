@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **addIp**
-> \Swagger\Client\Model\InlineResponse2011 addIp($ip_address)
+> \Swagger\Client\Model\AssignIpResponse addIp($ip_address)
 
 Assign IP address
 
@@ -43,7 +43,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Swagger\Client\Model\AssignIpResponse**](../Model/AssignIpResponse.md)
 
 ### Authorization
 
@@ -101,7 +101,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getDetails**
-> \Swagger\Client\Model\InlineResponse2011 getDetails($ip)
+> \Swagger\Client\Model\AssignIpResponse getDetails($ip)
 
 Get IP address details
 
@@ -132,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Swagger\Client\Model\AssignIpResponse**](../Model/AssignIpResponse.md)
 
 ### Authorization
 
@@ -146,7 +146,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listIps**
-> \Swagger\Client\Model\InlineResponse2006 listIps()
+> \Swagger\Client\Model\IpAddressListResponse listIps()
 
 List IP addresses
 
@@ -173,7 +173,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2006**](../Model/InlineResponse2006.md)
+[**\Swagger\Client\Model\IpAddressListResponse**](../Model/IpAddressListResponse.md)
 
 ### Authorization
 
@@ -187,7 +187,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **modifyIp**
-> \Swagger\Client\Model\InlineResponse2011 modifyIp($ip, $ip_address)
+> \Swagger\Client\Model\AssignIpResponse modifyIp($ip, $ip_address)
 
 Modify IP address
 
@@ -220,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Swagger\Client\Model\AssignIpResponse**](../Model/AssignIpResponse.md)
 
 ### Authorization
 

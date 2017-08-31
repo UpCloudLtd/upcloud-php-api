@@ -391,7 +391,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getFirewallRule**
-> \Swagger\Client\Model\InlineResponse2008 getFirewallRule($server_id, $firewall_rule_number)
+> \Swagger\Client\Model\FirewallRuleDetailsResponse getFirewallRule($server_id, $firewall_rule_number)
 
 Get firewall rule details
 
@@ -424,7 +424,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2008**](../Model/InlineResponse2008.md)
+[**\Swagger\Client\Model\FirewallRuleDetailsResponse**](../Model/FirewallRuleDetailsResponse.md)
 
 ### Authorization
 
@@ -438,7 +438,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listServerConfigurations**
-> \Swagger\Client\Model\InlineResponse2004 listServerConfigurations()
+> \Swagger\Client\Model\ConfigurationListResponse listServerConfigurations()
 
 List server configurations
 
@@ -465,7 +465,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2004**](../Model/InlineResponse2004.md)
+[**\Swagger\Client\Model\ConfigurationListResponse**](../Model/ConfigurationListResponse.md)
 
 ### Authorization
 
@@ -479,7 +479,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listServers**
-> \Swagger\Client\Model\InlineResponse2005 listServers()
+> \Swagger\Client\Model\ServerListResponse listServers()
 
 List of servers
 
@@ -506,7 +506,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2005**](../Model/InlineResponse2005.md)
+[**\Swagger\Client\Model\ServerListResponse**](../Model/ServerListResponse.md)
 
 ### Authorization
 
@@ -704,7 +704,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **serverServerIdFirewallRuleGet**
-> \Swagger\Client\Model\InlineResponse2007 serverServerIdFirewallRuleGet($server_id)
+> \Swagger\Client\Model\FirewallRuleListResponse serverServerIdFirewallRuleGet($server_id)
 
 List firewall rules
 
@@ -735,7 +735,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2007**](../Model/InlineResponse2007.md)
+[**\Swagger\Client\Model\FirewallRuleListResponse**](../Model/FirewallRuleListResponse.md)
 
 ### Authorization
 

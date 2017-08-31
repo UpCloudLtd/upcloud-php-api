@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **listPlans**
-> \Swagger\Client\Model\InlineResponse2003 listPlans()
+> \Swagger\Client\Model\AvailablePlanListResponse listPlans()
 
 List available plans
 
@@ -35,7 +35,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2003**](../Model/InlineResponse2003.md)
+[**\Swagger\Client\Model\AvailablePlanListResponse**](../Model/AvailablePlanListResponse.md)
 
 ### Authorization
 

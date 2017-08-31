@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **listPrices**
-> \Swagger\Client\Model\InlineResponse200 listPrices()
+> \Swagger\Client\Model\PriceListResponse listPrices()
 
 List prices
 
@@ -35,7 +35,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse200**](../Model/InlineResponse200.md)
+[**\Swagger\Client\Model\PriceListResponse**](../Model/PriceListResponse.md)
 
 ### Authorization
 

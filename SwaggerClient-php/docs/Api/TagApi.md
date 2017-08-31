@@ -60,7 +60,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createTag**
-> \Swagger\Client\Model\InlineResponse20010 createTag($tag)
+> \Swagger\Client\Model\CreateNewTagResponse createTag($tag)
 
 Create a new tag
 
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse20010**](../Model/InlineResponse20010.md)
+[**\Swagger\Client\Model\CreateNewTagResponse**](../Model/CreateNewTagResponse.md)
 
 ### Authorization
 
@@ -149,7 +149,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listTags**
-> \Swagger\Client\Model\InlineResponse2009 listTags()
+> \Swagger\Client\Model\TagListResponse listTags()
 
 List existing tags
 
@@ -176,7 +176,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2009**](../Model/InlineResponse2009.md)
+[**\Swagger\Client\Model\TagListResponse**](../Model/TagListResponse.md)
 
 ### Authorization
 
@@ -190,7 +190,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **modifyTag**
-> \Swagger\Client\Model\InlineResponse20010 modifyTag($tag_name, $tag)
+> \Swagger\Client\Model\CreateNewTagResponse modifyTag($tag_name, $tag)
 
 Modify existing tag
 
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse20010**](../Model/InlineResponse20010.md)
+[**\Swagger\Client\Model\CreateNewTagResponse**](../Model/CreateNewTagResponse.md)
 
 ### Authorization
 
