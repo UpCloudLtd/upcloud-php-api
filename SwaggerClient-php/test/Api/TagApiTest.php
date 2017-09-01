@@ -72,62 +72,62 @@ class TagApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for serverServerIdTagTagListPost
+     * Test case for assignTag
      *
      * Assign tag to a server.
      *
      */
-    public function testServerServerIdTagTagListPost()
+    public function testAssignTag()
     {
     }
 
     /**
-     * Test case for serverServerIdUntagTagNamePost
-     *
-     * Remove tag from server.
-     *
-     */
-    public function testServerServerIdUntagTagNamePost()
-    {
-    }
-
-    /**
-     * Test case for tagGet
-     *
-     * List existing tags.
-     *
-     */
-    public function testTagGet()
-    {
-    }
-
-    /**
-     * Test case for tagPost
+     * Test case for createTag
      *
      * Create a new tag.
      *
      */
-    public function testTagPost()
+    public function testCreateTag()
     {
     }
 
     /**
-     * Test case for tagTagNameDelete
+     * Test case for deleteTag
      *
      * Delete tag.
      *
      */
-    public function testTagTagNameDelete()
+    public function testDeleteTag()
     {
     }
 
     /**
-     * Test case for tagTagNamePut
+     * Test case for listTags
+     *
+     * List existing tags.
+     *
+     */
+    public function testListTags()
+    {
+    }
+
+    /**
+     * Test case for modifyTag
      *
      * Modify existing tag.
      *
      */
-    public function testTagTagNamePut()
+    public function testModifyTag()
+    {
+    }
+
+    /**
+     * Test case for untag
+     *
+     * Remove tag from server.
+     *
+     */
+    public function testUntag()
     {
     }
 }

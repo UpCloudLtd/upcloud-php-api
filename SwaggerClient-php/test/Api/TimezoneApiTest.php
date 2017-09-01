@@ -72,12 +72,12 @@ class TimezoneApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for timezoneGet
+     * Test case for listTimezones
      *
      * List timezones.
      *
      */
-    public function testTimezoneGet()
+    public function testListTimezones()
     {
     }
 }

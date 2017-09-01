@@ -72,12 +72,12 @@ class PricesApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for priceGet
+     * Test case for listPrices
      *
      * List prices.
      *
      */
-    public function testPriceGet()
+    public function testListPrices()
     {
     }
 }

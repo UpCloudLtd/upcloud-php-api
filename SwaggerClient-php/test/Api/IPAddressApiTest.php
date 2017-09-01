@@ -72,52 +72,52 @@ class IPAddressApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for ipAddressGet
-     *
-     * List IP addresses.
-     *
-     */
-    public function testIpAddressGet()
-    {
-    }
-
-    /**
-     * Test case for ipAddressIpDelete
-     *
-     * Release IP address.
-     *
-     */
-    public function testIpAddressIpDelete()
-    {
-    }
-
-    /**
-     * Test case for ipAddressIpGet
-     *
-     * Get IP address details.
-     *
-     */
-    public function testIpAddressIpGet()
-    {
-    }
-
-    /**
-     * Test case for ipAddressIpPut
-     *
-     * Modify IP address.
-     *
-     */
-    public function testIpAddressIpPut()
-    {
-    }
-
-    /**
-     * Test case for ipAddressPost
+     * Test case for addIp
      *
      * Assign IP address.
      *
      */
-    public function testIpAddressPost()
+    public function testAddIp()
+    {
+    }
+
+    /**
+     * Test case for deleteIp
+     *
+     * Release IP address.
+     *
+     */
+    public function testDeleteIp()
+    {
+    }
+
+    /**
+     * Test case for getDetails
+     *
+     * Get IP address details.
+     *
+     */
+    public function testGetDetails()
+    {
+    }
+
+    /**
+     * Test case for listIps
+     *
+     * List IP addresses.
+     *
+     */
+    public function testListIps()
+    {
+    }
+
+    /**
+     * Test case for modifyIp
+     *
+     * Modify IP address.
+     *
+     */
+    public function testModifyIp()
     {
     }
 }

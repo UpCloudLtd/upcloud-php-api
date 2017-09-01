@@ -72,12 +72,12 @@ class AccountApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for accountGet
+     * Test case for getAccount
      *
      * Account information.
      *
      */
-    public function testAccountGet()
+    public function testGetAccount()
     {
     }
 }

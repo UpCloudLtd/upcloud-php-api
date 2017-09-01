@@ -72,12 +72,12 @@ class PlanApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for planGet
+     * Test case for listPlans
      *
      * List available plans.
      *
      */
-    public function testPlanGet()
+    public function testListPlans()
     {
     }
 }

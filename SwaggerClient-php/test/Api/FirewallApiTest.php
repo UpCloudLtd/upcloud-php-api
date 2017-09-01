@@ -72,22 +72,32 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for serverServerIdFirewallRuleFirewallRuleNumberDelete
+     * Test case for createFirewallRule
      *
-     * Remove firewall rule.
+     * Create firewall rule.
      *
      */
-    public function testServerServerIdFirewallRuleFirewallRuleNumberDelete()
+    public function testCreateFirewallRule()
     {
     }
 
     /**
-     * Test case for serverServerIdFirewallRuleFirewallRuleNumberGet
+     * Test case for deleteFirewallRule
+     *
+     * Remove firewall rule.
+     *
+     */
+    public function testDeleteFirewallRule()
+    {
+    }
+
+    /**
+     * Test case for getFirewallRule
      *
      * Get firewall rule details.
      *
      */
-    public function testServerServerIdFirewallRuleFirewallRuleNumberGet()
+    public function testGetFirewallRule()
     {
     }
 
@@ -98,16 +108,6 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testServerServerIdFirewallRuleGet()
-    {
-    }
-
-    /**
-     * Test case for serverServerIdFirewallRulePost
-     *
-     * Create firewall rule.
-     *
-     */
-    public function testServerServerIdFirewallRulePost()
     {
     }
 }

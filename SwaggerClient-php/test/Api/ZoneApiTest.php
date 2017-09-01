@@ -72,12 +72,12 @@ class ZoneApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for zoneGet
+     * Test case for listZones
      *
      * List available zones.
      *
      */
-    public function testZoneGet()
+    public function testListZones()
     {
     }
 }
