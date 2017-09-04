@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**ejectCdrom**](StorageApi.md#ejectCdrom) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
 [**favoriteStorage**](StorageApi.md#favoriteStorage) | **POST** /storage/{storageId}/favorite | Add storage to favorites
 [**getStorageDetails**](StorageApi.md#getStorageDetails) | **GET** /storage/{storageId} | Get storage details
-[**listStorageTypes**](StorageApi.md#listStorageTypes) | **GET** /storage/{type} | List of storages by type
+[**listStorageTypes**](StorageApi.md#listStorageTypes) | **GET** /storage/{type}/ | List of storages by type
 [**listStorages**](StorageApi.md#listStorages) | **GET** /storage | List of storages
 [**loadCdrom**](StorageApi.md#loadCdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
 [**modifyStorage**](StorageApi.md#modifyStorage) | **PUT** /storage/{storageId} | Modify storage

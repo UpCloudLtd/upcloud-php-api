@@ -2581,7 +2581,7 @@ class StorageApi
             throw new \InvalidArgumentException('Missing the required parameter $type when calling listStorageTypes');
         }
 
-        $resourcePath = '/storage/{type}';
+        $resourcePath = '/storage/{type}/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2591,7 +2591,7 @@ class StorageApi
 
         // path params
         if ($type !== null) {
-            $resourcePath = str_replace('{' . 'Type' . '}', ObjectSerializer::toPathValue($type), $resourcePath);
+            $resourcePath = str_replace('{' . 'type' . '}', ObjectSerializer::toPathValue($type), $resourcePath);
         }
 
 

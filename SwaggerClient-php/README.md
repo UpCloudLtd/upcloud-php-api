@@ -110,7 +110,7 @@ Class | Method | HTTP request | Description
 *StorageApi* | [**ejectCdrom**](docs/Api/StorageApi.md#ejectcdrom) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
 *StorageApi* | [**favoriteStorage**](docs/Api/StorageApi.md#favoritestorage) | **POST** /storage/{storageId}/favorite | Add storage to favorites
 *StorageApi* | [**getStorageDetails**](docs/Api/StorageApi.md#getstoragedetails) | **GET** /storage/{storageId} | Get storage details
-*StorageApi* | [**listStorageTypes**](docs/Api/StorageApi.md#liststoragetypes) | **GET** /storage/{type} | List of storages by type
+*StorageApi* | [**listStorageTypes**](docs/Api/StorageApi.md#liststoragetypes) | **GET** /storage/{type}/ | List of storages by type
 *StorageApi* | [**listStorages**](docs/Api/StorageApi.md#liststorages) | **GET** /storage | List of storages
 *StorageApi* | [**loadCdrom**](docs/Api/StorageApi.md#loadcdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
 *StorageApi* | [**modifyStorage**](docs/Api/StorageApi.md#modifystorage) | **PUT** /storage/{storageId} | Modify storage
