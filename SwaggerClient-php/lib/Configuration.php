@@ -70,7 +70,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'http://localhost/1.2';
+    protected $host = 'http://api.upcloud.com/1.2';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default

@@ -273,12 +273,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -527,12 +527,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -738,12 +738,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -992,12 +992,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -1233,12 +1233,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -1444,12 +1444,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -1702,12 +1702,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -1946,12 +1946,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -2149,12 +2149,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -2373,12 +2373,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -2602,7 +2602,7 @@ class StorageApi
         } else {
             $headers = $this->headerSelector->selectHeaders(
                 ['application/json'],
-                []
+                ['application/json']
             );
         }
 
@@ -2813,7 +2813,7 @@ class StorageApi
         } else {
             $headers = $this->headerSelector->selectHeaders(
                 ['application/json'],
-                []
+                ['application/json']
             );
         }
 
@@ -3062,12 +3062,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -3320,12 +3320,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -3536,7 +3536,7 @@ class StorageApi
         } else {
             $headers = $this->headerSelector->selectHeaders(
                 ['application/json'],
-                []
+                ['application/json']
             );
         }
 
@@ -3785,12 +3785,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
@@ -3988,12 +3988,12 @@ class StorageApi
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
+                ['application/json'],
+                ['application/json']
             );
         }
 
