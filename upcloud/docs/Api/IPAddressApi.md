@@ -1,0 +1,235 @@
+# Upcloud\ApiClient\IPAddressApi
+
+All URIs are relative to *http://api.upcloud.com/1.2*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**addIp**](IPAddressApi.md#addIp) | **POST** /ip_address | Assign IP address
+[**deleteIp**](IPAddressApi.md#deleteIp) | **DELETE** /ip_address/{ip} | Release IP address
+[**getDetails**](IPAddressApi.md#getDetails) | **GET** /ip_address/{ip} | Get IP address details
+[**listIps**](IPAddressApi.md#listIps) | **GET** /ip_address | List IP addresses
+[**modifyIp**](IPAddressApi.md#modifyIp) | **PUT** /ip_address/{ip} | Modify IP address
+
+
+# **addIp**
+> \Upcloud\ApiClient\Model\AssignIpResponse addIp($ip_address)
+
+Assign IP address
+
+Assigns a new IP address to a server.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$ip_address = new \Upcloud\ApiClient\Model\IpAddress(); // \Upcloud\ApiClient\Model\IpAddress | 
+
+try {
+    $result = $api_instance->addIp($ip_address);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling IPAddressApi->addIp: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip_address** | [**\Upcloud\ApiClient\Model\IpAddress**](../Model/IpAddress.md)|  | [optional]
+
+### Return type
+
+[**\Upcloud\ApiClient\Model\AssignIpResponse**](../Model/AssignIpResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **deleteIp**
+> deleteIp($ip)
+
+Release IP address
+
+Removes an IP address from a server.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$ip = "ip_example"; // string | Ip address
+
+try {
+    $api_instance->deleteIp($ip);
+} catch (Exception $e) {
+    echo 'Exception when calling IPAddressApi->deleteIp: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**| Ip address |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **getDetails**
+> \Upcloud\ApiClient\Model\AssignIpResponse getDetails($ip)
+
+Get IP address details
+
+Returns detailed information about a specific IP address.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$ip = "ip_example"; // string | Ip address
+
+try {
+    $result = $api_instance->getDetails($ip);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling IPAddressApi->getDetails: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**| Ip address |
+
+### Return type
+
+[**\Upcloud\ApiClient\Model\AssignIpResponse**](../Model/AssignIpResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **listIps**
+> \Upcloud\ApiClient\Model\IpAddressListResponse listIps()
+
+List IP addresses
+
+Returns a list of all IP addresses assigned to servers on the current user account.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+
+try {
+    $result = $api_instance->listIps();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling IPAddressApi->listIps: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\Upcloud\ApiClient\Model\IpAddressListResponse**](../Model/IpAddressListResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **modifyIp**
+> \Upcloud\ApiClient\Model\AssignIpResponse modifyIp($ip, $ip_address)
+
+Modify IP address
+
+Modifies the reverse DNS PTR record corresponding to an IP address. The PTR record can only be set to public IP address.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$ip = "ip_example"; // string | Ip address
+$ip_address = new \Upcloud\ApiClient\Model\IpAddress1(); // \Upcloud\ApiClient\Model\IpAddress1 | 
+
+try {
+    $result = $api_instance->modifyIp($ip, $ip_address);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling IPAddressApi->modifyIp: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**| Ip address |
+ **ip_address** | [**\Upcloud\ApiClient\Model\IpAddress1**](../Model/IpAddress1.md)|  | [optional]
+
+### Return type
+
+[**\Upcloud\ApiClient\Model\AssignIpResponse**](../Model/AssignIpResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
