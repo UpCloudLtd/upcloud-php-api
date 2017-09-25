@@ -1,6 +1,6 @@
 <?php
 /**
- * ServerListResponse
+ * CreateServerResponse
  *
  * PHP version 5
  *
@@ -23,12 +23,12 @@ namespace Upcloud\ApiClient\Model;
 use \ArrayAccess;
 
 /**
- * ServerListResponse Class Doc Comment
+ * CreateServerResponse Class Doc Comment
  *
  * @category    Class
  * @package     Upcloud\ApiClient
  */
-class ServerListResponse implements ArrayAccess
+class CreateServerResponse implements ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -36,14 +36,14 @@ class ServerListResponse implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'server list response';
+    protected static $swaggerModelName = 'create server response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'servers' => '\Upcloud\ApiClient\Model\ServerListResponseServers'
+        'server' => '\Upcloud\ApiClient\Model\Server'
     ];
 
     /**
@@ -51,7 +51,7 @@ class ServerListResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'servers' => null
+        'server' => null
     ];
 
     public static function swaggerTypes()
@@ -69,7 +69,7 @@ class ServerListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'servers' => 'servers'
+        'server' => 'server'
     ];
 
 
@@ -78,7 +78,7 @@ class ServerListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'servers' => 'setServers'
+        'server' => 'setServer'
     ];
 
 
@@ -87,7 +87,7 @@ class ServerListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'servers' => 'getServers'
+        'server' => 'getServer'
     ];
 
     public static function attributeMap()
@@ -121,7 +121,7 @@ class ServerListResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['servers'] = isset($data['servers']) ? $data['servers'] : null;
+        $this->container['server'] = isset($data['server']) ? $data['server'] : null;
     }
 
     /**
@@ -150,22 +150,22 @@ class ServerListResponse implements ArrayAccess
 
 
     /**
-     * Gets servers
-     * @return \Upcloud\ApiClient\Model\ServerListResponseServers
+     * Gets server
+     * @return \Upcloud\ApiClient\Model\Server
      */
-    public function getServers()
+    public function getServer()
     {
-        return $this->container['servers'];
+        return $this->container['server'];
     }
 
     /**
-     * Sets servers
-     * @param \Upcloud\ApiClient\Model\ServerListResponseServers $servers
+     * Sets server
+     * @param \Upcloud\ApiClient\Model\Server $server
      * @return $this
      */
-    public function setServers($servers)
+    public function setServer($server)
     {
-        $this->container['servers'] = $servers;
+        $this->container['server'] = $server;
 
         return $this;
     }

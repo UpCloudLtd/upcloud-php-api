@@ -79,7 +79,7 @@ class TagApi
      * @param string $tag_list List of tags (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function assignTag($server_id, $tag_list)
     {
@@ -96,11 +96,11 @@ class TagApi
      * @param string $tag_list List of tags (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function assignTagWithHttpInfo($server_id, $tag_list)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->assignTagRequest($server_id, $tag_list);
 
         try {
@@ -145,7 +145,7 @@ class TagApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -194,7 +194,7 @@ class TagApi
      */
     public function assignTagAsyncWithHttpInfo($server_id, $tag_list)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->assignTagRequest($server_id, $tag_list);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1229,7 +1229,7 @@ class TagApi
      * @param string $tag_name Tag name (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function untag($server_id, $tag_name)
     {
@@ -1246,11 +1246,11 @@ class TagApi
      * @param string $tag_name Tag name (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function untagWithHttpInfo($server_id, $tag_name)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->untagRequest($server_id, $tag_name);
 
         try {
@@ -1295,7 +1295,7 @@ class TagApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1344,7 +1344,7 @@ class TagApi
      */
     public function untagAsyncWithHttpInfo($server_id, $tag_name)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->untagRequest($server_id, $tag_name);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

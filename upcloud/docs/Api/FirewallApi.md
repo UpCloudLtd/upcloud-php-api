@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **createFirewallRule**
-> createFirewallRule($server_id, $firewall_rule)
+> \Upcloud\ApiClient\Model\FirewallRuleCreateResponse createFirewallRule($server_id, $firewall_rule)
 
 Create firewall rule
 
@@ -24,10 +24,11 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
-$firewall_rule = new \Upcloud\ApiClient\Model\FirewallRule(); // \Upcloud\ApiClient\Model\FirewallRule | 
+$firewall_rule = new \Upcloud\ApiClient\Model\FirewallRuleRequest(); // \Upcloud\ApiClient\Model\FirewallRuleRequest | 
 
 try {
-    $api_instance->createFirewallRule($server_id, $firewall_rule);
+    $result = $api_instance->createFirewallRule($server_id, $firewall_rule);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling FirewallApi->createFirewallRule: ', $e->getMessage(), PHP_EOL;
 }
@@ -39,11 +40,11 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **server_id** | **string**| Server id |
- **firewall_rule** | [**\Upcloud\ApiClient\Model\FirewallRule**](../Model/FirewallRule.md)|  |
+ **firewall_rule** | [**\Upcloud\ApiClient\Model\FirewallRuleRequest**](../Model/FirewallRuleRequest.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**\Upcloud\ApiClient\Model\FirewallRuleCreateResponse**](../Model/FirewallRuleCreateResponse.md)
 
 ### Authorization
 
@@ -103,7 +104,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getFirewallRule**
-> \Upcloud\ApiClient\Model\FirewallRuleDetailsResponse getFirewallRule($server_id, $firewall_rule_number)
+> \Upcloud\ApiClient\Model\FirewallRuleCreateResponse getFirewallRule($server_id, $firewall_rule_number)
 
 Get firewall rule details
 
@@ -136,7 +137,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\FirewallRuleDetailsResponse**](../Model/FirewallRuleDetailsResponse.md)
+[**\Upcloud\ApiClient\Model\FirewallRuleCreateResponse**](../Model/FirewallRuleCreateResponse.md)
 
 ### Authorization
 

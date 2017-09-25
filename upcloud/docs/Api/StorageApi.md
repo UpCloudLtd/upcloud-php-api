@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 
 # **attachStorage**
-> \Upcloud\ApiClient\Model\ServerListResponse attachStorage($server_id, $storage_device)
+> \Upcloud\ApiClient\Model\CreateServerResponse attachStorage($server_id, $storage_device)
 
 Attach storage
 
@@ -57,7 +57,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -298,7 +298,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **detachStorage**
-> \Upcloud\ApiClient\Model\ServerListResponse detachStorage($server_id, $storage_device)
+> \Upcloud\ApiClient\Model\CreateServerResponse detachStorage($server_id, $storage_device)
 
 Detach storage
 
@@ -331,7 +331,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -345,7 +345,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **ejectCdrom**
-> \Upcloud\ApiClient\Model\ServerListResponse ejectCdrom($server_id)
+> \Upcloud\ApiClient\Model\CreateServerResponse ejectCdrom($server_id)
 
 Eject CD-ROM
 
@@ -376,7 +376,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -561,7 +561,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **loadCdrom**
-> \Upcloud\ApiClient\Model\ServerListResponse loadCdrom($server_id, $storage_device)
+> \Upcloud\ApiClient\Model\CreateServerResponse loadCdrom($server_id, $storage_device)
 
 Load CD-ROM
 
@@ -594,7 +594,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 

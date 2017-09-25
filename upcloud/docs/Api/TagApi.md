@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **assignTag**
-> \Upcloud\ApiClient\Model\ServerListResponse assignTag($server_id, $tag_list)
+> \Upcloud\ApiClient\Model\CreateServerResponse assignTag($server_id, $tag_list)
 
 Assign tag to a server
 
@@ -46,7 +46,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -237,7 +237,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **untag**
-> \Upcloud\ApiClient\Model\ServerListResponse untag($server_id, $tag_name)
+> \Upcloud\ApiClient\Model\CreateServerResponse untag($server_id, $tag_name)
 
 Remove tag from server
 
@@ -270,7 +270,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 

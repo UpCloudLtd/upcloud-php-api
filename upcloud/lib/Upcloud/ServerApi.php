@@ -79,7 +79,7 @@ class ServerApi
      * @param string $tag_list List of tags (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function assignTag($server_id, $tag_list)
     {
@@ -96,11 +96,11 @@ class ServerApi
      * @param string $tag_list List of tags (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function assignTagWithHttpInfo($server_id, $tag_list)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->assignTagRequest($server_id, $tag_list);
 
         try {
@@ -145,7 +145,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -194,7 +194,7 @@ class ServerApi
      */
     public function assignTagAsyncWithHttpInfo($server_id, $tag_list)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->assignTagRequest($server_id, $tag_list);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -328,7 +328,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function attachStorage($server_id, $storage_device)
     {
@@ -345,11 +345,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function attachStorageWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->attachStorageRequest($server_id, $storage_device);
 
         try {
@@ -394,7 +394,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -451,7 +451,7 @@ class ServerApi
      */
     public function attachStorageAsyncWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->attachStorageRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -583,14 +583,15 @@ class ServerApi
      * Create firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRule $firewall_rule  (required)
+     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \Upcloud\ApiClient\Model\FirewallRuleCreateResponse
      */
     public function createFirewallRule($server_id, $firewall_rule)
     {
-        $this->createFirewallRuleWithHttpInfo($server_id, $firewall_rule);
+        list($response) = $this->createFirewallRuleWithHttpInfo($server_id, $firewall_rule);
+        return $response;
     }
 
     /**
@@ -599,14 +600,14 @@ class ServerApi
      * Create firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRule $firewall_rule  (required)
+     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\FirewallRuleCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createFirewallRuleWithHttpInfo($server_id, $firewall_rule)
     {
-        $returnType = '';
+        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
         $request = $this->createFirewallRuleRequest($server_id, $firewall_rule);
 
         try {
@@ -632,10 +633,28 @@ class ServerApi
                 );
             }
 
-            return [null, $statusCode, $response->getHeaders()];
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
                 case 400:
                     $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
                     $e->setResponseObject($data);
@@ -667,7 +686,7 @@ class ServerApi
      * Create firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRule $firewall_rule  (required)
+     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -684,17 +703,31 @@ class ServerApi
      * Create firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRule $firewall_rule  (required)
+     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule)
     {
-        $returnType = '';
+        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
         $request = $this->createFirewallRuleRequest($server_id, $firewall_rule);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
         }, function ($exception) {
             $response = $exception->getResponse();
             $statusCode = $response->getStatusCode();
@@ -711,7 +744,7 @@ class ServerApi
      * Create request for operation 'createFirewallRule'
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRule $firewall_rule  (required)
+     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -810,7 +843,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\Server $server  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function createServer($server = null)
     {
@@ -826,11 +859,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\Server $server  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createServerWithHttpInfo($server = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->createServerRequest($server);
 
         try {
@@ -875,7 +908,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -930,7 +963,7 @@ class ServerApi
      */
     public function createServerAsyncWithHttpInfo($server = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->createServerRequest($server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1483,7 +1516,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function detachStorage($server_id, $storage_device)
     {
@@ -1500,11 +1533,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function detachStorageWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->detachStorageRequest($server_id, $storage_device);
 
         try {
@@ -1549,7 +1582,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1606,7 +1639,7 @@ class ServerApi
      */
     public function detachStorageAsyncWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->detachStorageRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1740,7 +1773,7 @@ class ServerApi
      * @param string $server_id Server id (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function ejectCdrom($server_id)
     {
@@ -1756,11 +1789,11 @@ class ServerApi
      * @param string $server_id Server id (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function ejectCdromWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->ejectCdromRequest($server_id);
 
         try {
@@ -1805,7 +1838,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1860,7 +1893,7 @@ class ServerApi
      */
     public function ejectCdromAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->ejectCdromRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1985,7 +2018,7 @@ class ServerApi
      * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\FirewallRuleDetailsResponse
+     * @return \Upcloud\ApiClient\Model\FirewallRuleCreateResponse
      */
     public function getFirewallRule($server_id, $firewall_rule_number)
     {
@@ -2002,11 +2035,11 @@ class ServerApi
      * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\FirewallRuleDetailsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\FirewallRuleCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getFirewallRuleWithHttpInfo($server_id, $firewall_rule_number)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleDetailsResponse';
+        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
         $request = $this->getFirewallRuleRequest($server_id, $firewall_rule_number);
 
         try {
@@ -2051,7 +2084,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\FirewallRuleDetailsResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -2108,7 +2141,7 @@ class ServerApi
      */
     public function getFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule_number)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleDetailsResponse';
+        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
         $request = $this->getFirewallRuleRequest($server_id, $firewall_rule_number);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -2664,7 +2697,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function loadCdrom($server_id, $storage_device = null)
     {
@@ -2681,11 +2714,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function loadCdromWithHttpInfo($server_id, $storage_device = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->loadCdromRequest($server_id, $storage_device);
 
         try {
@@ -2730,7 +2763,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -2787,7 +2820,7 @@ class ServerApi
      */
     public function loadCdromAsyncWithHttpInfo($server_id, $storage_device = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->loadCdromRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -2918,7 +2951,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\Server $server  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function modifyServer($server_id, $server = null)
     {
@@ -2935,11 +2968,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\Server $server  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function modifyServerWithHttpInfo($server_id, $server = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->modifyServerRequest($server_id, $server);
 
         try {
@@ -2984,7 +3017,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 202:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -3037,7 +3070,7 @@ class ServerApi
      */
     public function modifyServerAsyncWithHttpInfo($server_id, $server = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->modifyServerRequest($server_id, $server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -3168,7 +3201,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\RestartServer $restart_server  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function restartServer($server_id, $restart_server)
     {
@@ -3185,11 +3218,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\RestartServer $restart_server  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function restartServerWithHttpInfo($server_id, $restart_server)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->restartServerRequest($server_id, $restart_server);
 
         try {
@@ -3234,7 +3267,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -3291,7 +3324,7 @@ class ServerApi
      */
     public function restartServerAsyncWithHttpInfo($server_id, $restart_server)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->restartServerRequest($server_id, $restart_server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -3425,7 +3458,7 @@ class ServerApi
      * @param string $server_id Id of server to return (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function serverDetails($server_id)
     {
@@ -3441,11 +3474,11 @@ class ServerApi
      * @param string $server_id Id of server to return (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function serverDetailsWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->serverDetailsRequest($server_id);
 
         try {
@@ -3490,7 +3523,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -3525,7 +3558,7 @@ class ServerApi
      */
     public function serverDetailsAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->serverDetailsRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -3873,7 +3906,7 @@ class ServerApi
      * @param string $server_id Id of server to start (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function startServer($server_id)
     {
@@ -3889,11 +3922,11 @@ class ServerApi
      * @param string $server_id Id of server to start (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function startServerWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->startServerRequest($server_id);
 
         try {
@@ -3938,7 +3971,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -3993,7 +4026,7 @@ class ServerApi
      */
     public function startServerAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->startServerRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -4118,7 +4151,7 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function stopServer($server_id, $stop_server)
     {
@@ -4135,11 +4168,11 @@ class ServerApi
      * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function stopServerWithHttpInfo($server_id, $stop_server)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->stopServerRequest($server_id, $stop_server);
 
         try {
@@ -4184,7 +4217,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -4241,7 +4274,7 @@ class ServerApi
      */
     public function stopServerAsyncWithHttpInfo($server_id, $stop_server)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->stopServerRequest($server_id, $stop_server);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -4376,7 +4409,7 @@ class ServerApi
      * @param string $tag_name Tag name (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function untag($server_id, $tag_name)
     {
@@ -4393,11 +4426,11 @@ class ServerApi
      * @param string $tag_name Tag name (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function untagWithHttpInfo($server_id, $tag_name)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->untagRequest($server_id, $tag_name);
 
         try {
@@ -4442,7 +4475,7 @@ class ServerApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -4491,7 +4524,7 @@ class ServerApi
      */
     public function untagAsyncWithHttpInfo($server_id, $tag_name)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->untagRequest($server_id, $tag_name);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {

@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 
 # **assignTag**
-> \Upcloud\ApiClient\Model\ServerListResponse assignTag($server_id, $tag_list)
+> \Upcloud\ApiClient\Model\CreateServerResponse assignTag($server_id, $tag_list)
 
 Assign tag to a server
 
@@ -59,7 +59,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -73,7 +73,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **attachStorage**
-> \Upcloud\ApiClient\Model\ServerListResponse attachStorage($server_id, $storage_device)
+> \Upcloud\ApiClient\Model\CreateServerResponse attachStorage($server_id, $storage_device)
 
 Attach storage
 
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -120,7 +120,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createFirewallRule**
-> createFirewallRule($server_id, $firewall_rule)
+> \Upcloud\ApiClient\Model\FirewallRuleCreateResponse createFirewallRule($server_id, $firewall_rule)
 
 Create firewall rule
 
@@ -133,10 +133,11 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
-$firewall_rule = new \Upcloud\ApiClient\Model\FirewallRule(); // \Upcloud\ApiClient\Model\FirewallRule | 
+$firewall_rule = new \Upcloud\ApiClient\Model\FirewallRuleRequest(); // \Upcloud\ApiClient\Model\FirewallRuleRequest | 
 
 try {
-    $api_instance->createFirewallRule($server_id, $firewall_rule);
+    $result = $api_instance->createFirewallRule($server_id, $firewall_rule);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ServerApi->createFirewallRule: ', $e->getMessage(), PHP_EOL;
 }
@@ -148,11 +149,11 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **server_id** | **string**| Server id |
- **firewall_rule** | [**\Upcloud\ApiClient\Model\FirewallRule**](../Model/FirewallRule.md)|  |
+ **firewall_rule** | [**\Upcloud\ApiClient\Model\FirewallRuleRequest**](../Model/FirewallRuleRequest.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**\Upcloud\ApiClient\Model\FirewallRuleCreateResponse**](../Model/FirewallRuleCreateResponse.md)
 
 ### Authorization
 
@@ -166,7 +167,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createServer**
-> \Upcloud\ApiClient\Model\ServerListResponse createServer($server)
+> \Upcloud\ApiClient\Model\CreateServerResponse createServer($server)
 
 Create server
 
@@ -197,7 +198,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -299,7 +300,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **detachStorage**
-> \Upcloud\ApiClient\Model\ServerListResponse detachStorage($server_id, $storage_device)
+> \Upcloud\ApiClient\Model\CreateServerResponse detachStorage($server_id, $storage_device)
 
 Detach storage
 
@@ -332,7 +333,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -346,7 +347,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **ejectCdrom**
-> \Upcloud\ApiClient\Model\ServerListResponse ejectCdrom($server_id)
+> \Upcloud\ApiClient\Model\CreateServerResponse ejectCdrom($server_id)
 
 Eject CD-ROM
 
@@ -377,7 +378,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -391,7 +392,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getFirewallRule**
-> \Upcloud\ApiClient\Model\FirewallRuleDetailsResponse getFirewallRule($server_id, $firewall_rule_number)
+> \Upcloud\ApiClient\Model\FirewallRuleCreateResponse getFirewallRule($server_id, $firewall_rule_number)
 
 Get firewall rule details
 
@@ -424,7 +425,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\FirewallRuleDetailsResponse**](../Model/FirewallRuleDetailsResponse.md)
+[**\Upcloud\ApiClient\Model\FirewallRuleCreateResponse**](../Model/FirewallRuleCreateResponse.md)
 
 ### Authorization
 
@@ -520,7 +521,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **loadCdrom**
-> \Upcloud\ApiClient\Model\ServerListResponse loadCdrom($server_id, $storage_device)
+> \Upcloud\ApiClient\Model\CreateServerResponse loadCdrom($server_id, $storage_device)
 
 Load CD-ROM
 
@@ -553,7 +554,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -567,7 +568,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **modifyServer**
-> \Upcloud\ApiClient\Model\ServerListResponse modifyServer($server_id, $server)
+> \Upcloud\ApiClient\Model\CreateServerResponse modifyServer($server_id, $server)
 
 Modify server
 
@@ -598,7 +599,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -612,7 +613,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **restartServer**
-> \Upcloud\ApiClient\Model\ServerListResponse restartServer($server_id, $restart_server)
+> \Upcloud\ApiClient\Model\CreateServerResponse restartServer($server_id, $restart_server)
 
 Restart server
 
@@ -645,7 +646,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -659,7 +660,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **serverDetails**
-> \Upcloud\ApiClient\Model\ServerListResponse serverDetails($server_id)
+> \Upcloud\ApiClient\Model\CreateServerResponse serverDetails($server_id)
 
 Get server details
 
@@ -690,7 +691,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -749,7 +750,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **startServer**
-> \Upcloud\ApiClient\Model\ServerListResponse startServer($server_id)
+> \Upcloud\ApiClient\Model\CreateServerResponse startServer($server_id)
 
 Start server
 
@@ -780,7 +781,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -794,7 +795,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **stopServer**
-> \Upcloud\ApiClient\Model\ServerListResponse stopServer($server_id, $stop_server)
+> \Upcloud\ApiClient\Model\CreateServerResponse stopServer($server_id, $stop_server)
 
 Stop server
 
@@ -827,7 +828,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 
@@ -841,7 +842,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **untag**
-> \Upcloud\ApiClient\Model\ServerListResponse untag($server_id, $tag_name)
+> \Upcloud\ApiClient\Model\CreateServerResponse untag($server_id, $tag_name)
 
 Remove tag from server
 
@@ -874,7 +875,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\ServerListResponse**](../Model/ServerListResponse.md)
+[**\Upcloud\ApiClient\Model\CreateServerResponse**](../Model/CreateServerResponse.md)
 
 ### Authorization
 

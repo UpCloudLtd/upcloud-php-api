@@ -1,6 +1,6 @@
 <?php
 /**
- * ServerListResponse
+ * FirewallRuleCreateResponse
  *
  * PHP version 5
  *
@@ -23,12 +23,12 @@ namespace Upcloud\ApiClient\Model;
 use \ArrayAccess;
 
 /**
- * ServerListResponse Class Doc Comment
+ * FirewallRuleCreateResponse Class Doc Comment
  *
  * @category    Class
  * @package     Upcloud\ApiClient
  */
-class ServerListResponse implements ArrayAccess
+class FirewallRuleCreateResponse implements ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -36,14 +36,14 @@ class ServerListResponse implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'server list response';
+    protected static $swaggerModelName = 'firewall rule create response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'servers' => '\Upcloud\ApiClient\Model\ServerListResponseServers'
+        'firewall_rule' => '\Upcloud\ApiClient\Model\FirewallRule'
     ];
 
     /**
@@ -51,7 +51,7 @@ class ServerListResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'servers' => null
+        'firewall_rule' => null
     ];
 
     public static function swaggerTypes()
@@ -69,7 +69,7 @@ class ServerListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'servers' => 'servers'
+        'firewall_rule' => 'firewall_rule'
     ];
 
 
@@ -78,7 +78,7 @@ class ServerListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'servers' => 'setServers'
+        'firewall_rule' => 'setFirewallRule'
     ];
 
 
@@ -87,7 +87,7 @@ class ServerListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'servers' => 'getServers'
+        'firewall_rule' => 'getFirewallRule'
     ];
 
     public static function attributeMap()
@@ -121,7 +121,7 @@ class ServerListResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['servers'] = isset($data['servers']) ? $data['servers'] : null;
+        $this->container['firewall_rule'] = isset($data['firewall_rule']) ? $data['firewall_rule'] : null;
     }
 
     /**
@@ -150,22 +150,22 @@ class ServerListResponse implements ArrayAccess
 
 
     /**
-     * Gets servers
-     * @return \Upcloud\ApiClient\Model\ServerListResponseServers
+     * Gets firewall_rule
+     * @return \Upcloud\ApiClient\Model\FirewallRule
      */
-    public function getServers()
+    public function getFirewallRule()
     {
-        return $this->container['servers'];
+        return $this->container['firewall_rule'];
     }
 
     /**
-     * Sets servers
-     * @param \Upcloud\ApiClient\Model\ServerListResponseServers $servers
+     * Sets firewall_rule
+     * @param \Upcloud\ApiClient\Model\FirewallRule $firewall_rule
      * @return $this
      */
-    public function setServers($servers)
+    public function setFirewallRule($firewall_rule)
     {
-        $this->container['servers'] = $servers;
+        $this->container['firewall_rule'] = $firewall_rule;
 
         return $this;
     }

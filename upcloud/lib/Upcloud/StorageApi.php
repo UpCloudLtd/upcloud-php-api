@@ -79,7 +79,7 @@ class StorageApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function attachStorage($server_id, $storage_device)
     {
@@ -96,11 +96,11 @@ class StorageApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function attachStorageWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->attachStorageRequest($server_id, $storage_device);
 
         try {
@@ -145,7 +145,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -202,7 +202,7 @@ class StorageApi
      */
     public function attachStorageAsyncWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->attachStorageRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1508,7 +1508,7 @@ class StorageApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function detachStorage($server_id, $storage_device)
     {
@@ -1525,11 +1525,11 @@ class StorageApi
      * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function detachStorageWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->detachStorageRequest($server_id, $storage_device);
 
         try {
@@ -1574,7 +1574,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1631,7 +1631,7 @@ class StorageApi
      */
     public function detachStorageAsyncWithHttpInfo($server_id, $storage_device)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->detachStorageRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -1765,7 +1765,7 @@ class StorageApi
      * @param string $server_id Server id (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function ejectCdrom($server_id)
     {
@@ -1781,11 +1781,11 @@ class StorageApi
      * @param string $server_id Server id (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function ejectCdromWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->ejectCdromRequest($server_id);
 
         try {
@@ -1830,7 +1830,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -1885,7 +1885,7 @@ class StorageApi
      */
     public function ejectCdromAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->ejectCdromRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -2872,7 +2872,7 @@ class StorageApi
      * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\ServerListResponse
+     * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
     public function loadCdrom($server_id, $storage_device = null)
     {
@@ -2889,11 +2889,11 @@ class StorageApi
      * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\ServerListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function loadCdromWithHttpInfo($server_id, $storage_device = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->loadCdromRequest($server_id, $storage_device);
 
         try {
@@ -2938,7 +2938,7 @@ class StorageApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\ServerListResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 400:
@@ -2995,7 +2995,7 @@ class StorageApi
      */
     public function loadCdromAsyncWithHttpInfo($server_id, $storage_device = null)
     {
-        $returnType = '\Upcloud\ApiClient\Model\ServerListResponse';
+        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
         $request = $this->loadCdromRequest($server_id, $storage_device);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
