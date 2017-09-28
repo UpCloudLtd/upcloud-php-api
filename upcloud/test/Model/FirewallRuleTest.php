@@ -67,9 +67,107 @@ class FirewallRuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "firewall_rule"
+     * Test attribute "direction"
      */
-    public function testPropertyFirewallRule()
+    public function testPropertyDirection()
+    {
+    }
+
+    /**
+     * Test attribute "action"
+     */
+    public function testPropertyAction()
+    {
+    }
+
+    /**
+     * Test attribute "position"
+     */
+    public function testPropertyPosition()
+    {
+    }
+
+    /**
+     * Test attribute "family"
+     */
+    public function testPropertyFamily()
+    {
+    }
+
+    /**
+     * Test attribute "protocol"
+     */
+    public function testPropertyProtocol()
+    {
+    }
+
+    /**
+     * Test attribute "icmp_type"
+     */
+    public function testPropertyIcmpType()
+    {
+    }
+
+    /**
+     * Test attribute "destination_address_start"
+     */
+    public function testPropertyDestinationAddressStart()
+    {
+    }
+
+    /**
+     * Test attribute "destination_address_end"
+     */
+    public function testPropertyDestinationAddressEnd()
+    {
+    }
+
+    /**
+     * Test attribute "destination_port_start"
+     */
+    public function testPropertyDestinationPortStart()
+    {
+    }
+
+    /**
+     * Test attribute "destination_port_end"
+     */
+    public function testPropertyDestinationPortEnd()
+    {
+    }
+
+    /**
+     * Test attribute "source_address_start"
+     */
+    public function testPropertySourceAddressStart()
+    {
+    }
+
+    /**
+     * Test attribute "source_address_end"
+     */
+    public function testPropertySourceAddressEnd()
+    {
+    }
+
+    /**
+     * Test attribute "source_port_start"
+     */
+    public function testPropertySourcePortStart()
+    {
+    }
+
+    /**
+     * Test attribute "source_port_end"
+     */
+    public function testPropertySourcePortEnd()
+    {
+    }
+
+    /**
+     * Test attribute "comment"
+     */
+    public function testPropertyComment()
     {
     }
 }

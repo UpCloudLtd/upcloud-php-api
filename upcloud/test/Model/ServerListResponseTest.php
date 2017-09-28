@@ -67,9 +67,9 @@ class ServerListResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "server"
+     * Test attribute "servers"
      */
-    public function testPropertyServer()
+    public function testPropertyServers()
     {
     }
 }

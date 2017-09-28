@@ -31,11 +31,11 @@ class ErrorStatus
     /**
      * Possible values of this enum
      */
-    const 400 = 400;
-    const 402 = 402;
-    const 403 = 403;
-    const 404 = 404;
-    const 409 = 409;
+    const _400 = '400';
+    const _402 = '402';
+    const _403 = '403';
+    const _404 = '404';
+    const _409 = '409';
     
     /**
      * Gets allowable values of the enum
@@ -44,11 +44,11 @@ class ErrorStatus
     public static function getAllowableEnumValues()
     {
         return [
-            self::400,
-            self::402,
-            self::403,
-            self::404,
-            self::409,
+            self::_400,
+            self::_402,
+            self::_403,
+            self::_404,
+            self::_409,
         ];
     }
 }
