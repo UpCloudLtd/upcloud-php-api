@@ -49,7 +49,7 @@ class Server implements ArrayAccess
         'firewall' => 'string',
         'host' => 'float',
         'hostname' => 'string',
-        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddressListResponseIpAddresses',
+        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses',
         'license' => 'float',
         'memory_amount' => 'float',
         'nic_model' => 'string',
@@ -521,7 +521,7 @@ class Server implements ArrayAccess
 
     /**
      * Gets ip_addresses
-     * @return \Upcloud\ApiClient\Model\IpAddressListResponseIpAddresses
+     * @return \Upcloud\ApiClient\Model\IpAddresses
      */
     public function getIpAddresses()
     {
@@ -530,7 +530,7 @@ class Server implements ArrayAccess
 
     /**
      * Sets ip_addresses
-     * @param \Upcloud\ApiClient\Model\IpAddressListResponseIpAddresses $ip_addresses
+     * @param \Upcloud\ApiClient\Model\IpAddresses $ip_addresses
      * @return $this
      */
     public function setIpAddresses($ip_addresses)

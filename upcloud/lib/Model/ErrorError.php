@@ -43,8 +43,8 @@ class ErrorError implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'code' => '\Upcloud\ApiClient\Model\ErrorCode',
-        'status' => '\Upcloud\ApiClient\Model\ErrorStatus'
+        'error_code' => '\Upcloud\ApiClient\Model\ErrorCode',
+        'error_status' => '\Upcloud\ApiClient\Model\ErrorStatus'
     ];
 
     /**
@@ -52,8 +52,8 @@ class ErrorError implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'code' => null,
-        'status' => null
+        'error_code' => null,
+        'error_status' => null
     ];
 
     public static function swaggerTypes()
@@ -71,8 +71,8 @@ class ErrorError implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'code' => 'code',
-        'status' => 'status'
+        'error_code' => 'error_code',
+        'error_status' => 'error_status'
     ];
 
 
@@ -81,8 +81,8 @@ class ErrorError implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'code' => 'setCode',
-        'status' => 'setStatus'
+        'error_code' => 'setErrorCode',
+        'error_status' => 'setErrorStatus'
     ];
 
 
@@ -91,8 +91,8 @@ class ErrorError implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'code' => 'getCode',
-        'status' => 'getStatus'
+        'error_code' => 'getErrorCode',
+        'error_status' => 'getErrorStatus'
     ];
 
     public static function attributeMap()
@@ -126,8 +126,8 @@ class ErrorError implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['code'] = isset($data['code']) ? $data['code'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['error_code'] = isset($data['error_code']) ? $data['error_code'] : null;
+        $this->container['error_status'] = isset($data['error_status']) ? $data['error_status'] : null;
     }
 
     /**
@@ -156,43 +156,43 @@ class ErrorError implements ArrayAccess
 
 
     /**
-     * Gets code
+     * Gets error_code
      * @return \Upcloud\ApiClient\Model\ErrorCode
      */
-    public function getCode()
+    public function getErrorCode()
     {
-        return $this->container['code'];
+        return $this->container['error_code'];
     }
 
     /**
-     * Sets code
-     * @param \Upcloud\ApiClient\Model\ErrorCode $code
+     * Sets error_code
+     * @param \Upcloud\ApiClient\Model\ErrorCode $error_code
      * @return $this
      */
-    public function setCode($code)
+    public function setErrorCode($error_code)
     {
-        $this->container['code'] = $code;
+        $this->container['error_code'] = $error_code;
 
         return $this;
     }
 
     /**
-     * Gets status
+     * Gets error_status
      * @return \Upcloud\ApiClient\Model\ErrorStatus
      */
-    public function getStatus()
+    public function getErrorStatus()
     {
-        return $this->container['status'];
+        return $this->container['error_status'];
     }
 
     /**
-     * Sets status
-     * @param \Upcloud\ApiClient\Model\ErrorStatus $status
+     * Sets error_status
+     * @param \Upcloud\ApiClient\Model\ErrorStatus $error_status
      * @return $this
      */
-    public function setStatus($status)
+    public function setErrorStatus($error_status)
     {
-        $this->container['status'] = $status;
+        $this->container['error_status'] = $error_status;
 
         return $this;
     }

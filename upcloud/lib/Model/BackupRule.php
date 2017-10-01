@@ -45,6 +45,7 @@ class BackupRule implements ArrayAccess
       */
     protected static $swaggerTypes = [
         'interval' => 'string',
+        'time' => 'string',
         'retention' => 'float'
     ];
 
@@ -54,6 +55,7 @@ class BackupRule implements ArrayAccess
       */
     protected static $swaggerFormats = [
         'interval' => null,
+        'time' => null,
         'retention' => null
     ];
 
@@ -73,6 +75,7 @@ class BackupRule implements ArrayAccess
      */
     protected static $attributeMap = [
         'interval' => 'interval',
+        'time' => 'time',
         'retention' => 'retention'
     ];
 
@@ -83,6 +86,7 @@ class BackupRule implements ArrayAccess
      */
     protected static $setters = [
         'interval' => 'setInterval',
+        'time' => 'setTime',
         'retention' => 'setRetention'
     ];
 
@@ -93,6 +97,7 @@ class BackupRule implements ArrayAccess
      */
     protected static $getters = [
         'interval' => 'getInterval',
+        'time' => 'getTime',
         'retention' => 'getRetention'
     ];
 
@@ -154,6 +159,7 @@ class BackupRule implements ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['interval'] = isset($data['interval']) ? $data['interval'] : null;
+        $this->container['time'] = isset($data['time']) ? $data['time'] : null;
         $this->container['retention'] = isset($data['retention']) ? $data['retention'] : null;
     }
 
@@ -220,6 +226,27 @@ class BackupRule implements ArrayAccess
             );
         }
         $this->container['interval'] = $interval;
+
+        return $this;
+    }
+
+    /**
+     * Gets time
+     * @return string
+     */
+    public function getTime()
+    {
+        return $this->container['time'];
+    }
+
+    /**
+     * Sets time
+     * @param string $time
+     * @return $this
+     */
+    public function setTime($time)
+    {
+        $this->container['time'] = $time;
 
         return $this;
     }

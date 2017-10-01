@@ -26,6 +26,7 @@ use \ArrayAccess;
  * IpAddress Class Doc Comment
  *
  * @category    Class
+ * @description The UpCloud network has public and private IP addresses.
  * @package     Upcloud\ApiClient
  */
 class IpAddress implements ArrayAccess
@@ -36,7 +37,7 @@ class IpAddress implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'ip_address';
+    protected static $swaggerModelName = 'Ip address';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -44,8 +45,11 @@ class IpAddress implements ArrayAccess
       */
     protected static $swaggerTypes = [
         'access' => 'string',
+        'address' => 'string',
         'family' => 'string',
-        'server' => 'string'
+        'ptr_record' => 'string',
+        'server' => 'string',
+        'part_of_plan' => 'string'
     ];
 
     /**
@@ -54,8 +58,11 @@ class IpAddress implements ArrayAccess
       */
     protected static $swaggerFormats = [
         'access' => null,
+        'address' => null,
         'family' => null,
-        'server' => 'uuid'
+        'ptr_record' => null,
+        'server' => 'uuid',
+        'part_of_plan' => null
     ];
 
     public static function swaggerTypes()
@@ -74,8 +81,11 @@ class IpAddress implements ArrayAccess
      */
     protected static $attributeMap = [
         'access' => 'access',
+        'address' => 'address',
         'family' => 'family',
-        'server' => 'server'
+        'ptr_record' => 'ptr_record',
+        'server' => 'server',
+        'part_of_plan' => 'part_of_plan'
     ];
 
 
@@ -85,8 +95,11 @@ class IpAddress implements ArrayAccess
      */
     protected static $setters = [
         'access' => 'setAccess',
+        'address' => 'setAddress',
         'family' => 'setFamily',
-        'server' => 'setServer'
+        'ptr_record' => 'setPtrRecord',
+        'server' => 'setServer',
+        'part_of_plan' => 'setPartOfPlan'
     ];
 
 
@@ -96,8 +109,11 @@ class IpAddress implements ArrayAccess
      */
     protected static $getters = [
         'access' => 'getAccess',
+        'address' => 'getAddress',
         'family' => 'getFamily',
-        'server' => 'getServer'
+        'ptr_record' => 'getPtrRecord',
+        'server' => 'getServer',
+        'part_of_plan' => 'getPartOfPlan'
     ];
 
     public static function attributeMap()
@@ -119,6 +135,8 @@ class IpAddress implements ArrayAccess
     const ACCESS__PRIVATE = 'private';
     const FAMILY_I_PV4 = 'IPv4';
     const FAMILY_I_PV6 = 'IPv6';
+    const PART_OF_PLAN_YES = 'yes';
+    const PART_OF_PLAN_NO = 'no';
     
 
     
@@ -146,6 +164,18 @@ class IpAddress implements ArrayAccess
         ];
     }
     
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getPartOfPlanAllowableValues()
+    {
+        return [
+            self::PART_OF_PLAN_YES,
+            self::PART_OF_PLAN_NO,
+        ];
+    }
+    
 
     /**
      * Associative array for storing property values
@@ -160,8 +190,11 @@ class IpAddress implements ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['access'] = isset($data['access']) ? $data['access'] : null;
+        $this->container['address'] = isset($data['address']) ? $data['address'] : null;
         $this->container['family'] = isset($data['family']) ? $data['family'] : null;
+        $this->container['ptr_record'] = isset($data['ptr_record']) ? $data['ptr_record'] : null;
         $this->container['server'] = isset($data['server']) ? $data['server'] : null;
+        $this->container['part_of_plan'] = isset($data['part_of_plan']) ? $data['part_of_plan'] : null;
     }
 
     /**
@@ -189,6 +222,14 @@ class IpAddress implements ArrayAccess
             );
         }
 
+        $allowed_values = $this->getPartOfPlanAllowableValues();
+        if (!in_array($this->container['part_of_plan'], $allowed_values)) {
+            $invalid_properties[] = sprintf(
+                "invalid value for 'part_of_plan', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
+        }
+
         return $invalid_properties;
     }
 
@@ -207,6 +248,10 @@ class IpAddress implements ArrayAccess
         }
         $allowed_values = $this->getFamilyAllowableValues();
         if (!in_array($this->container['family'], $allowed_values)) {
+            return false;
+        }
+        $allowed_values = $this->getPartOfPlanAllowableValues();
+        if (!in_array($this->container['part_of_plan'], $allowed_values)) {
             return false;
         }
         return true;
@@ -244,6 +289,27 @@ class IpAddress implements ArrayAccess
     }
 
     /**
+     * Gets address
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->container['address'];
+    }
+
+    /**
+     * Sets address
+     * @param string $address
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        $this->container['address'] = $address;
+
+        return $this;
+    }
+
+    /**
      * Gets family
      * @return string
      */
@@ -274,6 +340,27 @@ class IpAddress implements ArrayAccess
     }
 
     /**
+     * Gets ptr_record
+     * @return string
+     */
+    public function getPtrRecord()
+    {
+        return $this->container['ptr_record'];
+    }
+
+    /**
+     * Sets ptr_record
+     * @param string $ptr_record
+     * @return $this
+     */
+    public function setPtrRecord($ptr_record)
+    {
+        $this->container['ptr_record'] = $ptr_record;
+
+        return $this;
+    }
+
+    /**
      * Gets server
      * @return string
      */
@@ -284,12 +371,42 @@ class IpAddress implements ArrayAccess
 
     /**
      * Sets server
-     * @param string $server Server id
+     * @param string $server
      * @return $this
      */
     public function setServer($server)
     {
         $this->container['server'] = $server;
+
+        return $this;
+    }
+
+    /**
+     * Gets part_of_plan
+     * @return string
+     */
+    public function getPartOfPlan()
+    {
+        return $this->container['part_of_plan'];
+    }
+
+    /**
+     * Sets part_of_plan
+     * @param string $part_of_plan
+     * @return $this
+     */
+    public function setPartOfPlan($part_of_plan)
+    {
+        $allowed_values = $this->getPartOfPlanAllowableValues();
+        if (!is_null($part_of_plan) && !in_array($part_of_plan, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'part_of_plan', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
+        }
+        $this->container['part_of_plan'] = $part_of_plan;
 
         return $this;
     }

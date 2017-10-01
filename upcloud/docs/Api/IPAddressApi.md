@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\IPAddressApi
 
-All URIs are relative to *http://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -23,8 +23,12 @@ Assigns a new IP address to a server.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
-$ip_address = new \Upcloud\ApiClient\Model\IpAddress(); // \Upcloud\ApiClient\Model\IpAddress | 
+$ip_address = new \Upcloud\ApiClient\Model\AddIpRequest(); // \Upcloud\ApiClient\Model\AddIpRequest | 
 
 try {
     $result = $api_instance->addIp($ip_address);
@@ -39,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ip_address** | [**\Upcloud\ApiClient\Model\IpAddress**](../Model/IpAddress.md)|  | [optional]
+ **ip_address** | [**\Upcloud\ApiClient\Model\AddIpRequest**](../Model/AddIpRequest.md)|  | [optional]
 
 ### Return type
 
@@ -47,7 +51,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -67,6 +71,10 @@ Removes an IP address from a server.
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip = "ip_example"; // string | Ip address
@@ -91,7 +99,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -111,6 +119,10 @@ Returns detailed information about a specific IP address.
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip = "ip_example"; // string | Ip address
@@ -136,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -156,6 +168,10 @@ Returns a list of all IP addresses assigned to servers on the current user accou
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 
@@ -177,7 +193,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -198,9 +214,13 @@ Modifies the reverse DNS PTR record corresponding to an IP address. The PTR reco
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip = "ip_example"; // string | Ip address
-$ip_address = new \Upcloud\ApiClient\Model\IpAddress1(); // \Upcloud\ApiClient\Model\IpAddress1 | 
+$ip_address = new \Upcloud\ApiClient\Model\ModifyIpRequest(); // \Upcloud\ApiClient\Model\ModifyIpRequest | 
 
 try {
     $result = $api_instance->modifyIp($ip, $ip_address);
@@ -216,7 +236,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ip** | **string**| Ip address |
- **ip_address** | [**\Upcloud\ApiClient\Model\IpAddress1**](../Model/IpAddress1.md)|  | [optional]
+ **ip_address** | [**\Upcloud\ApiClient\Model\ModifyIpRequest**](../Model/ModifyIpRequest.md)|  | [optional]
 
 ### Return type
 
@@ -224,7 +244,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 

@@ -43,8 +43,7 @@ class StopServer implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'stop_type' => 'string',
-        'timeout' => 'float'
+        'stop_server' => '\Upcloud\ApiClient\Model\StopServerRequest'
     ];
 
     /**
@@ -52,8 +51,7 @@ class StopServer implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'stop_type' => null,
-        'timeout' => null
+        'stop_server' => null
     ];
 
     public static function swaggerTypes()
@@ -71,8 +69,7 @@ class StopServer implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'stop_type' => 'stop_type',
-        'timeout' => 'timeout'
+        'stop_server' => 'stop_server'
     ];
 
 
@@ -81,8 +78,7 @@ class StopServer implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'stop_type' => 'setStopType',
-        'timeout' => 'setTimeout'
+        'stop_server' => 'setStopServer'
     ];
 
 
@@ -91,8 +87,7 @@ class StopServer implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'stop_type' => 'getStopType',
-        'timeout' => 'getTimeout'
+        'stop_server' => 'getStopServer'
     ];
 
     public static function attributeMap()
@@ -110,22 +105,8 @@ class StopServer implements ArrayAccess
         return self::$getters;
     }
 
-    const STOP_TYPE_SOFT = 'soft';
-    const STOP_TYPE_HARD = 'hard';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getStopTypeAllowableValues()
-    {
-        return [
-            self::STOP_TYPE_SOFT,
-            self::STOP_TYPE_HARD,
-        ];
-    }
     
 
     /**
@@ -140,8 +121,7 @@ class StopServer implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['stop_type'] = isset($data['stop_type']) ? $data['stop_type'] : 'soft';
-        $this->container['timeout'] = isset($data['timeout']) ? $data['timeout'] : null;
+        $this->container['stop_server'] = isset($data['stop_server']) ? $data['stop_server'] : null;
     }
 
     /**
@@ -152,22 +132,6 @@ class StopServer implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-
-        $allowed_values = $this->getStopTypeAllowableValues();
-        if (!in_array($this->container['stop_type'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'stop_type', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        if (!is_null($this->container['timeout']) && ($this->container['timeout'] > 600)) {
-            $invalid_properties[] = "invalid value for 'timeout', must be smaller than or equal to 600.";
-        }
-
-        if (!is_null($this->container['timeout']) && ($this->container['timeout'] < 1)) {
-            $invalid_properties[] = "invalid value for 'timeout', must be bigger than or equal to 1.";
-        }
 
         return $invalid_properties;
     }
@@ -181,75 +145,27 @@ class StopServer implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = $this->getStopTypeAllowableValues();
-        if (!in_array($this->container['stop_type'], $allowed_values)) {
-            return false;
-        }
-        if ($this->container['timeout'] > 600) {
-            return false;
-        }
-        if ($this->container['timeout'] < 1) {
-            return false;
-        }
         return true;
     }
 
 
     /**
-     * Gets stop_type
-     * @return string
+     * Gets stop_server
+     * @return \Upcloud\ApiClient\Model\StopServerRequest
      */
-    public function getStopType()
+    public function getStopServer()
     {
-        return $this->container['stop_type'];
+        return $this->container['stop_server'];
     }
 
     /**
-     * Sets stop_type
-     * @param string $stop_type Type of stop operation performed on the server.
+     * Sets stop_server
+     * @param \Upcloud\ApiClient\Model\StopServerRequest $stop_server
      * @return $this
      */
-    public function setStopType($stop_type)
+    public function setStopServer($stop_server)
     {
-        $allowed_values = $this->getStopTypeAllowableValues();
-        if (!is_null($stop_type) && !in_array($stop_type, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'stop_type', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['stop_type'] = $stop_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets timeout
-     * @return float
-     */
-    public function getTimeout()
-    {
-        return $this->container['timeout'];
-    }
-
-    /**
-     * Sets timeout
-     * @param float $timeout The stop timeout in seconds.
-     * @return $this
-     */
-    public function setTimeout($timeout)
-    {
-
-        if (!is_null($timeout) && ($timeout > 600)) {
-            throw new \InvalidArgumentException('invalid value for $timeout when calling StopServer., must be smaller than or equal to 600.');
-        }
-        if (!is_null($timeout) && ($timeout < 1)) {
-            throw new \InvalidArgumentException('invalid value for $timeout when calling StopServer., must be bigger than or equal to 1.');
-        }
-
-        $this->container['timeout'] = $timeout;
+        $this->container['stop_server'] = $stop_server;
 
         return $this;
     }

@@ -36,6 +36,7 @@ class StorageType
     const CDROM = 'cdrom';
     const TEMPLATE = 'template';
     const BACKUP = 'backup';
+    const NORMAL = 'normal';
     
     /**
      * Gets allowable values of the enum
@@ -48,6 +49,7 @@ class StorageType
             self::CDROM,
             self::TEMPLATE,
             self::BACKUP,
+            self::NORMAL,
         ];
     }
 }

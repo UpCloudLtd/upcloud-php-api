@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\AccountApi
 
-All URIs are relative to *http://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **getAccount**
-> \Upcloud\ApiClient\Model\Account getAccount()
+> \Upcloud\ApiClient\Model\AccountResponse getAccount()
 
 Account information
 
@@ -18,6 +18,10 @@ Returns information on the user's account.
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\AccountApi(new \Http\Adapter\Guzzle6\Client());
 
@@ -35,11 +39,11 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Upcloud\ApiClient\Model\Account**](../Model/Account.md)
+[**\Upcloud\ApiClient\Model\AccountResponse**](../Model/AccountResponse.md)
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 

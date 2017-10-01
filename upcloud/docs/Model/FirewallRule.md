@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **position** | **float** | Add the firewall rule to this position in the server&#39;s firewall list. | [optional] 
 **family** | [**\Upcloud\ApiClient\Model\AddressFamily**](AddressFamily.md) | if protocol is set The address family of new firewall rule | 
 **protocol** | **string** | The protocol this rule will be applied to. | [optional] 
-**icmp_type** | **float** | The ICMP type. | [optional] 
+**icmp_type** | **string** | The ICMP type. | [optional] 
 **destination_address_start** | **string** | The destination address range starts from this address. | [optional] 
 **destination_address_end** | **string** | The destination address range ends to this address. | [optional] 
 **destination_port_start** | **float** | The destination port range starts from this port number. | [optional] 

@@ -51,6 +51,10 @@ Please follow the [installation procedure](#installation--usage) and then run th
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\AccountApi();
 
 try {
@@ -65,7 +69,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -88,7 +92,7 @@ Class | Method | HTTP request | Description
 *ServerApi* | [**deleteFirewallRule**](docs/Api/ServerApi.md#deletefirewallrule) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
 *ServerApi* | [**deleteServer**](docs/Api/ServerApi.md#deleteserver) | **DELETE** /server/{serverId} | Delete server
 *ServerApi* | [**detachStorage**](docs/Api/ServerApi.md#detachstorage) | **POST** /server/{serverId}/storage/detach | Detach storage
-*ServerApi* | [**ejectCdrom**](docs/Api/ServerApi.md#ejectcdrom) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
+*ServerApi* | [**ejectCdrom**](docs/Api/ServerApi.md#ejectcdrom) | **POST** /server/{serverId}/cdrom/eject | Eject CD-ROM
 *ServerApi* | [**getFirewallRule**](docs/Api/ServerApi.md#getfirewallrule) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
 *ServerApi* | [**listServerConfigurations**](docs/Api/ServerApi.md#listserverconfigurations) | **GET** /server_size | List server configurations
 *ServerApi* | [**listServers**](docs/Api/ServerApi.md#listservers) | **GET** /server | List of servers
@@ -107,7 +111,7 @@ Class | Method | HTTP request | Description
 *StorageApi* | [**createStorage**](docs/Api/StorageApi.md#createstorage) | **POST** /storage | Create storage
 *StorageApi* | [**deleteStorage**](docs/Api/StorageApi.md#deletestorage) | **DELETE** /storage/{storageId} | Delete storage
 *StorageApi* | [**detachStorage**](docs/Api/StorageApi.md#detachstorage) | **POST** /server/{serverId}/storage/detach | Detach storage
-*StorageApi* | [**ejectCdrom**](docs/Api/StorageApi.md#ejectcdrom) | **POST** /server/{serverId}/storage/cdrom/eject | Eject CD-ROM
+*StorageApi* | [**ejectCdrom**](docs/Api/StorageApi.md#ejectcdrom) | **POST** /server/{serverId}/cdrom/eject | Eject CD-ROM
 *StorageApi* | [**favoriteStorage**](docs/Api/StorageApi.md#favoritestorage) | **POST** /storage/{storageId}/favorite | Add storage to favorites
 *StorageApi* | [**getStorageDetails**](docs/Api/StorageApi.md#getstoragedetails) | **GET** /storage/{storageId} | Get storage details
 *StorageApi* | [**listStorageTypes**](docs/Api/StorageApi.md#liststoragetypes) | **GET** /storage/{type}/ | List of storages by type
@@ -130,15 +134,22 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [Account](docs/Model/Account.md)
+ - [AccountResponse](docs/Model/AccountResponse.md)
+ - [AddIpRequest](docs/Model/AddIpRequest.md)
  - [AddressFamily](docs/Model/AddressFamily.md)
  - [AssignIpResponse](docs/Model/AssignIpResponse.md)
+ - [AttachStorageDeviceRequest](docs/Model/AttachStorageDeviceRequest.md)
  - [AvailablePlanListResponse](docs/Model/AvailablePlanListResponse.md)
  - [AvailablePlanListResponsePlans](docs/Model/AvailablePlanListResponsePlans.md)
  - [BackupRule](docs/Model/BackupRule.md)
+ - [CloneStorageRequest](docs/Model/CloneStorageRequest.md)
  - [ConfigurationListResponse](docs/Model/ConfigurationListResponse.md)
  - [ConfigurationListResponseServerSizes](docs/Model/ConfigurationListResponseServerSizes.md)
+ - [CreateBackupStorageRequest](docs/Model/CreateBackupStorageRequest.md)
  - [CreateNewTagResponse](docs/Model/CreateNewTagResponse.md)
+ - [CreateServerRequest](docs/Model/CreateServerRequest.md)
  - [CreateServerResponse](docs/Model/CreateServerResponse.md)
+ - [CreateStorageRequest](docs/Model/CreateStorageRequest.md)
  - [CreateStorageResponse](docs/Model/CreateStorageResponse.md)
  - [Error](docs/Model/Error.md)
  - [ErrorCode](docs/Model/ErrorCode.md)
@@ -150,13 +161,14 @@ Class | Method | HTTP request | Description
  - [FirewallRuleListResponseFirewallRules](docs/Model/FirewallRuleListResponseFirewallRules.md)
  - [FirewallRuleRequest](docs/Model/FirewallRuleRequest.md)
  - [IpAddress](docs/Model/IpAddress.md)
- - [IpAddress1](docs/Model/IpAddress1.md)
  - [IpAddressListResponse](docs/Model/IpAddressListResponse.md)
- - [IpAddressListResponseIpAddresses](docs/Model/IpAddressListResponseIpAddresses.md)
+ - [IpAddresses](docs/Model/IpAddresses.md)
+ - [ModifyIpRequest](docs/Model/ModifyIpRequest.md)
+ - [ModifyStorageRequest](docs/Model/ModifyStorageRequest.md)
  - [Plan](docs/Model/Plan.md)
  - [Price](docs/Model/Price.md)
  - [PriceListResponse](docs/Model/PriceListResponse.md)
- - [PriceListResponsePrice](docs/Model/PriceListResponsePrice.md)
+ - [PriceListResponsePrices](docs/Model/PriceListResponsePrices.md)
  - [PriceZone](docs/Model/PriceZone.md)
  - [RestartServer](docs/Model/RestartServer.md)
  - [Server](docs/Model/Server.md)
@@ -167,15 +179,13 @@ Class | Method | HTTP request | Description
  - [ServerStorageDevices](docs/Model/ServerStorageDevices.md)
  - [ServerTags](docs/Model/ServerTags.md)
  - [StopServer](docs/Model/StopServer.md)
+ - [StopServerRequest](docs/Model/StopServerRequest.md)
  - [Storage](docs/Model/Storage.md)
- - [Storage1](docs/Model/Storage1.md)
- - [Storage2](docs/Model/Storage2.md)
- - [Storage3](docs/Model/Storage3.md)
- - [Storage4](docs/Model/Storage4.md)
  - [StorageAccessType](docs/Model/StorageAccessType.md)
  - [StorageBackups](docs/Model/StorageBackups.md)
  - [StorageDevice](docs/Model/StorageDevice.md)
- - [StorageDevice1](docs/Model/StorageDevice1.md)
+ - [StorageDeviceDetachRequest](docs/Model/StorageDeviceDetachRequest.md)
+ - [StorageDeviceLoadRequest](docs/Model/StorageDeviceLoadRequest.md)
  - [StorageServers](docs/Model/StorageServers.md)
  - [StorageState](docs/Model/StorageState.md)
  - [StorageTier](docs/Model/StorageTier.md)
@@ -187,6 +197,7 @@ Class | Method | HTTP request | Description
  - [TagListResponse](docs/Model/TagListResponse.md)
  - [TagListResponseTags](docs/Model/TagListResponseTags.md)
  - [TagServers](docs/Model/TagServers.md)
+ - [TemplitizeStorageRequest](docs/Model/TemplitizeStorageRequest.md)
  - [Timezone](docs/Model/Timezone.md)
  - [TimezoneListResponse](docs/Model/TimezoneListResponse.md)
  - [TimezoneListResponseTimezones](docs/Model/TimezoneListResponseTimezones.md)
@@ -197,7 +208,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
- All endpoints do not require authorization.
+
+## baseAuth
+
+- **Type**: HTTP basic authentication
 
 
 ## Author

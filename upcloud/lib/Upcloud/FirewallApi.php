@@ -305,6 +305,10 @@ class FirewallApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -334,7 +338,7 @@ class FirewallApi
      * Remove firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -350,7 +354,7 @@ class FirewallApi
      * Remove firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -418,7 +422,7 @@ class FirewallApi
      * Remove firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -435,7 +439,7 @@ class FirewallApi
      * Remove firewall rule
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -462,7 +466,7 @@ class FirewallApi
      * Create request for operation 'deleteFirewallRule'
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -529,6 +533,10 @@ class FirewallApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -558,7 +566,7 @@ class FirewallApi
      * Get firewall rule details
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\FirewallRuleCreateResponse
@@ -575,7 +583,7 @@ class FirewallApi
      * Get firewall rule details
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\FirewallRuleCreateResponse, HTTP status code, HTTP response headers (array of strings)
@@ -661,7 +669,7 @@ class FirewallApi
      * Get firewall rule details
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -678,7 +686,7 @@ class FirewallApi
      * Get firewall rule details
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -719,7 +727,7 @@ class FirewallApi
      * Create request for operation 'getFirewallRule'
      *
      * @param string $server_id Server id (required)
-     * @param string $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -786,6 +794,10 @@ class FirewallApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -1010,6 +1022,10 @@ class FirewallApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');

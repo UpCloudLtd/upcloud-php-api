@@ -75,7 +75,7 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\IpAddress $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\AssignIpResponse
@@ -91,7 +91,7 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\IpAddress $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
@@ -176,7 +176,7 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\IpAddress $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -192,7 +192,7 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\IpAddress $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -232,7 +232,7 @@ class IPAddressApi
     /**
      * Create request for operation 'addIp'
      *
-     * @param \Upcloud\ApiClient\Model\IpAddress $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -288,6 +288,10 @@ class IPAddressApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -499,6 +503,10 @@ class IPAddressApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -723,6 +731,10 @@ class IPAddressApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -934,6 +946,10 @@ class IPAddressApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -963,7 +979,7 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\IpAddress1 $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\AssignIpResponse
@@ -980,7 +996,7 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\IpAddress1 $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
@@ -1066,7 +1082,7 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\IpAddress1 $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1083,7 +1099,7 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\IpAddress1 $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1124,7 +1140,7 @@ class IPAddressApi
      * Create request for operation 'modifyIp'
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\IpAddress1 $ip_address  (optional)
+     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1188,6 +1204,10 @@ class IPAddressApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');

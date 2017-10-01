@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\FirewallApi
 
-All URIs are relative to *http://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -21,6 +21,10 @@ Creates a new firewall rule
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
@@ -48,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -69,9 +73,13 @@ Removes a firewall rule from a server. Firewall rules must be removed individual
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
-$firewall_rule_number = "firewall_rule_number_example"; // string | Denotes the index of the firewall rule in the server's firewall rule list
+$firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
 try {
     $api_instance->deleteFirewallRule($server_id, $firewall_rule_number);
@@ -86,7 +94,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **server_id** | **string**| Server id |
- **firewall_rule_number** | **string**| Denotes the index of the firewall rule in the server&#39;s firewall rule list |
+ **firewall_rule_number** | **float**| Denotes the index of the firewall rule in the server&#39;s firewall rule list |
 
 ### Return type
 
@@ -94,7 +102,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -115,9 +123,13 @@ Returns detailed information about a specific firewall rule
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
-$firewall_rule_number = "firewall_rule_number_example"; // string | Denotes the index of the firewall rule in the server's firewall rule list
+$firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
 try {
     $result = $api_instance->getFirewallRule($server_id, $firewall_rule_number);
@@ -133,7 +145,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **server_id** | **string**| Server id |
- **firewall_rule_number** | **string**| Denotes the index of the firewall rule in the server&#39;s firewall rule list |
+ **firewall_rule_number** | **float**| Denotes the index of the firewall rule in the server&#39;s firewall rule list |
 
 ### Return type
 
@@ -141,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -161,6 +173,10 @@ Returns a list of firewall rules for a specific server.
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
@@ -186,7 +202,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 

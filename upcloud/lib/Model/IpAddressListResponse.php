@@ -43,7 +43,7 @@ class IpAddressListResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddressListResponseIpAddresses'
+        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses'
     ];
 
     /**
@@ -151,7 +151,7 @@ class IpAddressListResponse implements ArrayAccess
 
     /**
      * Gets ip_addresses
-     * @return \Upcloud\ApiClient\Model\IpAddressListResponseIpAddresses
+     * @return \Upcloud\ApiClient\Model\IpAddresses
      */
     public function getIpAddresses()
     {
@@ -160,7 +160,7 @@ class IpAddressListResponse implements ArrayAccess
 
     /**
      * Sets ip_addresses
-     * @param \Upcloud\ApiClient\Model\IpAddressListResponseIpAddresses $ip_addresses
+     * @param \Upcloud\ApiClient\Model\IpAddresses $ip_addresses
      * @return $this
      */
     public function setIpAddresses($ip_addresses)

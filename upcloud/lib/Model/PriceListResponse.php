@@ -43,7 +43,7 @@ class PriceListResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'price' => '\Upcloud\ApiClient\Model\PriceListResponsePrice'
+        'prices' => '\Upcloud\ApiClient\Model\PriceListResponsePrices'
     ];
 
     /**
@@ -51,7 +51,7 @@ class PriceListResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'price' => null
+        'prices' => null
     ];
 
     public static function swaggerTypes()
@@ -69,7 +69,7 @@ class PriceListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'price' => 'price'
+        'prices' => 'prices'
     ];
 
 
@@ -78,7 +78,7 @@ class PriceListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'price' => 'setPrice'
+        'prices' => 'setPrices'
     ];
 
 
@@ -87,7 +87,7 @@ class PriceListResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'price' => 'getPrice'
+        'prices' => 'getPrices'
     ];
 
     public static function attributeMap()
@@ -121,7 +121,7 @@ class PriceListResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['price'] = isset($data['price']) ? $data['price'] : null;
+        $this->container['prices'] = isset($data['prices']) ? $data['prices'] : null;
     }
 
     /**
@@ -150,22 +150,22 @@ class PriceListResponse implements ArrayAccess
 
 
     /**
-     * Gets price
-     * @return \Upcloud\ApiClient\Model\PriceListResponsePrice
+     * Gets prices
+     * @return \Upcloud\ApiClient\Model\PriceListResponsePrices
      */
-    public function getPrice()
+    public function getPrices()
     {
-        return $this->container['price'];
+        return $this->container['prices'];
     }
 
     /**
-     * Sets price
-     * @param \Upcloud\ApiClient\Model\PriceListResponsePrice $price
+     * Sets prices
+     * @param \Upcloud\ApiClient\Model\PriceListResponsePrices $prices
      * @return $this
      */
-    public function setPrice($price)
+    public function setPrices($prices)
     {
-        $this->container['price'] = $price;
+        $this->container['prices'] = $prices;
 
         return $this;
     }

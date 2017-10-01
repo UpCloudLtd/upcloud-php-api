@@ -36,14 +36,23 @@ class StorageDevice implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'storage_device';
+    protected static $swaggerModelName = 'Storage device';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'address' => 'string'
+        'title' => 'string',
+        'size' => 'float',
+        'tier' => 'string',
+        'action' => 'string',
+        'address' => 'string',
+        'part_of_plan' => 'string',
+        'storage' => 'string',
+        'storage_size' => 'float',
+        'storage_title' => 'string',
+        'type' => 'string'
     ];
 
     /**
@@ -51,7 +60,16 @@ class StorageDevice implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'address' => null
+        'title' => null,
+        'size' => null,
+        'tier' => null,
+        'action' => null,
+        'address' => null,
+        'part_of_plan' => null,
+        'storage' => null,
+        'storage_size' => null,
+        'storage_title' => null,
+        'type' => null
     ];
 
     public static function swaggerTypes()
@@ -69,7 +87,16 @@ class StorageDevice implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'address' => 'address'
+        'title' => 'title',
+        'size' => 'size',
+        'tier' => 'tier',
+        'action' => 'action',
+        'address' => 'address',
+        'part_of_plan' => 'part_of_plan',
+        'storage' => 'storage',
+        'storage_size' => 'storage_size',
+        'storage_title' => 'storage_title',
+        'type' => 'type'
     ];
 
 
@@ -78,7 +105,16 @@ class StorageDevice implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'address' => 'setAddress'
+        'title' => 'setTitle',
+        'size' => 'setSize',
+        'tier' => 'setTier',
+        'action' => 'setAction',
+        'address' => 'setAddress',
+        'part_of_plan' => 'setPartOfPlan',
+        'storage' => 'setStorage',
+        'storage_size' => 'setStorageSize',
+        'storage_title' => 'setStorageTitle',
+        'type' => 'setType'
     ];
 
 
@@ -87,7 +123,16 @@ class StorageDevice implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'address' => 'getAddress'
+        'title' => 'getTitle',
+        'size' => 'getSize',
+        'tier' => 'getTier',
+        'action' => 'getAction',
+        'address' => 'getAddress',
+        'part_of_plan' => 'getPartOfPlan',
+        'storage' => 'getStorage',
+        'storage_size' => 'getStorageSize',
+        'storage_title' => 'getStorageTitle',
+        'type' => 'getType'
     ];
 
     public static function attributeMap()
@@ -105,8 +150,22 @@ class StorageDevice implements ArrayAccess
         return self::$getters;
     }
 
+    const PART_OF_PLAN_YES = 'yes';
+    const PART_OF_PLAN_NO = 'no';
     
 
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getPartOfPlanAllowableValues()
+    {
+        return [
+            self::PART_OF_PLAN_YES,
+            self::PART_OF_PLAN_NO,
+        ];
+    }
     
 
     /**
@@ -121,7 +180,16 @@ class StorageDevice implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['size'] = isset($data['size']) ? $data['size'] : null;
+        $this->container['tier'] = isset($data['tier']) ? $data['tier'] : null;
+        $this->container['action'] = isset($data['action']) ? $data['action'] : null;
         $this->container['address'] = isset($data['address']) ? $data['address'] : null;
+        $this->container['part_of_plan'] = isset($data['part_of_plan']) ? $data['part_of_plan'] : null;
+        $this->container['storage'] = isset($data['storage']) ? $data['storage'] : null;
+        $this->container['storage_size'] = isset($data['storage_size']) ? $data['storage_size'] : null;
+        $this->container['storage_title'] = isset($data['storage_title']) ? $data['storage_title'] : null;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
     }
 
     /**
@@ -132,6 +200,14 @@ class StorageDevice implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+
+        $allowed_values = $this->getPartOfPlanAllowableValues();
+        if (!in_array($this->container['part_of_plan'], $allowed_values)) {
+            $invalid_properties[] = sprintf(
+                "invalid value for 'part_of_plan', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
+        }
 
         return $invalid_properties;
     }
@@ -145,9 +221,97 @@ class StorageDevice implements ArrayAccess
     public function valid()
     {
 
+        $allowed_values = $this->getPartOfPlanAllowableValues();
+        if (!in_array($this->container['part_of_plan'], $allowed_values)) {
+            return false;
+        }
         return true;
     }
 
+
+    /**
+     * Gets title
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->container['title'];
+    }
+
+    /**
+     * Sets title
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->container['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets size
+     * @return float
+     */
+    public function getSize()
+    {
+        return $this->container['size'];
+    }
+
+    /**
+     * Sets size
+     * @param float $size
+     * @return $this
+     */
+    public function setSize($size)
+    {
+        $this->container['size'] = $size;
+
+        return $this;
+    }
+
+    /**
+     * Gets tier
+     * @return string
+     */
+    public function getTier()
+    {
+        return $this->container['tier'];
+    }
+
+    /**
+     * Sets tier
+     * @param string $tier
+     * @return $this
+     */
+    public function setTier($tier)
+    {
+        $this->container['tier'] = $tier;
+
+        return $this;
+    }
+
+    /**
+     * Gets action
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->container['action'];
+    }
+
+    /**
+     * Sets action
+     * @param string $action
+     * @return $this
+     */
+    public function setAction($action)
+    {
+        $this->container['action'] = $action;
+
+        return $this;
+    }
 
     /**
      * Gets address
@@ -160,12 +324,126 @@ class StorageDevice implements ArrayAccess
 
     /**
      * Sets address
-     * @param string $address Detach the storage attached to this address.
+     * @param string $address
      * @return $this
      */
     public function setAddress($address)
     {
         $this->container['address'] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Gets part_of_plan
+     * @return string
+     */
+    public function getPartOfPlan()
+    {
+        return $this->container['part_of_plan'];
+    }
+
+    /**
+     * Sets part_of_plan
+     * @param string $part_of_plan
+     * @return $this
+     */
+    public function setPartOfPlan($part_of_plan)
+    {
+        $allowed_values = $this->getPartOfPlanAllowableValues();
+        if (!is_null($part_of_plan) && !in_array($part_of_plan, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'part_of_plan', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
+        }
+        $this->container['part_of_plan'] = $part_of_plan;
+
+        return $this;
+    }
+
+    /**
+     * Gets storage
+     * @return string
+     */
+    public function getStorage()
+    {
+        return $this->container['storage'];
+    }
+
+    /**
+     * Sets storage
+     * @param string $storage
+     * @return $this
+     */
+    public function setStorage($storage)
+    {
+        $this->container['storage'] = $storage;
+
+        return $this;
+    }
+
+    /**
+     * Gets storage_size
+     * @return float
+     */
+    public function getStorageSize()
+    {
+        return $this->container['storage_size'];
+    }
+
+    /**
+     * Sets storage_size
+     * @param float $storage_size
+     * @return $this
+     */
+    public function setStorageSize($storage_size)
+    {
+        $this->container['storage_size'] = $storage_size;
+
+        return $this;
+    }
+
+    /**
+     * Gets storage_title
+     * @return string
+     */
+    public function getStorageTitle()
+    {
+        return $this->container['storage_title'];
+    }
+
+    /**
+     * Sets storage_title
+     * @param string $storage_title
+     * @return $this
+     */
+    public function setStorageTitle($storage_title)
+    {
+        $this->container['storage_title'] = $storage_title;
+
+        return $this;
+    }
+
+    /**
+     * Gets type
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->container['type'];
+    }
+
+    /**
+     * Sets type
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->container['type'] = $type;
 
         return $this;
     }

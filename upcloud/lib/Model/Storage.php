@@ -36,18 +36,27 @@ class Storage implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'storage';
+    protected static $swaggerModelName = 'Storage';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
+        'access' => '\Upcloud\ApiClient\Model\StorageAccessType',
+        'backup_rule' => '\Upcloud\ApiClient\Model\BackupRule',
+        'backups' => '\Upcloud\ApiClient\Model\StorageBackups',
+        'license' => 'float',
+        'servers' => '\Upcloud\ApiClient\Model\StorageServers',
         'size' => 'float',
+        'state' => '\Upcloud\ApiClient\Model\StorageState',
         'tier' => '\Upcloud\ApiClient\Model\StorageTier',
         'title' => 'string',
+        'type' => '\Upcloud\ApiClient\Model\StorageType',
+        'uuid' => 'string',
         'zone' => 'string',
-        'backup_rule' => '\Upcloud\ApiClient\Model\BackupRule'
+        'origin' => 'string',
+        'created' => 'string'
     ];
 
     /**
@@ -55,11 +64,20 @@ class Storage implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
+        'access' => null,
+        'backup_rule' => null,
+        'backups' => null,
+        'license' => null,
+        'servers' => null,
         'size' => null,
+        'state' => null,
         'tier' => null,
         'title' => null,
+        'type' => null,
+        'uuid' => 'uuid',
         'zone' => null,
-        'backup_rule' => null
+        'origin' => 'uuid',
+        'created' => 'datetime'
     ];
 
     public static function swaggerTypes()
@@ -77,11 +95,20 @@ class Storage implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
+        'access' => 'access',
+        'backup_rule' => 'backup_rule',
+        'backups' => 'backups',
+        'license' => 'license',
+        'servers' => 'servers',
         'size' => 'size',
+        'state' => 'state',
         'tier' => 'tier',
         'title' => 'title',
+        'type' => 'type',
+        'uuid' => 'uuid',
         'zone' => 'zone',
-        'backup_rule' => 'backup_rule'
+        'origin' => 'origin',
+        'created' => 'created'
     ];
 
 
@@ -90,11 +117,20 @@ class Storage implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
+        'access' => 'setAccess',
+        'backup_rule' => 'setBackupRule',
+        'backups' => 'setBackups',
+        'license' => 'setLicense',
+        'servers' => 'setServers',
         'size' => 'setSize',
+        'state' => 'setState',
         'tier' => 'setTier',
         'title' => 'setTitle',
+        'type' => 'setType',
+        'uuid' => 'setUuid',
         'zone' => 'setZone',
-        'backup_rule' => 'setBackupRule'
+        'origin' => 'setOrigin',
+        'created' => 'setCreated'
     ];
 
 
@@ -103,11 +139,20 @@ class Storage implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
+        'access' => 'getAccess',
+        'backup_rule' => 'getBackupRule',
+        'backups' => 'getBackups',
+        'license' => 'getLicense',
+        'servers' => 'getServers',
         'size' => 'getSize',
+        'state' => 'getState',
         'tier' => 'getTier',
         'title' => 'getTitle',
+        'type' => 'getType',
+        'uuid' => 'getUuid',
         'zone' => 'getZone',
-        'backup_rule' => 'getBackupRule'
+        'origin' => 'getOrigin',
+        'created' => 'getCreated'
     ];
 
     public static function attributeMap()
@@ -141,11 +186,20 @@ class Storage implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['access'] = isset($data['access']) ? $data['access'] : null;
+        $this->container['backup_rule'] = isset($data['backup_rule']) ? $data['backup_rule'] : null;
+        $this->container['backups'] = isset($data['backups']) ? $data['backups'] : null;
+        $this->container['license'] = isset($data['license']) ? $data['license'] : null;
+        $this->container['servers'] = isset($data['servers']) ? $data['servers'] : null;
         $this->container['size'] = isset($data['size']) ? $data['size'] : null;
+        $this->container['state'] = isset($data['state']) ? $data['state'] : null;
         $this->container['tier'] = isset($data['tier']) ? $data['tier'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['zone'] = isset($data['zone']) ? $data['zone'] : 'The zone in which the storage will be created, e.g. fi-hel1. See Zones.';
-        $this->container['backup_rule'] = isset($data['backup_rule']) ? $data['backup_rule'] : null;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
+        $this->container['uuid'] = isset($data['uuid']) ? $data['uuid'] : null;
+        $this->container['zone'] = isset($data['zone']) ? $data['zone'] : null;
+        $this->container['origin'] = isset($data['origin']) ? $data['origin'] : null;
+        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
     }
 
     /**
@@ -156,14 +210,6 @@ class Storage implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-
-        if (!is_null($this->container['size']) && ($this->container['size'] > 1024)) {
-            $invalid_properties[] = "invalid value for 'size', must be smaller than or equal to 1024.";
-        }
-
-        if (!is_null($this->container['size']) && ($this->container['size'] < 10)) {
-            $invalid_properties[] = "invalid value for 'size', must be bigger than or equal to 10.";
-        }
 
         return $invalid_properties;
     }
@@ -177,15 +223,114 @@ class Storage implements ArrayAccess
     public function valid()
     {
 
-        if ($this->container['size'] > 1024) {
-            return false;
-        }
-        if ($this->container['size'] < 10) {
-            return false;
-        }
         return true;
     }
 
+
+    /**
+     * Gets access
+     * @return \Upcloud\ApiClient\Model\StorageAccessType
+     */
+    public function getAccess()
+    {
+        return $this->container['access'];
+    }
+
+    /**
+     * Sets access
+     * @param \Upcloud\ApiClient\Model\StorageAccessType $access
+     * @return $this
+     */
+    public function setAccess($access)
+    {
+        $this->container['access'] = $access;
+
+        return $this;
+    }
+
+    /**
+     * Gets backup_rule
+     * @return \Upcloud\ApiClient\Model\BackupRule
+     */
+    public function getBackupRule()
+    {
+        return $this->container['backup_rule'];
+    }
+
+    /**
+     * Sets backup_rule
+     * @param \Upcloud\ApiClient\Model\BackupRule $backup_rule
+     * @return $this
+     */
+    public function setBackupRule($backup_rule)
+    {
+        $this->container['backup_rule'] = $backup_rule;
+
+        return $this;
+    }
+
+    /**
+     * Gets backups
+     * @return \Upcloud\ApiClient\Model\StorageBackups
+     */
+    public function getBackups()
+    {
+        return $this->container['backups'];
+    }
+
+    /**
+     * Sets backups
+     * @param \Upcloud\ApiClient\Model\StorageBackups $backups
+     * @return $this
+     */
+    public function setBackups($backups)
+    {
+        $this->container['backups'] = $backups;
+
+        return $this;
+    }
+
+    /**
+     * Gets license
+     * @return float
+     */
+    public function getLicense()
+    {
+        return $this->container['license'];
+    }
+
+    /**
+     * Sets license
+     * @param float $license
+     * @return $this
+     */
+    public function setLicense($license)
+    {
+        $this->container['license'] = $license;
+
+        return $this;
+    }
+
+    /**
+     * Gets servers
+     * @return \Upcloud\ApiClient\Model\StorageServers
+     */
+    public function getServers()
+    {
+        return $this->container['servers'];
+    }
+
+    /**
+     * Sets servers
+     * @param \Upcloud\ApiClient\Model\StorageServers $servers
+     * @return $this
+     */
+    public function setServers($servers)
+    {
+        $this->container['servers'] = $servers;
+
+        return $this;
+    }
 
     /**
      * Gets size
@@ -198,20 +343,33 @@ class Storage implements ArrayAccess
 
     /**
      * Sets size
-     * @param float $size The size of the storage in gigabytes.
+     * @param float $size
      * @return $this
      */
     public function setSize($size)
     {
-
-        if (!is_null($size) && ($size > 1024)) {
-            throw new \InvalidArgumentException('invalid value for $size when calling Storage., must be smaller than or equal to 1024.');
-        }
-        if (!is_null($size) && ($size < 10)) {
-            throw new \InvalidArgumentException('invalid value for $size when calling Storage., must be bigger than or equal to 10.');
-        }
-
         $this->container['size'] = $size;
+
+        return $this;
+    }
+
+    /**
+     * Gets state
+     * @return \Upcloud\ApiClient\Model\StorageState
+     */
+    public function getState()
+    {
+        return $this->container['state'];
+    }
+
+    /**
+     * Sets state
+     * @param \Upcloud\ApiClient\Model\StorageState $state
+     * @return $this
+     */
+    public function setState($state)
+    {
+        $this->container['state'] = $state;
 
         return $this;
     }
@@ -248,12 +406,54 @@ class Storage implements ArrayAccess
 
     /**
      * Sets title
-     * @param string $title A short description.
+     * @param string $title
      * @return $this
      */
     public function setTitle($title)
     {
         $this->container['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets type
+     * @return \Upcloud\ApiClient\Model\StorageType
+     */
+    public function getType()
+    {
+        return $this->container['type'];
+    }
+
+    /**
+     * Sets type
+     * @param \Upcloud\ApiClient\Model\StorageType $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets uuid
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->container['uuid'];
+    }
+
+    /**
+     * Sets uuid
+     * @param string $uuid
+     * @return $this
+     */
+    public function setUuid($uuid)
+    {
+        $this->container['uuid'] = $uuid;
 
         return $this;
     }
@@ -280,22 +480,43 @@ class Storage implements ArrayAccess
     }
 
     /**
-     * Gets backup_rule
-     * @return \Upcloud\ApiClient\Model\BackupRule
+     * Gets origin
+     * @return string
      */
-    public function getBackupRule()
+    public function getOrigin()
     {
-        return $this->container['backup_rule'];
+        return $this->container['origin'];
     }
 
     /**
-     * Sets backup_rule
-     * @param \Upcloud\ApiClient\Model\BackupRule $backup_rule
+     * Sets origin
+     * @param string $origin
      * @return $this
      */
-    public function setBackupRule($backup_rule)
+    public function setOrigin($origin)
     {
-        $this->container['backup_rule'] = $backup_rule;
+        $this->container['origin'] = $origin;
+
+        return $this;
+    }
+
+    /**
+     * Gets created
+     * @return string
+     */
+    public function getCreated()
+    {
+        return $this->container['created'];
+    }
+
+    /**
+     * Sets created
+     * @param string $created
+     * @return $this
+     */
+    public function setCreated($created)
+    {
+        $this->container['created'] = $created;
 
         return $this;
     }

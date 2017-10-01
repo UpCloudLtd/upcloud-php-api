@@ -77,7 +77,7 @@ class AccountApi
      *
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\Account
+     * @return \Upcloud\ApiClient\Model\AccountResponse
      */
     public function getAccount()
     {
@@ -92,11 +92,11 @@ class AccountApi
      *
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\Account, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Upcloud\ApiClient\Model\AccountResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getAccountWithHttpInfo()
     {
-        $returnType = '\Upcloud\ApiClient\Model\Account';
+        $returnType = '\Upcloud\ApiClient\Model\AccountResponse';
         $request = $this->getAccountRequest();
 
         try {
@@ -141,7 +141,7 @@ class AccountApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Account', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\AccountResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -174,7 +174,7 @@ class AccountApi
      */
     public function getAccountAsyncWithHttpInfo()
     {
-        $returnType = '\Upcloud\ApiClient\Model\Account';
+        $returnType = '\Upcloud\ApiClient\Model\AccountResponse';
         $request = $this->getAccountRequest();
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
@@ -258,6 +258,10 @@ class AccountApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');

@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\PlanApi
 
-All URIs are relative to *http://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -18,6 +18,10 @@ Returns a list of available plans.
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\PlanApi(new \Http\Adapter\Guzzle6\Client());
 
@@ -39,7 +43,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 

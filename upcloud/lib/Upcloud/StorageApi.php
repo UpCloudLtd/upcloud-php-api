@@ -76,7 +76,7 @@ class StorageApi
      * Attach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateServerResponse
@@ -93,7 +93,7 @@ class StorageApi
      * Attach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
@@ -179,7 +179,7 @@ class StorageApi
      * Attach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -196,7 +196,7 @@ class StorageApi
      * Attach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -237,7 +237,7 @@ class StorageApi
      * Create request for operation 'attachStorage'
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -305,6 +305,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -334,7 +338,7 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage4 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
@@ -351,7 +355,7 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage4 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
@@ -437,7 +441,7 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage4 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -454,7 +458,7 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage4 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -495,7 +499,7 @@ class StorageApi
      * Create request for operation 'backupStorage'
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage4 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -559,6 +563,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -770,6 +778,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -799,7 +811,7 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage2 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
@@ -816,7 +828,7 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage2 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
@@ -902,7 +914,7 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage2 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -919,7 +931,7 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage2 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -960,7 +972,7 @@ class StorageApi
      * Create request for operation 'cloneStorage'
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage2 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1024,6 +1036,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -1052,7 +1068,7 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\Storage $storage  (required)
+     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
@@ -1068,7 +1084,7 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\Storage $storage  (required)
+     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
@@ -1149,7 +1165,7 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\Storage $storage  (required)
+     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1165,7 +1181,7 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\Storage $storage  (required)
+     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1205,7 +1221,7 @@ class StorageApi
     /**
      * Create request for operation 'createStorage'
      *
-     * @param \Upcloud\ApiClient\Model\Storage $storage  (required)
+     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1265,6 +1281,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -1476,6 +1496,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -1505,7 +1529,7 @@ class StorageApi
      * Detach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateServerResponse
@@ -1522,7 +1546,7 @@ class StorageApi
      * Detach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
@@ -1608,7 +1632,7 @@ class StorageApi
      * Detach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1625,7 +1649,7 @@ class StorageApi
      * Detach storage
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1666,7 +1690,7 @@ class StorageApi
      * Create request for operation 'detachStorage'
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device  (required)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1734,6 +1758,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -1765,12 +1793,11 @@ class StorageApi
      * @param string $server_id Server id (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateServerResponse
+     * @return void
      */
     public function ejectCdrom($server_id)
     {
-        list($response) = $this->ejectCdromWithHttpInfo($server_id);
-        return $response;
+        $this->ejectCdromWithHttpInfo($server_id);
     }
 
     /**
@@ -1781,11 +1808,11 @@ class StorageApi
      * @param string $server_id Server id (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function ejectCdromWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
+        $returnType = '';
         $request = $this->ejectCdromRequest($server_id);
 
         try {
@@ -1811,28 +1838,10 @@ class StorageApi
                 );
             }
 
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
+            return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
                 case 400:
                     $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
                     $e->setResponseObject($data);
@@ -1885,25 +1894,11 @@ class StorageApi
      */
     public function ejectCdromAsyncWithHttpInfo($server_id)
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
+        $returnType = '';
         $request = $this->ejectCdromRequest($server_id);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         }, function ($exception) {
             $response = $exception->getResponse();
             $statusCode = $response->getStatusCode();
@@ -1930,7 +1925,7 @@ class StorageApi
             throw new \InvalidArgumentException('Missing the required parameter $server_id when calling ejectCdrom');
         }
 
-        $resourcePath = '/server/{serverId}/storage/cdrom/eject';
+        $resourcePath = '/server/{serverId}/cdrom/eject';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1978,6 +1973,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -2181,6 +2180,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -2405,6 +2408,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -2629,6 +2636,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -2840,6 +2851,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -2869,7 +2884,7 @@ class StorageApi
      * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateServerResponse
@@ -2886,7 +2901,7 @@ class StorageApi
      * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
@@ -2972,7 +2987,7 @@ class StorageApi
      * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -2989,7 +3004,7 @@ class StorageApi
      * Load CD-ROM
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -3030,7 +3045,7 @@ class StorageApi
      * Create request for operation 'loadCdrom'
      *
      * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDevice1 $storage_device  (optional)
+     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -3094,6 +3109,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -3123,7 +3142,7 @@ class StorageApi
      * Modify storage
      *
      * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\Storage1 $storage  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
@@ -3140,7 +3159,7 @@ class StorageApi
      * Modify storage
      *
      * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\Storage1 $storage  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
@@ -3226,7 +3245,7 @@ class StorageApi
      * Modify storage
      *
      * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\Storage1 $storage  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -3243,7 +3262,7 @@ class StorageApi
      * Modify storage
      *
      * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\Storage1 $storage  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -3284,7 +3303,7 @@ class StorageApi
      * Create request for operation 'modifyStorage'
      *
      * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\Storage1 $storage  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -3352,6 +3371,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -3563,6 +3586,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -3592,7 +3619,7 @@ class StorageApi
      * Templatize storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage3 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
@@ -3609,7 +3636,7 @@ class StorageApi
      * Templatize storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage3 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
@@ -3695,7 +3722,7 @@ class StorageApi
      * Templatize storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage3 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -3712,7 +3739,7 @@ class StorageApi
      * Templatize storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage3 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -3753,7 +3780,7 @@ class StorageApi
      * Create request for operation 'templatizeStorage'
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\Storage3 $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -3817,6 +3844,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -4020,6 +4051,10 @@ class StorageApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');

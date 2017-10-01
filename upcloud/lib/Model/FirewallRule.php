@@ -48,7 +48,7 @@ class FirewallRule implements ArrayAccess
         'position' => 'float',
         'family' => '\Upcloud\ApiClient\Model\AddressFamily',
         'protocol' => 'string',
-        'icmp_type' => 'float',
+        'icmp_type' => 'string',
         'destination_address_start' => 'string',
         'destination_address_end' => 'string',
         'destination_port_start' => 'float',
@@ -304,14 +304,6 @@ class FirewallRule implements ArrayAccess
             );
         }
 
-        if (!is_null($this->container['icmp_type']) && ($this->container['icmp_type'] > 255)) {
-            $invalid_properties[] = "invalid value for 'icmp_type', must be smaller than or equal to 255.";
-        }
-
-        if (!is_null($this->container['icmp_type']) && ($this->container['icmp_type'] < 0)) {
-            $invalid_properties[] = "invalid value for 'icmp_type', must be bigger than or equal to 0.";
-        }
-
         if (!is_null($this->container['destination_port_start']) && ($this->container['destination_port_start'] > 65535)) {
             $invalid_properties[] = "invalid value for 'destination_port_start', must be smaller than or equal to 65535.";
         }
@@ -389,12 +381,6 @@ class FirewallRule implements ArrayAccess
         }
         $allowed_values = $this->getProtocolAllowableValues();
         if (!in_array($this->container['protocol'], $allowed_values)) {
-            return false;
-        }
-        if ($this->container['icmp_type'] > 255) {
-            return false;
-        }
-        if ($this->container['icmp_type'] < 0) {
             return false;
         }
         if ($this->container['destination_port_start'] > 65535) {
@@ -573,7 +559,7 @@ class FirewallRule implements ArrayAccess
 
     /**
      * Gets icmp_type
-     * @return float
+     * @return string
      */
     public function getIcmpType()
     {
@@ -582,19 +568,11 @@ class FirewallRule implements ArrayAccess
 
     /**
      * Sets icmp_type
-     * @param float $icmp_type The ICMP type.
+     * @param string $icmp_type The ICMP type.
      * @return $this
      */
     public function setIcmpType($icmp_type)
     {
-
-        if (!is_null($icmp_type) && ($icmp_type > 255)) {
-            throw new \InvalidArgumentException('invalid value for $icmp_type when calling FirewallRule., must be smaller than or equal to 255.');
-        }
-        if (!is_null($icmp_type) && ($icmp_type < 0)) {
-            throw new \InvalidArgumentException('invalid value for $icmp_type when calling FirewallRule., must be bigger than or equal to 0.');
-        }
-
         $this->container['icmp_type'] = $icmp_type;
 
         return $this;
