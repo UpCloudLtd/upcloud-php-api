@@ -24,6 +24,10 @@ Servers can be tagged with one or more tags. The tags used must exist
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $tag_list = "tag_list_example"; // string | List of tags
@@ -50,7 +54,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -71,8 +75,12 @@ Creates a new tag. Existing servers can be tagged in same request
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
-$tag = new \Upcloud\ApiClient\Model\Tag(); // \Upcloud\ApiClient\Model\Tag | 
+$tag = new \Upcloud\ApiClient\Model\TagCreateRequest(); // \Upcloud\ApiClient\Model\TagCreateRequest | 
 
 try {
     $result = $api_instance->createTag($tag);
@@ -87,7 +95,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tag** | [**\Upcloud\ApiClient\Model\Tag**](../Model/Tag.md)|  |
+ **tag** | [**\Upcloud\ApiClient\Model\TagCreateRequest**](../Model/TagCreateRequest.md)|  |
 
 ### Return type
 
@@ -95,7 +103,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -115,6 +123,10 @@ Deleting existing tag untags all servers from specified tag and deletes tag defi
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
 $tag_name = "tag_name_example"; // string | Tag name
@@ -139,7 +151,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -159,6 +171,10 @@ Returns all existing tags with their properties and servers tagged
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
 
@@ -180,7 +196,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -201,9 +217,13 @@ Changes attributes of an existing tag
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
 $tag_name = "tag_name_example"; // string | Tag name
-$tag = new \Upcloud\ApiClient\Model\Tag1(); // \Upcloud\ApiClient\Model\Tag1 | 
+$tag = new \Upcloud\ApiClient\Model\ModifyTagRequest(); // \Upcloud\ApiClient\Model\ModifyTagRequest | 
 
 try {
     $result = $api_instance->modifyTag($tag_name, $tag);
@@ -219,7 +239,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tag_name** | **string**| Tag name |
- **tag** | [**\Upcloud\ApiClient\Model\Tag1**](../Model/Tag1.md)|  |
+ **tag** | [**\Upcloud\ApiClient\Model\ModifyTagRequest**](../Model/ModifyTagRequest.md)|  |
 
 ### Return type
 
@@ -227,7 +247,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
@@ -247,6 +267,10 @@ Untags tags from given server. The tag(s) must exist
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
@@ -274,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 

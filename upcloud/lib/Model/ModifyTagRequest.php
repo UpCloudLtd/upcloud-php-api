@@ -1,6 +1,6 @@
 <?php
 /**
- * Tag
+ * ModifyTagRequest
  *
  * PHP version 5
  *
@@ -23,12 +23,12 @@ namespace Upcloud\ApiClient\Model;
 use \ArrayAccess;
 
 /**
- * Tag Class Doc Comment
+ * ModifyTagRequest Class Doc Comment
  *
  * @category    Class
  * @package     Upcloud\ApiClient
  */
-class Tag implements ArrayAccess
+class ModifyTagRequest implements ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -36,16 +36,14 @@ class Tag implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Tag';
+    protected static $swaggerModelName = 'modify tag request';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'name' => 'string',
-        'description' => 'string',
-        'servers' => '\Upcloud\ApiClient\Model\TagServers'
+        'tag' => '\Upcloud\ApiClient\Model\Tag'
     ];
 
     /**
@@ -53,9 +51,7 @@ class Tag implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'name' => null,
-        'description' => null,
-        'servers' => null
+        'tag' => null
     ];
 
     public static function swaggerTypes()
@@ -73,9 +69,7 @@ class Tag implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-        'description' => 'description',
-        'servers' => 'servers'
+        'tag' => 'tag'
     ];
 
 
@@ -84,9 +78,7 @@ class Tag implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-        'description' => 'setDescription',
-        'servers' => 'setServers'
+        'tag' => 'setTag'
     ];
 
 
@@ -95,9 +87,7 @@ class Tag implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-        'description' => 'getDescription',
-        'servers' => 'getServers'
+        'tag' => 'getTag'
     ];
 
     public static function attributeMap()
@@ -131,9 +121,7 @@ class Tag implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
-        $this->container['servers'] = isset($data['servers']) ? $data['servers'] : null;
+        $this->container['tag'] = isset($data['tag']) ? $data['tag'] : null;
     }
 
     /**
@@ -144,21 +132,6 @@ class Tag implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-
-        if ($this->container['name'] === null) {
-            $invalid_properties[] = "'name' can't be null";
-        }
-        if ((strlen($this->container['name']) > 32)) {
-            $invalid_properties[] = "invalid value for 'name', the character length must be smaller than or equal to 32.";
-        }
-
-        if ((strlen($this->container['name']) < 1)) {
-            $invalid_properties[] = "invalid value for 'name', the character length must be bigger than or equal to 1.";
-        }
-
-        if (!is_null($this->container['description']) && (strlen($this->container['description']) > 255)) {
-            $invalid_properties[] = "invalid value for 'description', the character length must be smaller than or equal to 255.";
-        }
 
         return $invalid_properties;
     }
@@ -172,92 +145,27 @@ class Tag implements ArrayAccess
     public function valid()
     {
 
-        if ($this->container['name'] === null) {
-            return false;
-        }
-        if (strlen($this->container['name']) > 32) {
-            return false;
-        }
-        if (strlen($this->container['name']) < 1) {
-            return false;
-        }
-        if (strlen($this->container['description']) > 255) {
-            return false;
-        }
         return true;
     }
 
 
     /**
-     * Gets name
-     * @return string
+     * Gets tag
+     * @return \Upcloud\ApiClient\Model\Tag
      */
-    public function getName()
+    public function getTag()
     {
-        return $this->container['name'];
+        return $this->container['tag'];
     }
 
     /**
-     * Sets name
-     * @param string $name The new tag
+     * Sets tag
+     * @param \Upcloud\ApiClient\Model\Tag $tag
      * @return $this
      */
-    public function setName($name)
+    public function setTag($tag)
     {
-        if ((strlen($name) > 32)) {
-            throw new \InvalidArgumentException('invalid length for $name when calling Tag., must be smaller than or equal to 32.');
-        }
-        if ((strlen($name) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $name when calling Tag., must be bigger than or equal to 1.');
-        }
-
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets description
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->container['description'];
-    }
-
-    /**
-     * Sets description
-     * @param string $description Description of the tag
-     * @return $this
-     */
-    public function setDescription($description)
-    {
-        if (!is_null($description) && (strlen($description) > 255)) {
-            throw new \InvalidArgumentException('invalid length for $description when calling Tag., must be smaller than or equal to 255.');
-        }
-
-        $this->container['description'] = $description;
-
-        return $this;
-    }
-
-    /**
-     * Gets servers
-     * @return \Upcloud\ApiClient\Model\TagServers
-     */
-    public function getServers()
-    {
-        return $this->container['servers'];
-    }
-
-    /**
-     * Sets servers
-     * @param \Upcloud\ApiClient\Model\TagServers $servers
-     * @return $this
-     */
-    public function setServers($servers)
-    {
-        $this->container['servers'] = $servers;
+        $this->container['tag'] = $tag;
 
         return $this;
     }

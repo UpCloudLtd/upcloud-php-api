@@ -296,6 +296,10 @@ class TagApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -324,7 +328,7 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\Tag $tag  (required)
+     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateNewTagResponse
@@ -340,7 +344,7 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\Tag $tag  (required)
+     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
@@ -413,7 +417,7 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\Tag $tag  (required)
+     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -429,7 +433,7 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\Tag $tag  (required)
+     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -469,7 +473,7 @@ class TagApi
     /**
      * Create request for operation 'createTag'
      *
-     * @param \Upcloud\ApiClient\Model\Tag $tag  (required)
+     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -529,6 +533,10 @@ class TagApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -732,6 +740,10 @@ class TagApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -943,6 +955,10 @@ class TagApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -972,7 +988,7 @@ class TagApi
      * Modify existing tag
      *
      * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\Tag1 $tag  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateNewTagResponse
@@ -989,7 +1005,7 @@ class TagApi
      * Modify existing tag
      *
      * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\Tag1 $tag  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
@@ -1071,7 +1087,7 @@ class TagApi
      * Modify existing tag
      *
      * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\Tag1 $tag  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1088,7 +1104,7 @@ class TagApi
      * Modify existing tag
      *
      * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\Tag1 $tag  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1129,7 +1145,7 @@ class TagApi
      * Create request for operation 'modifyTag'
      *
      * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\Tag1 $tag  (required)
+     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1197,6 +1213,10 @@ class TagApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
@@ -1446,6 +1466,10 @@ class TagApi
             }
         }
 
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
