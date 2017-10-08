@@ -1,0 +1,14 @@
+# Dependencies
+/vendor
+
+# Composer
+composer.phar
+composer.lock
+
+# Box
+build
+
+bin/php-cs-fixer
+bin/phpunit
+
+.php_cs.cache

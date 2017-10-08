@@ -13,7 +13,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -22,6 +22,7 @@ namespace Upcloud\ApiClient;
 use \Upcloud\ApiClient\Configuration;
 use \Upcloud\ApiClient\ApiException;
 use \Upcloud\ApiClient\ObjectSerializer;
+use \Upcloud\ApiClient\Upcloud\ZoneApi;
 
 /**
  * ZoneApiTest Class Doc Comment
@@ -31,6 +32,7 @@ use \Upcloud\ApiClient\ObjectSerializer;
  */
 class ZoneApiTest extends \PHPUnit_Framework_TestCase
 {
+    public $api;
 
     /**
      * Setup before running any test cases
@@ -44,6 +46,9 @@ class ZoneApiTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->api = new ZoneApi;
+        $this->api->getConfig()->setUsername("toughbyte");
+        $this->api->getConfig()->setPassword("Topsekret5");
     }
 
     /**
@@ -68,5 +73,7 @@ class ZoneApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testListZones()
     {
+        $zoneList = $this->api->listZones()["zones"]["zone"];
+        $this->assertTrue(count($zoneList) > 0);
     }
 }

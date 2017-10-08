@@ -43,7 +43,7 @@ class TimezoneListResponseTimezones implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'timezone' => '\Upcloud\ApiClient\Model\Timezone[]'
+        'timezone' => 'string[]'
     ];
 
     /**
@@ -151,7 +151,7 @@ class TimezoneListResponseTimezones implements ArrayAccess
 
     /**
      * Gets timezone
-     * @return \Upcloud\ApiClient\Model\Timezone[]
+     * @return string[]
      */
     public function getTimezone()
     {
@@ -160,7 +160,7 @@ class TimezoneListResponseTimezones implements ArrayAccess
 
     /**
      * Sets timezone
-     * @param \Upcloud\ApiClient\Model\Timezone[] $timezone
+     * @param string[] $timezone
      * @return $this
      */
     public function setTimezone($timezone)

@@ -13,7 +13,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -22,6 +22,9 @@ namespace Upcloud\ApiClient;
 use \Upcloud\ApiClient\Configuration;
 use \Upcloud\ApiClient\ApiException;
 use \Upcloud\ApiClient\ObjectSerializer;
+use \Upcloud\ApiClient\Upcloud\ServerApi;
+use \Upcloud\ApiClient\Helpers\ServerHelper;
+use \Upcloud\ApiClient\Model\CreateServerRequest;
 
 /**
  * ServerApiTest Class Doc Comment
@@ -29,14 +32,37 @@ use \Upcloud\ApiClient\ObjectSerializer;
  * @category Class
  * @package  Upcloud\ApiClient
  */
+
+const defaultServer = [
+    "zone" => "fi-hel1",
+    "title" => "Firewall test server",
+    "hostname" => "debian.example.com",
+    "plan" => "2xCPU-2GB",
+    "storage_devices" => [
+        "storage_device" => [
+            [
+                "action" => "clone",
+                "title" => "Debian from a template",
+                "size" => 50,
+                "storage" => "01000000-0000-4000-8000-000020030100",
+                "tier" => "maxiops"
+            ]
+        ]
+    ]
+];
 class ServerApiTest extends \PHPUnit_Framework_TestCase
 {
+
+    public static $api;
 
     /**
      * Setup before running any test cases
      */
     public static function setUpBeforeClass()
     {
+        self::$api = new ServerApi;
+        self::$api->getConfig()->setUsername("toughbyte");
+        self::$api->getConfig()->setPassword("Topsekret5");
     }
 
     /**
@@ -58,37 +84,9 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
      */
     public static function tearDownAfterClass()
     {
+        ServerHelper::removeAllServers();
     }
 
-    /**
-     * Test case for assignTag
-     *
-     * Assign tag to a server.
-     *
-     */
-    public function testAssignTag()
-    {
-    }
-
-    /**
-     * Test case for attachStorage
-     *
-     * Attach storage.
-     *
-     */
-    public function testAttachStorage()
-    {
-    }
-
-    /**
-     * Test case for createFirewallRule
-     *
-     * Create firewall rule.
-     *
-     */
-    public function testCreateFirewallRule()
-    {
-    }
 
     /**
      * Test case for createServer
@@ -98,67 +96,13 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateServer()
     {
+        $createdServer = self::$api->createServer(new CreateServerRequest(["server" => defaultServer]))["server"];
+        $this->assertEquals($createdServer["title"], defaultServer["title"]);
+        $this->assertEquals($createdServer["zone"], defaultServer["zone"]);
+        $this->assertEquals($createdServer["hostname"], defaultServer["hostname"]);
+        $this->assertEquals($createdServer["plan"], defaultServer["plan"]);
     }
 
-    /**
-     * Test case for deleteFirewallRule
-     *
-     * Remove firewall rule.
-     *
-     */
-    public function testDeleteFirewallRule()
-    {
-    }
-
-    /**
-     * Test case for deleteServer
-     *
-     * Delete server.
-     *
-     */
-    public function testDeleteServer()
-    {
-    }
-
-    /**
-     * Test case for detachStorage
-     *
-     * Detach storage.
-     *
-     */
-    public function testDetachStorage()
-    {
-    }
-
-    /**
-     * Test case for ejectCdrom
-     *
-     * Eject CD-ROM.
-     *
-     */
-    public function testEjectCdrom()
-    {
-    }
-
-    /**
-     * Test case for getFirewallRule
-     *
-     * Get firewall rule details.
-     *
-     */
-    public function testGetFirewallRule()
-    {
-    }
-
-    /**
-     * Test case for listServerConfigurations
-     *
-     * List server configurations.
-     *
-     */
-    public function testListServerConfigurations()
-    {
-    }
 
     /**
      * Test case for listServers
@@ -168,85 +112,10 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testListServers()
     {
-    }
-
-    /**
-     * Test case for loadCdrom
-     *
-     * Load CD-ROM.
-     *
-     */
-    public function testLoadCdrom()
-    {
-    }
-
-    /**
-     * Test case for modifyServer
-     *
-     * Modify server.
-     *
-     */
-    public function testModifyServer()
-    {
-    }
-
-    /**
-     * Test case for restartServer
-     *
-     * Restart server.
-     *
-     */
-    public function testRestartServer()
-    {
-    }
-
-    /**
-     * Test case for serverDetails
-     *
-     * Get server details.
-     *
-     */
-    public function testServerDetails()
-    {
-    }
-
-    /**
-     * Test case for serverServerIdFirewallRuleGet
-     *
-     * List firewall rules.
-     *
-     */
-    public function testServerServerIdFirewallRuleGet()
-    {
-    }
-
-    /**
-     * Test case for startServer
-     *
-     * Start server.
-     *
-     */
-    public function testStartServer()
-    {
-    }
-
-    /**
-     * Test case for stopServer
-     *
-     * Stop server.
-     *
-     */
-    public function testStopServer()
-    {
-    }
-
-    /**
-     * Test case for untag
-     *
-     * Remove tag from server.
-     *
-     */
-    public function testUntag()
-    {
+        $servers = self::$api->listServers()["servers"]["server"];
+        $prevSize = count($servers);
+        $createdServer = self::$api->createServer(new CreateServerRequest(["server" => defaultServer]))["server"];
+        $servers = self::$api->listServers()["servers"]["server"];
+        $this->assertEquals($prevSize + 1, count($servers));
     }
 }
