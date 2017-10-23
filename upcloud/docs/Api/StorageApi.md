@@ -108,7 +108,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **storage_id** | **string**| Storage id |
- **storage** | [**\Upcloud\ApiClient\Model\CreateBackupStorageRequest**](../Model/CreateBackupStorageRequest.md)|  | [optional]
+ **storage** | [**\Upcloud\ApiClient\Model\CreateBackupStorageRequest**](../Model/CreateBackupStorageRequest.md)|  |
 
 ### Return type
 

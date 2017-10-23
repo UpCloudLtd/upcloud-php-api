@@ -338,12 +338,12 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
      */
-    public function backupStorage($storage_id, $storage = null)
+    public function backupStorage($storage_id, $storage)
     {
         list($response) = $this->backupStorageWithHttpInfo($storage_id, $storage);
         return $response;
@@ -355,12 +355,12 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function backupStorageWithHttpInfo($storage_id, $storage = null)
+    public function backupStorageWithHttpInfo($storage_id, $storage)
     {
         $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
         $request = $this->backupStorageRequest($storage_id, $storage);
@@ -441,11 +441,11 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function backupStorageAsync($storage_id, $storage = null)
+    public function backupStorageAsync($storage_id, $storage)
     {
         return $this->backupStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
             return $response[0];
@@ -458,11 +458,11 @@ class StorageApi
      * Create backup
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function backupStorageAsyncWithHttpInfo($storage_id, $storage = null)
+    public function backupStorageAsyncWithHttpInfo($storage_id, $storage)
     {
         $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
         $request = $this->backupStorageRequest($storage_id, $storage);
@@ -499,15 +499,19 @@ class StorageApi
      * Create request for operation 'backupStorage'
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function backupStorageRequest($storage_id, $storage = null)
+    protected function backupStorageRequest($storage_id, $storage)
     {
         // verify the required parameter 'storage_id' is set
         if ($storage_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling backupStorage');
+        }
+        // verify the required parameter 'storage' is set
+        if ($storage === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage when calling backupStorage');
         }
 
         $resourcePath = '/storage/{storageId}/backup';
