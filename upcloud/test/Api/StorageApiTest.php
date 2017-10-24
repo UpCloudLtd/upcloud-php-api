@@ -48,8 +48,8 @@ class StorageApiTest extends \PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         self::$api = new StorageApi;
-        self::$api->getConfig()->setUsername("toughbyte");
-        self::$api->getConfig()->setPassword("Topsekret5");
+        self::$api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
+        self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORLD"));
     }
 
     /**

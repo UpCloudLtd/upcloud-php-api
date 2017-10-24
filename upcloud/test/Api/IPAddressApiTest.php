@@ -47,8 +47,8 @@ class IPAddressApiTest extends \PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         self::$api = new IPAddressApi;
-        self::$api->getConfig()->setUsername("toughbyte");
-        self::$api->getConfig()->setPassword("Topsekret5");
+        self::$api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
+        self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORLD"));
         self::$server = ServerHelper::createReadyServer();
         ServerHelper::stopServer(self::$server);
     }

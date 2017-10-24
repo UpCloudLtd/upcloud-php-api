@@ -36,8 +36,8 @@ class ServerHelper
         if (self::$api === null) {
             self::$api = new ServerApi;
             // self::$api->getConfig()->setHost("http://localhost:8080/1.2");
-            self::$api->getConfig()->setUsername("toughbyte");
-            self::$api->getConfig()->setPassword("Topsekret5");
+            self::$api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
+            self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORLD"));
         }
     }
 

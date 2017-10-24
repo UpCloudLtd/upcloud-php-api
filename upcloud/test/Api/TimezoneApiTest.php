@@ -48,8 +48,8 @@ class TimezoneApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->api = new TimezoneApi;
-        $this->api->getConfig()->setUsername("toughbyte");
-        $this->api->getConfig()->setPassword("Topsekret5");
+        $this->api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
+        $this->api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
     }
 
     /**

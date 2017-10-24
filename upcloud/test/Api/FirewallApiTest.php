@@ -60,8 +60,8 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
     {
         FirewallApiTest::$api = new FirewallApi;
         // self::$api->getConfig()->setHost("http://localhost:8080/1.2");
-        FirewallApiTest::$api->getConfig()->setUsername("toughbyte");
-        FirewallApiTest::$api->getConfig()->setPassword("Topsekret5");
+        $this->api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
+        $this->api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
         self::$server = ServerHelper::createReadyServer();
     }
 
