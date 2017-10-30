@@ -50,8 +50,6 @@ class AccountApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->api = new AccountApi;
-        echo "Environment".getenv("UPCLOUD_API_TEST_USER");
-        echo "Environment".getenv("UPCLOUD_API_TEST_PASSWORD");
         $this->api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
         $this->api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
     }
