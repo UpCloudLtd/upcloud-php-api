@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **state** | [**\Upcloud\ApiClient\Model\ServerState**](ServerState.md) |  | [optional] 
 **storage_devices** | [**\Upcloud\ApiClient\Model\ServerStorageDevices**](ServerStorageDevices.md) |  | [optional] 
 **tags** | [**\Upcloud\ApiClient\Model\ServerTags**](ServerTags.md) |  | [optional] 
-**timezone** | [**\Upcloud\ApiClient\Model\Timezone**](Timezone.md) | A timezone identifier, e.g. Europe/Helsinki. See Timezones. | [optional] 
+**timezone** | **string** | A timezone identifier, e.g. Europe/Helsinki. See Timezones. | [optional] 
 **title** | **string** | A short description. | [optional] 
 **uuid** | **string** |  | [optional] 
 **video_model** | **string** | The model of the server&#39;s video interface. | [optional] [default to 'vga']

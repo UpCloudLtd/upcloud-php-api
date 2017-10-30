@@ -207,7 +207,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **storage_id** | **string**| Storage id |
- **storage** | [**\Upcloud\ApiClient\Model\CloneStorageRequest**](../Model/CloneStorageRequest.md)|  | [optional]
+ **storage** | [**\Upcloud\ApiClient\Model\CloneStorageRequest**](../Model/CloneStorageRequest.md)|  |
 
 ### Return type
 

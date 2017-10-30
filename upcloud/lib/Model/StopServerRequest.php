@@ -26,6 +26,7 @@ use \ArrayAccess;
  * StopServerRequest Class Doc Comment
  *
  * @category    Class
+ * @description stop server request
  * @package     Upcloud\ApiClient
  */
 class StopServerRequest implements ArrayAccess

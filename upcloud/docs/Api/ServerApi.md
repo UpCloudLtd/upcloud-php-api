@@ -858,7 +858,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **stopServer**
-> \Upcloud\ApiClient\Model\CreateServerResponse stopServer($server_id, $stop_server)
+> \Upcloud\ApiClient\Model\CreateServerResponse stopServer($server_id, $stop_server_request)
 
 Stop server
 
@@ -875,10 +875,10 @@ Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PA
 
 $api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to stop
-$stop_server = new \Upcloud\ApiClient\Model\StopServer(); // \Upcloud\ApiClient\Model\StopServer | 
+$stop_server_request = new \Upcloud\ApiClient\Model\StopServer(); // \Upcloud\ApiClient\Model\StopServer | 
 
 try {
-    $result = $api_instance->stopServer($server_id, $stop_server);
+    $result = $api_instance->stopServer($server_id, $stop_server_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ServerApi->stopServer: ', $e->getMessage(), PHP_EOL;
@@ -891,7 +891,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **server_id** | **string**| Id of server to stop |
- **stop_server** | [**\Upcloud\ApiClient\Model\StopServer**](../Model/StopServer.md)|  |
+ **stop_server_request** | [**\Upcloud\ApiClient\Model\StopServer**](../Model/StopServer.md)|  |
 
 ### Return type
 

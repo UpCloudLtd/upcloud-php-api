@@ -4179,14 +4179,14 @@ class ServerApi
      * Stop server
      *
      * @param string $server_id Id of server to stop (required)
-     * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
+     * @param \Upcloud\ApiClient\Model\StopServer $stop_server_request  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateServerResponse
      */
-    public function stopServer($server_id, $stop_server)
+    public function stopServer($server_id, $stop_server_request)
     {
-        list($response) = $this->stopServerWithHttpInfo($server_id, $stop_server);
+        list($response) = $this->stopServerWithHttpInfo($server_id, $stop_server_request);
         return $response;
     }
 
@@ -4196,15 +4196,15 @@ class ServerApi
      * Stop server
      *
      * @param string $server_id Id of server to stop (required)
-     * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
+     * @param \Upcloud\ApiClient\Model\StopServer $stop_server_request  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function stopServerWithHttpInfo($server_id, $stop_server)
+    public function stopServerWithHttpInfo($server_id, $stop_server_request)
     {
         $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->stopServerRequest($server_id, $stop_server);
+        $request = $this->stopServerRequest($server_id, $stop_server_request);
 
         try {
 
@@ -4282,13 +4282,13 @@ class ServerApi
      * Stop server
      *
      * @param string $server_id Id of server to stop (required)
-     * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
+     * @param \Upcloud\ApiClient\Model\StopServer $stop_server_request  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function stopServerAsync($server_id, $stop_server)
+    public function stopServerAsync($server_id, $stop_server_request)
     {
-        return $this->stopServerAsyncWithHttpInfo($server_id, $stop_server)->then(function ($response) {
+        return $this->stopServerAsyncWithHttpInfo($server_id, $stop_server_request)->then(function ($response) {
             return $response[0];
         });
     }
@@ -4299,14 +4299,14 @@ class ServerApi
      * Stop server
      *
      * @param string $server_id Id of server to stop (required)
-     * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
+     * @param \Upcloud\ApiClient\Model\StopServer $stop_server_request  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function stopServerAsyncWithHttpInfo($server_id, $stop_server)
+    public function stopServerAsyncWithHttpInfo($server_id, $stop_server_request)
     {
         $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->stopServerRequest($server_id, $stop_server);
+        $request = $this->stopServerRequest($server_id, $stop_server_request);
 
         return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
             $responseBody = $response->getBody();
@@ -4340,19 +4340,19 @@ class ServerApi
      * Create request for operation 'stopServer'
      *
      * @param string $server_id Id of server to stop (required)
-     * @param \Upcloud\ApiClient\Model\StopServer $stop_server  (required)
+     * @param \Upcloud\ApiClient\Model\StopServer $stop_server_request  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function stopServerRequest($server_id, $stop_server)
+    protected function stopServerRequest($server_id, $stop_server_request)
     {
         // verify the required parameter 'server_id' is set
         if ($server_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $server_id when calling stopServer');
         }
-        // verify the required parameter 'stop_server' is set
-        if ($stop_server === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $stop_server when calling stopServer');
+        // verify the required parameter 'stop_server_request' is set
+        if ($stop_server_request === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $stop_server_request when calling stopServer');
         }
 
         $resourcePath = '/server/{serverId}/stop';
@@ -4370,8 +4370,8 @@ class ServerApi
 
         // body params
         $_tempBody = null;
-        if (isset($stop_server)) {
-            $_tempBody = $stop_server;
+        if (isset($stop_server_request)) {
+            $_tempBody = $stop_server_request;
         }
 
         if ($multipart) {

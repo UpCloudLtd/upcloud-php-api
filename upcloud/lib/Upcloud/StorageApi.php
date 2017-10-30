@@ -815,12 +815,12 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Upcloud\ApiClient\Model\CreateStorageResponse
      */
-    public function cloneStorage($storage_id, $storage = null)
+    public function cloneStorage($storage_id, $storage)
     {
         list($response) = $this->cloneStorageWithHttpInfo($storage_id, $storage);
         return $response;
@@ -832,12 +832,12 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function cloneStorageWithHttpInfo($storage_id, $storage = null)
+    public function cloneStorageWithHttpInfo($storage_id, $storage)
     {
         $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
         $request = $this->cloneStorageRequest($storage_id, $storage);
@@ -918,11 +918,11 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function cloneStorageAsync($storage_id, $storage = null)
+    public function cloneStorageAsync($storage_id, $storage)
     {
         return $this->cloneStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
             return $response[0];
@@ -935,11 +935,11 @@ class StorageApi
      * Clone storage
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function cloneStorageAsyncWithHttpInfo($storage_id, $storage = null)
+    public function cloneStorageAsyncWithHttpInfo($storage_id, $storage)
     {
         $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
         $request = $this->cloneStorageRequest($storage_id, $storage);
@@ -976,15 +976,19 @@ class StorageApi
      * Create request for operation 'cloneStorage'
      *
      * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (optional)
+     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function cloneStorageRequest($storage_id, $storage = null)
+    protected function cloneStorageRequest($storage_id, $storage)
     {
         // verify the required parameter 'storage_id' is set
         if ($storage_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling cloneStorage');
+        }
+        // verify the required parameter 'storage' is set
+        if ($storage === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $storage when calling cloneStorage');
         }
 
         $resourcePath = '/storage/{storageId}/clone';

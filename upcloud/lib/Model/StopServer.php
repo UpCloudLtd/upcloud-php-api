@@ -36,7 +36,7 @@ class StopServer implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'stop_server';
+    protected static $swaggerModelName = 'stopServer';
 
     /**
       * Array of property to type mappings. Used for (de)serialization

@@ -1,11 +1,19 @@
 # upcloud
 The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
 
+## Table of content
+* [Installation](#installation)
+* [Usage](#usage)
+* [Documentation](#documentation)
+* [Issues](#issues)
+* [Contributing](#contributing-optional)
+* [License](#license)
+
 ## Requirements
 
 PHP 5.5 and later
 
-## Installation & Usage
+## Installation
 ### Composer
 
 To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
@@ -43,7 +51,7 @@ composer install
 ./vendor/bin/phpunit
 ```
 
-## Getting Started
+## Usage
 
 Please follow the [installation procedure](#installation--usage) and then run the following:
 
@@ -67,7 +75,7 @@ try {
 ?>
 ```
 
-## Documentation for API Endpoints
+## Documentation
 
 All URIs are relative to *https://api.upcloud.com/1.2*
 
@@ -220,3 +228,14 @@ Class | Method | HTTP request | Description
 
 
 
+## Issues
+
+[Open a new issue here](https://github.com/UpCloudLtd/upcloud-php-api/issues/new).
+
+## Contributing
+
+How to contribute to the software. Forking and pull requests.
+
+## License
+
+This project is distributed under the [MIT License](https://opensource.org/licenses/MIT), see LICENSE.txt for more information.

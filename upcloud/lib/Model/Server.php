@@ -59,7 +59,7 @@ class Server implements ArrayAccess
         'state' => '\Upcloud\ApiClient\Model\ServerState',
         'storage_devices' => '\Upcloud\ApiClient\Model\ServerStorageDevices',
         'tags' => '\Upcloud\ApiClient\Model\ServerTags',
-        'timezone' => '\Upcloud\ApiClient\Model\Timezone',
+        'timezone' => 'string',
         'title' => 'string',
         'uuid' => 'string',
         'video_model' => 'string',
@@ -731,7 +731,7 @@ class Server implements ArrayAccess
 
     /**
      * Gets timezone
-     * @return \Upcloud\ApiClient\Model\Timezone
+     * @return string
      */
     public function getTimezone()
     {
@@ -740,7 +740,7 @@ class Server implements ArrayAccess
 
     /**
      * Sets timezone
-     * @param \Upcloud\ApiClient\Model\Timezone $timezone A timezone identifier, e.g. Europe/Helsinki. See Timezones.
+     * @param string $timezone A timezone identifier, e.g. Europe/Helsinki. See Timezones.
      * @return $this
      */
     public function setTimezone($timezone)
