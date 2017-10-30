@@ -1,4 +1,4 @@
-# upcloud
+# 
 The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
 
 ## Table of content
@@ -39,7 +39,7 @@ Then run `composer install`
 Download the files and include `autoload.php`:
 
 ```php
-    require_once('/path/to/upcloud/vendor/autoload.php');
+    require_once('/path/to//vendor/autoload.php');
 ```
 
 ## Tests
