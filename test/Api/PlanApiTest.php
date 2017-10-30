@@ -42,7 +42,7 @@ class PlanApiTest extends \PHPUnit_Framework_TestCase
     {
         self::$api = new PlanApi;
         self::$api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
-        self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORLD"));
+        self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
     }
 
     /**
