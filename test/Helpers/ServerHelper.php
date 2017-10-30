@@ -56,7 +56,7 @@ class ServerHelper
                 $server = self::$api->serverDetails($server["uuid"])["server"];
                 if ($server["state"] === ServerState::MAINTENANCE) {
                     echo "Waiting for server..." . "\n";
-                    sleep(5);
+                    sleep(60);
                     return self::createReadyServer($server);
                 } else {
                     return $server;
