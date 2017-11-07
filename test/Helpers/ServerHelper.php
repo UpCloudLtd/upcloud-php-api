@@ -49,7 +49,7 @@ class ServerHelper
     public static function createReadyServer($server = defaultServer)
     {
         try {
-            if ($server["uuid"] === null) {
+            if (!isset($server["uuid"])) {
                 $createdServer = self::createServer()["server"];
                 return self::createReadyServer($createdServer);
             } else {
