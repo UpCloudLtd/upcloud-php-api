@@ -2,19 +2,20 @@
 
 [![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-php-api.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-php-api)
 
-The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
+This PHP API client library provides integration with the UpCloud API allowing operations used to manage resources on UpCloud. The client is a web service interface that uses HTTPS to connect to the API. The API follows the principles of a RESTful web service wherever possible. 
+
+The base URL for all API operations is  https://api.upcloud.com/ and require basic authentication using UpCloud username and password. We recommend [creating a subaccount](https://www.upcloud.com/support/server-tags-and-group-accounts/) dedicated for the API communication for security purposes. This allows you to restrict API access by servers, storages, and tags ensuring you will never accidentally affect critical systems.
 
 ## Table of content
 * [Installation](#installation)
 * [Usage](#usage)
 * [Documentation](#documentation)
 * [Issues](#issues)
-* [Contributing](#contributing-optional)
 * [License](#license)
 
 ## Requirements
 
-PHP 5.5 and later
+Using this library requires the PHP version 5.5 and later.
 
 ## Installation
 ### Composer
@@ -37,7 +38,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
 
 Then run `composer install`
 
-### Manual Installation
+### Manual installation
 
 Download the files and include `autoload.php`:
 
@@ -63,8 +64,8 @@ Please follow the [installation procedure](#installation--usage) and then run th
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: baseAuth
-Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
-Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('UPCLOUD_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('UPCLOUD_PASSWORD');
 
 $api_instance = new Upcloud\ApiClient\Api\AccountApi();
 
@@ -142,7 +143,7 @@ Class | Method | HTTP request | Description
 *ZoneApi* | [**listZones**](docs/Api/ZoneApi.md#listzones) | **GET** /zone | List available zones
 
 
-## Documentation For Models
+## Documentation of the models
 
  - [Account](docs/Model/Account.md)
  - [AccountResponse](docs/Model/AccountResponse.md)
@@ -218,26 +219,20 @@ Class | Method | HTTP request | Description
  - [ZoneListResponseZones](docs/Model/ZoneListResponseZones.md)
 
 
-## Documentation For Authorization
+## Documentation for authorization
 
+It's recommended to store the username and password in a separate configuration file while developing API applications to avoid accidentally publishing your account credentials.
 
-## baseAuth
+### baseAuth
 
 - **Type**: HTTP basic authentication
-
-
-## Author
-
-
-
+- **Username**: Your UpCloud API username
+- **Password**: Your UpCloud API user's password
 
 ## Issues
 
-[Open a new issue here](https://github.com/UpCloudLtd/upcloud-php-api/issues/new).
+Found a bug, have a problem using the client, or anything else about the library you would want to mention? [Open a new issue here](https://github.com/UpCloudLtd/upcloud-php-api/issues/new) to get in contact.
 
-## Contributing
-
-How to contribute to the software. Forking and pull requests.
 
 ## License
 
