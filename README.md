@@ -57,7 +57,7 @@ composer install
 
 ## Usage
 
-Please follow the [installation procedure](#installation--usage) and then run the following:
+Please follow the [installation procedure](#installation--usage) and then run the following (*NOTE*: In real production applications you should use for example ENV variables instead of inserting credentials directly to code and to version control):
 
 ```php
 <?php
