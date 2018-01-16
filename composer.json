@@ -1,13 +1,13 @@
 {
-    "name": "GIT_USER_ID/GIT_REPO_ID",
-    "description": "",
+    "name": "upcloudltd/upcloud-php-api",
+    "description": "UpCloud PHP API",
     "keywords": [
-        "swagger",
         "php",
         "sdk",
-        "api"
+        "api",
+	"upcloud"
     ],
-    "homepage": "http://swagger.io",
+    "homepage": "https://github.com/UpCloudLtd/upcloud-php-api",
     "license": "proprietary",
     "authors": [
         {
@@ -32,5 +32,6 @@
     },
     "autoload-dev": {
         "psr-4": { "Upcloud\\ApiClient\\" : "test/" }
-    }
+    },
+    "minimum-stability":"stable"
 }

@@ -27,11 +27,11 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+      "url": "https://github.com/mlackman/upcloud-php-api.git"
     }
   ],
   "require": {
-    "GIT_USER_ID/GIT_REPO_ID": "*@dev"
+    "upcloudltd/upcloud-php-api": "*@dev"
   }
 }
 ```
@@ -63,11 +63,10 @@ Please follow the [installation procedure](#installation--usage) and then run th
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure HTTP basic authorization: baseAuth
-Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('UPCLOUD_USERNAME');
-Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('UPCLOUD_PASSWORD');
-
-$api_instance = new Upcloud\ApiClient\Api\AccountApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\AccountApi();
+$config = $api_instance->getConfig();
+$config->setUsername('YOUR UPCLOUD USERNAME');
+$config->setPassword('YOUR UPCLOUD PASSWORD');
 
 try {
     $result = $api_instance->getAccount();
