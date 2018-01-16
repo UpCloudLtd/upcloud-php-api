@@ -27,7 +27,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/mlackman/upcloud-php-api.git"
+      "url": "https://github.com/upcloudltd/upcloud-php-api.git"
     }
   ],
   "require": {
