@@ -87,7 +87,7 @@ class ServerHelper
                     }
                     flush();
                 }
-                sleep(60);
+                sleep(30);
                 self::deleteServer($server, $tryings + 1);
                 return;
             }
