@@ -85,7 +85,8 @@ class ServerHelper
                     flush();
                 }
                 sleep(60);
-                return self::deleteServer($server, $tryings + 1);
+                self::deleteServer($server, $tryings + 1);
+                return;
             }
             try {
                 self::$api->deleteServer($server["uuid"]);
