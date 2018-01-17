@@ -82,6 +82,9 @@ class ServerHelper
                     ]]));
                 } catch (ApiException $e) {
                     echo "Error stopping: " . $e->getMessage() . "\n";
+                    if ($e->getCode() == "404") {
+                        return;
+                    }
                     flush();
                 }
                 sleep(60);
