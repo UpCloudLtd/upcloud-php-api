@@ -121,7 +121,6 @@ class Serializer
             $text = wordwrap($text, $wrapLength);
             return $text;
         }
-
         return $text;
     }
 
@@ -139,7 +138,6 @@ class Serializer
             if ($wrapLength !== null) {
                 $tagText = wordwrap($tagText, $wrapLength);
             }
-
             $tagText = str_replace("\n", "\n{$indent} * ", $tagText);
 
             $comment .= "{$indent} * {$tagText}\n";
