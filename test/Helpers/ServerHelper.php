@@ -124,6 +124,8 @@ class ServerHelper
                 }
                 sleep(15);
                 self::stopServer($server, $tryings + 1);
+            } else {
+                echo "Server already stopped.";
             }
         }
     }
