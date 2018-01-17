@@ -105,6 +105,7 @@ class ServerHelper
         echo "Trying #". $tryings."\n";
         if ($server != null) {
             echo "Server: ".$server["uuid"]."\n";
+            $server = self::$api->serverDetails($server["uuid"])["server"];
             if ($server["state"] != ServerState::STOPPED) {
                 echo "Stopping server...\n";
                 try {
