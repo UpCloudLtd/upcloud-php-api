@@ -67,29 +67,6 @@ class ServerHelper
         }
     }
 
-    public static function stopServer($server, $tryings) {
-        if ($server !== null) {
-            echo "Stopping server ". $server["uuid"] . "...\n";
-            echo "Trying #" . $tryings . "\n";
-            if ($server["state"] !== ServerState::STOPPED) {
-                try {
-                    $server = self::$api->stopServer($server["uuid"], new StopServer(["stop_server" => [
-                        "stop_type" => StopServerRequest::STOP_TYPE_HARD,
-                        "timeout" => 60
-                    ]]));
-                } catch (ApiException $e) {
-                    echo "Error stopping: " . $e->getMessage() . "\n";
-                    if ($e->getCode() == "404") {
-                        return;
-                    }
-                    flush();
-                }
-                sleep(15);
-                self::stopServer($server, $tryings + 1);
-            }
-        }
-    }
-
     public static function deleteServer($server, $tryings)
     {
         echo "Deleting server: " . $server["uuid"] . "\n";
@@ -140,6 +117,10 @@ class ServerHelper
                     sleep(15);
                     self::stopServer($server, $tryings + 1);
                 } catch (ApiException $e) {
+                    echo "Error stopping: " . $e->getMessage() . "\n";
+                    if ($e->getCode() == "404") {
+                        return;
+                    }
                     echo $e->getResponseBody();
                 }
             }
