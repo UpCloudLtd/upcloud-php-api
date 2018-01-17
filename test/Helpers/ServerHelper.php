@@ -114,8 +114,6 @@ class ServerHelper
                             "timeout" => 60
                         ]
                     ]))["server"];
-                    sleep(15);
-                    self::stopServer($server, $tryings + 1);
                 } catch (ApiException $e) {
                     echo "Error stopping: " . $e->getMessage() . "\n";
                     if ($e->getCode() == "404") {
@@ -123,6 +121,8 @@ class ServerHelper
                     }
                     echo $e->getResponseBody();
                 }
+                sleep(15);
+                self::stopServer($server, $tryings + 1);
             }
         }
     }
