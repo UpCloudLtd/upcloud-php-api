@@ -80,7 +80,7 @@ class ServerHelper
                         "stop_type" => StopServerRequest::STOP_TYPE_HARD,
                         "timeout" => 60
                     ]]));
-                    sleep(15);
+                    sleep(30);
                     self::deleteServer($server, $tryings + 1);
                 } catch (ApiException $e) {
                     echo "Error stopping: " . $e->getMessage() . "\n";
