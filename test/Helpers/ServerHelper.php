@@ -67,16 +67,13 @@ class ServerHelper
         }
     }
 
-    public static function deleteServer($server, $tryings)
-    {
-        echo "Deleting server: " . $server["uuid"] . "\n";
-        echo "Trying to delete server: " . $server["uuid"] . "\n";
-        echo "Trying #" . $tryings . "\n";
+    public static function stopServer($server, $tryings) {
         if ($server !== null) {
+            echo "Stopping server ". $server["uuid"] . "...\n";
+            echo "Trying #" . $tryings . "\n";
             if ($server["state"] !== ServerState::STOPPED) {
-                echo "Stopping server..." . "\n";
                 try {
-                    self::$api->stopServer($server["uuid"], new StopServer(["stop_server" => [
+                    $server = self::$api->stopServer($server["uuid"], new StopServer(["stop_server" => [
                         "stop_type" => StopServerRequest::STOP_TYPE_HARD,
                         "timeout" => 60
                     ]]));
@@ -87,10 +84,19 @@ class ServerHelper
                     }
                     flush();
                 }
-                sleep(30);
-                self::deleteServer($server, $tryings + 1);
-                return;
+                sleep(15);
+                self::stopServer($server, $tryings + 1);
             }
+        }
+    }
+
+    public static function deleteServer($server, $tryings)
+    {
+        echo "Deleting server: " . $server["uuid"] . "\n";
+        echo "Trying to delete server: " . $server["uuid"] . "\n";
+        echo "Trying #" . $tryings . "\n";
+        if ($server !== null) {
+            self::stopServer($server);
             try {
                 self::$api->deleteServer($server["uuid"]);
             } catch (ApiException $e) {
@@ -98,6 +104,7 @@ class ServerHelper
                 flush();
                 echo "Code: ".$e->getCode()."\n";
                 if ($e->getCode() != "404") {
+                    sleep(15);
                     self::deleteServer($server, $tryings + 1);
                 }
             }
