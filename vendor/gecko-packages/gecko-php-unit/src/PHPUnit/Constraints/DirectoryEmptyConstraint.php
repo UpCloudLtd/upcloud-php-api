@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -13,14 +11,12 @@ declare(strict_types=1);
 
 namespace GeckoPackages\PHPUnit\Constraints;
 
-use PHPUnit\Framework\Constraint\Constraint;
-
 /**
  * @api
  *
  * @author SpacePossum
  */
-final class DirectoryEmptyConstraint extends Constraint
+final class DirectoryEmptyConstraint extends \PHPUnit_Framework_Constraint
 {
     /**
      * {@inheritdoc}

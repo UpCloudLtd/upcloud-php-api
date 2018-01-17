@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -13,8 +11,6 @@ declare(strict_types=1);
 
 namespace GeckoPackages\PHPUnit\Constraints;
 
-use PHPUnit\Framework\Constraint\Constraint;
-
 /**
  * @note Some code is derived from the example on PHP net (http://php.net/manual/en/function.fileperms.php)
  *
@@ -22,7 +18,7 @@ use PHPUnit\Framework\Constraint\Constraint;
  *
  * @author SpacePossum
  */
-final class FilePermissionsIsIdenticalConstraint extends Constraint
+final class FilePermissionsIsIdenticalConstraint extends \PHPUnit_Framework_Constraint
 {
     /**
      * @var int|string

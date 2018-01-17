@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -15,12 +13,13 @@ namespace GeckoPackages\PHPUnit\Asserts;
 
 use GeckoPackages\PHPUnit\Constraints\NumberRangeConstraint;
 use GeckoPackages\PHPUnit\Constraints\UnsignedIntConstraint;
-use PHPUnit\Framework\Constraint\LogicalNot;
 
 /**
  * Provides asserts for testing values with ranges.
  *
  * Additional PHPUnit asserts for testing if numbers are within or on ranges.
+ *
+ * @requires PHPUnit >= 3.0.0 (https://phpunit.de/)
  *
  * @api
  *
@@ -36,7 +35,7 @@ trait RangeAssertTrait
      * @param mixed     $actual
      * @param string    $message
      */
-    public static function assertNumberInRange($lowerBoundary, $upperBoundary, $actual, string $message = '')
+    public static function assertNumberInRange($lowerBoundary, $upperBoundary, $actual, $message = '')
     {
         self::assertNumberRangeMatch($lowerBoundary, $upperBoundary, $actual, $message, 'assertNumberInRange', false, false);
     }
@@ -49,7 +48,7 @@ trait RangeAssertTrait
      * @param mixed     $actual
      * @param string    $message
      */
-    public static function assertNumberNotInRange($lowerBoundary, $upperBoundary, $actual, string $message = '')
+    public static function assertNumberNotInRange($lowerBoundary, $upperBoundary, $actual, $message = '')
     {
         self::assertNumberRangeMatch($lowerBoundary, $upperBoundary, $actual, $message, 'assertNumberNotInRange', false, true);
     }
@@ -62,7 +61,7 @@ trait RangeAssertTrait
      * @param mixed     $actual
      * @param string    $message
      */
-    public static function assertNumberNotOnRange($lowerBoundary, $upperBoundary, $actual, string $message = '')
+    public static function assertNumberNotOnRange($lowerBoundary, $upperBoundary, $actual, $message = '')
     {
         self::assertNumberRangeMatch($lowerBoundary, $upperBoundary, $actual, $message, 'assertNumberNotOnRange', true, true);
     }
@@ -75,7 +74,7 @@ trait RangeAssertTrait
      * @param mixed     $actual
      * @param string    $message
      */
-    public static function assertNumberOnRange($lowerBoundary, $upperBoundary, $actual, string $message = '')
+    public static function assertNumberOnRange($lowerBoundary, $upperBoundary, $actual, $message = '')
     {
         self::assertNumberRangeMatch($lowerBoundary, $upperBoundary, $actual, $message, 'assertNumberOnRange', true, false);
     }
@@ -86,9 +85,9 @@ trait RangeAssertTrait
      * @param mixed  $actual
      * @param string $message
      */
-    public function assertUnsignedInt($actual, string $message = '')
+    public function assertUnsignedInt($actual, $message = '')
     {
-        AssertHelper::assertMethodDependency(__CLASS__, __TRAIT__, 'assertUnsignedInt', ['assertThat']);
+        AssertHelper::assertMethodDependency(__CLASS__, __TRAIT__, 'assertUnsignedInt', array('assertThat'));
         self::assertThat($actual, new UnsignedIntConstraint(), $message);
     }
 
@@ -105,10 +104,10 @@ trait RangeAssertTrait
         $lowerBoundary,
         $upperBoundary,
         $actual,
-        string $message,
-        string $method,
-        bool $onBoundary,
-        bool $negative
+        $message,
+        $method,
+        $onBoundary,
+        $negative
     ) {
         if (!is_int($lowerBoundary) && !is_float($lowerBoundary)) {
             throw AssertHelper::createArgumentException(__TRAIT__, $method, 'float or int', $lowerBoundary);
@@ -120,25 +119,24 @@ trait RangeAssertTrait
 
         if ($lowerBoundary >= $upperBoundary) {
             $message = sprintf(
-                'lower boundary %s must be smaller than upper boundary %s.',
+                'lower boundary %s must be smaller than upper boundary %s',
                 is_int($lowerBoundary) ? '%d' : '%.3f',
                 is_int($upperBoundary) ? '%d' : '%.3f'
             );
 
-            throw AssertHelper::createArgumentExceptionWithMessage(
+            throw AssertHelper::createException(
                 __TRAIT__,
                 $method,
-                $lowerBoundary,
                 sprintf($message, $lowerBoundary, $upperBoundary)
             );
         }
 
         $rangeConstraint = new NumberRangeConstraint($lowerBoundary, $upperBoundary, $onBoundary);
         if ($negative) {
-            $rangeConstraint = new LogicalNot($rangeConstraint);
+            $rangeConstraint = new \PHPUnit_Framework_Constraint_Not($rangeConstraint);
         }
 
-        AssertHelper::assertMethodDependency(__CLASS__, __TRAIT__, $method, ['assertThat']);
+        AssertHelper::assertMethodDependency(__CLASS__, __TRAIT__, $method, array('assertThat'));
         self::assertThat($actual, $rangeConstraint, $message);
     }
 }
