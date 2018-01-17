@@ -81,11 +81,11 @@ class ServerHelper
                         "timeout" => 60
                     ]]));
                     sleep(60);
-                    self::deleteServer($server, $tryings + 1);
                 } catch (ApiException $e) {
                     echo "Error stopping: " . $e->getMessage() . "\n";
                     flush();
                 }
+                return self::deleteServer($server, $tryings + 1);
             }
             try {
                 self::$api->deleteServer($server["uuid"]);
