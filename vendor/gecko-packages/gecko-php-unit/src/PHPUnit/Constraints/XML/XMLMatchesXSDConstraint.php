@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -28,7 +26,7 @@ final class XMLMatchesXSDConstraint extends AbstractXMLConstraint
     /**
      * @param string $XSD
      */
-    public function __construct(string $XSD)
+    public function __construct($XSD)
     {
         parent::__construct();
 

@@ -9,67 +9,29 @@
  * file that was distributed with this source code.
  */
 
+@trigger_error('The Twig_Function class is deprecated since version 1.12 and will be removed in 2.0. Use Twig_SimpleFunction instead.', E_USER_DEPRECATED);
+
 /**
  * Represents a template function.
  *
- * @final
+ * Use Twig_SimpleFunction instead.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  *
- * @see http://twig.sensiolabs.org/doc/templates.html#functions
+ * @deprecated since 1.12 (to be removed in 2.0)
  */
-class Twig_Function
+abstract class Twig_Function implements Twig_FunctionInterface, Twig_FunctionCallableInterface
 {
-    private $name;
-    private $callable;
-    private $options;
-    private $arguments = array();
+    protected $options;
+    protected $arguments = array();
 
-    /**
-     * Creates a template function.
-     *
-     * @param string        $name     Name of this function
-     * @param callable|null $callable A callable implementing the function. If null, you need to overwrite the "node_class" option to customize compilation.
-     * @param array         $options  Options array
-     */
-    public function __construct(string $name, $callable = null, array $options = array())
+    public function __construct(array $options = array())
     {
-        if (__CLASS__ !== get_class($this)) {
-            @trigger_error('Overriding '.__CLASS__.' is deprecated since version 2.4.0 and the class will be final in 3.0.', E_USER_DEPRECATED);
-        }
-
-        $this->name = $name;
-        $this->callable = $callable;
         $this->options = array_merge(array(
             'needs_environment' => false,
             'needs_context' => false,
-            'is_variadic' => false,
-            'is_safe' => null,
-            'is_safe_callback' => null,
-            'node_class' => 'Twig_Node_Expression_Function',
-            'deprecated' => false,
-            'alternative' => null,
+            'callable' => null,
         ), $options);
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns the callable to execute for this function.
-     *
-     * @return callable|null
-     */
-    public function getCallable()
-    {
-        return $this->callable;
-    }
-
-    public function getNodeClass()
-    {
-        return $this->options['node_class'];
     }
 
     public function setArguments($arguments)
@@ -94,39 +56,19 @@ class Twig_Function
 
     public function getSafe(Twig_Node $functionArgs)
     {
-        if (null !== $this->options['is_safe']) {
+        if (isset($this->options['is_safe'])) {
             return $this->options['is_safe'];
         }
 
-        if (null !== $this->options['is_safe_callback']) {
-            return $this->options['is_safe_callback']($functionArgs);
+        if (isset($this->options['is_safe_callback'])) {
+            return call_user_func($this->options['is_safe_callback'], $functionArgs);
         }
 
         return array();
     }
 
-    public function isVariadic()
+    public function getCallable()
     {
-        return $this->options['is_variadic'];
-    }
-
-    public function isDeprecated()
-    {
-        return (bool) $this->options['deprecated'];
-    }
-
-    public function getDeprecatedVersion()
-    {
-        return $this->options['deprecated'];
-    }
-
-    public function getAlternative()
-    {
-        return $this->options['alternative'];
+        return $this->options['callable'];
     }
 }
-
-// For Twig 1.x compatibility
-class_alias('Twig_Function', 'Twig_SimpleFunction', false);
-
-class_alias('Twig_Function', 'Twig\TwigFunction', false);

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -13,18 +11,13 @@ declare(strict_types=1);
 
 namespace GeckoPackages\PHPUnit\Constraints;
 
-use PHPUnit\Framework\Constraint\IsIdentical;
-
 /**
  * @api
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  */
-final class SameStringsConstraint extends IsIdentical
+final class SameStringsConstraint extends \PHPUnit_Framework_Constraint_IsIdentical
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function additionalFailureDescription($other)
     {
         if (
@@ -36,8 +29,8 @@ final class SameStringsConstraint extends IsIdentical
 
         return ' #Warning: Strings contain different line endings! Debug using remapping ["\r" => "R", "\n" => "N", "\t" => "T"]:'
             ."\n"
-            .' -'.str_replace(["\r", "\n", "\t"], ['R', 'N', 'T'], $other)
+            .' -'.str_replace(array("\r", "\n", "\t"), array('R', 'N', 'T'), $other)
             ."\n"
-            .' +'.str_replace(["\r", "\n", "\t"], ['R', 'N', 'T'], $this->value);
+            .' +'.str_replace(array("\r", "\n", "\t"), array('R', 'N', 'T'), $this->value);
     }
 }

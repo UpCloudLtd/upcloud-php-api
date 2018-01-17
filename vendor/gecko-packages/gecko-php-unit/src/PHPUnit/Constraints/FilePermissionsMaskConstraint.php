@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -13,14 +11,12 @@ declare(strict_types=1);
 
 namespace GeckoPackages\PHPUnit\Constraints;
 
-use PHPUnit\Framework\Constraint\Constraint;
-
 /**
  * @api
  *
  * @author SpacePossum
  */
-final class FilePermissionsMaskConstraint extends Constraint
+final class FilePermissionsMaskConstraint extends \PHPUnit_Framework_Constraint
 {
     /**
      * @var int
@@ -30,7 +26,7 @@ final class FilePermissionsMaskConstraint extends Constraint
     /**
      * @param int $mask
      */
-    public function __construct(int $mask)
+    public function __construct($mask)
     {
         parent::__construct();
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -14,15 +12,15 @@ declare(strict_types=1);
 namespace GeckoPackages\PHPUnit\Asserts;
 
 use GeckoPackages\PHPUnit\Constraints\FileExistsConstraint;
-use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\Constraint\LogicalNot;
 
 /**
  * Replaces the PHPUnit `assertFileExists` method. This assert does not pass if there is a directory rather than a file.
  *
  * Replacement for PHPUnits `assertFileExists` and `assertFileNotExists`.
- * Asserts when the filename exists and is a regular file, i.e. directories do not pass (however a symlink to a file does).<br/>
- * <sub>Note. Since this changes the default behaviour of the PHPUnit assert this has been placed in a separate trait.</sub>
+ * Asserts when the filename exists and is a regular file, i.e. directories do not pass (symlink to a file does).
+ * (Note. Since this changes the default behaviour of the PHPUnit assert this has been placed in a separate trait)
+ *
+ * @requires PHPUnit >= 3.0.0 (https://phpunit.de/)
  *
  * @api
  *
@@ -49,18 +47,18 @@ trait FileExistsAssertTrait
      */
     public static function assertFileNotExists($filename, $message = '')
     {
-        self::assertFileExisting($filename, $message, 'assertFileNotExists', new LogicalNot(new FileExistsConstraint()));
+        self::assertFileExisting($filename, $message, 'assertFileNotExists', new \PHPUnit_Framework_Constraint_Not(new FileExistsConstraint()));
     }
 
     /**
-     * @param mixed      $filename
-     * @param string     $message
-     * @param string     $method
-     * @param Constraint $constraint
+     * @param mixed                         $filename
+     * @param string                        $message
+     * @param string                        $method
+     * @param \PHPUnit_Framework_Constraint $constraint
      */
-    private static function assertFileExisting($filename, string $message, string $method, Constraint $constraint)
+    private static function assertFileExisting($filename, $message, $method, \PHPUnit_Framework_Constraint $constraint)
     {
-        AssertHelper::assertMethodDependency(__CLASS__, __TRAIT__, $method, ['assertThat']);
+        AssertHelper::assertMethodDependency(__CLASS__, __TRAIT__, $method, array('assertThat'));
         self::assertThat($filename, $constraint, $message);
     }
 }

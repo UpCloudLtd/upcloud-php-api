@@ -7,14 +7,14 @@ The asserts are provided using Traits so no changes are needed in the hierarchy 
 
 The additional asserts are provided through the Traits:
 
-- **AliasAssertTrait**<br/>
-  Provides alias/short hand asserts.
 - **FileExistsAssertTrait**<br/>
   Replaces the PHPUnit `assertFileExists` method. This assert does not pass if there is a directory rather than a file.
 - **FileSystemAssertTrait**<br/>
   Provides asserts for testing directories, files and symbolic links.
 - **RangeAssertTrait**<br/>
   Provides asserts for testing values with ranges.
+- **ScalarAssertTrait**<br/>
+  Provides asserts for testing of scalars such as integer, float, etc.
 - **StringsAssertTrait**<br/>
   Provides asserts for testing of strings.
 - **XMLAssertTrait**<br/>
@@ -24,10 +24,8 @@ See Traits and asserts listing for more details.
 
 ### Requirements
 
-PHP 7<br/>
-PHPUnit 6
-
-<sub>Use ^v2.0 if you are using PHPUnit 5.</sub>
+PHP 5.4 (PHP 5.3.6 for the constraints), PHP 7 supported.<br/>
+PHPUnit 4.8.35 || ^5.4.3
 
 ### Install
 
@@ -36,11 +34,11 @@ Add the package to your `composer.json`.
 
 ```
 "require-dev": {
-    "gecko-packages/gecko-php-unit" : "^3.0"
+    "gecko-packages/gecko-php-unit" : "^2.0"
 }
 ```
 
-<sub>Please note we hint `-dev` here because typically you only need tests during development.</sub>
+Please note we hint `-dev` here because typically you only need tests during development.
 
 ### Usage
 
@@ -61,10 +59,119 @@ class myTest extends \PHPUnit_Framework_TestCase
 
 # Traits and asserts listing
 
-## AliasAssertTrait
-###### GeckoPackages\PHPUnit\Asserts\AliasAssertTrait
-Additional alias/shorthand PHPUnit asserts to test for some types etc.
+## FileExistsAssertTrait
+###### GeckoPackages\PHPUnit\Asserts\FileExistsAssertTrait
+Replacement for PHPUnits `assertFileExists` and `assertFileNotExists`.
+Asserts when the filename exists and is a regular file, i.e. directories do not pass (symlink to a file does).
+(Note. Since this changes the default behaviour of the PHPUnit assert this has been placed in a separate trait)
 
+Requires PHPUnit >= 3.0.0 (https://phpunit.de/).
+
+### Methods
+
+#### assertFileExists()
+###### assertFileExists(mixed $filename [,string $message = ''])
+Assert the filename exists and is a regular file.
+
+The inverse assertion
+#### assertFileNotExists()
+###### assertFileNotExists(mixed $filename [,string $message = ''])
+Assert the filename does not exists or is not a regular file.
+
+
+## FileSystemAssertTrait
+###### GeckoPackages\PHPUnit\Asserts\FileSystemAssertTrait
+Additional PHPUnit asserts for testing file (system) based logic.
+
+Requires PHPUnit >= 3.0.0 (https://phpunit.de/).
+
+### Methods
+
+#### assertDirectoryEmpty()
+###### assertDirectoryEmpty(mixed $filename [,string $message = ''])
+Assert that a directory exists and is empty.
+
+The inverse assertion
+#### assertDirectoryNotEmpty()
+###### assertDirectoryNotEmpty(mixed $filename [,string $message = ''])
+Assert that a directory exists and is not empty.
+
+
+#### assertDirectoryExists()
+###### assertDirectoryExists(mixed $filename [,string $message = ''])
+Assert that a directory exists (or is a symlink to a directory).
+
+The inverse assertion
+#### assertDirectoryNotExists()
+###### assertDirectoryNotExists(mixed $filename [,string $message = ''])
+Assert that a filename does not exists as directory.
+
+
+#### assertFileHasPermissions()
+###### assertFileHasPermissions(int|string $permissions, mixed $filename [,string $message = ''])
+Asserts that a file permission matches, for example: 'drwxrwxrwx' or '0664'.
+
+#### assertFileIsLink()
+###### assertFileIsLink(mixed $filename [,string $message = ''])
+Assert that a file is a symbolic link.
+
+The inverse assertion
+#### assertFileIsNotLink()
+###### assertFileIsNotLink(mixed $filename [,string $message = ''])
+Assert that a file is not a symbolic link.
+
+
+#### assertFileIsValidLink()
+###### assertFileIsValidLink(mixed $filename [,string $message = ''])
+Assert given value is a string, symlink and points to a file or directory that exists.
+
+#### assertFilePermissionMask()
+###### assertFilePermissionMask(int $permissionMask, mixed $filename [,string $message = ''])
+Asserts that a file permission matches mask, for example: '0007'.
+
+The inverse assertion
+#### assertFilePermissionNotMask()
+###### assertFilePermissionNotMask(int $permissionMask, mixed $filename [,string $message = ''])
+Asserts that a file permission does not matches mask, for example: '0607'.
+
+
+## RangeAssertTrait
+###### GeckoPackages\PHPUnit\Asserts\RangeAssertTrait
+Additional PHPUnit asserts for testing if numbers are within or on ranges.
+
+Requires PHPUnit >= 3.0.0 (https://phpunit.de/).
+
+### Methods
+
+#### assertNumberInRange()
+###### assertNumberInRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
+Assert that a number is within a given range (a,b).
+
+The inverse assertion
+#### assertNumberNotInRange()
+###### assertNumberNotInRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
+Assert that a number is not within a given range !(a,b).
+
+
+#### assertNumberOnRange()
+###### assertNumberOnRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
+Assert that a number is within a given range or on its boundaries [a,b].
+
+The inverse assertion
+#### assertNumberNotOnRange()
+###### assertNumberNotOnRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
+Assert that a number is not within a given range and not on its boundaries ![a,b].
+
+
+#### assertUnsignedInt()
+###### assertUnsignedInt(mixed $actual [,string $message = ''])
+Assert that given value is an unsigned int (>= 0).
+
+## ScalarAssertTrait
+###### GeckoPackages\PHPUnit\Asserts\ScalarAssertTrait
+Additional shorthand PHPUnit asserts to test (for) scalar types.
+
+Requires PHPUnit >= 3.5.0 (https://phpunit.de/).
 
 ### Methods
 
@@ -128,104 +235,10 @@ The inverse assertion
 Assert value is not a string.
 
 
-## FileExistsAssertTrait
-###### GeckoPackages\PHPUnit\Asserts\FileExistsAssertTrait
-Replacement for PHPUnits `assertFileExists` and `assertFileNotExists`.
-Asserts when the filename exists and is a regular file, i.e. directories do not pass (however a symlink to a file does).<br/>
-<sub>Note. Since this changes the default behaviour of the PHPUnit assert this has been placed in a separate trait.</sub>
-
-
-### Methods
-
-#### assertFileExists()
-###### assertFileExists(mixed $filename [,string $message = ''])
-Assert the filename exists and is a regular file.
-
-The inverse assertion
-#### assertFileNotExists()
-###### assertFileNotExists(mixed $filename [,string $message = ''])
-Assert the filename does not exists or is not a regular file.
-
-
-## FileSystemAssertTrait
-###### GeckoPackages\PHPUnit\Asserts\FileSystemAssertTrait
-Additional PHPUnit asserts for testing file (system) based logic.
-
-
-### Methods
-
-#### assertDirectoryEmpty()
-###### assertDirectoryEmpty(mixed $filename [,string $message = ''])
-Assert that a directory exists and is empty.
-
-The inverse assertion
-#### assertDirectoryNotEmpty()
-###### assertDirectoryNotEmpty(mixed $filename [,string $message = ''])
-Assert that a directory exists and is not empty.
-
-
-#### assertFileHasPermissions()
-###### assertFileHasPermissions(int|string $permissions, mixed $filename [,string $message = ''])
-Asserts that a file permission matches, for example: 'drwxrwxrwx' or '0664'.
-
-#### assertFileIsLink()
-###### assertFileIsLink(mixed $filename [,string $message = ''])
-Assert that a file is a symbolic link.
-
-The inverse assertion
-#### assertFileIsNotLink()
-###### assertFileIsNotLink(mixed $filename [,string $message = ''])
-Assert that a file is not a symbolic link.
-
-
-#### assertFileIsValidLink()
-###### assertFileIsValidLink(mixed $filename [,string $message = ''])
-Assert given value is a string, symlink and points to a file or directory that exists.
-
-#### assertFilePermissionMask()
-###### assertFilePermissionMask(int $permissionMask, mixed $filename [,string $message = ''])
-Asserts that a file permission matches mask, for example: '0007'.
-
-The inverse assertion
-#### assertFilePermissionNotMask()
-###### assertFilePermissionNotMask(int $permissionMask, mixed $filename [,string $message = ''])
-Asserts that a file permission does not matches mask, for example: '0607'.
-
-
-## RangeAssertTrait
-###### GeckoPackages\PHPUnit\Asserts\RangeAssertTrait
-Additional PHPUnit asserts for testing if numbers are within or on ranges.
-
-
-### Methods
-
-#### assertNumberInRange()
-###### assertNumberInRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
-Assert that a number is within a given range (a,b).
-
-The inverse assertion
-#### assertNumberNotInRange()
-###### assertNumberNotInRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
-Assert that a number is not within a given range !(a,b).
-
-
-#### assertNumberOnRange()
-###### assertNumberOnRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
-Assert that a number is within a given range or on its boundaries [a,b].
-
-The inverse assertion
-#### assertNumberNotOnRange()
-###### assertNumberNotOnRange(int|float $lowerBoundary, int|float $upperBoundary, mixed $actual [,string $message = ''])
-Assert that a number is not within a given range and not on its boundaries ![a,b].
-
-
-#### assertUnsignedInt()
-###### assertUnsignedInt(mixed $actual [,string $message = ''])
-Assert that given value is an unsigned int (>= 0).
-
 ## StringsAssertTrait
 ###### GeckoPackages\PHPUnit\Asserts\StringsAssertTrait
 
+Requires PHPUnit >= 3.0.0 (https://phpunit.de/).
 
 ### Methods
 
@@ -262,7 +275,9 @@ Assert value is a string and not only contains white space characters (" \t\n\r\
 ## XMLAssertTrait
 ###### GeckoPackages\PHPUnit\Asserts\XMLAssertTrait
 
-Requires libxml (https://secure.php.net/manual/en/book.libxml.php).
+Requires:
+* PHPUnit >= 3.0.0 (https://phpunit.de/)
+* libxml (https://secure.php.net/manual/en/book.libxml.php)
 
 ### Methods
 

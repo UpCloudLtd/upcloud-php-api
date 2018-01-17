@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -13,14 +11,12 @@ declare(strict_types=1);
 
 namespace GeckoPackages\PHPUnit\Constraints;
 
-use PHPUnit\Framework\Constraint\Constraint;
-
 /**
  * @api
  *
  * @author SpacePossum
  */
-final class ScalarConstraint extends Constraint
+final class ScalarConstraint extends \PHPUnit_Framework_Constraint
 {
     const TYPE_SCALAR = 1;
     const TYPE_BOOL = 2;
@@ -35,7 +31,7 @@ final class ScalarConstraint extends Constraint
     /**
      * @param int $type
      */
-    public function __construct(int $type)
+    public function __construct($type)
     {
         parent::__construct();
 

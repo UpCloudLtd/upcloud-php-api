@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the GeckoPackages.
  *
@@ -13,14 +11,12 @@ declare(strict_types=1);
 
 namespace GeckoPackages\PHPUnit\Constraints;
 
-use PHPUnit\Framework\Constraint\Constraint;
-
 /**
  * @api
  *
  * @author SpacePossum
  */
-final class NumberRangeConstraint extends Constraint
+final class NumberRangeConstraint extends \PHPUnit_Framework_Constraint
 {
     /**
      * @var int|float
@@ -42,7 +38,7 @@ final class NumberRangeConstraint extends Constraint
      * @param int|float $upperBoundary
      * @param bool      $onBoundary    pass if value is same as a boundary value, or false; value must be within the boundaries values
      */
-    public function __construct($lowerBoundary, $upperBoundary, bool $onBoundary)
+    public function __construct($lowerBoundary, $upperBoundary, $onBoundary)
     {
         parent::__construct();
 
