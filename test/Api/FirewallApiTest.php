@@ -39,7 +39,7 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
     public static $server;
     public static $testRule;
 
-    public const testFirewallRule = [
+    public static $testFirewallRule = [
         // "position" => "500",
         "direction" => Model\FirewallRule::DIRECTION_IN,
         "family" => Model\AddressFamily::I_PV4,
@@ -71,7 +71,7 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $serverId = self::$server["uuid"];
-        $newRule = self::testFirewallRule;
+        $newRule = self::$testFirewallRule;
         $newRule["comment"] = "Common firewall rule";
         $newRule["position"] = 500;
         $newRule["source_address_start"] = "193.168.1.1";
@@ -113,7 +113,7 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
     {
         $serverId = self::$server["uuid"];
         $createdRule = self::$api->createFirewallRule($serverId, new Model\FirewallRuleRequest([
-        "firewall_rule" => self::testFirewallRule
+        "firewall_rule" => self::$testFirewallRule
         ]))["firewall_rule"];
         $this->assertEquals($createdRule["direction"], Model\FirewallRule::DIRECTION_IN);
         $this->assertEquals($createdRule["family"], Model\AddressFamily::I_PV4);
@@ -141,7 +141,7 @@ class FirewallApiTest extends \PHPUnit_Framework_TestCase
     {
         $serverId = self::$server["uuid"];
         $createdRule = self::$api->createFirewallRule($serverId, new Model\FirewallRuleRequest([
-        "firewall_rule" => self::testFirewallRule
+        "firewall_rule" => self::$testFirewallRule
         ]))["firewall_rule"];
         $ruleForDelete = self::$api->getFirewallRule($serverId, $createdRule["position"])["firewall_rule"];
         $this->assertEquals($createdRule["position"], $ruleForDelete["position"]);
