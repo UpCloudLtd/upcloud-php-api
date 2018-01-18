@@ -73,20 +73,7 @@ class ServerHelper
         echo "Trying to delete server: " . $server["uuid"] . "\n";
         echo "Trying #" . $tryings . "\n";
         if ($server !== null) {
-            if ($server["state"] !== ServerState::STOPPED) {
-                echo "Stopping server..." . "\n";
-                try {
-                    self::$api->stopServer($server["uuid"], new StopServer(["stop_server" => [
-                        "stop_type" => StopServerRequest::STOP_TYPE_HARD,
-                        "timeout" => 60
-                    ]]));
-                    sleep(15);
-                    self::deleteServer($server, $tryings + 1);
-                } catch (ApiException $e) {
-                    echo "Error stopping: " . $e->getMessage() . "\n";
-                    flush();
-                }
-            }
+            self::stopServer($server);
             try {
                 self::$api->deleteServer($server["uuid"]);
             } catch (ApiException $e) {
@@ -94,6 +81,7 @@ class ServerHelper
                 flush();
                 echo "Code: ".$e->getCode()."\n";
                 if ($e->getCode() != "404") {
+                    sleep(15);
                     self::deleteServer($server, $tryings + 1);
                 }
             }
@@ -117,9 +105,10 @@ class ServerHelper
         echo "Trying #". $tryings."\n";
         if ($server != null) {
             echo "Server: ".$server["uuid"]."\n";
-            if ($server["state"] != ServerState::STOPPED) {
-                echo "Stopping server...\n";
-                try {
+            try {
+                $server = self::$api->serverDetails($server["uuid"])["server"];
+                if ($server["state"] != ServerState::STOPPED) {
+                    echo "Stopping server...\n";
                     $server = self::$api->stopServer($server["uuid"], new StopServer([
                         "stop_server" => [
                             "stop_type" => StopServerRequest::STOP_TYPE_HARD,
@@ -128,9 +117,15 @@ class ServerHelper
                     ]))["server"];
                     sleep(15);
                     self::stopServer($server, $tryings + 1);
-                } catch (ApiException $e) {
-                    echo $e->getResponseBody();
+                } else {
+                    echo "Server already stopped.";
                 }
+            } catch (ApiException $e) {
+                echo "Error stopping: " . $e->getMessage() . "\n";
+                if ($e->getCode() == "404") {
+                    return;
+                }
+                echo $e->getResponseBody();
             }
         }
     }
