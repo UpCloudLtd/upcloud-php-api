@@ -37,6 +37,7 @@ const defaultServer = [
     "zone" => "fi-hel1",
     "title" => "Firewall test server",
     "hostname" => "debian.example.com",
+    "password_delivery" => "none"
     "plan" => "1xCPU-1GB",
     "storage_devices" => [
         "storage_device" => [
