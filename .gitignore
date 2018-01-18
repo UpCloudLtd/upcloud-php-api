@@ -1,1 +1,3 @@
-upcloud/vendor
+vendor
+.DS_Store
+git_push.sh
