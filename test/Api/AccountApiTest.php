@@ -77,7 +77,7 @@ class AccountApiTest extends \PHPUnit_Framework_TestCase
     public function testGetAccount()
     {
         $account = $this->api->getAccount()->getAccount();
-        $this->assertEquals("toughbyte", $account->getUsername());
+        $this->assertEquals(getenv("UPCLOUD_API_TEST_USER"), $account->getUsername());
         $this->assertArrayHasKey("credits", $account);
     }
 }
