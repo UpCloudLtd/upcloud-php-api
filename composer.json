@@ -3,11 +3,11 @@
   "description": "UpCloud PHP API",
   "keywords": ["php", "sdk", "api", "upcloud"],
   "homepage": "https://github.com/UpCloudLtd/upcloud-php-api",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
-      "name": "Swagger and contributors",
-      "homepage": "https://github.com/swagger-api/swagger-codegen"
+      "name": "UpCloud",
+      "homepage": "https://www.upcloud.com"
     }
   ],
   "require": {
