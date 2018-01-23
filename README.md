@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-php-api.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-php-api)
 
-This PHP API client library provides integration with the UpCloud API allowing operations used to manage resources on UpCloud. The client is a web service interface that uses HTTPS to connect to the API. The API follows the principles of a RESTful web service wherever possible. 
+This PHP API client library provides integration with the UpCloud API allowing operations used to manage resources on UpCloud. The client is a web service interface that uses HTTPS to connect to the API. The API follows the principles of a RESTful web service wherever possible.
 
 The base URL for all API operations is  https://api.upcloud.com/ and require basic authentication using UpCloud username and password. We recommend [creating a subaccount](https://www.upcloud.com/support/server-tags-and-group-accounts/) dedicated for the API communication for security purposes. This allows you to restrict API access by servers, storages, and tags ensuring you will never accidentally affect critical systems.
 
@@ -24,19 +24,15 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
 
 ```
 {
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/upcloudltd/upcloud-php-api.git"
-    }
-  ],
   "require": {
-    "upcloudltd/upcloud-php-api": "*@dev"
+    "upcloudltd/upcloud-php-api": "v1.0.0"
   }
 }
 ```
 
 Then run `composer install`
+
+The upcloudltd/upcloud-php-api can be found from packagist.org, https://packagist.org/packages/upcloudltd/upcloud-php-api
 
 ### Manual installation
 
