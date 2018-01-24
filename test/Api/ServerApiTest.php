@@ -34,7 +34,7 @@ use \Upcloud\ApiClient\Model\CreateServerRequest;
  */
 
 const defaultServer = [
-    "zone" => "fi-hel1",
+    "zone" => "fi-hel2",
     "title" => "Firewall test server",
     "hostname" => "debian.example.com",
     "password_delivery" => "none",
