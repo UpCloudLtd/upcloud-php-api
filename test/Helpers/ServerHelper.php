@@ -10,16 +10,17 @@ use \Upcloud\ApiClient\Model\StopServerRequest;
 use \Upcloud\ApiClient\ApiException;
 
 const defaultServer = [
-    "zone" => "fi-hel1",
+    "zone" => "fi-hel2",
     "title" => "Firewall test server",
     "hostname" => "debian.example.com",
-    "plan" => "2xCPU-2GB",
+    "password_delivery" => "none",
+    "plan" => "1xCPU-1GB",
     "storage_devices" => [
         "storage_device" => [
             [
                 "action" => "clone",
                 "title" => "Debian from a template",
-                "size" => 50,
+                "size" => 30,
                 "storage" => "01000000-0000-4000-8000-000020030100",
                 "tier" => "maxiops"
             ]
