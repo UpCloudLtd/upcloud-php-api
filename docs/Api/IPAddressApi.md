@@ -27,7 +27,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip_address = new \Upcloud\ApiClient\Model\AddIpRequest(); // \Upcloud\ApiClient\Model\AddIpRequest | 
 
 try {
@@ -76,7 +76,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip = "ip_example"; // string | Ip address
 
 try {
@@ -124,7 +124,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip = "ip_example"; // string | Ip address
 
 try {
@@ -173,7 +173,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
     $result = $api_instance->listIps();
@@ -218,7 +218,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi(new \Http\Adapter\Guzzle6\Client());
 $ip = "ip_example"; // string | Ip address
 $ip_address = new \Upcloud\ApiClient\Model\ModifyIpRequest(); // \Upcloud\ApiClient\Model\ModifyIpRequest | 
 

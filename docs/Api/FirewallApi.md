@@ -26,7 +26,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule = new \Upcloud\ApiClient\Model\FirewallRuleRequest(); // \Upcloud\ApiClient\Model\FirewallRuleRequest | 
 
@@ -77,7 +77,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
@@ -127,7 +127,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
@@ -178,7 +178,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\FirewallApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\FirewallApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 
 try {

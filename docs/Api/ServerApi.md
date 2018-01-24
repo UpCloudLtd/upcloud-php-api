@@ -41,7 +41,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $tag_list = "tag_list_example"; // string | List of tags
 
@@ -92,7 +92,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $storage_device = new \Upcloud\ApiClient\Model\AttachStorageDeviceRequest(); // \Upcloud\ApiClient\Model\AttachStorageDeviceRequest | 
 
@@ -143,7 +143,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule = new \Upcloud\ApiClient\Model\FirewallRuleRequest(); // \Upcloud\ApiClient\Model\FirewallRuleRequest | 
 
@@ -194,7 +194,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server = new \Upcloud\ApiClient\Model\CreateServerRequest(); // \Upcloud\ApiClient\Model\CreateServerRequest | 
 
 try {
@@ -243,7 +243,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
@@ -291,7 +291,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to delete
 
 try {
@@ -339,7 +339,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $storage_device = new \Upcloud\ApiClient\Model\StorageDeviceDetachRequest(); // \Upcloud\ApiClient\Model\StorageDeviceDetachRequest | 
 
@@ -390,7 +390,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 
 try {
@@ -438,7 +438,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
@@ -489,7 +489,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
     $result = $api_instance->listServerConfigurations();
@@ -534,7 +534,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 
 try {
     $result = $api_instance->listServers();
@@ -579,7 +579,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $storage_device = new \Upcloud\ApiClient\Model\StorageDeviceLoadRequest(); // \Upcloud\ApiClient\Model\StorageDeviceLoadRequest | 
 
@@ -628,7 +628,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to modify
 $server = new \Upcloud\ApiClient\Model\Server(); // \Upcloud\ApiClient\Model\Server | 
 
@@ -675,7 +675,7 @@ Stops and starts a server. The server state must be `started`.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to restart
 $restart_server = new \Upcloud\ApiClient\Model\RestartServer(); // \Upcloud\ApiClient\Model\RestartServer | 
 
@@ -726,7 +726,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to return
 
 try {
@@ -775,7 +775,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 
 try {
@@ -824,7 +824,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to start
 
 try {
@@ -873,7 +873,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Id of server to stop
 $stop_server_request = new \Upcloud\ApiClient\Model\StopServer(); // \Upcloud\ApiClient\Model\StopServer | 
 
@@ -924,7 +924,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi(new \Http\Adapter\Guzzle6\Client());
 $server_id = "server_id_example"; // string | Server id
 $tag_name = "tag_name_example"; // string | Tag name
 
