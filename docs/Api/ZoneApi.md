@@ -1,13 +1,13 @@
 # Upcloud\ApiClient\ZoneApi
 
-All URIs are relative to *https://api.upcloud.com/1.2*
+All URIs are relative to _https://api.upcloud.com/1.2_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**listZones**](ZoneApi.md#listZones) | **GET** /zone | List available zones
-
+| Method                                | HTTP request  | Description          |
+| ------------------------------------- | ------------- | -------------------- |
+| [**listZones**](ZoneApi.md#listZones) | **GET** /zone | List available zones |
 
 # **listZones**
+
 > \Upcloud\ApiClient\Model\ZoneListResponse listZones()
 
 List available zones
@@ -15,6 +15,7 @@ List available zones
 Returns a list of available zones.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -23,7 +24,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ZoneApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ZoneApi();
 
 try {
     $result = $api_instance->listZones();
@@ -35,6 +36,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -47,8 +49,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-

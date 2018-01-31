@@ -1,18 +1,18 @@
 # Upcloud\ApiClient\TagApi
 
-All URIs are relative to *https://api.upcloud.com/1.2*
+All URIs are relative to _https://api.upcloud.com/1.2_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**assignTag**](TagApi.md#assignTag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
-[**createTag**](TagApi.md#createTag) | **POST** /tag | Create a new tag
-[**deleteTag**](TagApi.md#deleteTag) | **DELETE** /tag/{tagName} | Delete tag
-[**listTags**](TagApi.md#listTags) | **GET** /tag | List existing tags
-[**modifyTag**](TagApi.md#modifyTag) | **PUT** /tag/{tagName} | Modify existing tag
-[**untag**](TagApi.md#untag) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
-
+| Method                               | HTTP request                                | Description            |
+| ------------------------------------ | ------------------------------------------- | ---------------------- |
+| [**assignTag**](TagApi.md#assignTag) | **POST** /server/{serverId}/tag/{tagList}   | Assign tag to a server |
+| [**createTag**](TagApi.md#createTag) | **POST** /tag                               | Create a new tag       |
+| [**deleteTag**](TagApi.md#deleteTag) | **DELETE** /tag/{tagName}                   | Delete tag             |
+| [**listTags**](TagApi.md#listTags)   | **GET** /tag                                | List existing tags     |
+| [**modifyTag**](TagApi.md#modifyTag) | **PUT** /tag/{tagName}                      | Modify existing tag    |
+| [**untag**](TagApi.md#untag)         | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server |
 
 # **assignTag**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse assignTag($server_id, $tag_list)
 
 Assign tag to a server
@@ -20,6 +20,7 @@ Assign tag to a server
 Servers can be tagged with one or more tags. The tags used must exist
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -28,7 +29,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\TagApi();
 $server_id = "server_id_example"; // string | Server id
 $tag_list = "tag_list_example"; // string | List of tags
 
@@ -43,10 +44,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **tag_list** | **string**| List of tags |
+| Name          | Type       | Description  | Notes |
+| ------------- | ---------- | ------------ | ----- |
+| **server_id** | **string** | Server id    |
+| **tag_list**  | **string** | List of tags |
 
 ### Return type
 
@@ -58,12 +59,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createTag**
+
 > \Upcloud\ApiClient\Model\CreateNewTagResponse createTag($tag)
 
 Create a new tag
@@ -71,6 +73,7 @@ Create a new tag
 Creates a new tag. Existing servers can be tagged in same request
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -79,8 +82,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
-$tag = new \Upcloud\ApiClient\Model\TagCreateRequest(); // \Upcloud\ApiClient\Model\TagCreateRequest | 
+$api_instance = new Upcloud\ApiClient\Api\TagApi();
+$tag = new \Upcloud\ApiClient\Model\TagCreateRequest(); // \Upcloud\ApiClient\Model\TagCreateRequest |
 
 try {
     $result = $api_instance->createTag($tag);
@@ -93,9 +96,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tag** | [**\Upcloud\ApiClient\Model\TagCreateRequest**](../Model/TagCreateRequest.md)|  |
+| Name    | Type                                                                          | Description | Notes |
+| ------- | ----------------------------------------------------------------------------- | ----------- | ----- |
+| **tag** | [**\Upcloud\ApiClient\Model\TagCreateRequest**](../Model/TagCreateRequest.md) |             |
 
 ### Return type
 
@@ -107,12 +110,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **deleteTag**
+
 > deleteTag($tag_name)
 
 Delete tag
@@ -120,6 +124,7 @@ Delete tag
 Deleting existing tag untags all servers from specified tag and deletes tag definition
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -128,7 +133,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\TagApi();
 $tag_name = "tag_name_example"; // string | Tag name
 
 try {
@@ -141,9 +146,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tag_name** | **string**| Tag name |
+| Name         | Type       | Description | Notes |
+| ------------ | ---------- | ----------- | ----- |
+| **tag_name** | **string** | Tag name    |
 
 ### Return type
 
@@ -155,12 +160,13 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listTags**
+
 > \Upcloud\ApiClient\Model\TagListResponse listTags()
 
 List existing tags
@@ -168,6 +174,7 @@ List existing tags
 Returns all existing tags with their properties and servers tagged
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -176,7 +183,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\TagApi();
 
 try {
     $result = $api_instance->listTags();
@@ -188,6 +195,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -200,12 +208,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **modifyTag**
+
 > \Upcloud\ApiClient\Model\CreateNewTagResponse modifyTag($tag_name, $tag)
 
 Modify existing tag
@@ -213,6 +222,7 @@ Modify existing tag
 Changes attributes of an existing tag
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -221,9 +231,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\TagApi();
 $tag_name = "tag_name_example"; // string | Tag name
-$tag = new \Upcloud\ApiClient\Model\ModifyTagRequest(); // \Upcloud\ApiClient\Model\ModifyTagRequest | 
+$tag = new \Upcloud\ApiClient\Model\ModifyTagRequest(); // \Upcloud\ApiClient\Model\ModifyTagRequest |
 
 try {
     $result = $api_instance->modifyTag($tag_name, $tag);
@@ -236,10 +246,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tag_name** | **string**| Tag name |
- **tag** | [**\Upcloud\ApiClient\Model\ModifyTagRequest**](../Model/ModifyTagRequest.md)|  |
+| Name         | Type                                                                          | Description | Notes |
+| ------------ | ----------------------------------------------------------------------------- | ----------- | ----- |
+| **tag_name** | **string**                                                                    | Tag name    |
+| **tag**      | [**\Upcloud\ApiClient\Model\ModifyTagRequest**](../Model/ModifyTagRequest.md) |             |
 
 ### Return type
 
@@ -251,12 +261,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **untag**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse untag($server_id, $tag_name)
 
 Remove tag from server
@@ -264,6 +275,7 @@ Remove tag from server
 Untags tags from given server. The tag(s) must exist
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -272,7 +284,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\TagApi();
 $server_id = "server_id_example"; // string | Server id
 $tag_name = "tag_name_example"; // string | Tag name
 
@@ -287,10 +299,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **tag_name** | **string**| Tag name |
+| Name          | Type       | Description | Notes |
+| ------------- | ---------- | ----------- | ----- |
+| **server_id** | **string** | Server id   |
+| **tag_name**  | **string** | Tag name    |
 
 ### Return type
 
@@ -302,8 +314,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
