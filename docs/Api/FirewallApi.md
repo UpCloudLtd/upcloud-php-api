@@ -132,7 +132,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\FirewallApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\FirewallApi();
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 

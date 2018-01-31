@@ -24,7 +24,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\PricesApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\PricesApi();
 
 try {
     $result = $api_instance->listPrices();
