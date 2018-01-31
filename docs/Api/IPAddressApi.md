@@ -228,7 +228,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi();
 $ip = "ip_example"; // string | Ip address
 $ip_address = new \Upcloud\ApiClient\Model\ModifyIpRequest(); // \Upcloud\ApiClient\Model\ModifyIpRequest |
 

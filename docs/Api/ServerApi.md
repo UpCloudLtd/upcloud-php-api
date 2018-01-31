@@ -95,7 +95,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 $storage_device = new \Upcloud\ApiClient\Model\AttachStorageDeviceRequest(); // \Upcloud\ApiClient\Model\AttachStorageDeviceRequest |
 

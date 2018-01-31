@@ -24,7 +24,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TimezoneApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\TimezoneApi();
 
 try {
     $result = $api_instance->listTimezones();
