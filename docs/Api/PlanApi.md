@@ -1,13 +1,13 @@
 # Upcloud\ApiClient\PlanApi
 
-All URIs are relative to *https://api.upcloud.com/1.2*
+All URIs are relative to _https://api.upcloud.com/1.2_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**listPlans**](PlanApi.md#listPlans) | **GET** /plan | List available plans
-
+| Method                                | HTTP request  | Description          |
+| ------------------------------------- | ------------- | -------------------- |
+| [**listPlans**](PlanApi.md#listPlans) | **GET** /plan | List available plans |
 
 # **listPlans**
+
 > \Upcloud\ApiClient\Model\AvailablePlanListResponse listPlans()
 
 List available plans
@@ -15,6 +15,7 @@ List available plans
 Returns a list of available plans.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -23,7 +24,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\PlanApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\PlanApi();
 
 try {
     $result = $api_instance->listPlans();
@@ -35,6 +36,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -47,8 +49,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-

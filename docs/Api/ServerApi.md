@@ -1,31 +1,31 @@
 # Upcloud\ApiClient\ServerApi
 
-All URIs are relative to *https://api.upcloud.com/1.2*
+All URIs are relative to _https://api.upcloud.com/1.2_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**assignTag**](ServerApi.md#assignTag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
-[**attachStorage**](ServerApi.md#attachStorage) | **POST** /server/{serverId}/storage/attach | Attach storage
-[**createFirewallRule**](ServerApi.md#createFirewallRule) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
-[**createServer**](ServerApi.md#createServer) | **POST** /server | Create server
-[**deleteFirewallRule**](ServerApi.md#deleteFirewallRule) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
-[**deleteServer**](ServerApi.md#deleteServer) | **DELETE** /server/{serverId} | Delete server
-[**detachStorage**](ServerApi.md#detachStorage) | **POST** /server/{serverId}/storage/detach | Detach storage
-[**ejectCdrom**](ServerApi.md#ejectCdrom) | **POST** /server/{serverId}/cdrom/eject | Eject CD-ROM
-[**getFirewallRule**](ServerApi.md#getFirewallRule) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
-[**listServerConfigurations**](ServerApi.md#listServerConfigurations) | **GET** /server_size | List server configurations
-[**listServers**](ServerApi.md#listServers) | **GET** /server | List of servers
-[**loadCdrom**](ServerApi.md#loadCdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
-[**modifyServer**](ServerApi.md#modifyServer) | **PUT** /server/{serverId} | Modify server
-[**restartServer**](ServerApi.md#restartServer) | **POST** /server/{serverId}/restart | Restart server
-[**serverDetails**](ServerApi.md#serverDetails) | **GET** /server/{serverId} | Get server details
-[**serverServerIdFirewallRuleGet**](ServerApi.md#serverServerIdFirewallRuleGet) | **GET** /server/{serverId}/firewall_rule | List firewall rules
-[**startServer**](ServerApi.md#startServer) | **POST** /server/{serverId}/start | Start server
-[**stopServer**](ServerApi.md#stopServer) | **POST** /server/{serverId}/stop | Stop server
-[**untag**](ServerApi.md#untag) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
-
+| Method                                                                          | HTTP request                                                     | Description                |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------- |
+| [**assignTag**](ServerApi.md#assignTag)                                         | **POST** /server/{serverId}/tag/{tagList}                        | Assign tag to a server     |
+| [**attachStorage**](ServerApi.md#attachStorage)                                 | **POST** /server/{serverId}/storage/attach                       | Attach storage             |
+| [**createFirewallRule**](ServerApi.md#createFirewallRule)                       | **POST** /server/{serverId}/firewall_rule                        | Create firewall rule       |
+| [**createServer**](ServerApi.md#createServer)                                   | **POST** /server                                                 | Create server              |
+| [**deleteFirewallRule**](ServerApi.md#deleteFirewallRule)                       | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule       |
+| [**deleteServer**](ServerApi.md#deleteServer)                                   | **DELETE** /server/{serverId}                                    | Delete server              |
+| [**detachStorage**](ServerApi.md#detachStorage)                                 | **POST** /server/{serverId}/storage/detach                       | Detach storage             |
+| [**ejectCdrom**](ServerApi.md#ejectCdrom)                                       | **POST** /server/{serverId}/cdrom/eject                          | Eject CD-ROM               |
+| [**getFirewallRule**](ServerApi.md#getFirewallRule)                             | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber}    | Get firewall rule details  |
+| [**listServerConfigurations**](ServerApi.md#listServerConfigurations)           | **GET** /server_size                                             | List server configurations |
+| [**listServers**](ServerApi.md#listServers)                                     | **GET** /server                                                  | List of servers            |
+| [**loadCdrom**](ServerApi.md#loadCdrom)                                         | **POST** /server/{serverId}/storage/cdrom/load                   | Load CD-ROM                |
+| [**modifyServer**](ServerApi.md#modifyServer)                                   | **PUT** /server/{serverId}                                       | Modify server              |
+| [**restartServer**](ServerApi.md#restartServer)                                 | **POST** /server/{serverId}/restart                              | Restart server             |
+| [**serverDetails**](ServerApi.md#serverDetails)                                 | **GET** /server/{serverId}                                       | Get server details         |
+| [**serverServerIdFirewallRuleGet**](ServerApi.md#serverServerIdFirewallRuleGet) | **GET** /server/{serverId}/firewall_rule                         | List firewall rules        |
+| [**startServer**](ServerApi.md#startServer)                                     | **POST** /server/{serverId}/start                                | Start server               |
+| [**stopServer**](ServerApi.md#stopServer)                                       | **POST** /server/{serverId}/stop                                 | Stop server                |
+| [**untag**](ServerApi.md#untag)                                                 | **POST** /server/{serverId}/untag/{tagName}                      | Remove tag from server     |
 
 # **assignTag**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse assignTag($server_id, $tag_list)
 
 Assign tag to a server
@@ -33,6 +33,7 @@ Assign tag to a server
 Servers can be tagged with one or more tags. The tags used must exist
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -41,7 +42,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 $tag_list = "tag_list_example"; // string | List of tags
 
@@ -56,10 +57,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **tag_list** | **string**| List of tags |
+| Name          | Type       | Description  | Notes |
+| ------------- | ---------- | ------------ | ----- |
+| **server_id** | **string** | Server id    |
+| **tag_list**  | **string** | List of tags |
 
 ### Return type
 
@@ -71,12 +72,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **attachStorage**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse attachStorage($server_id, $storage_device)
 
 Attach storage
@@ -84,6 +86,7 @@ Attach storage
 Attaches a storage as a device to a server.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -92,9 +95,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
-$storage_device = new \Upcloud\ApiClient\Model\AttachStorageDeviceRequest(); // \Upcloud\ApiClient\Model\AttachStorageDeviceRequest | 
+$storage_device = new \Upcloud\ApiClient\Model\AttachStorageDeviceRequest(); // \Upcloud\ApiClient\Model\AttachStorageDeviceRequest |
 
 try {
     $result = $api_instance->attachStorage($server_id, $storage_device);
@@ -107,10 +110,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **storage_device** | [**\Upcloud\ApiClient\Model\AttachStorageDeviceRequest**](../Model/AttachStorageDeviceRequest.md)|  |
+| Name               | Type                                                                                              | Description | Notes |
+| ------------------ | ------------------------------------------------------------------------------------------------- | ----------- | ----- |
+| **server_id**      | **string**                                                                                        | Server id   |
+| **storage_device** | [**\Upcloud\ApiClient\Model\AttachStorageDeviceRequest**](../Model/AttachStorageDeviceRequest.md) |             |
 
 ### Return type
 
@@ -122,12 +125,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createFirewallRule**
+
 > \Upcloud\ApiClient\Model\FirewallRuleCreateResponse createFirewallRule($server_id, $firewall_rule)
 
 Create firewall rule
@@ -135,6 +139,7 @@ Create firewall rule
 Creates a new firewall rule
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -143,9 +148,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
-$firewall_rule = new \Upcloud\ApiClient\Model\FirewallRuleRequest(); // \Upcloud\ApiClient\Model\FirewallRuleRequest | 
+$firewall_rule = new \Upcloud\ApiClient\Model\FirewallRuleRequest(); // \Upcloud\ApiClient\Model\FirewallRuleRequest |
 
 try {
     $result = $api_instance->createFirewallRule($server_id, $firewall_rule);
@@ -158,10 +163,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **firewall_rule** | [**\Upcloud\ApiClient\Model\FirewallRuleRequest**](../Model/FirewallRuleRequest.md)|  |
+| Name              | Type                                                                                | Description | Notes |
+| ----------------- | ----------------------------------------------------------------------------------- | ----------- | ----- |
+| **server_id**     | **string**                                                                          | Server id   |
+| **firewall_rule** | [**\Upcloud\ApiClient\Model\FirewallRuleRequest**](../Model/FirewallRuleRequest.md) |             |
 
 ### Return type
 
@@ -173,12 +178,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createServer**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse createServer($server)
 
 Create server
@@ -186,6 +192,7 @@ Create server
 Creates a new server instance.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -194,8 +201,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
-$server = new \Upcloud\ApiClient\Model\CreateServerRequest(); // \Upcloud\ApiClient\Model\CreateServerRequest | 
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
+$server = new \Upcloud\ApiClient\Model\CreateServerRequest(); // \Upcloud\ApiClient\Model\CreateServerRequest |
 
 try {
     $result = $api_instance->createServer($server);
@@ -208,9 +215,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server** | [**\Upcloud\ApiClient\Model\CreateServerRequest**](../Model/CreateServerRequest.md)|  | [optional]
+| Name       | Type                                                                                | Description | Notes      |
+| ---------- | ----------------------------------------------------------------------------------- | ----------- | ---------- |
+| **server** | [**\Upcloud\ApiClient\Model\CreateServerRequest**](../Model/CreateServerRequest.md) |             | [optional] |
 
 ### Return type
 
@@ -222,12 +229,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **deleteFirewallRule**
+
 > deleteFirewallRule($server_id, $firewall_rule_number)
 
 Remove firewall rule
@@ -235,6 +243,7 @@ Remove firewall rule
 Removes a firewall rule from a server. Firewall rules must be removed individually. The positions of remaining firewall rules will be adjusted after a rule is removed.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -243,7 +252,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
@@ -257,10 +266,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **firewall_rule_number** | **float**| Denotes the index of the firewall rule in the server&#39;s firewall rule list |
+| Name                     | Type       | Description                                                                   | Notes |
+| ------------------------ | ---------- | ----------------------------------------------------------------------------- | ----- |
+| **server_id**            | **string** | Server id                                                                     |
+| **firewall_rule_number** | **float**  | Denotes the index of the firewall rule in the server&#39;s firewall rule list |
 
 ### Return type
 
@@ -272,17 +281,19 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **deleteServer**
+
 > deleteServer($server_id)
 
 Delete server
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -291,7 +302,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to delete
 
 try {
@@ -304,9 +315,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Id of server to delete |
+| Name          | Type       | Description            | Notes |
+| ------------- | ---------- | ---------------------- | ----- |
+| **server_id** | **string** | Id of server to delete |
 
 ### Return type
 
@@ -318,12 +329,13 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **detachStorage**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse detachStorage($server_id, $storage_device)
 
 Detach storage
@@ -331,6 +343,7 @@ Detach storage
 Detaches a storage resource from a server.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -339,9 +352,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
-$storage_device = new \Upcloud\ApiClient\Model\StorageDeviceDetachRequest(); // \Upcloud\ApiClient\Model\StorageDeviceDetachRequest | 
+$storage_device = new \Upcloud\ApiClient\Model\StorageDeviceDetachRequest(); // \Upcloud\ApiClient\Model\StorageDeviceDetachRequest |
 
 try {
     $result = $api_instance->detachStorage($server_id, $storage_device);
@@ -354,10 +367,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **storage_device** | [**\Upcloud\ApiClient\Model\StorageDeviceDetachRequest**](../Model/StorageDeviceDetachRequest.md)|  |
+| Name               | Type                                                                                              | Description | Notes |
+| ------------------ | ------------------------------------------------------------------------------------------------- | ----------- | ----- |
+| **server_id**      | **string**                                                                                        | Server id   |
+| **storage_device** | [**\Upcloud\ApiClient\Model\StorageDeviceDetachRequest**](../Model/StorageDeviceDetachRequest.md) |             |
 
 ### Return type
 
@@ -369,12 +382,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **ejectCdrom**
+
 > ejectCdrom($server_id)
 
 Eject CD-ROM
@@ -382,6 +396,7 @@ Eject CD-ROM
 Ejects the storage from the CD-ROM device of a server.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -390,7 +405,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 
 try {
@@ -403,9 +418,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
+| Name          | Type       | Description | Notes |
+| ------------- | ---------- | ----------- | ----- |
+| **server_id** | **string** | Server id   |
 
 ### Return type
 
@@ -417,12 +432,13 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getFirewallRule**
+
 > \Upcloud\ApiClient\Model\FirewallRuleCreateResponse getFirewallRule($server_id, $firewall_rule_number)
 
 Get firewall rule details
@@ -430,6 +446,7 @@ Get firewall rule details
 Returns detailed information about a specific firewall rule
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -438,7 +455,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 $firewall_rule_number = 3.4; // float | Denotes the index of the firewall rule in the server's firewall rule list
 
@@ -453,10 +470,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **firewall_rule_number** | **float**| Denotes the index of the firewall rule in the server&#39;s firewall rule list |
+| Name                     | Type       | Description                                                                   | Notes |
+| ------------------------ | ---------- | ----------------------------------------------------------------------------- | ----- |
+| **server_id**            | **string** | Server id                                                                     |
+| **firewall_rule_number** | **float**  | Denotes the index of the firewall rule in the server&#39;s firewall rule list |
 
 ### Return type
 
@@ -468,12 +485,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listServerConfigurations**
+
 > \Upcloud\ApiClient\Model\ConfigurationListResponse listServerConfigurations()
 
 List server configurations
@@ -481,6 +499,7 @@ List server configurations
 Returns a list of available server configurations. A server configuration consists of a combination of CPU core count and main memory amount. All servers are created using these configurations.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -489,7 +508,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 
 try {
     $result = $api_instance->listServerConfigurations();
@@ -501,6 +520,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -513,12 +533,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listServers**
+
 > \Upcloud\ApiClient\Model\ServerListResponse listServers()
 
 List of servers
@@ -526,6 +547,7 @@ List of servers
 Returns a list of all servers associated with the current account.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -534,7 +556,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 
 try {
     $result = $api_instance->listServers();
@@ -546,6 +568,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -558,12 +581,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **loadCdrom**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse loadCdrom($server_id, $storage_device)
 
 Load CD-ROM
@@ -571,6 +595,7 @@ Load CD-ROM
 Loads a storage as a CD-ROM in the CD-ROM device of a server.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -579,9 +604,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
-$storage_device = new \Upcloud\ApiClient\Model\StorageDeviceLoadRequest(); // \Upcloud\ApiClient\Model\StorageDeviceLoadRequest | 
+$storage_device = new \Upcloud\ApiClient\Model\StorageDeviceLoadRequest(); // \Upcloud\ApiClient\Model\StorageDeviceLoadRequest |
 
 try {
     $result = $api_instance->loadCdrom($server_id, $storage_device);
@@ -594,10 +619,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **storage_device** | [**\Upcloud\ApiClient\Model\StorageDeviceLoadRequest**](../Model/StorageDeviceLoadRequest.md)|  | [optional]
+| Name               | Type                                                                                          | Description | Notes      |
+| ------------------ | --------------------------------------------------------------------------------------------- | ----------- | ---------- |
+| **server_id**      | **string**                                                                                    | Server id   |
+| **storage_device** | [**\Upcloud\ApiClient\Model\StorageDeviceLoadRequest**](../Model/StorageDeviceLoadRequest.md) |             | [optional] |
 
 ### Return type
 
@@ -609,17 +634,19 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **modifyServer**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse modifyServer($server_id, $server)
 
 Modify server
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -628,9 +655,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to modify
-$server = new \Upcloud\ApiClient\Model\Server(); // \Upcloud\ApiClient\Model\Server | 
+$server = new \Upcloud\ApiClient\Model\Server(); // \Upcloud\ApiClient\Model\Server |
 
 try {
     $result = $api_instance->modifyServer($server_id, $server);
@@ -643,10 +670,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Id of server to modify |
- **server** | [**\Upcloud\ApiClient\Model\Server**](../Model/Server.md)|  | [optional]
+| Name          | Type                                                      | Description            | Notes      |
+| ------------- | --------------------------------------------------------- | ---------------------- | ---------- |
+| **server_id** | **string**                                                | Id of server to modify |
+| **server**    | [**\Upcloud\ApiClient\Model\Server**](../Model/Server.md) |                        | [optional] |
 
 ### Return type
 
@@ -658,12 +685,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **restartServer**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse restartServer($server_id, $restart_server)
 
 Restart server
@@ -671,13 +699,14 @@ Restart server
 Stops and starts a server. The server state must be `started`.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to restart
-$restart_server = new \Upcloud\ApiClient\Model\RestartServer(); // \Upcloud\ApiClient\Model\RestartServer | 
+$restart_server = new \Upcloud\ApiClient\Model\RestartServer(); // \Upcloud\ApiClient\Model\RestartServer |
 
 try {
     $result = $api_instance->restartServer($server_id, $restart_server);
@@ -690,10 +719,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Id of server to restart |
- **restart_server** | [**\Upcloud\ApiClient\Model\RestartServer**](../Model/RestartServer.md)|  |
+| Name               | Type                                                                    | Description             | Notes |
+| ------------------ | ----------------------------------------------------------------------- | ----------------------- | ----- |
+| **server_id**      | **string**                                                              | Id of server to restart |
+| **restart_server** | [**\Upcloud\ApiClient\Model\RestartServer**](../Model/RestartServer.md) |                         |
 
 ### Return type
 
@@ -705,12 +734,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **serverDetails**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse serverDetails($server_id)
 
 Get server details
@@ -718,6 +748,7 @@ Get server details
 Returns detailed information about a specific server.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -726,7 +757,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to return
 
 try {
@@ -740,9 +771,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Id of server to return |
+| Name          | Type       | Description            | Notes |
+| ------------- | ---------- | ---------------------- | ----- |
+| **server_id** | **string** | Id of server to return |
 
 ### Return type
 
@@ -754,12 +785,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **serverServerIdFirewallRuleGet**
+
 > \Upcloud\ApiClient\Model\FirewallRuleListResponse serverServerIdFirewallRuleGet($server_id)
 
 List firewall rules
@@ -767,6 +799,7 @@ List firewall rules
 Returns a list of firewall rules for a specific server.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -775,7 +808,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 
 try {
@@ -789,9 +822,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
+| Name          | Type       | Description | Notes |
+| ------------- | ---------- | ----------- | ----- |
+| **server_id** | **string** | Server id   |
 
 ### Return type
 
@@ -803,12 +836,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **startServer**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse startServer($server_id)
 
 Start server
@@ -816,6 +850,7 @@ Start server
 Starts a stopped server. The server state must be `stopped`.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -824,7 +859,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to start
 
 try {
@@ -838,9 +873,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Id of server to start |
+| Name          | Type       | Description           | Notes |
+| ------------- | ---------- | --------------------- | ----- |
+| **server_id** | **string** | Id of server to start |
 
 ### Return type
 
@@ -852,12 +887,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **stopServer**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse stopServer($server_id, $stop_server_request)
 
 Stop server
@@ -865,6 +901,7 @@ Stop server
 Stops a started server. The server state must be `started`.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -873,9 +910,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to stop
-$stop_server_request = new \Upcloud\ApiClient\Model\StopServer(); // \Upcloud\ApiClient\Model\StopServer | 
+$stop_server_request = new \Upcloud\ApiClient\Model\StopServer(); // \Upcloud\ApiClient\Model\StopServer |
 
 try {
     $result = $api_instance->stopServer($server_id, $stop_server_request);
@@ -888,10 +925,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Id of server to stop |
- **stop_server_request** | [**\Upcloud\ApiClient\Model\StopServer**](../Model/StopServer.md)|  |
+| Name                    | Type                                                              | Description          | Notes |
+| ----------------------- | ----------------------------------------------------------------- | -------------------- | ----- |
+| **server_id**           | **string**                                                        | Id of server to stop |
+| **stop_server_request** | [**\Upcloud\ApiClient\Model\StopServer**](../Model/StopServer.md) |                      |
 
 ### Return type
 
@@ -903,12 +940,13 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **untag**
+
 > \Upcloud\ApiClient\Model\CreateServerResponse untag($server_id, $tag_name)
 
 Remove tag from server
@@ -916,6 +954,7 @@ Remove tag from server
 Untags tags from given server. The tag(s) must exist
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -924,7 +963,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\ServerApi(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new Upcloud\ApiClient\Api\ServerApi();
 $server_id = "server_id_example"; // string | Server id
 $tag_name = "tag_name_example"; // string | Tag name
 
@@ -939,10 +978,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **server_id** | **string**| Server id |
- **tag_name** | **string**| Tag name |
+| Name          | Type       | Description | Notes |
+| ------------- | ---------- | ----------- | ----- |
+| **server_id** | **string** | Server id   |
+| **tag_name**  | **string** | Tag name    |
 
 ### Return type
 
@@ -954,8 +993,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+* **Content-Type**: application/json
+* **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
