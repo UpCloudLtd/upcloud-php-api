@@ -74,6 +74,53 @@ try {
 ?>
 ```
 
+To create a server:
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Upcloud\ApiClient\Upcloud\AccountApi();
+$config = $api_instance->getConfig();
+$config->setUsername('mlackman');
+$config->setPassword('_MLyv2003ab');
+
+try {
+        $result = $api_instance->getAccount();
+            print_r($result);
+} catch (Exception $e) {
+        echo 'Exception when calling AccountApi->getAccount: ', $e->getMessage(), PHP_EOL;
+}
+
+$server = new Upcloud\ApiClient\Model\Server();
+$server->setTitle('php-test-machine');
+$server->setZone('fi-hel1');
+$server->setHostname('phptest');
+
+$storage = new Upcloud\ApiClient\Model\StorageDevice();
+$storage->setStorage('01000000-0000-4000-8000-000030040200');
+$storage->setSize(50.0);
+$storage->setAction('clone');
+$storage->setTitle('php-test-storage');
+
+$storage_devices = new Upcloud\ApiClient\Model\ServerStorageDevices();
+$storage_devices->setStorageDevice($storage);
+
+$server->setStorageDevices($storage_devices);
+
+$server_request = new Upcloud\ApiClient\Model\CreateServerRequest();
+$server_request->setServer($server);
+$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
+try {
+        $result = $api_instance->createServer($server_request);
+            print_r($result);
+} catch (Exception $e) {
+        echo 'Exception when calling ServerApi->createServer: ', $e->getMessage(), PHP_EOL;
+}
+
+?>
+```
+
 ## Documentation
 
 All URIs are relative to *https://api.upcloud.com/1.2*
