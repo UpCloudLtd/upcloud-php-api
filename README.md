@@ -96,6 +96,7 @@ $server = new Upcloud\ApiClient\Model\Server();
 $server->setTitle('php-test-machine');
 $server->setZone('fi-hel1');
 $server->setHostname('phptest');
+$server->setPlan('1xCPU-1GB');
 
 $storage = new Upcloud\ApiClient\Model\StorageDevice();
 $storage->setStorage('01000000-0000-4000-8000-000030040200');
