@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -44,7 +44,7 @@ class Zone implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'name' => 'string',
+        'id' => 'string',
         'description' => 'string'
     ];
 
@@ -53,7 +53,7 @@ class Zone implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'name' => null,
+        'id' => null,
         'description' => null
     ];
 
@@ -72,7 +72,7 @@ class Zone implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
+        'id' => 'id',
         'description' => 'description'
     ];
 
@@ -82,7 +82,7 @@ class Zone implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
+        'id' => 'setId',
         'description' => 'setDescription'
     ];
 
@@ -92,7 +92,7 @@ class Zone implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
+        'id' => 'getId',
         'description' => 'getDescription'
     ];
 
@@ -111,9 +111,9 @@ class Zone implements ArrayAccess
         return self::$getters;
     }
 
-    
 
-    
+
+
 
     /**
      * Associative array for storing property values
@@ -127,7 +127,7 @@ class Zone implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['description'] = isset($data['description']) ? $data['description'] : null;
     }
 
@@ -157,22 +157,22 @@ class Zone implements ArrayAccess
 
 
     /**
-     * Gets name
+     * Gets Zone ID
      * @return string
      */
-    public function getName()
+    public function getId()
     {
-        return $this->container['name'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets name
-     * @param string $name
+     * Sets zone ID
+     * @param string $id
      * @return $this
      */
-    public function setName($name)
+    public function setId($id)
     {
-        $this->container['name'] = $name;
+        $this->container['id'] = $id;
 
         return $this;
     }
