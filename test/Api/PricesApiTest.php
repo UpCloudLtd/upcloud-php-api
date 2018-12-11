@@ -91,7 +91,6 @@ class PricesApiTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($priceZone["server_core"]);
         $this->assertNotNull($priceZone["server_memory"]);
         $this->assertNotNull($priceZone["server_plan_1x_cpu_1_gb"]);
-        $this->assertNotNull($priceZone["server_plan_2x_cpu_2_gb"]);
         $this->assertNotNull($priceZone["storage_backup"]);
         $this->assertNotNull($priceZone["storage_maxiops"]);
     }
