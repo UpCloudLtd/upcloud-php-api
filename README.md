@@ -1,6 +1,9 @@
 # UpCloud PHP API client library
 
-[![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-php-api.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-php-api) [![Latest Stable Version](https://poser.pugx.org/upcloudltd/upcloud-php-api/v/stable)](https://packagist.org/packages/upcloudltd/upcloud-php-api) [![License](https://poser.pugx.org/upcloudltd/upcloud-php-api/license)](https://packagist.org/packages/upcloudltd/upcloud-php-api) [![Total Downloads](https://poser.pugx.org/upcloudltd/upcloud-php-api/downloads)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
+[![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-php-api.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-php-api)
+[![Latest Stable Version](https://poser.pugx.org/upcloudltd/upcloud-php-api/v/stable)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
+[![License](https://poser.pugx.org/upcloudltd/upcloud-php-api/license)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
+[![Total Downloads](https://poser.pugx.org/upcloudltd/upcloud-php-api/downloads)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
 
 This PHP API client library provides integration with the UpCloud API allowing operations used to manage resources on UpCloud. The client is a web service interface that uses HTTPS to connect to the API. The API follows the principles of a RESTful web service wherever possible.
 
