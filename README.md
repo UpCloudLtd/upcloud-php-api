@@ -28,7 +28,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
 ```
 {
   "require": {
-    "upcloudltd/upcloud-php-api": "v1.0.0"
+    "upcloudltd/upcloud-php-api": "v1.0.3"
   }
 }
 ```
