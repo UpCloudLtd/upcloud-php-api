@@ -956,11 +956,11 @@ class Server implements ArrayAccess
 
     /**
      * Gets user_data
-     * @return string
+     * @return null user_data not available in GET call
      */
     public function getUserData()
     {
-        return $this->container['user_data'];
+        return null;
     }
 
     /**
