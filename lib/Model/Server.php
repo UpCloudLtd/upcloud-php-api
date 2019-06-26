@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -67,7 +67,8 @@ class Server implements ArrayAccess
         'vnc_host' => 'string',
         'vnc_password' => 'string',
         'vnc_port' => 'string',
-        'zone' => 'string'
+        'zone' => 'string',
+        'user_data' => 'string'
     ];
 
     /**
@@ -98,7 +99,8 @@ class Server implements ArrayAccess
         'vnc_host' => null,
         'vnc_password' => null,
         'vnc_port' => null,
-        'zone' => null
+        'zone' => null,
+        'user_data' => null
     ];
 
     public static function swaggerTypes()
@@ -139,7 +141,8 @@ class Server implements ArrayAccess
         'vnc_host' => 'vnc_host',
         'vnc_password' => 'vnc_password',
         'vnc_port' => 'vnc_port',
-        'zone' => 'zone'
+        'zone' => 'zone',
+        'user_data' => 'user_data'
     ];
 
 
@@ -171,7 +174,8 @@ class Server implements ArrayAccess
         'vnc_host' => 'setVncHost',
         'vnc_password' => 'setVncPassword',
         'vnc_port' => 'setVncPort',
-        'zone' => 'setZone'
+        'zone' => 'setZone',
+        'user_data' => 'setUserData'
     ];
 
 
@@ -203,7 +207,8 @@ class Server implements ArrayAccess
         'vnc_host' => 'getVncHost',
         'vnc_password' => 'getVncPassword',
         'vnc_port' => 'getVncPort',
-        'zone' => 'getZone'
+        'zone' => 'getZone',
+        'user_data' => 'getUserData'
     ];
 
     public static function attributeMap()
@@ -231,9 +236,9 @@ class Server implements ArrayAccess
     const VIDEO_MODEL_CIRRUS = 'cirrus';
     const VNC_ON = 'on';
     const VNC_OFF = 'off';
-    
 
-    
+
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -247,7 +252,7 @@ class Server implements ArrayAccess
             self::BOOT_ORDER_CDROMDISK,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -259,7 +264,7 @@ class Server implements ArrayAccess
             self::FIREWALL_OFF,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -271,7 +276,7 @@ class Server implements ArrayAccess
             self::VIDEO_MODEL_CIRRUS,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -283,7 +288,7 @@ class Server implements ArrayAccess
             self::VNC_OFF,
         ];
     }
-    
+
 
     /**
      * Associative array for storing property values
@@ -321,6 +326,7 @@ class Server implements ArrayAccess
         $this->container['vnc_password'] = isset($data['vnc_password']) ? $data['vnc_password'] : null;
         $this->container['vnc_port'] = isset($data['vnc_port']) ? $data['vnc_port'] : null;
         $this->container['zone'] = isset($data['zone']) ? $data['zone'] : null;
+        $this->container['user_data'] = isset($data['user_data']) ? $data['user_data'] : null;
     }
 
     /**
@@ -935,6 +941,28 @@ class Server implements ArrayAccess
 
         return $this;
     }
+
+    /**
+     * Sets user_data
+     * @param string $user_data A bash script (body or URL) to run on first boot
+     * @return $this
+     */
+    public function setUserData($user_data)
+    {
+        $this->container['user_data'] = $user_data;
+
+        return $this;
+    }
+
+    /**
+     * Gets user_data
+     * @return string
+     */
+    public function getUserData()
+    {
+        return $this->container['user_data'];
+    }
+
     /**
      * Returns true if offset exists. False otherwise.
      * @param  integer $offset Offset
@@ -993,5 +1021,3 @@ class Server implements ArrayAccess
         return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

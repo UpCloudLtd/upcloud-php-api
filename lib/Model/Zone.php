@@ -44,8 +44,9 @@ class Zone implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'id' => 'string',
-        'description' => 'string'
+        'name' => 'string',
+        'description' => 'string',
+        'id' => 'string'
     ];
 
     /**
@@ -53,8 +54,9 @@ class Zone implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'id' => null,
-        'description' => null
+        'name' => null,
+        'description' => null,
+        'id' => null
     ];
 
     public static function swaggerTypes()
@@ -72,8 +74,9 @@ class Zone implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'description' => 'description'
+        'name' => 'name',
+        'description' => 'description',
+        'id' => 'id'
     ];
 
 
@@ -82,8 +85,9 @@ class Zone implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'description' => 'setDescription'
+        'name' => 'setName',
+        'description' => 'setDescription',
+        'id' => 'setId'
     ];
 
 
@@ -92,8 +96,9 @@ class Zone implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'description' => 'getDescription'
+        'name' => 'getName',
+        'description' => 'getDescription',
+        'id' => 'getId'
     ];
 
     public static function attributeMap()
@@ -127,7 +132,7 @@ class Zone implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['description'] = isset($data['description']) ? $data['description'] : null;
     }
 
@@ -157,22 +162,22 @@ class Zone implements ArrayAccess
 
 
     /**
-     * Gets Zone ID
+     * Gets name
      * @return string
      */
-    public function getId()
+    public function getName()
     {
-        return $this->container['id'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets zone ID
-     * @param string $id
+     * Sets name
+     * @param string $name
      * @return $this
      */
-    public function setId($id)
+    public function setName($name)
     {
-        $this->container['id'] = $id;
+        $this->container['name'] = $name;
 
         return $this;
     }
@@ -197,6 +202,28 @@ class Zone implements ArrayAccess
 
         return $this;
     }
+
+    /**
+     * Gets description
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets description
+     * @param string $description
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
     /**
      * Returns true if offset exists. False otherwise.
      * @param  integer $offset Offset
@@ -255,5 +282,3 @@ class Zone implements ArrayAccess
         return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-
