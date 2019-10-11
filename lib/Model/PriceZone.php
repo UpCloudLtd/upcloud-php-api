@@ -60,7 +60,16 @@ class PriceZone implements ArrayAccess
         'storage_hdd' => '\Upcloud\ApiClient\Model\Price',
         'storage_maxiops' => '\Upcloud\ApiClient\Model\Price',
         'server_plan_1x_cpu_1_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_2x_cpu_2_gb' => '\Upcloud\ApiClient\Model\Price'
+        'server_plan_1x_cpu_2_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_20x_cpu_128_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_20x_cpu_96_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_2x_cpu_4_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_4x_cpu_8_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_6x_cpu_16_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_8x_cpu_32_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_12x_cpu_48_gb' => '\Upcloud\ApiClient\Model\Price',
+        'server_plan_16x_cpu_64_gb' => '\Upcloud\ApiClient\Model\Price'
+
     ];
 
     /**
@@ -85,7 +94,15 @@ class PriceZone implements ArrayAccess
         'storage_hdd' => null,
         'storage_maxiops' => null,
         'server_plan_1x_cpu_1_gb' => null,
-        'server_plan_2x_cpu_2_gb' => null
+        'server_plan_1x_cpu_2_gb' => null,
+        'server_plan_20x_cpu_128_gb' => null,
+        'server_plan_20x_cpu_96_gb' => null,
+        'server_plan_2x_cpu_4_gb' => null,
+        'server_plan_4x_cpu_8_gb' => null,
+        'server_plan_6x_cpu_16_gb' => null,
+        'server_plan_8x_cpu_32_gb' => null,
+        'server_plan_12x_cpu_48_gb' => null,
+        'server_plan_16x_cpu_64_gb' => null
     ];
 
     public static function swaggerTypes()
@@ -120,7 +137,15 @@ class PriceZone implements ArrayAccess
         'storage_hdd' => 'storage_hdd',
         'storage_maxiops' => 'storage_maxiops',
         'server_plan_1x_cpu_1_gb' => 'server_plan_1xCPU-1GB',
-        'server_plan_2x_cpu_2_gb' => 'server_plan_2xCPU-2GB'
+        'server_plan_1x_cpu_2_gb' => 'server_plan_1xCPU-2GB',
+        'server_plan_20x_cpu_128_gb' => 'server_plan_20xCPU-128GB',
+        'server_plan_20x_cpu_96_gb' => 'server_plan_20xCPU-96GB',
+        'server_plan_2x_cpu_4_gb' => 'server_plan_2xCPU-4GB',
+        'server_plan_4x_cpu_8_gb' => 'server_plan_4xCPU-8GB',
+        'server_plan_6x_cpu_16_gb' => 'server_plan_6xCPU-16GB',
+        'server_plan_8x_cpu_32_gb' => 'server_plan_8xCPU-32GB',
+        'server_plan_12x_cpu_48_gb' => 'server_plan_12xCPU-48GB',
+        'server_plan_16x_cpu_64_gb' => 'server_plan_16xCPU-64GB'
     ];
 
 
@@ -146,7 +171,15 @@ class PriceZone implements ArrayAccess
         'storage_hdd' => 'setStorageHdd',
         'storage_maxiops' => 'setStorageMaxiops',
         'server_plan_1x_cpu_1_gb' => 'setServerPlan1xCpu1Gb',
-        'server_plan_2x_cpu_2_gb' => 'setServerPlan2xCpu2Gb'
+        'server_plan_1x_cpu_2_gb' => 'setServerPlan1xCpu2Gb',
+        'server_plan_20x_cpu_128_gb' => 'setServerPlan20xCpuGb',
+        'server_plan_20x_cpu_96_gb' => 'setServerPlan20xCpu96Gb',
+        'server_plan_2x_cpu_4_gb' => 'setServerPlan2xCpu4Gb',
+        'server_plan_4x_cpu_8_gb' => 'setServerPlan4xCpu8Gb',
+        'server_plan_6x_cpu_16_gb' => 'setServerPlan6xCpu16Gb',
+        'server_plan_8x_cpu_32_gb' => 'setServerPlan8xCpu32Gb',
+        'server_plan_12x_cpu_48_gb' => 'setServerPlan12xCpu48Gb',
+        'server_plan_16x_cpu_64_gb' => 'setServerPlan16xCpu64Gb'
     ];
 
 
@@ -172,7 +205,15 @@ class PriceZone implements ArrayAccess
         'storage_hdd' => 'getStorageHdd',
         'storage_maxiops' => 'getStorageMaxiops',
         'server_plan_1x_cpu_1_gb' => 'getServerPlan1xCpu1Gb',
-        'server_plan_2x_cpu_2_gb' => 'getServerPlan2xCpu2Gb'
+        'server_plan_1x_cpu_2_gb' => 'getServerPlan1xCpu2Gb',
+        'server_plan_20x_cpu_128_gb' => 'getServerPlan20xCpuGb',
+        'server_plan_20x_cpu_96_gb' => 'getServerPlan20xCpu96Gb',
+        'server_plan_2x_cpu_4_gb' => 'getServerPlan2xCpu4Gb',
+        'server_plan_4x_cpu_8_gb' => 'getServerPlan4xCpu8Gb',
+        'server_plan_6x_cpu_16_gb' => 'getServerPlan6xCpu16Gb',
+        'server_plan_8x_cpu_32_gb' => 'getServerPlan8xCpu32Gb',
+        'server_plan_12x_cpu_48_gb' => 'getServerPlan12xCpu48Gb',
+        'server_plan_16x_cpu_64_gb' => 'getServerPlan16xCpu64Gb'
     ];
 
     public static function attributeMap()
@@ -223,7 +264,15 @@ class PriceZone implements ArrayAccess
         $this->container['storage_hdd'] = isset($data['storage_hdd']) ? $data['storage_hdd'] : null;
         $this->container['storage_maxiops'] = isset($data['storage_maxiops']) ? $data['storage_maxiops'] : null;
         $this->container['server_plan_1x_cpu_1_gb'] = isset($data['server_plan_1x_cpu_1_gb']) ? $data['server_plan_1x_cpu_1_gb'] : null;
-        $this->container['server_plan_2x_cpu_2_gb'] = isset($data['server_plan_2x_cpu_2_gb']) ? $data['server_plan_2x_cpu_2_gb'] : null;
+        $this->container['server_plan_1x_cpu_2_gb'] = isset($data['server_plan_1x_cpu_2_gb']) ? $data['server_plan_1x_cpu_2_gb'] : null;
+        $this->container['server_plan_20x_cpu_128_gb'] = isset($data['server_plan_20x_cpu_128_gb']) ? $data['server_plan_20x_cpu_128_gb'] : null;
+        $this->container['server_plan_20x_cpu_96_gb'] = isset($data['server_plan_20x_cpu_96_gb']) ? $data['server_plan_20x_cpu_96_gb'] : null;
+        $this->container['server_plan_2x_cpu_4_gb'] = isset($data['server_plan_2x_cpu_4_gb']) ? $data['server_plan_2x_cpu_4_gb'] : null;
+        $this->container['server_plan_4x_cpu_8_gb'] = isset($data['server_plan_4x_cpu_8_gb']) ? $data['server_plan_4x_cpu_8_gb'] : null;
+        $this->container['server_plan_6x_cpu_16_gb'] = isset($data['server_plan_6x_cpu_16_gb']) ? $data['server_plan_6x_cpu_16_gb'] : null;
+        $this->container['server_plan_8x_cpu_32_gb'] = isset($data['server_plan_8x_cpu_32_gb']) ? $data['server_plan_8x_cpu_32_gb'] : null;
+        $this->container['server_plan_12x_cpu_48_gb'] = isset($data['server_plan_12x_cpu_48_gb']) ? $data['server_plan_12x_cpu_48_gb'] : null;
+        $this->container['server_plan_16x_cpu_64_gb'] = isset($data['server_plan_16x_cpu_64_gb']) ? $data['server_plan_16x_cpu_64_gb'] : null;
     }
 
     /**
@@ -628,6 +677,202 @@ class PriceZone implements ArrayAccess
 
         return $this;
     }
+
+    /**
+     * Gets server_plan_1x_cpu_2_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan1xCpu2Gb()
+    {
+        return $this->container['server_plan_1x_cpu_2_gb'];
+    }
+
+    /**
+     * Sets server_plan_1x_cpu_2_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_1x_cpu_2_gb
+     * @return $this
+     */
+    public function setServerPlan1xCpu2Gb($server_plan_1x_cpu_2_gb)
+    {
+        $this->container['server_plan_1x_cpu_2_gb'] = $server_plan_1x_cpu_2_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_20x_cpu_128_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan20xCpuGb()
+    {
+        return $this->container['server_plan_20x_cpu_128_gb'];
+    }
+
+    /**
+     * Sets server_plan_20x_cpu_128_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_20x_cpu_128_gb
+     * @return $this
+     */
+    public function setServerPlan20xCpuGb($server_plan_20x_cpu_128_gb)
+    {
+        $this->container['server_plan_20x_cpu_128_gb'] = $server_plan_20x_cpu_128_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_20x_cpu_96_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan20xCpu96Gb()
+    {
+        return $this->container['server_plan_20x_cpu_96_gb'];
+    }
+
+    /**
+     * Sets server_plan_20x_cpu_96_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_20x_cpu_96_gb
+     * @return $this
+     */
+    public function setServerPlan20xCpu96Gb($server_plan_20x_cpu_96_gb)
+    {
+        $this->container['server_plan_20x_cpu_96_gb'] = $server_plan_20x_cpu_96_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_2x_cpu_4_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan2xCpu4Gb()
+    {
+        return $this->container['server_plan_2x_cpu_4_gb'];
+    }
+
+    /**
+     * Sets server_plan_2x_cpu_4_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_2x_cpu_4_gb
+     * @return $this
+     */
+    public function setServerPlan2xCpu4Gb($server_plan_2x_cpu_4_gb)
+    {
+        $this->container['server_plan_2x_cpu_4_gb'] = $server_plan_2x_cpu_4_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_4x_cpu_8_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan4xCpu8Gb()
+    {
+        return $this->container['server_plan_4x_cpu_8_gb'];
+    }
+
+    /**
+     * Sets server_plan_4x_cpu_8_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_4x_cpu_8_gb
+     * @return $this
+     */
+    public function setServerPlan4xCpu8Gb($server_plan_4x_cpu_8_gb)
+    {
+        $this->container['server_plan_4x_cpu_8_gb'] = $server_plan_4x_cpu_8_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_6x_cpu_16_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan6xCpu16Gb()
+    {
+        return $this->container['server_plan_6x_cpu_16_gb'];
+    }
+
+    /**
+     * Sets server_plan_6x_cpu_16_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_6x_cpu_16_gb
+     * @return $this
+     */
+    public function setServerPlan6xCpu16Gb($server_plan_6x_cpu_16_gb)
+    {
+        $this->container['server_plan_6x_cpu_16_gb'] = $server_plan_6x_cpu_16_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_8x_cpu_32_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan8xCpu32Gb()
+    {
+        return $this->container['server_plan_8x_cpu_32_gb'];
+    }
+
+    /**
+     * Sets server_plan_8x_cpu_32_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_8x_cpu_32_gb
+     * @return $this
+     */
+    public function setServerPlan8xCpu32Gb($server_plan_8x_cpu_32_gb)
+    {
+        $this->container['server_plan_8x_cpu_32_gb'] = $server_plan_8x_cpu_32_gb;
+
+        return $this;
+    }
+
+    /**
+     * Gets server_plan_12x_cpu_48_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan12xCpu48Gb()
+    {
+        return $this->container['server_plan_12x_cpu_48_gb'];
+    }
+
+    /**
+     * Sets server_plan_12x_cpu_48_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_12x_cpu_48_gb
+     * @return $this
+     */
+    public function setServerPlan12xCpu48Gb($server_plan_12x_cpu_48_gb)
+    {
+        $this->container['server_plan_12x_cpu_48_gb'] = $server_plan_12x_cpu_48_gb;
+
+        return $this;
+    }
+    /**
+     * Gets server_plan_16x_cpu_64_gb
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan16xCpu64Gb()
+    {
+        return $this->container['server_plan_16x_cpu_64_gb'];
+    }
+
+    /**
+     * Sets server_plan_16x_cpu_64_gb
+     * @param \Upcloud\ApiClient\Model\Price $server_plan_16x_cpu_64_gb
+     * @return $this
+     */
+    public function setServerPlan16xCpu64Gb($server_plan_16x_cpu_64_gb)
+    {
+        $this->container['server_plan_16x_cpu_64_gb'] = $server_plan_16x_cpu_64_gb;
+
+        return $this;
+    }
+
+    /**
+     * Gets server_plan based on name in Server->getPlan
+     * @return \Upcloud\ApiClient\Model\Price
+     */
+    public function getServerPlan($serverPlan){
+        $plan = strtolower("server_plan_".$serverPlan);
+        $plan = str_replace('x', 'x_', $plan);
+        $plan = str_replace('-', '_', $plan);
+        $plan = str_replace('gb', '_gb', $plan);
+
+        return $this->container[$plan];
+    }
+
     /**
      * Returns true if offset exists. False otherwise.
      * @param  integer $offset Offset
