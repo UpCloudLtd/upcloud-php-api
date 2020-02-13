@@ -704,6 +704,10 @@ Stops and starts a server. The server state must be `started`.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+// Configure HTTP basic authorization: baseAuth
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
+Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
+
 $api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to restart
 $restart_server = new \Upcloud\ApiClient\Model\RestartServer(); // \Upcloud\ApiClient\Model\RestartServer |
@@ -730,7 +734,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[baseAuth](../../README.md#baseAuth)
 
 ### HTTP request headers
 
