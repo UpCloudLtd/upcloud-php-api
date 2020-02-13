@@ -82,7 +82,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\TagApi();
 $tag = new \Upcloud\ApiClient\Model\TagCreateRequest(); // \Upcloud\ApiClient\Model\TagCreateRequest |
 
 try {
@@ -133,7 +133,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\TagApi();
 $tag_name = "tag_name_example"; // string | Tag name
 
 try {
@@ -183,7 +183,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\TagApi();
 
 try {
     $result = $api_instance->listTags();
@@ -231,7 +231,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\TagApi();
 $tag_name = "tag_name_example"; // string | Tag name
 $tag = new \Upcloud\ApiClient\Model\ModifyTagRequest(); // \Upcloud\ApiClient\Model\ModifyTagRequest |
 
@@ -284,7 +284,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\TagApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\TagApi();
 $server_id = "server_id_example"; // string | Server id
 $tag_name = "tag_name_example"; // string | Tag name
 
