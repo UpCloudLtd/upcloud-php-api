@@ -93,7 +93,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Storage id
 $storage = new \Upcloud\ApiClient\Model\CreateBackupStorageRequest(); // \Upcloud\ApiClient\Model\CreateBackupStorageRequest |
 
@@ -146,7 +146,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Strage id
 
 try {
@@ -196,7 +196,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Storage id
 $storage = new \Upcloud\ApiClient\Model\CloneStorageRequest(); // \Upcloud\ApiClient\Model\CloneStorageRequest |
 
@@ -249,7 +249,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage = new \Upcloud\ApiClient\Model\CreateStorageRequest(); // \Upcloud\ApiClient\Model\CreateStorageRequest |
 
 try {
@@ -300,7 +300,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string |
 
 try {
@@ -350,7 +350,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $server_id = "server_id_example"; // string | Server id
 $storage_device = new \Upcloud\ApiClient\Model\StorageDeviceDetachRequest(); // \Upcloud\ApiClient\Model\StorageDeviceDetachRequest |
 
@@ -403,7 +403,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $server_id = "server_id_example"; // string | Server id
 
 try {
@@ -453,7 +453,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Storage id
 
 try {
@@ -503,7 +503,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string |
 
 try {
@@ -552,7 +552,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $type = "type_example"; // string | Storage's access type (`public` or `private`) or storage type (`normal`, `backup`, `cdrom` or `template`) or `favorite` status
 
 try {
@@ -601,7 +601,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 
 try {
     $result = $api_instance->listStorages();
@@ -649,7 +649,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $server_id = "server_id_example"; // string | Server id
 $storage_device = new \Upcloud\ApiClient\Model\StorageDeviceLoadRequest(); // \Upcloud\ApiClient\Model\StorageDeviceLoadRequest |
 
@@ -702,7 +702,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string |
 $storage = new \Upcloud\ApiClient\Model\ModifyStorageRequest(); // \Upcloud\ApiClient\Model\ModifyStorageRequest |
 
@@ -755,7 +755,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Storage id
 
 try {
@@ -805,7 +805,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Storage id
 $storage = new \Upcloud\ApiClient\Model\TemplitizeStorageRequest(); // \Upcloud\ApiClient\Model\TemplitizeStorageRequest |
 
@@ -858,7 +858,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\StorageApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
 $storage_id = "storage_id_example"; // string | Storage id
 
 try {

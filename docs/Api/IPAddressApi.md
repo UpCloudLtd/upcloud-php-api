@@ -28,7 +28,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi();
 $ip_address = new \Upcloud\ApiClient\Model\AddIpRequest(); // \Upcloud\ApiClient\Model\AddIpRequest |
 
 try {
@@ -79,7 +79,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi();
 $ip = "ip_example"; // string | Ip address
 
 try {
@@ -129,7 +129,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi();
 $ip = "ip_example"; // string | Ip address
 
 try {
@@ -180,7 +180,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
 Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
 
-$api_instance = new Upcloud\ApiClient\Api\IPAddressApi();
+$api_instance = new Upcloud\ApiClient\Upcloud\IPAddressApi();
 
 try {
     $result = $api_instance->listIps();
