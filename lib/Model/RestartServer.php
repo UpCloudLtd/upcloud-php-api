@@ -36,16 +36,14 @@ class RestartServer implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'restart_server';
+    protected static $swaggerModelName = 'restartServer';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'stop_type' => 'string',
-        'timeout' => 'float',
-        'timeout_action' => 'string'
+        'restart_server' => '\Upcloud\ApiClient\Model\RestartServerRequest'
     ];
 
     /**
@@ -53,9 +51,7 @@ class RestartServer implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'stop_type' => null,
-        'timeout' => null,
-        'timeout_action' => null
+        'restart_server' => null
     ];
 
     public static function swaggerTypes()
@@ -73,9 +69,7 @@ class RestartServer implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'stop_type' => 'stop_type',
-        'timeout' => 'timeout',
-        'timeout_action' => 'timeout_action'
+        'restart_server' => 'restart_server'
     ];
 
 
@@ -84,9 +78,7 @@ class RestartServer implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'stop_type' => 'setStopType',
-        'timeout' => 'setTimeout',
-        'timeout_action' => 'setTimeoutAction'
+        'restart_server' => 'setRestartServer'
     ];
 
 
@@ -95,9 +87,7 @@ class RestartServer implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'stop_type' => 'getStopType',
-        'timeout' => 'getTimeout',
-        'timeout_action' => 'getTimeoutAction'
+        'restart_server' => 'getRestartServer'
     ];
 
     public static function attributeMap()
@@ -115,36 +105,8 @@ class RestartServer implements ArrayAccess
         return self::$getters;
     }
 
-    const STOP_TYPE_SOFT = 'soft';
-    const STOP_TYPE_HARD = 'hard';
-    const TIMEOUT_ACTION_DESTROY = 'destroy';
-    const TIMEOUT_ACTION_IGNORE = 'ignore';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getStopTypeAllowableValues()
-    {
-        return [
-            self::STOP_TYPE_SOFT,
-            self::STOP_TYPE_HARD,
-        ];
-    }
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getTimeoutActionAllowableValues()
-    {
-        return [
-            self::TIMEOUT_ACTION_DESTROY,
-            self::TIMEOUT_ACTION_IGNORE,
-        ];
-    }
     
 
     /**
@@ -159,9 +121,9 @@ class RestartServer implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['stop_type'] = isset($data['stop_type']) ? $data['stop_type'] : 'soft';
-        $this->container['timeout'] = isset($data['timeout']) ? $data['timeout'] : null;
-        $this->container['timeout_action'] = isset($data['timeout_action']) ? $data['timeout_action'] : null;
+        $this->container['restart_server'] = isset($data['restart_server']) 
+            ? $data['restart_server']
+            : new \Upcloud\ApiClient\Model\RestartServerRequest(); // If the user sets no values, populate request with default arguments
     }
 
     /**
@@ -172,30 +134,6 @@ class RestartServer implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-
-        $allowed_values = $this->getStopTypeAllowableValues();
-        if (!in_array($this->container['stop_type'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'stop_type', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        if (!is_null($this->container['timeout']) && ($this->container['timeout'] > 600)) {
-            $invalid_properties[] = "invalid value for 'timeout', must be smaller than or equal to 600.";
-        }
-
-        if (!is_null($this->container['timeout']) && ($this->container['timeout'] < 1)) {
-            $invalid_properties[] = "invalid value for 'timeout', must be bigger than or equal to 1.";
-        }
-
-        $allowed_values = $this->getTimeoutActionAllowableValues();
-        if (!in_array($this->container['timeout_action'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'timeout_action', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
 
         return $invalid_properties;
     }
@@ -209,109 +147,27 @@ class RestartServer implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = $this->getStopTypeAllowableValues();
-        if (!in_array($this->container['stop_type'], $allowed_values)) {
-            return false;
-        }
-        if ($this->container['timeout'] > 600) {
-            return false;
-        }
-        if ($this->container['timeout'] < 1) {
-            return false;
-        }
-        $allowed_values = $this->getTimeoutActionAllowableValues();
-        if (!in_array($this->container['timeout_action'], $allowed_values)) {
-            return false;
-        }
         return true;
     }
 
 
     /**
-     * Gets stop_type
-     * @return string
+     * Gets restart_server
+     * @return \Upcloud\ApiClient\Model\RestartServerRequest
      */
-    public function getStopType()
+    public function getRestartServer()
     {
-        return $this->container['stop_type'];
+        return $this->container['restart_server'];
     }
 
     /**
-     * Sets stop_type
-     * @param string $stop_type Restart type
+     * Sets restart_server
+     * @param \Upcloud\ApiClient\Model\RestartServerRequest $restart_server
      * @return $this
      */
-    public function setStopType($stop_type)
+    public function setRestartServer($restart_server)
     {
-        $allowed_values = $this->getStopTypeAllowableValues();
-        if (!is_null($stop_type) && !in_array($stop_type, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'stop_type', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['stop_type'] = $stop_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets timeout
-     * @return float
-     */
-    public function getTimeout()
-    {
-        return $this->container['timeout'];
-    }
-
-    /**
-     * Sets timeout
-     * @param float $timeout Stop timeout in seconds
-     * @return $this
-     */
-    public function setTimeout($timeout)
-    {
-
-        if (!is_null($timeout) && ($timeout > 600)) {
-            throw new \InvalidArgumentException('invalid value for $timeout when calling RestartServer., must be smaller than or equal to 600.');
-        }
-        if (!is_null($timeout) && ($timeout < 1)) {
-            throw new \InvalidArgumentException('invalid value for $timeout when calling RestartServer., must be bigger than or equal to 1.');
-        }
-
-        $this->container['timeout'] = $timeout;
-
-        return $this;
-    }
-
-    /**
-     * Gets timeout_action
-     * @return string
-     */
-    public function getTimeoutAction()
-    {
-        return $this->container['timeout_action'];
-    }
-
-    /**
-     * Sets timeout_action
-     * @param string $timeout_action Action to take if timeout limit is exceeded.
-     * @return $this
-     */
-    public function setTimeoutAction($timeout_action)
-    {
-        $allowed_values = $this->getTimeoutActionAllowableValues();
-        if (!is_null($timeout_action) && !in_array($timeout_action, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'timeout_action', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['timeout_action'] = $timeout_action;
+        $this->container['restart_server'] = $restart_server;
 
         return $this;
     }
