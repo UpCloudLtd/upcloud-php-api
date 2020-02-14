@@ -118,8 +118,7 @@ class RestartServerRequest implements ArrayAccess
     const STOP_TYPE_SOFT = 'soft';
     const STOP_TYPE_HARD = 'hard';
     const TIMEOUT_ACTION_DESTROY = 'destroy';
-    const TIMEOUT_ACTION_IGNORE = 'ignore';
-    
+    const TIMEOUT_ACTION_IGNORE = 'ignore';    
 
     
     /**
