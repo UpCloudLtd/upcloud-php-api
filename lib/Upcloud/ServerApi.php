@@ -1326,13 +1326,14 @@ class ServerApi
      * Delete server
      *
      * @param string $server_id Id of server to delete (required)
+     * @param bool $delete_storage Delete attached storage devices
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteServer($server_id)
+    public function deleteServer($server_id, $delete_storage = false)
     {
-        $this->deleteServerWithHttpInfo($server_id);
+        $this->deleteServerWithHttpInfo($server_id, $delete_storage);
     }
 
     /**
@@ -1341,14 +1342,15 @@ class ServerApi
      * Delete server
      *
      * @param string $server_id Id of server to delete (required)
+     * @param bool $delete_storage Delete attached storage devices
      * @throws \Upcloud\ApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteServerWithHttpInfo($server_id)
+    public function deleteServerWithHttpInfo($server_id, $delete_storage = false)
     {
         $returnType = '';
-        $request = $this->deleteServerRequest($server_id);
+        $request = $this->deleteServerRequest($server_id, $delete_storage);
 
         try {
 
@@ -1446,10 +1448,12 @@ class ServerApi
      * Create request for operation 'deleteServer'
      *
      * @param string $server_id Id of server to delete (required)
+     * @param bool $delete_storage Delete attached storage devices
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteServerRequest($server_id)
+    protected function deleteServerRequest($server_id, $delete_storage = false)
     {
         // verify the required parameter 'server_id' is set
         if ($server_id === null) {
@@ -1458,7 +1462,7 @@ class ServerApi
 
         $resourcePath = '/server/{serverId}';
         $formParams = [];
-        $queryParams = [];
+        $queryParams = $delete_storage ? ['storages' => '1'] : [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
