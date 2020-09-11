@@ -51,6 +51,7 @@ class Server implements ArrayAccess
         'hostname' => 'string',
         'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses',
         'license' => 'float',
+        'login_user' => '\Upcloud\ApiClient\Model\ServerLoginUser',
         'memory_amount' => 'float',
         'nic_model' => 'string',
         'plan' => 'string',
@@ -82,6 +83,7 @@ class Server implements ArrayAccess
         'hostname' => null,
         'ip_addresses' => null,
         'license' => null,
+        'login_user' => null,
         'memory_amount' => null,
         'nic_model' => null,
         'plan' => null,
@@ -123,6 +125,7 @@ class Server implements ArrayAccess
         'hostname' => 'hostname',
         'ip_addresses' => 'ip_addresses',
         'license' => 'license',
+        'login_user' => 'login_user',
         'memory_amount' => 'memory_amount',
         'nic_model' => 'nic_model',
         'plan' => 'plan',
@@ -155,6 +158,7 @@ class Server implements ArrayAccess
         'hostname' => 'setHostname',
         'ip_addresses' => 'setIpAddresses',
         'license' => 'setLicense',
+        'login_user' => 'setLoginUser',
         'memory_amount' => 'setMemoryAmount',
         'nic_model' => 'setNicModel',
         'plan' => 'setPlan',
@@ -187,6 +191,7 @@ class Server implements ArrayAccess
         'hostname' => 'getHostname',
         'ip_addresses' => 'getIpAddresses',
         'license' => 'getLicense',
+        'login_user' => 'getLoginUser',
         'memory_amount' => 'getMemoryAmount',
         'nic_model' => 'getNicModel',
         'plan' => 'getPlan',
@@ -304,6 +309,7 @@ class Server implements ArrayAccess
         $this->container['hostname'] = isset($data['hostname']) ? $data['hostname'] : null;
         $this->container['ip_addresses'] = isset($data['ip_addresses']) ? $data['ip_addresses'] : null;
         $this->container['license'] = isset($data['license']) ? $data['license'] : null;
+        $this->container['login_user'] = isset($data['login_user']) ? $data['login_user'] : null;
         $this->container['memory_amount'] = isset($data['memory_amount']) ? $data['memory_amount'] : null;
         $this->container['nic_model'] = isset($data['nic_model']) ? $data['nic_model'] : 'e1000';
         $this->container['plan'] = isset($data['plan']) ? $data['plan'] : 'custom';
@@ -557,6 +563,27 @@ class Server implements ArrayAccess
     public function setLicense($license)
     {
         $this->container['license'] = $license;
+
+        return $this;
+    }
+
+    /**
+     * Gets login user
+     * @return \Upcloud\ApiClient\Model\ServerLoginUser
+     */
+    public function getLoginUser()
+    {
+        return $this->container['login_user'];
+    }
+
+    /**
+     * Sets login user
+     * @param \Upcloud\ApiClient\Model\ServerLoginUser $login_user
+     * @return $this
+     */
+    public function setLoginUser($login_user)
+    {
+        $this->container['login_user'] = $login_user;
 
         return $this;
     }
