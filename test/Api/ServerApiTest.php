@@ -42,10 +42,9 @@ const defaultServer = [
     "storage_devices" => [
         "storage_device" => [
             [
-                "action" => "clone",
-                "title" => "Debian from a template",
-                "size" => 30,
-                "storage" => "01000000-0000-4000-8000-000020030100",
+                "action" => "create",
+                "title" => "Debian from scratch",
+                "size" => 20,
                 "tier" => "maxiops"
             ]
         ]
