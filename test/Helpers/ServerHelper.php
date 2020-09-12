@@ -76,7 +76,7 @@ class ServerHelper
         if ($server !== null) {
             self::stopServer($server);
             try {
-                self::$api->deleteServer($server["uuid"]);
+                self::$api->deleteServer($server["uuid"], true);
             } catch (ApiException $e) {
                 echo "Error deleting: " . $e->getMessage() . "\n";
                 flush();
@@ -109,13 +109,15 @@ class ServerHelper
             try {
                 $server = self::$api->serverDetails($server["uuid"])["server"];
                 if ($server["state"] != ServerState::STOPPED) {
-                    echo "Stopping server...\n";
-                    $server = self::$api->stopServer($server["uuid"], new StopServer([
-                        "stop_server" => [
-                            "stop_type" => StopServerRequest::STOP_TYPE_HARD,
-                            "timeout" => 60
-                        ]
-                    ]))["server"];
+                    if ($server["state"] != ServerState::MAINTENANCE) {
+                        echo "Stopping server...\n";
+                        $server = self::$api->stopServer($server["uuid"], new StopServer([
+                            "stop_server" => [
+                                "stop_type" => StopServerRequest::STOP_TYPE_HARD,
+                                "timeout" => 60
+                            ]
+                        ]))["server"];
+                    }
                     sleep(15);
                     self::stopServer($server, $tryings + 1);
                 } else {
