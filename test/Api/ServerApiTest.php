@@ -19,9 +19,11 @@
 
 namespace Upcloud\ApiClient;
 
-use \Upcloud\ApiClient\Configuration;
-use \Upcloud\ApiClient\ApiException;
-use \Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\Model\Server;
+use Upcloud\ApiClient\Model\ServerLoginUser;
+use Upcloud\ApiClient\Model\ServerStorageDevices;
+use Upcloud\ApiClient\Model\SshKeys;
+use Upcloud\ApiClient\Model\StorageDevice;
 use \Upcloud\ApiClient\Upcloud\ServerApi;
 use \Upcloud\ApiClient\Helpers\ServerHelper;
 use \Upcloud\ApiClient\Model\CreateServerRequest;
@@ -32,28 +34,12 @@ use \Upcloud\ApiClient\Model\CreateServerRequest;
  * @category Class
  * @package  Upcloud\ApiClient
  */
-
-const defaultServer = [
-    "zone" => "fi-hel2",
-    "title" => "Firewall test server",
-    "hostname" => "debian.example.com",
-    "password_delivery" => "none",
-    "plan" => "1xCPU-1GB",
-    "storage_devices" => [
-        "storage_device" => [
-            [
-                "action" => "create",
-                "title" => "Debian from scratch",
-                "size" => 20,
-                "tier" => "maxiops"
-            ]
-        ]
-    ]
-];
 class ServerApiTest extends \PHPUnit_Framework_TestCase
 {
 
     public static $api;
+
+    public static $defaultServer;
 
     /**
      * Setup before running any test cases
@@ -63,6 +49,32 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
         self::$api = new ServerApi;
         self::$api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
         self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
+        self::$defaultServer = new Server([
+            "zone" => "fi-hel2",
+            "title" => "Firewall test server",
+            "hostname" => "debian.example.com",
+            "password_delivery" => "none",
+            "plan" => "1xCPU-1GB",
+            "login_user" => new ServerLoginUser([
+                "create_password" => "no",
+                "username" => "firewalltest",
+                "ssh_keys" => new SshKeys([
+                    "ssh_key" => [
+                        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHf/oHh306iOGFBlQtiS7OQ7bUEhHlghAX8kRi2403BFCanFKp9yDVjk2RG+imBWt1KVHv7YfogToDqh/6U8B0C2o80VWe37O6wgTCN98jyVm36MC4O0/WSJMiHrNjbPENy6Cv6QXpwqo39qtz8MMyLOXi51sF1Z+t8mEhnol1JWGQzIpgujrLs7AW2Qfw5U7QKNCk16UIDXm8bYhKVX7Ehsn1YtBn5rRf6mzXQ+zHKYcEi8wNviwDlgwQ9nZp/ANpDzo/zCKmLQ4iraNr4v/aX7AXzfN/vsPP4YDkiT93vXNVaIqjzCAOeEsnLU0NvOufuwTNL2x70bDkx28XDytR firewalltest@example.com"
+                    ]
+                ]),
+            ]),
+            "storage_devices" => new ServerStorageDevices([
+                "storage_device" => [new StorageDevice(
+                    [
+                        "action" => "create",
+                        "title" => "Debian from scratch",
+                        "size" => 20,
+                        "tier" => "maxiops"
+                    ]
+                )]
+            ])
+        ]);
     }
 
     /**
@@ -96,11 +108,11 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateServer()
     {
-        $createdServer = self::$api->createServer(new CreateServerRequest(["server" => defaultServer]))["server"];
-        $this->assertEquals($createdServer["title"], defaultServer["title"]);
-        $this->assertEquals($createdServer["zone"], defaultServer["zone"]);
-        $this->assertEquals($createdServer["hostname"], defaultServer["hostname"]);
-        $this->assertEquals($createdServer["plan"], defaultServer["plan"]);
+        $createdServer = self::$api->createServer(new CreateServerRequest(["server" => self::$defaultServer]))["server"];
+        $this->assertEquals($createdServer["title"], self::$defaultServer["title"]);
+        $this->assertEquals($createdServer["zone"], self::$defaultServer["zone"]);
+        $this->assertEquals($createdServer["hostname"], self::$defaultServer["hostname"]);
+        $this->assertEquals($createdServer["plan"], self::$defaultServer["plan"]);
     }
 
 
@@ -114,7 +126,7 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
     {
         $servers = self::$api->listServers()["servers"]["server"];
         $prevSize = count($servers);
-        $createdServer = self::$api->createServer(new CreateServerRequest(["server" => defaultServer]))["server"];
+        self::$api->createServer(new CreateServerRequest(["server" => self::$defaultServer]));
         $servers = self::$api->listServers()["servers"]["server"];
         $this->assertEquals($prevSize + 1, count($servers));
     }
