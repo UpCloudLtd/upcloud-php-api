@@ -1,105 +1,91 @@
 <?php
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Api;
+
+use PHPUnit\Framework\TestCase;
+use Upcloud\ApiClient\ApiException;
+use Upcloud\ApiClient\Model\AttachStorageDeviceRequest;
+use Upcloud\ApiClient\Model\BackupRule;
+use Upcloud\ApiClient\Model\CreateStorageRequest;
+use Upcloud\ApiClient\Model\StorageDeviceDetachRequest;
+use Upcloud\ApiClient\Model\StorageTier;
+use Upcloud\ApiClient\Upcloud\StorageApi;
+
 /**
- * StorageApiTest
- * PHP version 5
+ * StorageApiTest Class Doc Comment.
  *
  * @category Class
- * @package  Upcloud\ApiClient
+ *
+ * @internal
  */
-
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- *
- */
-
-
-namespace Upcloud\ApiClient;
-
-use \Upcloud\ApiClient\Configuration;
-use \Upcloud\ApiClient\ApiException;
-use \Upcloud\ApiClient\ObjectSerializer;
-use \Upcloud\ApiClient\Upcloud\StorageApi;
-use \Upcloud\ApiClient\Model\Storage;
-use \Upcloud\ApiClient\Model\CreateStorageRequest;
-use \Upcloud\ApiClient\Model\AttachStorageDeviceRequest;
-use \Upcloud\ApiClient\Model\DetachStorageDeviceRequest;
-use \Upcloud\ApiClient\Model\BackupRule;
-use \Upcloud\ApiClient\Model\StorageTier;
-use \Upcloud\ApiClient\Helpers\ServerHelper;
-
-/**
- * StorageApiTest Class Doc Comment
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
-class StorageApiTest extends \PHPUnit_Framework_TestCase
+class StorageApiTest extends TestCase
 {
-
     public static $api;
     public static $testStorage;
+
     /**
-     * Setup before running any test cases
+     * Setup before running any test cases.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
-        self::$api = new StorageApi;
-        self::$api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
-        self::$api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
+        self::$api = new StorageApi();
+        self::$api->getConfig()->setUsername(\getenv('UPCLOUD_API_TEST_USER'));
+        self::$api->getConfig()->setPassword(\getenv('UPCLOUD_API_TEST_PASSWORD'));
     }
 
     /**
-     * Setup before running each test case
+     * Setup before running each test case.
      */
-    public function setUp()
+    protected function setUp(): void
     {
-        $testStorage = ["size" => 10, "tier" => StorageTier::MAXIOPS, "title" => "Test create storage storage", "zone" => "fi-hel1", "backup_rule" => ["interval" =>BackupRule::INTERVAL_DAILY, "time" => "0430", "retention" => 365]];
-        self::$testStorage = self::$api->createStorage(new CreateStorageRequest(["storage" => $testStorage]))["storage"];
+        $testStorage = [
+            'size' => 10,
+            'tier' => StorageTier::MAXIOPS,
+            'title' => 'Test create storage storage',
+            'zone' => 'fi-hel1',
+            'backup_rule' => [
+                'interval' => BackupRule::INTERVAL_DAILY,
+                'time' => '0430',
+                'retention' => 365,
+            ],
+        ];
+        self::$testStorage = self::$api->createStorage(
+            new CreateStorageRequest(['storage' => $testStorage])
+        )['storage'];
         // ServerHelper::createReadyServer();
     }
 
     /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test case for attachStorage
+     * Test case for attachStorage.
      *
      * Attach storage.
-     *
      */
-    public function testAttachStorage()
+    public function testAttachStorage(): void
     {
         try {
-            $serverId = "00b13f6c-0500-4b13-883f-f260bf77542a";
-            $storageDevice = ["storage" => self::$testStorage["uuid"], "address" => "scsi:0:0", "type" => "disk"];
-            $server = self::$api->attachStorage($serverId, new AttachStorageDeviceRequest(["storage_device" => $storageDevice]))["server"];
+            $serverId = '00b13f6c-0500-4b13-883f-f260bf77542a';
+            $storageDevice = ['storage' => self::$testStorage['uuid'], 'address' => 'scsi:0:0', 'type' => 'disk'];
+            $server = self::$api->attachStorage(
+                $serverId,
+                new AttachStorageDeviceRequest(['storage_device' => $storageDevice])
+            )['server'];
             $is = false;
-            var_dump($server );
-            foreach ($server["storage_devices"]["storage_device"] as $storageDevice) {
-                echo $storageDevice["title"];
-                if ($storageDevice["title"] === "Test create storage storage") {
+            \var_dump($server);
+            foreach ($server['storage_devices']['storage_device'] as $storageDevice) {
+                echo $storageDevice['title'];
+                if ($storageDevice['title'] === 'Test create storage storage') {
                     $is = true;
                 }
             }
             $this->assertTrue($is);
-            $server = self::$api->detachStorage($serverId, new DetachStorageDeviceRequest(["storage_device"=> ["address" => "scsi:0:0"]]))["server"];
-            foreach ($server["storage_devices"]["storage_device"] as $storageDevice) {
-                $this->assertNotEquals($storageDevice["address"], "scsi:0:0");
+            $server = self::$api->detachStorage(
+                $serverId,
+                new StorageDeviceDetachRequest(['storage_device' => ['address' => 'scsi:0:0']])
+            )['server'];
+            foreach ($server['storage_devices']['storage_device'] as $storageDevice) {
+                $this->assertNotEquals($storageDevice['address'], 'scsi:0:0');
             }
         } catch (ApiException $e) {
             echo $e->getMessage();
@@ -107,7 +93,7 @@ class StorageApiTest extends \PHPUnit_Framework_TestCase
         // $this->assertTrue($server["storage_devices"]["storage_device"])
     }
 
-    /**
+    /*
      * Test case for backupStorage
      *
      * Create backup.

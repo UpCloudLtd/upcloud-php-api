@@ -1,84 +1,48 @@
 <?php
-/**
- * TimezoneApiTest
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- *
- */
+declare(strict_types=1);
 
+namespace Upcloud\Tests\Api;
 
-namespace Upcloud\ApiClient;
-
-use \Upcloud\ApiClient\Configuration;
-use \Upcloud\ApiClient\ApiException;
-use \Upcloud\ApiClient\ObjectSerializer;
+use PHPUnit\Framework\TestCase;
 use Upcloud\ApiClient\Upcloud\TimezoneApi;
 
 /**
- * TimezoneApiTest Class Doc Comment
+ * TimezoneApiTest Class Doc Comment.
  *
  * @category Class
- * @package  Upcloud\ApiClient
+ *
+ * @internal
  */
-class TimezoneApiTest extends \PHPUnit_Framework_TestCase
+class TimezoneApiTest extends TestCase
 {
-
-    /**
-     * Setup before running any test cases
-     */
+    /** Setup before running any test cases. */
     private $api;
-    
-    public static function setUpBeforeClass()
-    {
-    }
 
     /**
-     * Setup before running each test case
+     * Setup before running each test case.
      */
-    public function setUp()
+    protected function setUp(): void
     {
-        $this->api = new TimezoneApi;
-        $this->api->getConfig()->setUsername(getenv("UPCLOUD_API_TEST_USER"));
-        $this->api->getConfig()->setPassword(getenv("UPCLOUD_API_TEST_PASSWORD"));
+        $this->api = new TimezoneApi();
+        $this->api->getConfig()->setUsername(\getenv('UPCLOUD_API_TEST_USER'));
+        $this->api->getConfig()->setPassword(\getenv('UPCLOUD_API_TEST_PASSWORD'));
     }
 
     /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test case for listTimezones
+     * Test case for listTimezones.
      *
      * List timezones.
-     *
      */
-    public function testListTimezones()
+    public function testListTimezones(): void
     {
         $timezones = $this->api->listTimezones()->getTimezones()->getTimezone();
-        $zones = ["Africa", "America", "Antarctica", "Arctic", "Asia", "Atlantic", "Australia", "Europe", "Indian", "Pacific", "UTC"];
-        $result = array_reduce($timezones, function ($acc, $timezone) use ($zones) {
-            $zone = explode("/", $timezone)[0];
-            return $acc && in_array($zone, $zones);
+        $zones = ['Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic',
+            'Australia', 'Europe', 'Indian', 'Pacific', 'UTC', ];
+        $result = \array_reduce($timezones, static function ($acc, $timezone) use ($zones) {
+            $zone = \explode('/', $timezone)[0];
+
+            return $acc && \in_array($zone, $zones);
         }, true);
         $this->assertTrue($result);
     }

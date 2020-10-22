@@ -1,68 +1,25 @@
 <?php
-/**
- * StorageAccessTypeTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * StorageAccessTypeTest Class Doc Comment
+ * StorageAccessTypeTest Class Doc Comment.
  *
  * @category    Class */
 // * @description Storage access types. * &#x60;public&#x60; (*Public storages*) are visible to all users. Public storages include CD-ROM images and templates. CD-ROM images can be used to install operating systems and to rescue unbootable systems. Templates are used to create servers with a preconfigured operating system. * &#x60;private&#x60; (*Private storages*) - visible only to the specific user account and sub-accounts. Users can only create private storages.
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class StorageAccessTypeTest extends \PHPUnit_Framework_TestCase
+class StorageAccessTypeTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "StorageAccessType".
      */
-    public static function setUpBeforeClass()
-    {
-    }
-
-    /**
-     * Setup before running each test case
-     */
-    public function setUp()
-    {
-    }
-
-    /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "StorageAccessType"
-     */
-    public function testStorageAccessType()
+    public function testStorageAccessType(): void
     {
     }
 }

@@ -1,89 +1,46 @@
 <?php
-/**
- * Storage2Test
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * Storage2Test Class Doc Comment
+ * Storage2Test Class Doc Comment.
  *
  * @category    Class */
 // * @description Storage2
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class Storage2Test extends \PHPUnit_Framework_TestCase
+class Storage2Test extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "Storage2".
      */
-    public static function setUpBeforeClass()
+    public function testStorage2(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "zone".
      */
-    public function setUp()
+    public function testPropertyZone(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "tier".
      */
-    public function tearDown()
+    public function testPropertyTier(): void
     {
     }
 
     /**
-     * Clean up after running all test cases
+     * Test attribute "title".
      */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "Storage2"
-     */
-    public function testStorage2()
-    {
-    }
-
-    /**
-     * Test attribute "zone"
-     */
-    public function testPropertyZone()
-    {
-    }
-
-    /**
-     * Test attribute "tier"
-     */
-    public function testPropertyTier()
-    {
-    }
-
-    /**
-     * Test attribute "title"
-     */
-    public function testPropertyTitle()
+    public function testPropertyTitle(): void
     {
     }
 }

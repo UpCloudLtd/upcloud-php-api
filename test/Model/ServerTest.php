@@ -1,236 +1,193 @@
 <?php
-/**
- * ServerTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * ServerTest Class Doc Comment
+ * ServerTest Class Doc Comment.
  *
  * @category    Class */
 // * @description The server configuration defines which storage devices the server is attached to, which IP addresses can be used and how the server can be reached for remote management. A server must have at least one storage device attached in order to be started. Servers may have from zero to five public IPv4 and IPv6 addresses. All servers have a private IP address that cannot be removed.
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class ServerTest extends \PHPUnit_Framework_TestCase
+class ServerTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "Server".
      */
-    public static function setUpBeforeClass()
+    public function testServer(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "boot_order".
      */
-    public function setUp()
+    public function testPropertyBootOrder(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "core_number".
      */
-    public function tearDown()
+    public function testPropertyCoreNumber(): void
     {
     }
 
     /**
-     * Clean up after running all test cases
+     * Test attribute "firewall".
      */
-    public static function tearDownAfterClass()
+    public function testPropertyFirewall(): void
     {
     }
 
     /**
-     * Test "Server"
+     * Test attribute "host".
      */
-    public function testServer()
+    public function testPropertyHost(): void
     {
     }
 
     /**
-     * Test attribute "boot_order"
+     * Test attribute "hostname".
      */
-    public function testPropertyBootOrder()
+    public function testPropertyHostname(): void
     {
     }
 
     /**
-     * Test attribute "core_number"
+     * Test attribute "ip_addresses".
      */
-    public function testPropertyCoreNumber()
+    public function testPropertyIpAddresses(): void
     {
     }
 
     /**
-     * Test attribute "firewall"
+     * Test attribute "license".
      */
-    public function testPropertyFirewall()
+    public function testPropertyLicense(): void
     {
     }
 
     /**
-     * Test attribute "host"
+     * Test attribute "memory_amount".
      */
-    public function testPropertyHost()
+    public function testPropertyMemoryAmount(): void
     {
     }
 
     /**
-     * Test attribute "hostname"
+     * Test attribute "nic_model".
      */
-    public function testPropertyHostname()
+    public function testPropertyNicModel(): void
     {
     }
 
     /**
-     * Test attribute "ip_addresses"
+     * Test attribute "plan".
      */
-    public function testPropertyIpAddresses()
+    public function testPropertyPlan(): void
     {
     }
 
     /**
-     * Test attribute "license"
+     * Test attribute "plan_ipv4_bytes".
      */
-    public function testPropertyLicense()
+    public function testPropertyPlanIpv4Bytes(): void
     {
     }
 
     /**
-     * Test attribute "memory_amount"
+     * Test attribute "plan_ipv6_bytes".
      */
-    public function testPropertyMemoryAmount()
+    public function testPropertyPlanIpv6Bytes(): void
     {
     }
 
     /**
-     * Test attribute "nic_model"
+     * Test attribute "state".
      */
-    public function testPropertyNicModel()
+    public function testPropertyState(): void
     {
     }
 
     /**
-     * Test attribute "plan"
+     * Test attribute "storage_devices".
      */
-    public function testPropertyPlan()
+    public function testPropertyStorageDevices(): void
     {
     }
 
     /**
-     * Test attribute "plan_ipv4_bytes"
+     * Test attribute "tags".
      */
-    public function testPropertyPlanIpv4Bytes()
+    public function testPropertyTags(): void
     {
     }
 
     /**
-     * Test attribute "plan_ipv6_bytes"
+     * Test attribute "timezone".
      */
-    public function testPropertyPlanIpv6Bytes()
+    public function testPropertyTimezone(): void
     {
     }
 
     /**
-     * Test attribute "state"
+     * Test attribute "title".
      */
-    public function testPropertyState()
+    public function testPropertyTitle(): void
     {
     }
 
     /**
-     * Test attribute "storage_devices"
+     * Test attribute "uuid".
      */
-    public function testPropertyStorageDevices()
+    public function testPropertyUuid(): void
     {
     }
 
     /**
-     * Test attribute "tags"
+     * Test attribute "video_model".
      */
-    public function testPropertyTags()
+    public function testPropertyVideoModel(): void
     {
     }
 
     /**
-     * Test attribute "timezone"
+     * Test attribute "vnc".
      */
-    public function testPropertyTimezone()
+    public function testPropertyVnc(): void
     {
     }
 
     /**
-     * Test attribute "title"
+     * Test attribute "vnc_host".
      */
-    public function testPropertyTitle()
+    public function testPropertyVncHost(): void
     {
     }
 
     /**
-     * Test attribute "uuid"
+     * Test attribute "vnc_password".
      */
-    public function testPropertyUuid()
+    public function testPropertyVncPassword(): void
     {
     }
 
     /**
-     * Test attribute "video_model"
+     * Test attribute "vnc_port".
      */
-    public function testPropertyVideoModel()
+    public function testPropertyVncPort(): void
     {
     }
 
     /**
-     * Test attribute "vnc"
+     * Test attribute "zone".
      */
-    public function testPropertyVnc()
-    {
-    }
-
-    /**
-     * Test attribute "vnc_host"
-     */
-    public function testPropertyVncHost()
-    {
-    }
-
-    /**
-     * Test attribute "vnc_password"
-     */
-    public function testPropertyVncPassword()
-    {
-    }
-
-    /**
-     * Test attribute "vnc_port"
-     */
-    public function testPropertyVncPort()
-    {
-    }
-
-    /**
-     * Test attribute "zone"
-     */
-    public function testPropertyZone()
+    public function testPropertyZone(): void
     {
     }
 }

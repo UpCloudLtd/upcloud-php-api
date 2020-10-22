@@ -1,82 +1,39 @@
 <?php
-/**
- * ServerSizeTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * ServerSizeTest Class Doc Comment
+ * ServerSizeTest Class Doc Comment.
  *
  * @category    Class */
 // * @description ServerSize
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class ServerSizeTest extends \PHPUnit_Framework_TestCase
+class ServerSizeTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "ServerSize".
      */
-    public static function setUpBeforeClass()
+    public function testServerSize(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "core_number".
      */
-    public function setUp()
+    public function testPropertyCoreNumber(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "memory_amount".
      */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "ServerSize"
-     */
-    public function testServerSize()
-    {
-    }
-
-    /**
-     * Test attribute "core_number"
-     */
-    public function testPropertyCoreNumber()
-    {
-    }
-
-    /**
-     * Test attribute "memory_amount"
-     */
-    public function testPropertyMemoryAmount()
+    public function testPropertyMemoryAmount(): void
     {
     }
 }

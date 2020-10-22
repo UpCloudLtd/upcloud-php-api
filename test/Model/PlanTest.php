@@ -1,110 +1,67 @@
 <?php
-/**
- * PlanTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * PlanTest Class Doc Comment
+ * PlanTest Class Doc Comment.
  *
  * @category    Class */
 // * @description Server plans are preconfigured server configurations with fixed price. Each plan includes certain number of CPU cores, memory amount, storage and transfer quota in addition of one public IPv4 address (private IPv4 addresses and public IPv6 addresses are currently free of charge, so they are not included in plan).
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class PlanTest extends \PHPUnit_Framework_TestCase
+class PlanTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "Plan".
      */
-    public static function setUpBeforeClass()
+    public function testPlan(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "core_number".
      */
-    public function setUp()
+    public function testPropertyCoreNumber(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "memory_amount".
      */
-    public function tearDown()
+    public function testPropertyMemoryAmount(): void
     {
     }
 
     /**
-     * Clean up after running all test cases
+     * Test attribute "name".
      */
-    public static function tearDownAfterClass()
+    public function testPropertyName(): void
     {
     }
 
     /**
-     * Test "Plan"
+     * Test attribute "public_traffic_out".
      */
-    public function testPlan()
+    public function testPropertyPublicTrafficOut(): void
     {
     }
 
     /**
-     * Test attribute "core_number"
+     * Test attribute "storage_size".
      */
-    public function testPropertyCoreNumber()
+    public function testPropertyStorageSize(): void
     {
     }
 
     /**
-     * Test attribute "memory_amount"
+     * Test attribute "storage_tier".
      */
-    public function testPropertyMemoryAmount()
-    {
-    }
-
-    /**
-     * Test attribute "name"
-     */
-    public function testPropertyName()
-    {
-    }
-
-    /**
-     * Test attribute "public_traffic_out"
-     */
-    public function testPropertyPublicTrafficOut()
-    {
-    }
-
-    /**
-     * Test attribute "storage_size"
-     */
-    public function testPropertyStorageSize()
-    {
-    }
-
-    /**
-     * Test attribute "storage_tier"
-     */
-    public function testPropertyStorageTier()
+    public function testPropertyStorageTier(): void
     {
     }
 }

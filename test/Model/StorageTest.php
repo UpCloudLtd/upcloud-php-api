@@ -1,103 +1,60 @@
 <?php
-/**
- * StorageTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * StorageTest Class Doc Comment
+ * StorageTest Class Doc Comment.
  *
  * @category    Class */
 // * @description Storage
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class StorageTest extends \PHPUnit_Framework_TestCase
+class StorageTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "Storage".
      */
-    public static function setUpBeforeClass()
+    public function testStorage(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "size".
      */
-    public function setUp()
+    public function testPropertySize(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "tier".
      */
-    public function tearDown()
+    public function testPropertyTier(): void
     {
     }
 
     /**
-     * Clean up after running all test cases
+     * Test attribute "title".
      */
-    public static function tearDownAfterClass()
+    public function testPropertyTitle(): void
     {
     }
 
     /**
-     * Test "Storage"
+     * Test attribute "zone".
      */
-    public function testStorage()
+    public function testPropertyZone(): void
     {
     }
 
     /**
-     * Test attribute "size"
+     * Test attribute "backup_rule".
      */
-    public function testPropertySize()
-    {
-    }
-
-    /**
-     * Test attribute "tier"
-     */
-    public function testPropertyTier()
-    {
-    }
-
-    /**
-     * Test attribute "title"
-     */
-    public function testPropertyTitle()
-    {
-    }
-
-    /**
-     * Test attribute "zone"
-     */
-    public function testPropertyZone()
-    {
-    }
-
-    /**
-     * Test attribute "backup_rule"
-     */
-    public function testPropertyBackupRule()
+    public function testPropertyBackupRule(): void
     {
     }
 }

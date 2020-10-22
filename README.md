@@ -18,7 +18,7 @@ The base URL for all API operations is  https://api.upcloud.com/ and require bas
 
 ## Requirements
 
-Using this library requires the PHP version 5.5 and later.
+Using this library requires the PHP version 7.2 and later.
 
 ## Installation
 ### Composer
