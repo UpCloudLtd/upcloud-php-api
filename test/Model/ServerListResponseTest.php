@@ -1,75 +1,32 @@
 <?php
-/**
- * ServerListResponseTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * ServerListResponseTest Class Doc Comment
+ * ServerListResponseTest Class Doc Comment.
  *
  * @category    Class */
 // * @description ServerListResponse
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class ServerListResponseTest extends \PHPUnit_Framework_TestCase
+class ServerListResponseTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "ServerListResponse".
      */
-    public static function setUpBeforeClass()
+    public function testServerListResponse(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "servers".
      */
-    public function setUp()
-    {
-    }
-
-    /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "ServerListResponse"
-     */
-    public function testServerListResponse()
-    {
-    }
-
-    /**
-     * Test attribute "servers"
-     */
-    public function testPropertyServers()
+    public function testPropertyServers(): void
     {
     }
 }

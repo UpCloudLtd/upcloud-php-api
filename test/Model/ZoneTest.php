@@ -1,82 +1,39 @@
 <?php
-/**
- * ZoneTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * ZoneTest Class Doc Comment
+ * ZoneTest Class Doc Comment.
  *
  * @category    Class */
 // * @description A zone identifies the physical site where the cloud services are located. Different zones may be used to provide geographical and logical separation of servers.
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class ZoneTest extends \PHPUnit_Framework_TestCase
+class ZoneTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "Zone".
      */
-    public static function setUpBeforeClass()
+    public function testZone(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "name".
      */
-    public function setUp()
+    public function testPropertyName(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "description".
      */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "Zone"
-     */
-    public function testZone()
-    {
-    }
-
-    /**
-     * Test attribute "name"
-     */
-    public function testPropertyName()
-    {
-    }
-
-    /**
-     * Test attribute "description"
-     */
-    public function testPropertyDescription()
+    public function testPropertyDescription(): void
     {
     }
 }

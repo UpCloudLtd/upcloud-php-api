@@ -1,173 +1,130 @@
 <?php
-/**
- * FirewallRuleTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * FirewallRuleTest Class Doc Comment
+ * FirewallRuleTest Class Doc Comment.
  *
  * @category    Class */
 // * @description FirewallRule
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class FirewallRuleTest extends \PHPUnit_Framework_TestCase
+class FirewallRuleTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "FirewallRule".
      */
-    public static function setUpBeforeClass()
+    public function testFirewallRule(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "direction".
      */
-    public function setUp()
+    public function testPropertyDirection(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "action".
      */
-    public function tearDown()
+    public function testPropertyAction(): void
     {
     }
 
     /**
-     * Clean up after running all test cases
+     * Test attribute "position".
      */
-    public static function tearDownAfterClass()
+    public function testPropertyPosition(): void
     {
     }
 
     /**
-     * Test "FirewallRule"
+     * Test attribute "family".
      */
-    public function testFirewallRule()
+    public function testPropertyFamily(): void
     {
     }
 
     /**
-     * Test attribute "direction"
+     * Test attribute "protocol".
      */
-    public function testPropertyDirection()
+    public function testPropertyProtocol(): void
     {
     }
 
     /**
-     * Test attribute "action"
+     * Test attribute "icmp_type".
      */
-    public function testPropertyAction()
+    public function testPropertyIcmpType(): void
     {
     }
 
     /**
-     * Test attribute "position"
+     * Test attribute "destination_address_start".
      */
-    public function testPropertyPosition()
+    public function testPropertyDestinationAddressStart(): void
     {
     }
 
     /**
-     * Test attribute "family"
+     * Test attribute "destination_address_end".
      */
-    public function testPropertyFamily()
+    public function testPropertyDestinationAddressEnd(): void
     {
     }
 
     /**
-     * Test attribute "protocol"
+     * Test attribute "destination_port_start".
      */
-    public function testPropertyProtocol()
+    public function testPropertyDestinationPortStart(): void
     {
     }
 
     /**
-     * Test attribute "icmp_type"
+     * Test attribute "destination_port_end".
      */
-    public function testPropertyIcmpType()
+    public function testPropertyDestinationPortEnd(): void
     {
     }
 
     /**
-     * Test attribute "destination_address_start"
+     * Test attribute "source_address_start".
      */
-    public function testPropertyDestinationAddressStart()
+    public function testPropertySourceAddressStart(): void
     {
     }
 
     /**
-     * Test attribute "destination_address_end"
+     * Test attribute "source_address_end".
      */
-    public function testPropertyDestinationAddressEnd()
+    public function testPropertySourceAddressEnd(): void
     {
     }
 
     /**
-     * Test attribute "destination_port_start"
+     * Test attribute "source_port_start".
      */
-    public function testPropertyDestinationPortStart()
+    public function testPropertySourcePortStart(): void
     {
     }
 
     /**
-     * Test attribute "destination_port_end"
+     * Test attribute "source_port_end".
      */
-    public function testPropertyDestinationPortEnd()
+    public function testPropertySourcePortEnd(): void
     {
     }
 
     /**
-     * Test attribute "source_address_start"
+     * Test attribute "comment".
      */
-    public function testPropertySourceAddressStart()
-    {
-    }
-
-    /**
-     * Test attribute "source_address_end"
-     */
-    public function testPropertySourceAddressEnd()
-    {
-    }
-
-    /**
-     * Test attribute "source_port_start"
-     */
-    public function testPropertySourcePortStart()
-    {
-    }
-
-    /**
-     * Test attribute "source_port_end"
-     */
-    public function testPropertySourcePortEnd()
-    {
-    }
-
-    /**
-     * Test attribute "comment"
-     */
-    public function testPropertyComment()
+    public function testPropertyComment(): void
     {
     }
 }

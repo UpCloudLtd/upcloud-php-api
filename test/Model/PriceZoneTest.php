@@ -1,194 +1,151 @@
 <?php
-/**
- * PriceZoneTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * PriceZoneTest Class Doc Comment
+ * PriceZoneTest Class Doc Comment.
  *
  * @category    Class */
 // * @description PriceZone
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class PriceZoneTest extends \PHPUnit_Framework_TestCase
+class PriceZoneTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "PriceZone".
      */
-    public static function setUpBeforeClass()
+    public function testPriceZone(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "name".
      */
-    public function setUp()
+    public function testPropertyName(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "firewall".
      */
-    public function tearDown()
+    public function testPropertyFirewall(): void
     {
     }
 
     /**
-     * Clean up after running all test cases
+     * Test attribute "io_request_backup".
      */
-    public static function tearDownAfterClass()
+    public function testPropertyIoRequestBackup(): void
     {
     }
 
     /**
-     * Test "PriceZone"
+     * Test attribute "io_request_hdd".
      */
-    public function testPriceZone()
+    public function testPropertyIoRequestHdd(): void
     {
     }
 
     /**
-     * Test attribute "name"
+     * Test attribute "io_request_maxiops".
      */
-    public function testPropertyName()
+    public function testPropertyIoRequestMaxiops(): void
     {
     }
 
     /**
-     * Test attribute "firewall"
+     * Test attribute "ipv4_address".
      */
-    public function testPropertyFirewall()
+    public function testPropertyIpv4Address(): void
     {
     }
 
     /**
-     * Test attribute "io_request_backup"
+     * Test attribute "ipv6_address".
      */
-    public function testPropertyIoRequestBackup()
+    public function testPropertyIpv6Address(): void
     {
     }
 
     /**
-     * Test attribute "io_request_hdd"
+     * Test attribute "public_ipv4_bandwidth_in".
      */
-    public function testPropertyIoRequestHdd()
+    public function testPropertyPublicIpv4BandwidthIn(): void
     {
     }
 
     /**
-     * Test attribute "io_request_maxiops"
+     * Test attribute "public_ipv4_bandwidth_out".
      */
-    public function testPropertyIoRequestMaxiops()
+    public function testPropertyPublicIpv4BandwidthOut(): void
     {
     }
 
     /**
-     * Test attribute "ipv4_address"
+     * Test attribute "public_ipv6_bandwidth_in".
      */
-    public function testPropertyIpv4Address()
+    public function testPropertyPublicIpv6BandwidthIn(): void
     {
     }
 
     /**
-     * Test attribute "ipv6_address"
+     * Test attribute "public_ipv6_bandwidth_out".
      */
-    public function testPropertyIpv6Address()
+    public function testPropertyPublicIpv6BandwidthOut(): void
     {
     }
 
     /**
-     * Test attribute "public_ipv4_bandwidth_in"
+     * Test attribute "server_core".
      */
-    public function testPropertyPublicIpv4BandwidthIn()
+    public function testPropertyServerCore(): void
     {
     }
 
     /**
-     * Test attribute "public_ipv4_bandwidth_out"
+     * Test attribute "server_memory".
      */
-    public function testPropertyPublicIpv4BandwidthOut()
+    public function testPropertyServerMemory(): void
     {
     }
 
     /**
-     * Test attribute "public_ipv6_bandwidth_in"
+     * Test attribute "storage_backup".
      */
-    public function testPropertyPublicIpv6BandwidthIn()
+    public function testPropertyStorageBackup(): void
     {
     }
 
     /**
-     * Test attribute "public_ipv6_bandwidth_out"
+     * Test attribute "storage_hdd".
      */
-    public function testPropertyPublicIpv6BandwidthOut()
+    public function testPropertyStorageHdd(): void
     {
     }
 
     /**
-     * Test attribute "server_core"
+     * Test attribute "storage_maxiops".
      */
-    public function testPropertyServerCore()
+    public function testPropertyStorageMaxiops(): void
     {
     }
 
     /**
-     * Test attribute "server_memory"
+     * Test attribute "server_plan_1x_cpu_1_gb".
      */
-    public function testPropertyServerMemory()
+    public function testPropertyServerPlan1xCpu1Gb(): void
     {
     }
 
     /**
-     * Test attribute "storage_backup"
+     * Test attribute "server_plan_2x_cpu_2_gb".
      */
-    public function testPropertyStorageBackup()
-    {
-    }
-
-    /**
-     * Test attribute "storage_hdd"
-     */
-    public function testPropertyStorageHdd()
-    {
-    }
-
-    /**
-     * Test attribute "storage_maxiops"
-     */
-    public function testPropertyStorageMaxiops()
-    {
-    }
-
-    /**
-     * Test attribute "server_plan_1x_cpu_1_gb"
-     */
-    public function testPropertyServerPlan1xCpu1Gb()
-    {
-    }
-
-    /**
-     * Test attribute "server_plan_2x_cpu_2_gb"
-     */
-    public function testPropertyServerPlan2xCpu2Gb()
+    public function testPropertyServerPlan2xCpu2Gb(): void
     {
     }
 }

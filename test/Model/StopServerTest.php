@@ -1,82 +1,39 @@
 <?php
-/**
- * StopServerTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * StopServerTest Class Doc Comment
+ * StopServerTest Class Doc Comment.
  *
  * @category    Class */
 // * @description StopServer
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class StopServerTest extends \PHPUnit_Framework_TestCase
+class StopServerTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "StopServer".
      */
-    public static function setUpBeforeClass()
+    public function testStopServer(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "stop_type".
      */
-    public function setUp()
+    public function testPropertyStopType(): void
     {
     }
 
     /**
-     * Clean up after running each test case
+     * Test attribute "timeout".
      */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "StopServer"
-     */
-    public function testStopServer()
-    {
-    }
-
-    /**
-     * Test attribute "stop_type"
-     */
-    public function testPropertyStopType()
-    {
-    }
-
-    /**
-     * Test attribute "timeout"
-     */
-    public function testPropertyTimeout()
+    public function testPropertyTimeout(): void
     {
     }
 }

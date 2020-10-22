@@ -1,75 +1,32 @@
 <?php
-/**
- * AttachStorageDeviceRequestTest
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
+
+declare(strict_types=1);
+
+namespace Upcloud\Tests\Model;
+
+use PHPUnit\Framework\TestCase;
 
 /**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
-
-namespace Upcloud\ApiClient;
-
-/**
- * AttachStorageDeviceRequestTest Class Doc Comment
+ * AttachStorageDeviceRequestTest Class Doc Comment.
  *
  * @category    Class */
 // * @description AttachStorageDeviceRequest
 /**
- * @package     Upcloud\ApiClient
+ * @internal
  */
-class AttachStorageDeviceRequestTest extends \PHPUnit_Framework_TestCase
+class AttachStorageDeviceRequestTest extends TestCase
 {
-
     /**
-     * Setup before running any test case
+     * Test "AttachStorageDeviceRequest".
      */
-    public static function setUpBeforeClass()
+    public function testAttachStorageDeviceRequest(): void
     {
     }
 
     /**
-     * Setup before running each test case
+     * Test attribute "storage_device".
      */
-    public function setUp()
-    {
-    }
-
-    /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test "AttachStorageDeviceRequest"
-     */
-    public function testAttachStorageDeviceRequest()
-    {
-    }
-
-    /**
-     * Test attribute "storage_device"
-     */
-    public function testPropertyStorageDevice()
+    public function testPropertyStorageDevice(): void
     {
     }
 }
