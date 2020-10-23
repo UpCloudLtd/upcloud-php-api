@@ -1,180 +1,166 @@
 <?php
-/**
- * Configuration
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient;
 
 /**
  * Configuration Class Doc Comment
- * PHP version 5
  *
  * @category Class
- * @package  Upcloud\ApiClient
  */
 class Configuration
 {
     private static $defaultConfiguration;
 
     /**
-     * Associate array to store API key(s)
+     * Associate array to store API key(s).
      *
      * @var string[]
      */
     protected $apiKeys = [];
 
     /**
-     * Associate array to store API prefix (e.g. Bearer)
+     * Associate array to store API prefix (e.g. Bearer).
      *
      * @var string[]
      */
     protected $apiKeyPrefixes = [];
 
     /**
-     * Access token for OAuth
+     * Access token for OAuth.
      *
      * @var string
      */
     protected $accessToken = '';
 
     /**
-     * Username for HTTP basic authentication
+     * Username for HTTP basic authentication.
      *
      * @var string
      */
     protected $username = '';
 
     /**
-     * Password for HTTP basic authentication
+     * Password for HTTP basic authentication.
      *
      * @var string
      */
     protected $password = '';
 
     /**
-     * The host
+     * The host.
      *
      * @var string
      */
-    protected $host = 'https://api.upcloud.com/1.2';
+    protected $host = 'https://api.upcloud.com/1.3';
 
     /**
-     * User agent of the HTTP request, set to "PHP-Swagger" by default
+     * User agent of the HTTP request
      *
      * @var string
      */
-    protected $userAgent = 'Swagger-Codegen/1.0.0/php';
+    protected $userAgent = 'Upcloud-Sdk/1.3/php';
 
     /**
-     * Debug switch (default set to false)
+     * Debug switch (default set to false).
      *
      * @var bool
      */
     protected $debug = false;
 
     /**
-     * Debug file location (log to STDOUT by default)
+     * Debug file location (log to STDOUT by default).
      *
      * @var string
      */
     protected $debugFile = 'php://output';
 
     /**
-     * Debug file location (log to STDOUT by default)
+     * Debug file location (log to STDOUT by default).
      *
      * @var string
      */
     protected $tempFolderPath;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->tempFolderPath = sys_get_temp_dir();
+        $this->tempFolderPath = \sys_get_temp_dir();
     }
 
     /**
-     * Sets API key
+     * Sets API key.
      *
      * @param string $apiKeyIdentifier API key identifier (authentication scheme)
-     * @param string $key              API key or token
+     * @param string $key API key or token
      *
      * @return $this
      */
-    public function setApiKey($apiKeyIdentifier, $key)
+    public function setApiKey(string $apiKeyIdentifier, string $key)
     {
         $this->apiKeys[$apiKeyIdentifier] = $key;
+
         return $this;
     }
 
     /**
-     * Gets API key
+     * Gets API key.
      *
      * @param string $apiKeyIdentifier API key identifier (authentication scheme)
      *
-     * @return string API key or token
+     * @return null|string API key or token
      */
-    public function getApiKey($apiKeyIdentifier)
+    public function getApiKey(string $apiKeyIdentifier)
     {
         return isset($this->apiKeys[$apiKeyIdentifier]) ? $this->apiKeys[$apiKeyIdentifier] : null;
     }
 
     /**
-     * Sets the prefix for API key (e.g. Bearer)
+     * Sets the prefix for API key (e.g. Bearer).
      *
      * @param string $apiKeyIdentifier API key identifier (authentication scheme)
-     * @param string $prefix           API key prefix, e.g. Bearer
+     * @param string $prefix API key prefix, e.g. Bearer
      *
      * @return $this
      */
-    public function setApiKeyPrefix($apiKeyIdentifier, $prefix)
+    public function setApiKeyPrefix(string $apiKeyIdentifier, string $prefix)
     {
         $this->apiKeyPrefixes[$apiKeyIdentifier] = $prefix;
+
         return $this;
     }
 
     /**
-     * Gets API key prefix
+     * Gets API key prefix.
      *
      * @param string $apiKeyIdentifier API key identifier (authentication scheme)
      *
-     * @return string
+     * @return null|string
      */
-    public function getApiKeyPrefix($apiKeyIdentifier)
+    public function getApiKeyPrefix(string $apiKeyIdentifier)
     {
         return isset($this->apiKeyPrefixes[$apiKeyIdentifier]) ? $this->apiKeyPrefixes[$apiKeyIdentifier] : null;
     }
 
     /**
-     * Sets the access token for OAuth
+     * Sets the access token for OAuth.
      *
      * @param string $accessToken Token for OAuth
      *
      * @return $this
      */
-    public function setAccessToken($accessToken)
+    public function setAccessToken(string $accessToken)
     {
         $this->accessToken = $accessToken;
+
         return $this;
     }
 
     /**
-     * Gets the access token for OAuth
+     * Gets the access token for OAuth.
      *
      * @return string Access token for OAuth
      */
@@ -184,20 +170,21 @@ class Configuration
     }
 
     /**
-     * Sets the username for HTTP basic authentication
+     * Sets the username for HTTP basic authentication.
      *
      * @param string $username Username for HTTP basic authentication
      *
      * @return $this
      */
-    public function setUsername($username)
+    public function setUsername(string $username)
     {
         $this->username = $username;
+
         return $this;
     }
 
     /**
-     * Gets the username for HTTP basic authentication
+     * Gets the username for HTTP basic authentication.
      *
      * @return string Username for HTTP basic authentication
      */
@@ -207,20 +194,21 @@ class Configuration
     }
 
     /**
-     * Sets the password for HTTP basic authentication
+     * Sets the password for HTTP basic authentication.
      *
      * @param string $password Password for HTTP basic authentication
      *
      * @return $this
      */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
+
         return $this;
     }
 
     /**
-     * Gets the password for HTTP basic authentication
+     * Gets the password for HTTP basic authentication.
      *
      * @return string Password for HTTP basic authentication
      */
@@ -230,20 +218,21 @@ class Configuration
     }
 
     /**
-     * Sets the host
+     * Sets the host.
      *
      * @param string $host Host
      *
      * @return $this
      */
-    public function setHost($host)
+    public function setHost(string $host)
     {
         $this->host = $host;
+
         return $this;
     }
 
     /**
-     * Gets the host
+     * Gets the host.
      *
      * @return string Host
      */
@@ -253,25 +242,23 @@ class Configuration
     }
 
     /**
-     * Sets the user agent of the api client
+     * Sets the user agent of the api client.
      *
      * @param string $userAgent the user agent of the api client
      *
      * @throws \InvalidArgumentException
+     *
      * @return $this
      */
-    public function setUserAgent($userAgent)
+    public function setUserAgent(string $userAgent)
     {
-        if (!is_string($userAgent)) {
-            throw new \InvalidArgumentException('User-agent must be a string.');
-        }
-
         $this->userAgent = $userAgent;
+
         return $this;
     }
 
     /**
-     * Gets the user agent of the api client
+     * Gets the user agent of the api client.
      *
      * @return string user agent
      */
@@ -281,20 +268,21 @@ class Configuration
     }
 
     /**
-     * Sets debug flag
+     * Sets debug flag.
      *
      * @param bool $debug Debug flag
      *
      * @return $this
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug)
     {
         $this->debug = $debug;
+
         return $this;
     }
 
     /**
-     * Gets the debug flag
+     * Gets the debug flag.
      *
      * @return bool
      */
@@ -304,20 +292,21 @@ class Configuration
     }
 
     /**
-     * Sets the debug file
+     * Sets the debug file.
      *
      * @param string $debugFile Debug file
      *
      * @return $this
      */
-    public function setDebugFile($debugFile)
+    public function setDebugFile(string $debugFile)
     {
         $this->debugFile = $debugFile;
+
         return $this;
     }
 
     /**
-     * Gets the debug file
+     * Gets the debug file.
      *
      * @return string
      */
@@ -327,22 +316,23 @@ class Configuration
     }
 
     /**
-     * Sets the temp folder path
+     * Sets the temp folder path.
      *
      * @param string $tempFolderPath Temp folder path
      *
      * @return $this
      */
-    public function setTempFolderPath($tempFolderPath)
+    public function setTempFolderPath(string $tempFolderPath)
     {
         $this->tempFolderPath = $tempFolderPath;
+
         return $this;
     }
 
     /**
-     * Gets the temp folder path
+     * Gets the temp folder path.
      *
-     * @return string Temp folder path
+     * @return null|string Temp folder path
      */
     public function getTempFolderPath()
     {
@@ -350,7 +340,7 @@ class Configuration
     }
 
     /**
-     * Gets the default configuration instance
+     * Gets the default configuration instance.
      *
      * @return Configuration
      */
@@ -364,41 +354,39 @@ class Configuration
     }
 
     /**
-     * Sets the detault configuration instance
+     * Sets the detault configuration instance.
      *
      * @param Configuration $config An instance of the Configuration Object
-     *
-     * @return void
      */
-    public static function setDefaultConfiguration(Configuration $config)
+    public static function setDefaultConfiguration(Configuration $config): void
     {
         self::$defaultConfiguration = $config;
     }
 
     /**
-     * Gets the essential information for debugging
+     * Gets the essential information for debugging.
      *
      * @return string The report for debugging
      */
     public static function toDebugReport()
     {
-        $report  = 'PHP SDK (Upcloud\ApiClient) Debug Report:' . PHP_EOL;
-        $report .= '    OS: ' . php_uname() . PHP_EOL;
-        $report .= '    PHP Version: ' . PHP_VERSION . PHP_EOL;
-        $report .= '    OpenAPI Spec Version: 1.2.0' . PHP_EOL;
-        $report .= '    Temp Folder Path: ' . self::getDefaultConfiguration()->getTempFolderPath() . PHP_EOL;
+        $report = 'PHP SDK (Upcloud\ApiClient) Debug Report:'.\PHP_EOL;
+        $report .= '    OS: '.\php_uname().\PHP_EOL;
+        $report .= '    PHP Version: '.\PHP_VERSION.\PHP_EOL;
+        $report .= '    OpenAPI Spec Version: 1.2.0'.\PHP_EOL;
+        $report .= '    Temp Folder Path: '.self::getDefaultConfiguration()->getTempFolderPath().\PHP_EOL;
 
         return $report;
     }
 
     /**
-     * Get API key (with prefix if set)
+     * Get API key (with prefix if set).
      *
      * @param  string $apiKeyIdentifier name of apikey
      *
      * @return string API key with the prefix
      */
-    public function getApiKeyWithPrefix($apiKeyIdentifier)
+    public function getApiKeyWithPrefix(string $apiKeyIdentifier)
     {
         $prefix = $this->getApiKeyPrefix($apiKeyIdentifier);
         $apiKey = $this->getApiKey($apiKeyIdentifier);
@@ -410,7 +398,7 @@ class Configuration
         if ($prefix === null) {
             $keyWithPrefix = $apiKey;
         } else {
-            $keyWithPrefix = $prefix . ' ' . $apiKey;
+            $keyWithPrefix = $prefix.' '.$apiKey;
         }
 
         return $keyWithPrefix;
