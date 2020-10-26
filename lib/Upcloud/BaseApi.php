@@ -9,7 +9,7 @@ use Upcloud\ApiClient\Configuration;
 use Upcloud\ApiClient\HeaderSelector;
 use Upcloud\ApiClient\HttpClient\UpcloudHttpClient;
 
-class BaseApi
+abstract class BaseApi
 {
     /**
      * @var null|UpcloudHttpClient
