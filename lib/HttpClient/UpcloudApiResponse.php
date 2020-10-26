@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Upcloud\ApiClient\HttpClient;
 
 use GuzzleHttp\Utils;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Upcloud\ApiClient\ObjectSerializer;
 
@@ -37,6 +38,15 @@ class UpcloudApiResponse
         $this->statusCode = $statusCode;
         $this->headers = $headers;
         $this->body = $body;
+    }
+
+    public static function createFromResponse(ResponseInterface $response): self
+    {
+        return new self(
+            $response->getHeaders(),
+            $response->getBody(),
+            $response->getStatusCode()
+        );
     }
 
     /**
