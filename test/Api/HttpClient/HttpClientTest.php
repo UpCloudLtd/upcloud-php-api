@@ -15,8 +15,9 @@ use GuzzleHttp\Exception\RequestException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\HttpClient\UpcloudHttpClient;
+use Upcloud\Tests\Api\BaseApiTest;
 
-class HttpClientTest extends AbstractTestHttpClient
+class HttpClientTest extends BaseApiTest
 {
 
     /**
@@ -57,6 +58,7 @@ class HttpClientTest extends AbstractTestHttpClient
     public function testThrowsExceptionOnClientError(): void
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode(400);
 
         $request = new Request('GET', $this->url);
 
@@ -92,6 +94,8 @@ class HttpClientTest extends AbstractTestHttpClient
     public function testThrowsExceptionOnSendAsyncRequest(): void
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode(400);
+
         $request = new Request('GET', $this->url);
         $response = new Response(400, $this->fakeHeadersAsArray, $this->fakeRawBody);
 

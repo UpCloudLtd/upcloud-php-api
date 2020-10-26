@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Upcloud\Tests\Api\HttpClient;
+namespace Upcloud\Tests\Api;
 
 use PHPUnit\Framework\TestCase;
 
-class AbstractTestHttpClient extends TestCase
+abstract class BaseApiTest extends TestCase
 {
     protected $url = 'https://api.upcloud.com/1.3';
+
+    protected $testUsername = "test";
+    protected $testPassword = "123456";
 
     protected $fakeRawRedirectHeader = "HTTP/1.1 302 Found
         Content-Type: text/html; charset=utf-8
@@ -16,7 +19,7 @@ class AbstractTestHttpClient extends TestCase
 
     protected $fakeRawProxyHeader = "HTTP/1.0 200 Connection established\r\n\r\n";
 
-    protected $fakeRawBody = "{\"account\": {\"credits\": \"42292.682\",\"username\":\"techconsult\"}}";
+    protected $fakeRawBody = "{\"account\":{\"credits\":\"42292.682\",\"username\":\"test\"}}";
 
     protected $fakeHeadersAsArray = [
         'Etag' => '"9d86b21aa74d74e574bbb35ba13524a52deb96e3"',
