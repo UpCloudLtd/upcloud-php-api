@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Upcloud;
@@ -6,6 +7,7 @@ namespace Upcloud\ApiClient\Upcloud;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\PromiseInterface;
+use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\FirewallRuleCreateResponse;
@@ -29,10 +31,10 @@ class FirewallApi extends BaseApi
      * @param string $serverId Server id (required)
      * @param FirewallRuleRequest $firewallRule  (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return FirewallRuleCreateResponse
      */
-    public function createFirewallRule(string $serverId, FirewallRuleRequest $firewallRule)
+    public function createFirewallRule(string $serverId, FirewallRuleRequest $firewallRule): FirewallRuleCreateResponse
     {
         list($response) = $this->createFirewallRuleWithHttpInfo($serverId, $firewallRule);
         return $response;
@@ -48,10 +50,10 @@ class FirewallApi extends BaseApi
      * @return array of FirewallRuleCreateResponse,
      *                  HTTP status code,
      *                  HTTP response headers (array of strings)
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @throws ApiException on non-2xx response
      */
-    public function createFirewallRuleWithHttpInfo(string $serverId, FirewallRuleRequest $firewallRule)
+    public function createFirewallRuleWithHttpInfo(string $serverId, FirewallRuleRequest $firewallRule): array
     {
         $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
 
@@ -68,10 +70,10 @@ class FirewallApi extends BaseApi
      *
      * @param string $serverId Server id (required)
      * @param FirewallRuleRequest $firewallRule  (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function createFirewallRuleAsync(string $serverId, FirewallRuleRequest $firewallRule)
+    public function createFirewallRuleAsync(string $serverId, FirewallRuleRequest $firewallRule): PromiseInterface
     {
         return $this->createFirewallRuleAsyncWithHttpInfo($serverId, $firewallRule)->then(function ($response) {
             return $response[0];
@@ -85,11 +87,13 @@ class FirewallApi extends BaseApi
      *
      * @param string $serverId Server id (required)
      * @param FirewallRuleRequest $firewallRule  (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function createFirewallRuleAsyncWithHttpInfo(string $serverId, FirewallRuleRequest $firewallRule)
-    {
+    public function createFirewallRuleAsyncWithHttpInfo(
+        string $serverId,
+        FirewallRuleRequest $firewallRule
+    ): PromiseInterface {
         $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
 
         $request = new Request('POST', $url, [], $firewallRule);
@@ -107,10 +111,10 @@ class FirewallApi extends BaseApi
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function deleteFirewallRule(string $serverId, float $firewallRuleNumber)
+    public function deleteFirewallRule(string $serverId, float $firewallRuleNumber): void
     {
         $this->deleteFirewallRuleWithHttpInfo($serverId, $firewallRuleNumber);
     }
@@ -124,10 +128,10 @@ class FirewallApi extends BaseApi
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber)
+    public function deleteFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber): array
     {
         $url = $this->buildPath(
             'server/{serverId}/firewall_rule/{ruleNumber}',
@@ -152,10 +156,10 @@ class FirewallApi extends BaseApi
      * @param string $serverId Server id (required)
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function deleteFirewallRuleAsync(string $serverId, float $firewallRuleNumber)
+    public function deleteFirewallRuleAsync(string $serverId, float $firewallRuleNumber): PromiseInterface
     {
         return $this->deleteFirewallRuleAsyncWithHttpInfo($serverId, $firewallRuleNumber)->then(function ($response) {
             return $response[0];
@@ -170,10 +174,10 @@ class FirewallApi extends BaseApi
      * @param string $serverId Server id (required)
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function deleteFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber)
+    public function deleteFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber): PromiseInterface
     {
         $url = $this->buildPath(
             'server/{serverId}/firewall_rule/{ruleNumber}',
@@ -199,10 +203,10 @@ class FirewallApi extends BaseApi
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return FirewallRuleCreateResponse
      */
-    public function getFirewallRule(string $serverId, float $firewallRuleNumber)
+    public function getFirewallRule(string $serverId, float $firewallRuleNumber): FirewallRuleCreateResponse
     {
         list($response) = $this->getFirewallRuleWithHttpInfo($serverId, $firewallRuleNumber);
         return $response;
@@ -217,12 +221,12 @@ class FirewallApi extends BaseApi
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of FirewallRuleCreateResponse,
      *                  HTTP status code,
      *                  HTTP response headers (array of strings)
      */
-    public function getFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber)
+    public function getFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber): array
     {
         $url = $this->buildPath(
             'server/{serverId}/firewall_rule/{ruleNumber}',
@@ -246,10 +250,10 @@ class FirewallApi extends BaseApi
      * @param string $serverId Server id (required)
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function getFirewallRuleAsync(string $serverId, float $firewallRuleNumber)
+    public function getFirewallRuleAsync(string $serverId, float $firewallRuleNumber): PromiseInterface
     {
         return $this->getFirewallRuleAsyncWithHttpInfo($serverId, $firewallRuleNumber)->then(function ($response) {
             return $response[0];
@@ -264,10 +268,10 @@ class FirewallApi extends BaseApi
      * @param string $serverId Server id (required)
      * @param float $firewallRuleNumber Denotes the index of the firewall rule
      *                                  in the server&#39;s firewall rule list (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function getFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber)
+    public function getFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber): PromiseInterface
     {
 
         $url = $this->buildPath(
@@ -291,10 +295,10 @@ class FirewallApi extends BaseApi
      *
      * @param string $serverId Server id (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return FirewallRuleListResponse
      */
-    public function serverServerIdFirewallRuleGet(string $serverId)
+    public function serverServerIdFirewallRuleGet(string $serverId): FirewallRuleListResponse
     {
         list($response) = $this->serverServerIdFirewallRuleGetWithHttpInfo($serverId);
         return $response;
@@ -307,12 +311,12 @@ class FirewallApi extends BaseApi
      *
      * @param string $serverId Server id (required)
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException|GuzzleException
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of FirewallRuleListResponse,
      *                  HTTP status code,
      *                  HTTP response headers (array of strings)
      */
-    public function serverServerIdFirewallRuleGetWithHttpInfo(string $serverId)
+    public function serverServerIdFirewallRuleGetWithHttpInfo(string $serverId): array
     {
 
         $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
@@ -329,10 +333,10 @@ class FirewallApi extends BaseApi
      * List firewall rules
      *
      * @param string $serverId Server id (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function serverServerIdFirewallRuleGetAsync(string $serverId)
+    public function serverServerIdFirewallRuleGetAsync(string $serverId): PromiseInterface
     {
         return $this->serverServerIdFirewallRuleGetAsyncWithHttpInfo($serverId)->then(function ($response) {
             return $response[0];
@@ -345,10 +349,10 @@ class FirewallApi extends BaseApi
      * List firewall rules
      *
      * @param string $serverId Server id (required)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function serverServerIdFirewallRuleGetAsyncWithHttpInfo(string $serverId)
+    public function serverServerIdFirewallRuleGetAsyncWithHttpInfo(string $serverId): PromiseInterface
     {
         $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
         $request = new Request('GET', $url);

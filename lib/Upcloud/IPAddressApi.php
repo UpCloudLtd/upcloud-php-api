@@ -1,33 +1,19 @@
 <?php
-/**
- * IPAddressApi
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Upcloud;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Promise\PromiseInterface;
+use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
-use Upcloud\ApiClient\Configuration;
-use Upcloud\ApiClient\HeaderSelector;
-use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\Model\AddIpRequest;
+use Upcloud\ApiClient\Model\ModifyIpRequest;
+use Upcloud\ApiClient\Model\AssignIpResponse;
+use Upcloud\ApiClient\Model\IpAddressListResponse;
+use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 
 /**
  * IPAddressApi Class Doc Comment
@@ -35,54 +21,22 @@ use Upcloud\ApiClient\ObjectSerializer;
  * @category Class
  * @package  Upcloud\ApiClient
  */
-class IPAddressApi
+class IPAddressApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: Configuration::getDefaultConfiguration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation addIp
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\AssignIpResponse
+     * @param AddIpRequest|null $ipAddress  (optional)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return AssignIpResponse
      */
-    public function addIp($ip_address = null)
+    public function addIp(?AddIpRequest $ipAddress = null): AssignIpResponse
     {
-        list($response) = $this->addIpWithHttpInfo($ip_address);
+        list($response) = $this->addIpWithHttpInfo($ipAddress);
         return $response;
     }
 
@@ -91,84 +45,18 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param AddIpRequest|null $ipAddress  (optional)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function addIpWithHttpInfo($ip_address = null)
+    public function addIpWithHttpInfo(?AddIpRequest $ipAddress = null): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\AssignIpResponse';
-        $request = $this->addIpRequest($ip_address);
+        $request = new Request('POST', 'ip_address', [], $ipAddress);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\AssignIpResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(AssignIpResponse::class);
     }
 
     /**
@@ -176,13 +64,13 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param AddIpRequest|null $ipAddress  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function addIpAsync($ip_address = null)
+    public function addIpAsync(?AddIpRequest $ipAddress = null): PromiseInterface
     {
-        return $this->addIpAsyncWithHttpInfo($ip_address)->then(function ($response) {
+        return $this->addIpAsyncWithHttpInfo($ipAddress)->then(function ($response) {
             return $response[0];
         });
     }
@@ -192,127 +80,17 @@ class IPAddressApi
      *
      * Assign IP address
      *
-     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param AddIpRequest|null $ipAddress  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function addIpAsyncWithHttpInfo($ip_address = null)
+    public function addIpAsyncWithHttpInfo(?AddIpRequest $ipAddress = null): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\AssignIpResponse';
-        $request = $this->addIpRequest($ip_address);
+        $request = new Request('POST', 'ip_address', [], $ipAddress);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(AssignIpResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'addIp'
-     *
-     * @param \Upcloud\ApiClient\Model\AddIpRequest $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function addIpRequest($ip_address = null)
-    {
-
-        $resourcePath = '/ip_address';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // body params
-        $_tempBody = null;
-        if (isset($ip_address)) {
-            $_tempBody = $ip_address;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -321,11 +99,11 @@ class IPAddressApi
      * Release IP address
      *
      * @param string $ip Ip address (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function deleteIp($ip)
+    public function deleteIp(string $ip): void
     {
         $this->deleteIpWithHttpInfo($ip);
     }
@@ -336,65 +114,18 @@ class IPAddressApi
      * Release IP address
      *
      * @param string $ip Ip address (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteIpWithHttpInfo($ip)
+    public function deleteIpWithHttpInfo(string $ip): array
     {
-        $returnType = '';
-        $request = $this->deleteIpRequest($ip);
+        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $request = new Request('DELETE', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray();
     }
 
     /**
@@ -403,10 +134,10 @@ class IPAddressApi
      * Release IP address
      *
      * @param string $ip Ip address (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function deleteIpAsync($ip)
+    public function deleteIpAsync(string $ip): PromiseInterface
     {
         return $this->deleteIpAsyncWithHttpInfo($ip)->then(function ($response) {
             return $response[0];
@@ -419,115 +150,17 @@ class IPAddressApi
      * Release IP address
      *
      * @param string $ip Ip address (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function deleteIpAsyncWithHttpInfo($ip)
+    public function deleteIpAsyncWithHttpInfo(string $ip): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->deleteIpRequest($ip);
+        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $request = new Request('DELETE', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
-    }
-
-    /**
-     * Create request for operation 'deleteIp'
-     *
-     * @param string $ip Ip address (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function deleteIpRequest($ip)
-    {
-        // verify the required parameter 'ip' is set
-        if ($ip === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $ip when calling deleteIp');
-        }
-
-        $resourcePath = '/ip_address/{ip}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($ip !== null) {
-            $resourcePath = str_replace('{' . 'ip' . '}', ObjectSerializer::toPathValue($ip), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -536,11 +169,11 @@ class IPAddressApi
      * Get IP address details
      *
      * @param string $ip Ip address (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\AssignIpResponse
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return AssignIpResponse
      */
-    public function getDetails($ip)
+    public function getDetails(string $ip): AssignIpResponse
     {
         list($response) = $this->getDetailsWithHttpInfo($ip);
         return $response;
@@ -552,63 +185,19 @@ class IPAddressApi
      * Get IP address details
      *
      * @param string $ip Ip address (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getDetailsWithHttpInfo($ip)
+    public function getDetailsWithHttpInfo(string $ip): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\AssignIpResponse';
-        $request = $this->getDetailsRequest($ip);
 
-        try {
+        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $request = new Request('GET', $url);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
+        $response = $this->client->send($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\AssignIpResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(AssignIpResponse::class);
     }
 
     /**
@@ -617,10 +206,10 @@ class IPAddressApi
      * Get IP address details
      *
      * @param string $ip Ip address (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function getDetailsAsync($ip)
+    public function getDetailsAsync(string $ip): PromiseInterface
     {
         return $this->getDetailsAsyncWithHttpInfo($ip)->then(function ($response) {
             return $response[0];
@@ -633,129 +222,17 @@ class IPAddressApi
      * Get IP address details
      *
      * @param string $ip Ip address (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function getDetailsAsyncWithHttpInfo($ip)
+    public function getDetailsAsyncWithHttpInfo(string $ip): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\AssignIpResponse';
-        $request = $this->getDetailsRequest($ip);
+        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $request = new Request('GET', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(AssignIpResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'getDetails'
-     *
-     * @param string $ip Ip address (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function getDetailsRequest($ip)
-    {
-        // verify the required parameter 'ip' is set
-        if ($ip === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $ip when calling getDetails');
-        }
-
-        $resourcePath = '/ip_address/{ip}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($ip !== null) {
-            $resourcePath = str_replace('{' . 'ip' . '}', ObjectSerializer::toPathValue($ip), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -763,11 +240,11 @@ class IPAddressApi
      *
      * List IP addresses
      *
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\IpAddressListResponse
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return IpAddressListResponse
      */
-    public function listIps()
+    public function listIps(): IpAddressListResponse
     {
         list($response) = $this->listIpsWithHttpInfo();
         return $response;
@@ -778,63 +255,16 @@ class IPAddressApi
      *
      * List IP addresses
      *
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\IpAddressListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of IpAddressListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listIpsWithHttpInfo()
+    public function listIpsWithHttpInfo(): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\IpAddressListResponse';
-        $request = $this->listIpsRequest();
+        $request = new Request('GET', 'ip_address');
+        $response = $this->client->send($request);
 
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\IpAddressListResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(IpAddressListResponse::class);
     }
 
     /**
@@ -842,10 +272,10 @@ class IPAddressApi
      *
      * List IP addresses
      *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function listIpsAsync()
+    public function listIpsAsync(): PromiseInterface
     {
         return $this->listIpsAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
@@ -857,121 +287,17 @@ class IPAddressApi
      *
      * List IP addresses
      *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function listIpsAsyncWithHttpInfo()
+    public function listIpsAsyncWithHttpInfo(): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\IpAddressListResponse';
-        $request = $this->listIpsRequest();
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        $request = new Request('GET', 'ip_address');
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(IpAddressListResponse::class);
         });
     }
 
-    /**
-     * Create request for operation 'listIps'
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listIpsRequest()
-    {
-
-        $resourcePath = '/ip_address';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
 
     /**
      * Operation modifyIp
@@ -979,14 +305,14 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\AssignIpResponse
+     * @param ModifyIpRequest|null $ipAddress  (optional)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return AssignIpResponse
      */
-    public function modifyIp($ip, $ip_address = null)
+    public function modifyIp(string $ip, ?ModifyIpRequest $ipAddress = null): AssignIpResponse
     {
-        list($response) = $this->modifyIpWithHttpInfo($ip, $ip_address);
+        list($response) = $this->modifyIpWithHttpInfo($ip, $ipAddress);
         return $response;
     }
 
@@ -996,84 +322,19 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param ModifyIpRequest|null $ipAddress  (optional)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of AssignIpResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function modifyIpWithHttpInfo($ip, $ip_address = null)
+    public function modifyIpWithHttpInfo(string $ip, ?ModifyIpRequest $ipAddress = null): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\AssignIpResponse';
-        $request = $this->modifyIpRequest($ip, $ip_address);
+        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
 
-        try {
+        $request = new Request('PATCH', $url, [], $ipAddress);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 202:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\AssignIpResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        $response = $this->client->send($request);
+        return $response->toArray(AssignIpResponse::class);
     }
 
     /**
@@ -1082,13 +343,13 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param ModifyIpRequest|null $ipAddress  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function modifyIpAsync($ip, $ip_address = null)
+    public function modifyIpAsync(string $ip, ?ModifyIpRequest $ipAddress = null): PromiseInterface
     {
-        return $this->modifyIpAsyncWithHttpInfo($ip, $ip_address)->then(function ($response) {
+        return $this->modifyIpAsyncWithHttpInfo($ip, $ipAddress)->then(function ($response) {
             return $response[0];
         });
     }
@@ -1099,136 +360,18 @@ class IPAddressApi
      * Modify IP address
      *
      * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param ModifyIpRequest|null $ipAddress  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function modifyIpAsyncWithHttpInfo($ip, $ip_address = null)
+    public function modifyIpAsyncWithHttpInfo(string $ip, ?ModifyIpRequest $ipAddress = null): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\AssignIpResponse';
-        $request = $this->modifyIpRequest($ip, $ip_address);
+        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $request = new Request('PATCH', $url, [], $ipAddress);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(AssignIpResponse::class);
         });
     }
-
-    /**
-     * Create request for operation 'modifyIp'
-     *
-     * @param string $ip Ip address (required)
-     * @param \Upcloud\ApiClient\Model\ModifyIpRequest $ip_address  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function modifyIpRequest($ip, $ip_address = null)
-    {
-        // verify the required parameter 'ip' is set
-        if ($ip === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $ip when calling modifyIp');
-        }
-
-        $resourcePath = '/ip_address/{ip}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($ip !== null) {
-            $resourcePath = str_replace('{' . 'ip' . '}', ObjectSerializer::toPathValue($ip), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($ip_address)) {
-            $_tempBody = $ip_address;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
 }

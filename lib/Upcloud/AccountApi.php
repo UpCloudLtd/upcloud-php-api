@@ -7,6 +7,7 @@ namespace Upcloud\ApiClient\Upcloud;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
+use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\AccountResponse;
@@ -25,10 +26,10 @@ class AccountApi extends BaseApi
      * Account information
      *
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException | GuzzleException
+     * @throws InvalidArgumentException | GuzzleException
      * @return AccountResponse
      */
-    public function getAccount()
+    public function getAccount(): AccountResponse
     {
         list($response) = $this->getAccountWithHttpInfo();
         return $response;
@@ -40,12 +41,12 @@ class AccountApi extends BaseApi
      * Account information
      *
      * @throws ApiException on non-2xx response
-     * @throws \InvalidArgumentException | GuzzleException
+     * @throws InvalidArgumentException | GuzzleException
      * @return array of AccountResponse,
      *                  HTTP status code,
      *                  HTTP response headers (array of strings)
      */
-    public function getAccountWithHttpInfo()
+    public function getAccountWithHttpInfo(): array
     {
         $request = new Request('GET', 'account');
         $response = $this->client->send($request);
@@ -58,10 +59,10 @@ class AccountApi extends BaseApi
      *
      * Account information
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function getAccountAsync()
+    public function getAccountAsync(): PromiseInterface
     {
         return $this->getAccountAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
@@ -73,10 +74,10 @@ class AccountApi extends BaseApi
      *
      * Account information
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return PromiseInterface
      */
-    public function getAccountAsyncWithHttpInfo()
+    public function getAccountAsyncWithHttpInfo(): PromiseInterface
     {
         $request = new Request('GET', 'account');
 
