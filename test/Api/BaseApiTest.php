@@ -10,6 +10,8 @@ abstract class BaseApiTest extends TestCase
 {
     protected $url = 'https://api.upcloud.com/1.3';
 
+    protected $serverId = '00f25527-c3d9-470b-a2a1-d3670e0c3cdf';
+
     protected $testUsername = "test";
     protected $testPassword = "123456";
 

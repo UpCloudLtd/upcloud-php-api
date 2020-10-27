@@ -1,33 +1,16 @@
 <?php
-/**
- * FirewallApi
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
-
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Upcloud;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Promise\PromiseInterface;
 use Upcloud\ApiClient\ApiException;
-use Upcloud\ApiClient\Configuration;
-use Upcloud\ApiClient\HeaderSelector;
-use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
+use Upcloud\ApiClient\Model\FirewallRuleCreateResponse;
+use Upcloud\ApiClient\Model\FirewallRuleListResponse;
+use Upcloud\ApiClient\Model\FirewallRuleRequest;
 
 /**
  * FirewallApi Class Doc Comment
@@ -35,55 +18,23 @@ use Upcloud\ApiClient\ObjectSerializer;
  * @category Class
  * @package  Upcloud\ApiClient
  */
-class FirewallApi
+class FirewallApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: Configuration::getDefaultConfiguration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation createFirewallRule
      *
      * Create firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\FirewallRuleCreateResponse
+     * @param string $serverId Server id (required)
+     * @param FirewallRuleRequest $firewallRule  (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
+     * @return FirewallRuleCreateResponse
      */
-    public function createFirewallRule($server_id, $firewall_rule)
+    public function createFirewallRule(string $serverId, FirewallRuleRequest $firewallRule)
     {
-        list($response) = $this->createFirewallRuleWithHttpInfo($server_id, $firewall_rule);
+        list($response) = $this->createFirewallRuleWithHttpInfo($serverId, $firewallRule);
         return $response;
     }
 
@@ -92,85 +43,22 @@ class FirewallApi
      *
      * Create firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\FirewallRuleCreateResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param FirewallRuleRequest $firewallRule  (required)
+     * @return array of FirewallRuleCreateResponse,
+     *                  HTTP status code,
+     *                  HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException|GuzzleException
+     * @throws ApiException on non-2xx response
      */
-    public function createFirewallRuleWithHttpInfo($server_id, $firewall_rule)
+    public function createFirewallRuleWithHttpInfo(string $serverId, FirewallRuleRequest $firewallRule)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
-        $request = $this->createFirewallRuleRequest($server_id, $firewall_rule);
+        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
 
-        try {
+        $request = new Request('POST', $url, [], $firewallRule);
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(FirewallRuleCreateResponse::class);
     }
 
     /**
@@ -178,14 +66,14 @@ class FirewallApi
      *
      * Create firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
+     * @param string $serverId Server id (required)
+     * @param FirewallRuleRequest $firewallRule  (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function createFirewallRuleAsync($server_id, $firewall_rule)
+    public function createFirewallRuleAsync(string $serverId, FirewallRuleRequest $firewallRule)
     {
-        return $this->createFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule)->then(function ($response) {
+        return $this->createFirewallRuleAsyncWithHttpInfo($serverId, $firewallRule)->then(function ($response) {
             return $response[0];
         });
     }
@@ -195,141 +83,19 @@ class FirewallApi
      *
      * Create firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
+     * @param string $serverId Server id (required)
+     * @param FirewallRuleRequest $firewallRule  (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function createFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule)
+    public function createFirewallRuleAsyncWithHttpInfo(string $serverId, FirewallRuleRequest $firewallRule)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
-        $request = $this->createFirewallRuleRequest($server_id, $firewall_rule);
+        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        $request = new Request('POST', $url, [], $firewallRule);
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(FirewallRuleCreateResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'createFirewallRule'
-     *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\FirewallRuleRequest $firewall_rule  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function createFirewallRuleRequest($server_id, $firewall_rule)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling createFirewallRule');
-        }
-        // verify the required parameter 'firewall_rule' is set
-        if ($firewall_rule === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $firewall_rule when calling createFirewallRule');
-        }
-
-        $resourcePath = '/server/{serverId}/firewall_rule';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($firewall_rule)) {
-            $_tempBody = $firewall_rule;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -337,15 +103,16 @@ class FirewallApi
      *
      * Remove firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function deleteFirewallRule($server_id, $firewall_rule_number)
+    public function deleteFirewallRule(string $serverId, float $firewallRuleNumber)
     {
-        $this->deleteFirewallRuleWithHttpInfo($server_id, $firewall_rule_number);
+        $this->deleteFirewallRuleWithHttpInfo($serverId, $firewallRuleNumber);
     }
 
     /**
@@ -353,67 +120,28 @@ class FirewallApi
      *
      * Remove firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteFirewallRuleWithHttpInfo($server_id, $firewall_rule_number)
+    public function deleteFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber)
     {
-        $returnType = '';
-        $request = $this->deleteFirewallRuleRequest($server_id, $firewall_rule_number);
+        $url = $this->buildPath(
+            'server/{serverId}/firewall_rule/{ruleNumber}',
+            [
+                'serverId' => $serverId,
+                'ruleNumber' => $firewallRuleNumber
+            ]
+        );
 
-        try {
+        $request = new Request('DELETE', $url);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
+        $response = $this->client->send($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray();
     }
 
     /**
@@ -421,14 +149,15 @@ class FirewallApi
      *
      * Remove firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteFirewallRuleAsync($server_id, $firewall_rule_number)
+    public function deleteFirewallRuleAsync(string $serverId, float $firewallRuleNumber)
     {
-        return $this->deleteFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule_number)->then(function ($response) {
+        return $this->deleteFirewallRuleAsyncWithHttpInfo($serverId, $firewallRuleNumber)->then(function ($response) {
             return $response[0];
         });
     }
@@ -438,126 +167,27 @@ class FirewallApi
      *
      * Remove firewall rule
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule_number)
+    public function deleteFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber)
     {
-        $returnType = '';
-        $request = $this->deleteFirewallRuleRequest($server_id, $firewall_rule_number);
+        $url = $this->buildPath(
+            'server/{serverId}/firewall_rule/{ruleNumber}',
+            [
+                'serverId' => $serverId,
+                'ruleNumber' => $firewallRuleNumber
+            ]
+        );
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        $request = new Request('DELETE', $url);
+
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
-    }
-
-    /**
-     * Create request for operation 'deleteFirewallRule'
-     *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function deleteFirewallRuleRequest($server_id, $firewall_rule_number)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling deleteFirewallRule');
-        }
-        // verify the required parameter 'firewall_rule_number' is set
-        if ($firewall_rule_number === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $firewall_rule_number when calling deleteFirewallRule');
-        }
-
-        $resourcePath = '/server/{serverId}/firewall_rule/{firewallRuleNumber}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-        // path params
-        if ($firewall_rule_number !== null) {
-            $resourcePath = str_replace('{' . 'firewallRuleNumber' . '}', ObjectSerializer::toPathValue($firewall_rule_number), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -565,15 +195,16 @@ class FirewallApi
      *
      * Get firewall rule details
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\FirewallRuleCreateResponse
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
+     * @return FirewallRuleCreateResponse
      */
-    public function getFirewallRule($server_id, $firewall_rule_number)
+    public function getFirewallRule(string $serverId, float $firewallRuleNumber)
     {
-        list($response) = $this->getFirewallRuleWithHttpInfo($server_id, $firewall_rule_number);
+        list($response) = $this->getFirewallRuleWithHttpInfo($serverId, $firewallRuleNumber);
         return $response;
     }
 
@@ -582,85 +213,29 @@ class FirewallApi
      *
      * Get firewall rule details
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\FirewallRuleCreateResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
+     * @return array of FirewallRuleCreateResponse,
+     *                  HTTP status code,
+     *                  HTTP response headers (array of strings)
      */
-    public function getFirewallRuleWithHttpInfo($server_id, $firewall_rule_number)
+    public function getFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
-        $request = $this->getFirewallRuleRequest($server_id, $firewall_rule_number);
+        $url = $this->buildPath(
+            'server/{serverId}/firewall_rule/{ruleNumber}',
+            [
+                'serverId' => $serverId,
+                'ruleNumber' => $firewallRuleNumber
+            ]
+        );
+        $request = new Request('GET', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(FirewallRuleCreateResponse::class);
     }
 
     /**
@@ -668,14 +243,15 @@ class FirewallApi
      *
      * Get firewall rule details
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function getFirewallRuleAsync($server_id, $firewall_rule_number)
+    public function getFirewallRuleAsync(string $serverId, float $firewallRuleNumber)
     {
-        return $this->getFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule_number)->then(function ($response) {
+        return $this->getFirewallRuleAsyncWithHttpInfo($serverId, $firewallRuleNumber)->then(function ($response) {
             return $response[0];
         });
     }
@@ -685,140 +261,27 @@ class FirewallApi
      *
      * Get firewall rule details
      *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
+     * @param string $serverId Server id (required)
+     * @param float $firewallRuleNumber Denotes the index of the firewall rule
+     *                                  in the server&#39;s firewall rule list (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function getFirewallRuleAsyncWithHttpInfo($server_id, $firewall_rule_number)
+    public function getFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleCreateResponse';
-        $request = $this->getFirewallRuleRequest($server_id, $firewall_rule_number);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $url = $this->buildPath(
+            'server/{serverId}/firewall_rule/{ruleNumber}',
+            [
+                'serverId' => $serverId,
+                'ruleNumber' => $firewallRuleNumber
+            ]
+        );
+        $request = new Request('GET', $url);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(FirewallRuleCreateResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'getFirewallRule'
-     *
-     * @param string $server_id Server id (required)
-     * @param float $firewall_rule_number Denotes the index of the firewall rule in the server&#39;s firewall rule list (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function getFirewallRuleRequest($server_id, $firewall_rule_number)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling getFirewallRule');
-        }
-        // verify the required parameter 'firewall_rule_number' is set
-        if ($firewall_rule_number === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $firewall_rule_number when calling getFirewallRule');
-        }
-
-        $resourcePath = '/server/{serverId}/firewall_rule/{firewallRuleNumber}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-        // path params
-        if ($firewall_rule_number !== null) {
-            $resourcePath = str_replace('{' . 'firewallRuleNumber' . '}', ObjectSerializer::toPathValue($firewall_rule_number), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -826,14 +289,14 @@ class FirewallApi
      *
      * List firewall rules
      *
-     * @param string $server_id Server id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\FirewallRuleListResponse
+     * @param string $serverId Server id (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
+     * @return FirewallRuleListResponse
      */
-    public function serverServerIdFirewallRuleGet($server_id)
+    public function serverServerIdFirewallRuleGet(string $serverId)
     {
-        list($response) = $this->serverServerIdFirewallRuleGetWithHttpInfo($server_id);
+        list($response) = $this->serverServerIdFirewallRuleGetWithHttpInfo($serverId);
         return $response;
     }
 
@@ -842,64 +305,22 @@ class FirewallApi
      *
      * List firewall rules
      *
-     * @param string $server_id Server id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\FirewallRuleListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @throws ApiException on non-2xx response
+     * @throws \InvalidArgumentException|GuzzleException
+     * @return array of FirewallRuleListResponse,
+     *                  HTTP status code,
+     *                  HTTP response headers (array of strings)
      */
-    public function serverServerIdFirewallRuleGetWithHttpInfo($server_id)
+    public function serverServerIdFirewallRuleGetWithHttpInfo(string $serverId)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleListResponse';
-        $request = $this->serverServerIdFirewallRuleGetRequest($server_id);
 
-        try {
+        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
+        $request = new Request('GET', $url);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
+        $response = $this->client->send($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\FirewallRuleListResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(FirewallRuleListResponse::class);
     }
 
     /**
@@ -907,13 +328,13 @@ class FirewallApi
      *
      * List firewall rules
      *
-     * @param string $server_id Server id (required)
+     * @param string $serverId Server id (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function serverServerIdFirewallRuleGetAsync($server_id)
+    public function serverServerIdFirewallRuleGetAsync(string $serverId)
     {
-        return $this->serverServerIdFirewallRuleGetAsyncWithHttpInfo($server_id)->then(function ($response) {
+        return $this->serverServerIdFirewallRuleGetAsyncWithHttpInfo($serverId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -923,130 +344,18 @@ class FirewallApi
      *
      * List firewall rules
      *
-     * @param string $server_id Server id (required)
+     * @param string $serverId Server id (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function serverServerIdFirewallRuleGetAsyncWithHttpInfo($server_id)
+    public function serverServerIdFirewallRuleGetAsyncWithHttpInfo(string $serverId)
     {
-        $returnType = '\Upcloud\ApiClient\Model\FirewallRuleListResponse';
-        $request = $this->serverServerIdFirewallRuleGetRequest($server_id);
+        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
+        $request = new Request('GET', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+            return $response->toArray(FirewallRuleListResponse::class);
         });
     }
-
-    /**
-     * Create request for operation 'serverServerIdFirewallRuleGet'
-     *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function serverServerIdFirewallRuleGetRequest($server_id)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling serverServerIdFirewallRuleGet');
-        }
-
-        $resourcePath = '/server/{serverId}/firewall_rule';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
 }
