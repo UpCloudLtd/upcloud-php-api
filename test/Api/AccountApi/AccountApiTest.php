@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Upcloud\Tests\Api\AccountApi;
 
-use GuzzleHttp\Promise\PromiseInterface;
 use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -12,6 +11,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\Model\Account;
 use Upcloud\ApiClient\Model\AccountResponse;

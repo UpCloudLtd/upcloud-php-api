@@ -8,6 +8,7 @@ use GuzzleHttp\ClientInterface;
 use Upcloud\ApiClient\Configuration;
 use Upcloud\ApiClient\HeaderSelector;
 use Upcloud\ApiClient\HttpClient\UpcloudHttpClient;
+use Upcloud\ApiClient\ObjectSerializer;
 
 abstract class BaseApi
 {
@@ -42,8 +43,21 @@ abstract class BaseApi
     /**
      * @return Configuration
      */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         return $this->config;
+    }
+
+    /**
+     * @param string $path
+     * @param array $parts
+     * @return string
+     */
+    protected function buildPath(string $path, array $parts = []): string
+    {
+        foreach ($parts as $search => $replace) {
+            $path =  str_replace('{' . $search . '}', ObjectSerializer::toPathValue($replace), $path);
+        }
+        return $path;
     }
 }
