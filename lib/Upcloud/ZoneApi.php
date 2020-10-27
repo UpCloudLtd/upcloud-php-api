@@ -83,5 +83,4 @@ class ZoneApi extends BaseApi
             return $response->toArray(ZoneListResponse::class);
         });
     }
-
 }

@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Upcloud\Tests\Api\PricesApi;
+namespace Upcloud\Tests\Api\TimezoneApi;
 
 use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Upcloud\ApiClient\Model\PriceListResponse;
-use Upcloud\ApiClient\Upcloud\PricesApi;
+use Upcloud\ApiClient\Model\TimezoneListResponse;
+use Upcloud\ApiClient\Upcloud\TimezoneApi;
 use Upcloud\Tests\Api\BaseApiTest;
-use Upcloud\Tests\Api\Fixtures\PricesApiFixture;
+use Upcloud\Tests\Api\Fixtures\TimezoneApiFixture;
 
 /**
- * PricesApiTest Class Doc Comment.
+ * TimezoneApiTest Class Doc Comment.
  *
  * @category Class
  *
  * @internal
  */
-class PricesApiTest extends BaseApiTest
+class TimezoneApiTest extends BaseApiTest
 {
     /**
-     * @var PricesApi
+     * @var TimezoneApi
      */
     public $api;
 
@@ -34,21 +34,21 @@ class PricesApiTest extends BaseApiTest
     private $mock;
 
     /**
-     * @var PricesApiFixture
+     * @var TimezoneApiFixture
      */
     private $fixture;
 
     /**
-     * Setup before running any test cases.
+     * Setup before running each test case.
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mock = Mockery::mock(Client::class);
-        $this->api = new PricesApi($this->mock);
-        $this->fixture = new PricesApiFixture;
+        $this->api = new TimezoneApi($this->mock);
+        $this->fixture = new TimezoneApiFixture;
     }
 
-    public function testListPrices(): void
+    public function testListTimezones(): void
     {
         $fakeResponse = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBody());
         $this->mock
@@ -56,13 +56,13 @@ class PricesApiTest extends BaseApiTest
             ->once()
             ->andReturn($fakeResponse);
 
-        $response = $this->api->listPrices();
+        $response = $this->api->listTimezones();
 
-        $this->assertInstanceOf(PriceListResponse::class, $response);
+        $this->assertInstanceOf(TimezoneListResponse::class, $response);
         $this->assertEquals($response, $this->fixture->getResponse());
     }
 
-    public function testListPricesAsync(): void
+    public function testListTimezonesAsync(): void
     {
         $response = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBody());
 
@@ -71,10 +71,10 @@ class PricesApiTest extends BaseApiTest
             ->once()
             ->andReturn(new FulfilledPromise($response));
 
-        $promise = $this->api->listPricesAsync();
+        $promise = $this->api->listTimezonesAsync();
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
-        $this->assertInstanceOf(PriceListResponse::class, $result = $promise->wait());
+        $this->assertInstanceOf(TimezoneListResponse::class, $result = $promise->wait());
         $this->assertEquals($result, $this->fixture->getResponse());
     }
 }

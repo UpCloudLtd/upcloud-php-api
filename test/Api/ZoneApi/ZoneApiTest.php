@@ -48,7 +48,7 @@ class ZoneApiTest extends BaseApiTest
         $this->fixture = new ZoneApiFixture;
     }
 
-    public function testListPlans(): void
+    public function testListZones(): void
     {
         $fakeResponse = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBody());
         $this->mock
@@ -62,7 +62,7 @@ class ZoneApiTest extends BaseApiTest
         $this->assertEquals($response, $this->fixture->getResponse());
     }
 
-    public function testListPlansAsync(): void
+    public function testListZonesAsync(): void
     {
         $response = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBody());
 
