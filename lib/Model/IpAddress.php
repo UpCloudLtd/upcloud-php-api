@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -133,13 +133,14 @@ class IpAddress implements ArrayAccess
 
     const ACCESS__PUBLIC = 'public';
     const ACCESS__PRIVATE = 'private';
+    const ACCESS__UTILITY = 'utility';
     const FAMILY_I_PV4 = 'IPv4';
     const FAMILY_I_PV6 = 'IPv6';
     const PART_OF_PLAN_YES = 'yes';
     const PART_OF_PLAN_NO = 'no';
-    
 
-    
+
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -149,9 +150,10 @@ class IpAddress implements ArrayAccess
         return [
             self::ACCESS__PUBLIC,
             self::ACCESS__PRIVATE,
+            self::ACCESS__UTILITY,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -163,7 +165,7 @@ class IpAddress implements ArrayAccess
             self::FAMILY_I_PV6,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -175,7 +177,7 @@ class IpAddress implements ArrayAccess
             self::PART_OF_PLAN_NO,
         ];
     }
-    
+
 
     /**
      * Associative array for storing property values

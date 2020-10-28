@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Upcloud\ApiClient\Configuration;
 use Upcloud\ApiClient\ApiException;
 
@@ -26,6 +27,9 @@ class UpcloudHttpClient
      */
     private $config;
 
+    /**
+     * @var string[]
+     */
     public $headers = [
         'Content-Type'     => 'application/json; charset=UTF-8'
     ];
@@ -75,7 +79,7 @@ class UpcloudHttpClient
             );
         }
 
-        return new UpcloudApiResponse($response->getHeaders(), $response->getBody(), $response->getStatusCode());
+        return UpcloudApiResponse::createFromResponse($response);
     }
 
     /**
@@ -88,7 +92,19 @@ class UpcloudHttpClient
      */
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
-        return $this->client->sendAsync($request, $options);
+        $request = $this->combineRequest($request);
+
+        return $this->client->sendAsync($request, $options)
+            ->then(function (ResponseInterface $response) {
+                return UpcloudApiResponse::createFromResponse($response);
+            }, function (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody() : null
+                );
+            });
     }
 
     /**

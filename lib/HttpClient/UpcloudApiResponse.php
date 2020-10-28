@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Upcloud\ApiClient\HttpClient;
 
 use GuzzleHttp\Utils;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Upcloud\ApiClient\ObjectSerializer;
 
@@ -16,7 +17,7 @@ class UpcloudApiResponse
     protected $headers;
 
     /**
-     * @var string The raw response body.
+     * @var StreamInterface The raw response body.
      */
     protected $body;
 
@@ -39,12 +40,21 @@ class UpcloudApiResponse
         $this->body = $body;
     }
 
+    public static function createFromResponse(ResponseInterface $response): self
+    {
+        return new self(
+            $response->getHeaders(),
+            $response->getBody(),
+            $response->getStatusCode()
+        );
+    }
+
     /**
      * Return the response headers.
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -52,9 +62,9 @@ class UpcloudApiResponse
     /**
      * Return the body of the response.
      *
-     * @return string
+     * @return StreamInterface
      */
-    public function getBody()
+    public function getBody(): StreamInterface
     {
         return $this->body;
     }
@@ -64,7 +74,7 @@ class UpcloudApiResponse
      *
      * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
