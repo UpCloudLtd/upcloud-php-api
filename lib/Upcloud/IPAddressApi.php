@@ -120,7 +120,7 @@ class IPAddressApi extends BaseApi
      */
     public function deleteIpWithHttpInfo(string $ip): array
     {
-        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $url = $this->buildPath('ip_address/{ip}', compact('ip'));
         $request = new Request('DELETE', $url);
 
         $response = $this->client->send($request);
@@ -155,7 +155,7 @@ class IPAddressApi extends BaseApi
      */
     public function deleteIpAsyncWithHttpInfo(string $ip): PromiseInterface
     {
-        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $url = $this->buildPath('ip_address/{ip}', compact('ip'));
         $request = new Request('DELETE', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
@@ -192,7 +192,7 @@ class IPAddressApi extends BaseApi
     public function getDetailsWithHttpInfo(string $ip): array
     {
 
-        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $url = $this->buildPath('ip_address/{ip}', compact('ip'));
         $request = new Request('GET', $url);
 
         $response = $this->client->send($request);
@@ -227,7 +227,7 @@ class IPAddressApi extends BaseApi
      */
     public function getDetailsAsyncWithHttpInfo(string $ip): PromiseInterface
     {
-        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $url = $this->buildPath('ip_address/{ip}', compact('ip'));
         $request = new Request('GET', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
@@ -329,7 +329,7 @@ class IPAddressApi extends BaseApi
      */
     public function modifyIpWithHttpInfo(string $ip, ?ModifyIpRequest $ipAddress = null): array
     {
-        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $url = $this->buildPath('ip_address/{ip}', compact('ip'));
 
         $request = new Request('PATCH', $url, [], $ipAddress);
 
@@ -366,7 +366,7 @@ class IPAddressApi extends BaseApi
      */
     public function modifyIpAsyncWithHttpInfo(string $ip, ?ModifyIpRequest $ipAddress = null): PromiseInterface
     {
-        $url = $this->buildPath('ip_address/{ip}', ['ip' => $ip]);
+        $url = $this->buildPath('ip_address/{ip}', compact('ip'));
 
         $request = new Request('PATCH', $url, [], $ipAddress);
 

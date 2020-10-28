@@ -17,7 +17,7 @@ class UpcloudApiResponse
     protected $headers;
 
     /**
-     * @var string The raw response body.
+     * @var StreamInterface The raw response body.
      */
     protected $body;
 
@@ -54,7 +54,7 @@ class UpcloudApiResponse
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -62,9 +62,9 @@ class UpcloudApiResponse
     /**
      * Return the body of the response.
      *
-     * @return string
+     * @return StreamInterface
      */
-    public function getBody()
+    public function getBody(): StreamInterface
     {
         return $this->body;
     }
@@ -74,7 +74,7 @@ class UpcloudApiResponse
      *
      * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
