@@ -55,9 +55,9 @@ class FirewallApi extends BaseApi
      */
     public function createFirewallRuleWithHttpInfo(string $serverId, FirewallRuleRequest $firewallRule): array
     {
-        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
-
+        $url = $this->buildPath('server/{serverId}/firewall_rule', compact('serverId'));
         $request = new Request('POST', $url, [], $firewallRule);
+
         $response = $this->client->send($request);
 
         return $response->toArray(FirewallRuleCreateResponse::class);
@@ -94,9 +94,10 @@ class FirewallApi extends BaseApi
         string $serverId,
         FirewallRuleRequest $firewallRule
     ): PromiseInterface {
-        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
 
+        $url = $this->buildPath('server/{serverId}/firewall_rule', compact('serverId'));
         $request = new Request('POST', $url, [], $firewallRule);
+
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
             return $response->toArray(FirewallRuleCreateResponse::class);
         });
@@ -134,11 +135,8 @@ class FirewallApi extends BaseApi
     public function deleteFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber): array
     {
         $url = $this->buildPath(
-            'server/{serverId}/firewall_rule/{ruleNumber}',
-            [
-                'serverId' => $serverId,
-                'ruleNumber' => $firewallRuleNumber
-            ]
+            'server/{serverId}/firewall_rule/{firewallRuleNumber}',
+            compact('serverId', 'firewallRuleNumber')
         );
 
         $request = new Request('DELETE', $url);
@@ -180,11 +178,8 @@ class FirewallApi extends BaseApi
     public function deleteFirewallRuleAsyncWithHttpInfo(string $serverId, float $firewallRuleNumber): PromiseInterface
     {
         $url = $this->buildPath(
-            'server/{serverId}/firewall_rule/{ruleNumber}',
-            [
-                'serverId' => $serverId,
-                'ruleNumber' => $firewallRuleNumber
-            ]
+            'server/{serverId}/firewall_rule/{firewallRuleNumber}',
+            compact('serverId', 'firewallRuleNumber')
         );
 
         $request = new Request('DELETE', $url);
@@ -229,12 +224,10 @@ class FirewallApi extends BaseApi
     public function getFirewallRuleWithHttpInfo(string $serverId, float $firewallRuleNumber): array
     {
         $url = $this->buildPath(
-            'server/{serverId}/firewall_rule/{ruleNumber}',
-            [
-                'serverId' => $serverId,
-                'ruleNumber' => $firewallRuleNumber
-            ]
+            'server/{serverId}/firewall_rule/{firewallRuleNumber}',
+            compact('serverId', 'firewallRuleNumber')
         );
+
         $request = new Request('GET', $url);
 
         $response = $this->client->send($request);
@@ -275,11 +268,8 @@ class FirewallApi extends BaseApi
     {
 
         $url = $this->buildPath(
-            'server/{serverId}/firewall_rule/{ruleNumber}',
-            [
-                'serverId' => $serverId,
-                'ruleNumber' => $firewallRuleNumber
-            ]
+            'server/{serverId}/firewall_rule/{firewallRuleNumber}',
+            compact('serverId', 'firewallRuleNumber')
         );
         $request = new Request('GET', $url);
 
@@ -319,7 +309,7 @@ class FirewallApi extends BaseApi
     public function serverServerIdFirewallRuleGetWithHttpInfo(string $serverId): array
     {
 
-        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
+        $url = $this->buildPath('server/{serverId}/firewall_rule', compact('serverId'));
         $request = new Request('GET', $url);
 
         $response = $this->client->send($request);
@@ -354,7 +344,7 @@ class FirewallApi extends BaseApi
      */
     public function serverServerIdFirewallRuleGetAsyncWithHttpInfo(string $serverId): PromiseInterface
     {
-        $url = $this->buildPath('server/{serverId}/firewall_rule', ['serverId' => $serverId]);
+        $url = $this->buildPath('server/{serverId}/firewall_rule', compact('serverId'));
         $request = new Request('GET', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {

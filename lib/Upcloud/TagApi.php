@@ -1,33 +1,20 @@
 <?php
-/**
- * TagApi
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Upcloud;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\MultipartStream;
+use InvalidArgumentException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Upcloud\ApiClient\ApiException;
-use Upcloud\ApiClient\Configuration;
-use Upcloud\ApiClient\HeaderSelector;
-use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
+use Upcloud\ApiClient\Model\CreateNewTagResponse;
+use Upcloud\ApiClient\Model\CreateServerResponse;
+use Upcloud\ApiClient\Model\ModifyTagRequest;
+use Upcloud\ApiClient\Model\TagCreateRequest;
+use Upcloud\ApiClient\Model\TagListResponse;
 
 /**
  * TagApi Class Doc Comment
@@ -35,55 +22,23 @@ use Upcloud\ApiClient\ObjectSerializer;
  * @category Class
  * @package  Upcloud\ApiClient
  */
-class TagApi
+class TagApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: Configuration::getDefaultConfiguration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation assignTag
      *
      * Assign tag to a server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_list List of tags (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateServerResponse
+     * @param string $serverId Server id (required)
+     * @param string $tagList List of tags (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateServerResponse
      */
-    public function assignTag($server_id, $tag_list)
+    public function assignTag(string $serverId, string $tagList): CreateServerResponse
     {
-        list($response) = $this->assignTagWithHttpInfo($server_id, $tag_list);
+        list($response) = $this->assignTagWithHttpInfo($serverId, $tagList);
         return $response;
     }
 
@@ -92,77 +47,20 @@ class TagApi
      *
      * Assign tag to a server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_list List of tags (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param string $tagList List of tags (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function assignTagWithHttpInfo($server_id, $tag_list)
+    public function assignTagWithHttpInfo(string $serverId, string $tagList): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->assignTagRequest($server_id, $tag_list);
+        $url = $this->buildPath('server/{serverId}/tag/{tagList}', compact('serverId', 'tagList'));
+        $request =  new Request('POST', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -170,14 +68,14 @@ class TagApi
      *
      * Assign tag to a server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_list List of tags (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param string $tagList List of tags (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function assignTagAsync($server_id, $tag_list)
+    public function assignTagAsync(string $serverId, string $tagList): PromiseInterface
     {
-        return $this->assignTagAsyncWithHttpInfo($server_id, $tag_list)->then(function ($response) {
+        return $this->assignTagAsyncWithHttpInfo($serverId, $tagList)->then(function ($response) {
             return $response[0];
         });
     }
@@ -187,140 +85,21 @@ class TagApi
      *
      * Assign tag to a server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_list List of tags (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param string $tagList List of tags (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function assignTagAsyncWithHttpInfo($server_id, $tag_list)
+    public function assignTagAsyncWithHttpInfo(string $serverId, string $tagList): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->assignTagRequest($server_id, $tag_list);
+        $url = $this->buildPath('server/{serverId}/tag/{tagList}', compact('serverId', 'tagList'));
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $request =  new Request('POST', $url);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+
+            return $response->toArray(CreateServerResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'assignTag'
-     *
-     * @param string $server_id Server id (required)
-     * @param string $tag_list List of tags (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function assignTagRequest($server_id, $tag_list)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling assignTag');
-        }
-        // verify the required parameter 'tag_list' is set
-        if ($tag_list === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tag_list when calling assignTag');
-        }
-
-        $resourcePath = '/server/{serverId}/tag/{tagList}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-        // path params
-        if ($tag_list !== null) {
-            $resourcePath = str_replace('{' . 'tagList' . '}', ObjectSerializer::toPathValue($tag_list), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -328,12 +107,12 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateNewTagResponse
+     * @param TagCreateRequest $tag  (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateNewTagResponse
      */
-    public function createTag($tag)
+    public function createTag(TagCreateRequest $tag): CreateNewTagResponse
     {
         list($response) = $this->createTagWithHttpInfo($tag);
         return $response;
@@ -344,72 +123,16 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param TagCreateRequest $tag  (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createTagWithHttpInfo($tag)
+    public function createTagWithHttpInfo(TagCreateRequest $tag): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateNewTagResponse';
-        $request = $this->createTagRequest($tag);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateNewTagResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        $request = new Request('POST', 'tag', [], $tag);
+        $response = $this->client->send($request);
+        return $response->toArray(CreateNewTagResponse::class);
     }
 
     /**
@@ -417,11 +140,11 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param TagCreateRequest $tag  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function createTagAsync($tag)
+    public function createTagAsync(TagCreateRequest $tag): PromiseInterface
     {
         return $this->createTagAsyncWithHttpInfo($tag)->then(function ($response) {
             return $response[0];
@@ -433,131 +156,17 @@ class TagApi
      *
      * Create a new tag
      *
-     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param TagCreateRequest $tag  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function createTagAsyncWithHttpInfo($tag)
+    public function createTagAsyncWithHttpInfo(TagCreateRequest $tag): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateNewTagResponse';
-        $request = $this->createTagRequest($tag);
+        $request = new Request('POST', 'tag', [], $tag);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateNewTagResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'createTag'
-     *
-     * @param \Upcloud\ApiClient\Model\TagCreateRequest $tag  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function createTagRequest($tag)
-    {
-        // verify the required parameter 'tag' is set
-        if ($tag === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tag when calling createTag');
-        }
-
-        $resourcePath = '/tag';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // body params
-        $_tempBody = null;
-        if (isset($tag)) {
-            $_tempBody = $tag;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -565,14 +174,14 @@ class TagApi
      *
      * Delete tag
      *
-     * @param string $tag_name Tag name (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $tagName Tag name (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function deleteTag($tag_name)
+    public function deleteTag(string $tagName): void
     {
-        $this->deleteTagWithHttpInfo($tag_name);
+        $this->deleteTagWithHttpInfo($tagName);
     }
 
     /**
@@ -580,58 +189,18 @@ class TagApi
      *
      * Delete tag
      *
-     * @param string $tag_name Tag name (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $tagName Tag name (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteTagWithHttpInfo($tag_name)
+    public function deleteTagWithHttpInfo(string $tagName): array
     {
-        $returnType = '';
-        $request = $this->deleteTagRequest($tag_name);
+        $url = $this->buildPath('tag/{tagName}', compact('tagName'));
+        $request = new Request('DELETE', $url);
 
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        $response = $this->client->send($request);
+        return  $response->toArray();
     }
 
     /**
@@ -639,13 +208,13 @@ class TagApi
      *
      * Delete tag
      *
-     * @param string $tag_name Tag name (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $tagName Tag name (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function deleteTagAsync($tag_name)
+    public function deleteTagAsync(string $tagName): PromiseInterface
     {
-        return $this->deleteTagAsyncWithHttpInfo($tag_name)->then(function ($response) {
+        return $this->deleteTagAsyncWithHttpInfo($tagName)->then(function ($response) {
             return $response[0];
         });
     }
@@ -655,116 +224,18 @@ class TagApi
      *
      * Delete tag
      *
-     * @param string $tag_name Tag name (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $tagName Tag name (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function deleteTagAsyncWithHttpInfo($tag_name)
+    public function deleteTagAsyncWithHttpInfo(string $tagName): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->deleteTagRequest($tag_name);
+        $url = $this->buildPath('tag/{tagName}', compact('tagName'));
+        $request = new Request('DELETE', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
-    }
-
-    /**
-     * Create request for operation 'deleteTag'
-     *
-     * @param string $tag_name Tag name (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function deleteTagRequest($tag_name)
-    {
-        // verify the required parameter 'tag_name' is set
-        if ($tag_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tag_name when calling deleteTag');
-        }
-
-        $resourcePath = '/tag/{tagName}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($tag_name !== null) {
-            $resourcePath = str_replace('{' . 'tagName' . '}', ObjectSerializer::toPathValue($tag_name), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -772,11 +243,11 @@ class TagApi
      *
      * List existing tags
      *
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\TagListResponse
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return TagListResponse
      */
-    public function listTags()
+    public function listTags(): TagListResponse
     {
         list($response) = $this->listTagsWithHttpInfo();
         return $response;
@@ -787,63 +258,17 @@ class TagApi
      *
      * List existing tags
      *
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\TagListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of TagListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listTagsWithHttpInfo()
+    public function listTagsWithHttpInfo(): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\TagListResponse';
-        $request = $this->listTagsRequest();
+        $request = new Request('GET', 'tag');
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\TagListResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(TagListResponse::class);
     }
 
     /**
@@ -851,10 +276,10 @@ class TagApi
      *
      * List existing tags
      *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function listTagsAsync()
+    public function listTagsAsync(): PromiseInterface
     {
         return $this->listTagsAsyncWithHttpInfo()->then(function ($response) {
             return $response[0];
@@ -866,120 +291,16 @@ class TagApi
      *
      * List existing tags
      *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function listTagsAsyncWithHttpInfo()
+    public function listTagsAsyncWithHttpInfo(): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\TagListResponse';
-        $request = $this->listTagsRequest();
+        $request = new Request('GET', 'tag');
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(TagListResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'listTags'
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listTagsRequest()
-    {
-
-        $resourcePath = '/tag';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -987,15 +308,15 @@ class TagApi
      *
      * Modify existing tag
      *
-     * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateNewTagResponse
+     * @param string $tagName Tag name (required)
+     * @param ModifyTagRequest $tag  (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateNewTagResponse
      */
-    public function modifyTag($tag_name, $tag)
+    public function modifyTag(string $tagName, ModifyTagRequest $tag): CreateNewTagResponse
     {
-        list($response) = $this->modifyTagWithHttpInfo($tag_name, $tag);
+        list($response) = $this->modifyTagWithHttpInfo($tagName, $tag);
         return $response;
     }
 
@@ -1004,81 +325,20 @@ class TagApi
      *
      * Modify existing tag
      *
-     * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $tagName Tag name (required)
+     * @param ModifyTagRequest $tag  (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateNewTagResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function modifyTagWithHttpInfo($tag_name, $tag)
+    public function modifyTagWithHttpInfo(string $tagName, ModifyTagRequest $tag): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateNewTagResponse';
-        $request = $this->modifyTagRequest($tag_name, $tag);
+        $url = $this->buildPath('tag/{tagName}', compact('tagName'));
+        $request = new Request('PUT', $url, [], $tag);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateNewTagResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateNewTagResponse::class);
     }
 
     /**
@@ -1086,14 +346,14 @@ class TagApi
      *
      * Modify existing tag
      *
-     * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $tagName Tag name (required)
+     * @param ModifyTagRequest $tag  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function modifyTagAsync($tag_name, $tag)
+    public function modifyTagAsync(string $tagName, ModifyTagRequest $tag): PromiseInterface
     {
-        return $this->modifyTagAsyncWithHttpInfo($tag_name, $tag)->then(function ($response) {
+        return $this->modifyTagAsyncWithHttpInfo($tagName, $tag)->then(function ($response) {
             return $response[0];
         });
     }
@@ -1103,141 +363,19 @@ class TagApi
      *
      * Modify existing tag
      *
-     * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $tagName Tag name (required)
+     * @param ModifyTagRequest $tag  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function modifyTagAsyncWithHttpInfo($tag_name, $tag)
+    public function modifyTagAsyncWithHttpInfo(string $tagName, ModifyTagRequest $tag): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateNewTagResponse';
-        $request = $this->modifyTagRequest($tag_name, $tag);
+        $url = $this->buildPath('tag/{tagName}', compact('tagName'));
+        $request = new Request('PUT', $url, [], $tag);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateNewTagResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'modifyTag'
-     *
-     * @param string $tag_name Tag name (required)
-     * @param \Upcloud\ApiClient\Model\ModifyTagRequest $tag  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function modifyTagRequest($tag_name, $tag)
-    {
-        // verify the required parameter 'tag_name' is set
-        if ($tag_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tag_name when calling modifyTag');
-        }
-        // verify the required parameter 'tag' is set
-        if ($tag === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tag when calling modifyTag');
-        }
-
-        $resourcePath = '/tag/{tagName}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($tag_name !== null) {
-            $resourcePath = str_replace('{' . 'tagName' . '}', ObjectSerializer::toPathValue($tag_name), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($tag)) {
-            $_tempBody = $tag;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -1245,15 +383,15 @@ class TagApi
      *
      * Remove tag from server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_name Tag name (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateServerResponse
+     * @param string $serverId Server id (required)
+     * @param string $tagName Tag name (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateServerResponse
      */
-    public function untag($server_id, $tag_name)
+    public function untag(string $serverId, string $tagName): CreateServerResponse
     {
-        list($response) = $this->untagWithHttpInfo($server_id, $tag_name);
+        list($response) = $this->untagWithHttpInfo($serverId, $tagName);
         return $response;
     }
 
@@ -1262,77 +400,20 @@ class TagApi
      *
      * Remove tag from server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_name Tag name (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param string $tagName Tag name (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function untagWithHttpInfo($server_id, $tag_name)
+    public function untagWithHttpInfo(string $serverId, string $tagName): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->untagRequest($server_id, $tag_name);
+        $url = $this->buildPath('server/{serverId}/untag/{tagName}', compact('serverId', 'tagName'));
 
-        try {
+        $request = new Request('POST', $url);
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -1340,14 +421,14 @@ class TagApi
      *
      * Remove tag from server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_name Tag name (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param string $tagName Tag name (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function untagAsync($server_id, $tag_name)
+    public function untagAsync(string $serverId, string $tagName): PromiseInterface
     {
-        return $this->untagAsyncWithHttpInfo($server_id, $tag_name)->then(function ($response) {
+        return $this->untagAsyncWithHttpInfo($serverId, $tagName)->then(function ($response) {
             return $response[0];
         });
     }
@@ -1357,140 +438,18 @@ class TagApi
      *
      * Remove tag from server
      *
-     * @param string $server_id Server id (required)
-     * @param string $tag_name Tag name (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param string $tagName Tag name (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function untagAsyncWithHttpInfo($server_id, $tag_name)
+    public function untagAsyncWithHttpInfo(string $serverId, string $tagName): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->untagRequest($server_id, $tag_name);
+        $url = $this->buildPath('server/{serverId}/untag/{tagName}', compact('serverId', 'tagName'));
+        $request = new Request('POST', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateServerResponse::class);
         });
     }
-
-    /**
-     * Create request for operation 'untag'
-     *
-     * @param string $server_id Server id (required)
-     * @param string $tag_name Tag name (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function untagRequest($server_id, $tag_name)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling untag');
-        }
-        // verify the required parameter 'tag_name' is set
-        if ($tag_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tag_name when calling untag');
-        }
-
-        $resourcePath = '/server/{serverId}/untag/{tagName}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-        // path params
-        if ($tag_name !== null) {
-            $resourcePath = str_replace('{' . 'tagName' . '}', ObjectSerializer::toPathValue($tag_name), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
 }
