@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -39,19 +39,19 @@ class TemplitizeStorageRequest implements ArrayAccess
     protected static $swaggerModelName = 'templitize storage request';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     * @var string[]
+     */
     protected static $swaggerTypes = [
-        'title' => 'string'
+        'storage' => '\Upcloud\ApiClient\Model\Storage'
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     * @var string[]
+     */
     protected static $swaggerFormats = [
-        'title' => null
+        'storage' => null
     ];
 
     public static function swaggerTypes()
@@ -69,7 +69,7 @@ class TemplitizeStorageRequest implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'title' => 'title'
+        'storage' => 'storage'
     ];
 
 
@@ -78,7 +78,7 @@ class TemplitizeStorageRequest implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'title' => 'setTitle'
+        'storage' => 'setStorage'
     ];
 
 
@@ -87,7 +87,7 @@ class TemplitizeStorageRequest implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'title' => 'getTitle'
+        'storage' => 'getStorage'
     ];
 
     public static function attributeMap()
@@ -105,9 +105,9 @@ class TemplitizeStorageRequest implements ArrayAccess
         return self::$getters;
     }
 
-    
 
-    
+
+
 
     /**
      * Associative array for storing property values
@@ -121,7 +121,7 @@ class TemplitizeStorageRequest implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['storage'] = isset($data['storage']) ? $data['storage'] : null;
     }
 
     /**
@@ -132,10 +132,6 @@ class TemplitizeStorageRequest implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-
-        if (!is_null($this->container['title']) && (strlen($this->container['title']) > 64)) {
-            $invalid_properties[] = "invalid value for 'title', the character length must be smaller than or equal to 64.";
-        }
 
         return $invalid_properties;
     }
@@ -149,34 +145,27 @@ class TemplitizeStorageRequest implements ArrayAccess
     public function valid()
     {
 
-        if (strlen($this->container['title']) > 64) {
-            return false;
-        }
         return true;
     }
 
 
     /**
-     * Gets title
-     * @return string
+     * Gets storage
+     * @return \Upcloud\ApiClient\Model\Storage
      */
-    public function getTitle()
+    public function getStorage()
     {
-        return $this->container['title'];
+        return $this->container['storage'];
     }
 
     /**
-     * Sets title
-     * @param string $title A short description.
+     * Sets storage
+     * @param \Upcloud\ApiClient\Model\Storage $storage
      * @return $this
      */
-    public function setTitle($title)
+    public function setStorage($storage)
     {
-        if (!is_null($title) && (strlen($title) > 64)) {
-            throw new \InvalidArgumentException('invalid length for $title when calling TemplitizeStorageRequest., must be smaller than or equal to 64.');
-        }
-
-        $this->container['title'] = $title;
+        $this->container['storage'] = $storage;
 
         return $this;
     }
