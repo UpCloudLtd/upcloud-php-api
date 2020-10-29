@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -33,25 +33,25 @@ class StorageDeviceLoadRequest implements ArrayAccess
     const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      * @var string
-      */
+     * The original name of the model.
+     * @var string
+     */
     protected static $swaggerModelName = 'storageDeviceLoadRequest';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     * @var string[]
+     */
     protected static $swaggerTypes = [
-        'storage' => 'string'
+        'storage_device' => '\Upcloud\ApiClient\Model\StorageDevice'
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     * @var string[]
+     */
     protected static $swaggerFormats = [
-        'storage' => 'uuid'
+        'storage_device' => null
     ];
 
     public static function swaggerTypes()
@@ -69,7 +69,7 @@ class StorageDeviceLoadRequest implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'storage' => 'storage'
+        'storage_device' => 'storage_device'
     ];
 
 
@@ -78,7 +78,7 @@ class StorageDeviceLoadRequest implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'storage' => 'setStorage'
+        'storage_device' => 'setStorageDevice'
     ];
 
 
@@ -87,7 +87,7 @@ class StorageDeviceLoadRequest implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'storage' => 'getStorage'
+        'storage_device' => 'getStorageDevice'
     ];
 
     public static function attributeMap()
@@ -105,10 +105,6 @@ class StorageDeviceLoadRequest implements ArrayAccess
         return self::$getters;
     }
 
-    
-
-    
-
     /**
      * Associative array for storing property values
      * @var mixed[]
@@ -121,7 +117,7 @@ class StorageDeviceLoadRequest implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['storage'] = isset($data['storage']) ? $data['storage'] : null;
+        $this->container['storage_device'] = isset($data['storage_device']) ? $data['storage_device'] : null;
     }
 
     /**
@@ -150,22 +146,22 @@ class StorageDeviceLoadRequest implements ArrayAccess
 
 
     /**
-     * Gets storage
-     * @return string
+     * Gets storage_device
+     * @return \Upcloud\ApiClient\Model\StorageDevice
      */
-    public function getStorage()
+    public function getStorageDevice()
     {
-        return $this->container['storage'];
+        return $this->container['storage_device'];
     }
 
     /**
-     * Sets storage
-     * @param string $storage The UUID of the storage to be loaded in the CD-ROM device.
+     * Sets storage_device
+     * @param \Upcloud\ApiClient\Model\StorageDevice $storage_device
      * @return $this
      */
-    public function setStorage($storage)
+    public function setStorageDevice($storage_device)
     {
-        $this->container['storage'] = $storage;
+        $this->container['storage_device'] = $storage_device;
 
         return $this;
     }

@@ -140,36 +140,36 @@ class TagApiFixture
     public function getServerData(): array
     {
         return [
-            "server" => [
-                "boot_order" => "disk",
-                "core_number" => "2",
-                "firewall" => "on",
-                "hostname" => "debian.example.com",
-                "ip_addresses" => [
-                    "ip_address" => []
+            'server' => [
+                'boot_order' => 'disk',
+                'core_number' => '2',
+                'firewall' => 'on',
+                'hostname' => 'debian.example.com',
+                'ip_addresses' => [
+                    'ip_address' => []
                 ],
-                "license" => 0,
-                "memory_amount" => "4096",
-                "nic_model" => "virtio",
-                "plan" => "2xCPU-4GB",
-                "plan_ipv4_bytes" => "345346754423",
-                "plan_ipv6_bytes" => "676300234",
-                "state" => "started",
-                "storage_devices" => [
-                    "storage_device" => []
+                'license' => 0,
+                'memory_amount' => '4096',
+                'nic_model' => 'virtio',
+                'plan' => '2xCPU-4GB',
+                'plan_ipv4_bytes' => '345346754423',
+                'plan_ipv6_bytes' => '676300234',
+                'state' => 'started',
+                'storage_devices' => [
+                    'storage_device' => []
                 ],
-                "tags" => [
-                    "tag" => [
-                        "TEST"
+                'tags' => [
+                    'tag' => [
+                        'TEST'
                     ]
                 ],
-                "timezone" => "UTC",
-                "title" => "My Debian server",
-                "uuid" => "00c78863-db86-44ea-af70-d6edc4d162bf",
-                "video_model" => "cirrus",
-                "vnc" => "off",
-                "vnc_password" => "aabbccdd",
-                "zone" => "fi-hel1",
+                'timezone' => 'UTC',
+                'title' => 'My Debian server',
+                'uuid' => '00c78863-db86-44ea-af70-d6edc4d162bf',
+                'video_model' => 'cirrus',
+                'vnc' => 'off',
+                'vnc_password' => 'aabbccdd',
+                'zone' => 'fi-hel1',
             ]
         ];
     }
