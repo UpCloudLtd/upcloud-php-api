@@ -129,7 +129,7 @@ try {
 
 ## Documentation
 
-All URIs are relative to *https://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.3*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
