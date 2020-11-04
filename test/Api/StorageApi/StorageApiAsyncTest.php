@@ -121,12 +121,17 @@ class StorageApiAsyncTest extends BaseApiTest
 
         $response = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBody());
 
+        $request = new Request(
+            'GET',
+            $this->url . 'storage/type',
+            $this->fakeHeadersAsArray
+        );
         $this->expectException(InvalidArgumentException::class);
 
         $this->mock
             ->shouldReceive('sendAsync')
             ->once()
-            ->andReturn(new FulfilledPromise($response));
+            ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
 
 
         $this->api->listStorages('normals');
