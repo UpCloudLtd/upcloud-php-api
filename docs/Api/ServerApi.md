@@ -657,7 +657,7 @@ Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PA
 
 $api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to modify
-$server = new \Upcloud\ApiClient\Model\Server(); // \Upcloud\ApiClient\Model\Server |
+$server = new \Upcloud\ApiClient\Model\ModifyServerRequest(); // \Upcloud\ApiClient\Model\ModifyServerRequest |
 
 try {
     $result = $api_instance->modifyServer($server_id, $server);
@@ -673,7 +673,7 @@ try {
 | Name          | Type                                                      | Description            | Notes      |
 | ------------- | --------------------------------------------------------- | ---------------------- | ---------- |
 | **server_id** | **string**                                                | Id of server to modify |
-| **server**    | [**\Upcloud\ApiClient\Model\Server**](../Model/Server.md) |                        | [optional] |
+| **server**    | [**\Upcloud\ApiClient\Model\ModifyServerRequest**](../Model/ModifyServerRequest.md) |                        | [optional] |
 
 ### Return type
 
