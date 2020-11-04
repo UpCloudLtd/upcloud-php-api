@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\TimezoneApi
 
-All URIs are relative to _https://api.upcloud.com/1.2_
+All URIs are relative to _https://api.upcloud.com/1.3_
 
 | Method                                            | HTTP request      | Description    |
 | ------------------------------------------------- | ----------------- | -------------- |

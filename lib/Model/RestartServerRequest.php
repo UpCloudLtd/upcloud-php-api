@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -118,9 +118,9 @@ class RestartServerRequest implements ArrayAccess
     const STOP_TYPE_SOFT = 'soft';
     const STOP_TYPE_HARD = 'hard';
     const TIMEOUT_ACTION_DESTROY = 'destroy';
-    const TIMEOUT_ACTION_IGNORE = 'ignore';    
+    const TIMEOUT_ACTION_IGNORE = 'ignore';
 
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -132,7 +132,7 @@ class RestartServerRequest implements ArrayAccess
             self::STOP_TYPE_HARD,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -144,7 +144,7 @@ class RestartServerRequest implements ArrayAccess
             self::TIMEOUT_ACTION_IGNORE,
         ];
     }
-    
+
 
     /**
      * Associative array for storing property values
@@ -160,11 +160,7 @@ class RestartServerRequest implements ArrayAccess
     {
         $this->container['stop_type'] = isset($data['stop_type']) ? $data['stop_type'] : 'soft';
         $this->container['timeout_action'] = isset($data['timeout_action']) ? $data['timeout_action'] : null;
-        $this->container['timeout'] = isset($data['timeout'])
-          ? $data['timeout']
-          : !isset($data['stop_type'])
-            ? '60'
-            : null;
+        $this->container['timeout'] =  $data['timeout'] ?? (!isset($data['stop_type']) ? 60 : null);
     }
 
     /**
@@ -376,4 +372,3 @@ class RestartServerRequest implements ArrayAccess
         return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-

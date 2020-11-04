@@ -14,7 +14,7 @@
  * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
  *
  * OpenAPI spec version: 1.2.0
- * 
+ *
  */
 
 
@@ -63,10 +63,10 @@ class Server implements ArrayAccess
         'title' => 'string',
         'uuid' => 'string',
         'video_model' => 'string',
-        'vnc' => 'string',
-        'vnc_host' => 'string',
-        'vnc_password' => 'string',
-        'vnc_port' => 'string',
+        'remote_access_type' => 'string',
+        'remote_access_enabled' => 'string',
+        'remote_access_password' => 'string',
+        'simple_backup' => 'string',
         'zone' => 'string'
     ];
 
@@ -94,10 +94,10 @@ class Server implements ArrayAccess
         'title' => null,
         'uuid' => 'uuid',
         'video_model' => null,
-        'vnc' => null,
-        'vnc_host' => null,
-        'vnc_password' => null,
-        'vnc_port' => null,
+        'remote_access_type' => null,
+        'remote_access_enabled' => null,
+        'remote_access_password' => null,
+        'simple_backup' => null,
         'zone' => null
     ];
 
@@ -135,10 +135,10 @@ class Server implements ArrayAccess
         'title' => 'title',
         'uuid' => 'uuid',
         'video_model' => 'video_model',
-        'vnc' => 'vnc',
-        'vnc_host' => 'vnc_host',
-        'vnc_password' => 'vnc_password',
-        'vnc_port' => 'vnc_port',
+        'remote_access_type' => 'remote_access_type',
+        'remote_access_enabled' => 'remote_access_enabled',
+        'remote_access_password' => 'remote_access_password',
+        'simple_backup' => 'simple_backup',
         'zone' => 'zone'
     ];
 
@@ -167,10 +167,10 @@ class Server implements ArrayAccess
         'title' => 'setTitle',
         'uuid' => 'setUuid',
         'video_model' => 'setVideoModel',
-        'vnc' => 'setVnc',
-        'vnc_host' => 'setVncHost',
-        'vnc_password' => 'setVncPassword',
-        'vnc_port' => 'setVncPort',
+        'remote_access_type' => 'setRemoteAccessType',
+        'remote_access_enabled' => 'setRemoteAccessEnabled',
+        'remote_access_password' => 'setRemoteAccessPassword',
+        'simple_backup' => 'setSimpleBackup',
         'zone' => 'setZone'
     ];
 
@@ -199,10 +199,10 @@ class Server implements ArrayAccess
         'title' => 'getTitle',
         'uuid' => 'getUuid',
         'video_model' => 'getVideoModel',
-        'vnc' => 'getVnc',
-        'vnc_host' => 'getVncHost',
-        'vnc_password' => 'getVncPassword',
-        'vnc_port' => 'getVncPort',
+        'remote_access_type' => 'getRemoteAccessType',
+        'remote_access_enabled' => 'getRemoteAccessEnabled',
+        'remote_access_password' => 'getRemoteAccessPassword',
+        'simple_backup' => 'getSimpleBackup',
         'zone' => 'getZone'
     ];
 
@@ -229,11 +229,13 @@ class Server implements ArrayAccess
     const FIREWALL_OFF = 'off';
     const VIDEO_MODEL_VGA = 'vga';
     const VIDEO_MODEL_CIRRUS = 'cirrus';
-    const VNC_ON = 'on';
-    const VNC_OFF = 'off';
-    
 
-    
+    const REMOTE_ACCESS_TYPE_VNC = 'vnc';
+    const REMOTE_ACCESS_TYPE_SPICE = 'spice';
+    const REMOTE_ACCESS_ENABLED_YES = 'yes';
+    const REMOTE_ACCESS_ENABLED_NO = 'no';
+
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -247,7 +249,7 @@ class Server implements ArrayAccess
             self::BOOT_ORDER_CDROMDISK,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -259,7 +261,7 @@ class Server implements ArrayAccess
             self::FIREWALL_OFF,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
@@ -271,19 +273,30 @@ class Server implements ArrayAccess
             self::VIDEO_MODEL_CIRRUS,
         ];
     }
-    
+
     /**
      * Gets allowable values of the enum
      * @return string[]
      */
-    public function getVncAllowableValues()
+    public function getRemoteAccessTypeAllowableValues()
     {
         return [
-            self::VNC_ON,
-            self::VNC_OFF,
+            self::REMOTE_ACCESS_TYPE_VNC,
+            self::REMOTE_ACCESS_TYPE_SPICE,
         ];
     }
-    
+
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getRemoteAccessEnabledValues()
+    {
+        return [
+            self::REMOTE_ACCESS_ENABLED_NO,
+            self::REMOTE_ACCESS_ENABLED_YES,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -305,7 +318,7 @@ class Server implements ArrayAccess
         $this->container['ip_addresses'] = isset($data['ip_addresses']) ? $data['ip_addresses'] : null;
         $this->container['license'] = isset($data['license']) ? $data['license'] : null;
         $this->container['memory_amount'] = isset($data['memory_amount']) ? $data['memory_amount'] : null;
-        $this->container['nic_model'] = isset($data['nic_model']) ? $data['nic_model'] : 'e1000';
+        $this->container['nic_model'] = isset($data['nic_model']) ? $data['nic_model'] : 'virtio';
         $this->container['plan'] = isset($data['plan']) ? $data['plan'] : 'custom';
         $this->container['plan_ipv4_bytes'] = isset($data['plan_ipv4_bytes']) ? $data['plan_ipv4_bytes'] : null;
         $this->container['plan_ipv6_bytes'] = isset($data['plan_ipv6_bytes']) ? $data['plan_ipv6_bytes'] : null;
@@ -316,10 +329,10 @@ class Server implements ArrayAccess
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
         $this->container['uuid'] = isset($data['uuid']) ? $data['uuid'] : null;
         $this->container['video_model'] = isset($data['video_model']) ? $data['video_model'] : 'vga';
-        $this->container['vnc'] = isset($data['vnc']) ? $data['vnc'] : 'off';
-        $this->container['vnc_host'] = isset($data['vnc_host']) ? $data['vnc_host'] : null;
-        $this->container['vnc_password'] = isset($data['vnc_password']) ? $data['vnc_password'] : null;
-        $this->container['vnc_port'] = isset($data['vnc_port']) ? $data['vnc_port'] : null;
+        $this->container['remote_access_type'] = $data['remote_access_type'] ??  'vnc';
+        $this->container['remote_access_enabled'] = $data['remote_access_enabled'] ?? 'no';
+        $this->container['remote_access_password'] = $data['remote_access_password'] ?? null;
+        $this->container['simple_backup'] = $data['simple_backup'] ?? null;
         $this->container['zone'] = isset($data['zone']) ? $data['zone'] : null;
     }
 
@@ -356,13 +369,22 @@ class Server implements ArrayAccess
             );
         }
 
-        $allowed_values = $this->getVncAllowableValues();
-        if (!in_array($this->container['vnc'], $allowed_values)) {
+        $allowed_values = $this->getRemoteAccessEnabledValues();
+        if (!in_array($this->container['remote_access_enabled'], $allowed_values)) {
             $invalid_properties[] = sprintf(
-                "invalid value for 'vnc', must be one of '%s'",
+                "invalid value for 'remote_access_enabled', must be one of '%s'",
                 implode("', '", $allowed_values)
             );
         }
+
+        $allowed_values = $this->getRemoteAccessTypeAllowableValues();
+        if (!in_array($this->container['remote_access_type'], $allowed_values)) {
+            $invalid_properties[] = sprintf(
+                "invalid value for 'remote_access_type', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
+        }
+
 
         return $invalid_properties;
     }
@@ -388,8 +410,13 @@ class Server implements ArrayAccess
         if (!in_array($this->container['video_model'], $allowed_values)) {
             return false;
         }
-        $allowed_values = $this->getVncAllowableValues();
-        if (!in_array($this->container['vnc'], $allowed_values)) {
+        $allowed_values = $this->getRemoteAccessEnabledValues();
+        if (!in_array($this->container['remote_access_enabled'], $allowed_values)) {
+            return false;
+        }
+
+        $allowed_values = $this->getRemoteAccessTypeAllowableValues();
+        if (!in_array($this->container['remote_access_type'], $allowed_values)) {
             return false;
         }
         return true;
@@ -823,94 +850,103 @@ class Server implements ArrayAccess
     }
 
     /**
-     * Gets vnc
+     * Gets remote_access_type
      * @return string
      */
-    public function getVnc()
+    public function getRemoteAccessType()
     {
-        return $this->container['vnc'];
+        return $this->container['remote_access_type'];
     }
 
     /**
-     * Sets vnc
-     * @param string $vnc The state of the VNC remote access service.
+     * Sets remote_access_type
+     * @param string $remote_access_type
      * @return $this
      */
-    public function setVnc($vnc)
+    public function setRemoteAccessType($remote_access_type)
     {
-        $allowed_values = $this->getVncAllowableValues();
-        if (!is_null($vnc) && !in_array($vnc, $allowed_values)) {
+        $allowed_values = $this->getRemoteAccessTypeAllowableValues();
+        if (!is_null($remote_access_type) && !in_array($remote_access_type, $allowed_values)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for 'vnc', must be one of '%s'",
+                    "Invalid value for 'remote_access_type', must be one of '%s'",
                     implode("', '", $allowed_values)
                 )
             );
         }
-        $this->container['vnc'] = $vnc;
+        $this->container['remote_access_type'] = $remote_access_type;
 
         return $this;
     }
 
     /**
-     * Gets vnc_host
+     * Gets remote_access_enabled
      * @return string
      */
-    public function getVncHost()
+    public function getRemoteAccessEnabled()
     {
-        return $this->container['vnc_host'];
+        return $this->container['remote_access_enabled'];
     }
 
     /**
-     * Sets vnc_host
-     * @param string $vnc_host
+     * Sets remote_access_enabled
+     * @param string $remote_access_enabled
      * @return $this
      */
-    public function setVncHost($vnc_host)
+    public function setRemoteAccessEnabled($remote_access_enabled)
     {
-        $this->container['vnc_host'] = $vnc_host;
+        $allowed_values = $this->getRemoteAccessEnabledValues();
+        if (!is_null($remote_access_enabled) && !in_array($remote_access_enabled, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'remote_access_enabled', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
+        }
+        $this->container['remote_access_enabled'] = $remote_access_enabled;
 
         return $this;
     }
 
     /**
-     * Gets vnc_password
+     * Gets remote_access_password
      * @return string
      */
-    public function getVncPassword()
+    public function getRemoteAccessPassword()
     {
-        return $this->container['vnc_password'];
+        return $this->container['remote_access_password'];
     }
 
     /**
-     * Sets vnc_password
-     * @param string $vnc_password The VNC remote access password.
+     * Sets remote_access_password
+     * @param string $remote_access_password
      * @return $this
      */
-    public function setVncPassword($vnc_password)
+    public function setRemoteAccessPassword($remote_access_password)
     {
-        $this->container['vnc_password'] = $vnc_password;
+        $this->container['remote_access_password'] = $remote_access_password;
 
         return $this;
     }
 
     /**
-     * Gets vnc_port
+     * Gets simple_backup
      * @return string
      */
-    public function getVncPort()
+    public function getSimpleBackup()
     {
-        return $this->container['vnc_port'];
+        return $this->container['simple_backup'];
     }
 
     /**
-     * Sets vnc_port
-     * @param string $vnc_port
+     * Sets simple_backup
+     * @param string $simple_backup
      * @return $this
      */
-    public function setVncPort($vnc_port)
+    public function setSimpleBackup($simple_backup)
     {
-        $this->container['vnc_port'] = $vnc_port;
+        $this->container['simple_backup'] = $simple_backup;
 
         return $this;
     }

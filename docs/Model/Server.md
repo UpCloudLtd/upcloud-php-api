@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **ip_addresses** | [**\Upcloud\ApiClient\Model\IpAddresses**](IpAddresses.md) |  | [optional] 
 **license** | **float** |  | [optional] 
 **memory_amount** | **float** | The amount of main memory in megabytes. See List server configurations. | [optional] 
-**nic_model** | **string** | The model of the server&#39;s network interfaces. | [optional] [default to 'e1000']
+**nic_model** | **string** | The model of the server&#39;s network interfaces. | [optional] [default to 'virtio']
 **plan** | **string** | The pricing plan used. If a plan is selected, the core_number and  memory_amount must match the plan if they are present. | [optional] [default to 'custom']
 **plan_ipv4_bytes** | **float** |  | [optional] 
 **plan_ipv6_bytes** | **float** |  | [optional] 
@@ -22,11 +22,11 @@ Name | Type | Description | Notes
 **title** | **string** | A short description. | [optional] 
 **uuid** | **string** |  | [optional] 
 **video_model** | **string** | The model of the server&#39;s video interface. | [optional] [default to 'vga']
-**vnc** | **string** | The state of the VNC remote access service. | [optional] [default to 'off']
-**vnc_host** | **string** |  | [optional] 
-**vnc_password** | **string** | The VNC remote access password. | [optional] 
-**vnc_port** | **string** |  | [optional] 
-**zone** | **string** |  | [optional] 
+**remote_access_type** | **string** | The remote access type. | [optional] [default to 'vnc']
+**remote_access_enabled** | **string** | Is the remote access enabled. | [optional] [default to 'no']
+**remote_access_password** | **string** | Remote access password. | [optional] 
+**simple_backup** | **string** | Simple backup time in UTC, followed by dailies, weeklies, or monthlies option separated by comma, or no when disabled. | [optional] 
+**zone** | **string** | The zone in which the server will be hosted, e.g. fi-hel1. See Zones. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
