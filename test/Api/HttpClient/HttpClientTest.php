@@ -15,6 +15,8 @@ use GuzzleHttp\Exception\RequestException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\HttpClient\UpcloudHttpClient;
+use Upcloud\ApiClient\Model\Account;
+use Upcloud\ApiClient\Model\AccountResponse;
 use Upcloud\Tests\Api\BaseApiTest;
 
 class HttpClientTest extends BaseApiTest
@@ -30,79 +32,103 @@ class HttpClientTest extends BaseApiTest
      */
     private $mock;
 
-
     public function setUp(): void
     {
-        $this->mock = Mockery::mock(Client::class);
-        $this->client = new UpcloudHttpClient($this->mock);
+        if ($this->isNoCredentials) {
+            $this->mock = Mockery::mock(Client::class);
+            $this->client = new UpcloudHttpClient($this->mock);
+        } else {
+            $this->client = new UpcloudHttpClient();
+            $this->client->getConfig()->setUsername($this->getUsername());
+            $this->client->getConfig()->setPassword($this->getPassword());
+        }
     }
 
     public function testCanSendNormalRequest(): void
     {
-        $request = new Request('GET', $this->url);
-        $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
+        $request = new Request('GET', $this->url . '/account');
 
-        $this->mock
-            ->shouldReceive('send')
-            ->once()
-            ->andReturn($response);
+        if ($this->isNoCredentials) {
+            $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
+
+            $this->mock
+                ->shouldReceive('send')
+                ->once()
+                ->andReturn($response);
+        }
+
 
         $response = $this->client->send($request);
         $this->assertInstanceOf(UpcloudApiResponse::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals($this->fakeRawBody, $response->getBody());
-        $this->assertIsArray($responseArray = $response->toArray('\Upcloud\ApiClient\Model\AccountResponse'));
-        $this->assertInstanceOf('\Upcloud\ApiClient\Model\Account', $responseArray[0]['account']);
+        $this->assertIsArray($responseArray = $response->toArray(AccountResponse::class));
+        $this->assertInstanceOf(AccountResponse::class, $accountResponse = $responseArray[0]);
+        $this->assertInstanceOf(Account::class, $account = $accountResponse->getAccount());
+        $this->assertEquals($this->getUsername(), $account->getUsername());
     }
 
     public function testThrowsExceptionOnClientError(): void
     {
         $this->expectException(ApiException::class);
-        $this->expectExceptionCode(400);
+        $this->expectExceptionCode(401);
 
-        $request = new Request('GET', $this->url);
+        $request = new Request('GET', $this->url . '/account');
 
-        $response = new Response(400, $this->fakeResponseHeadersAsArray);
+        $this->client->getConfig()->setUsername($this->generateRandomString());
+        $this->client->getConfig()->setPassword($this->generateRandomString());
 
-        $this->mock
-            ->shouldReceive('send')
-            ->once()
-            ->andThrow(new RequestException('Bad Request', $request, $response));
+        if ($this->isNoCredentials) {
+            $response = new Response(401, $this->fakeResponseHeadersAsArray);
+
+            $this->mock
+                ->shouldReceive('send')
+                ->once()
+                ->andThrow(new RequestException('Bad Request', $request, $response));
+        }
 
         $this->client->send($request);
     }
 
     public function testCanSendAsyncRequest(): void
     {
-        $request = new Request('GET', $this->url);
+        $request = new Request('GET', $this->url . '/account');
         $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
 
-        $this->mock
-            ->shouldReceive('sendAsync')
-            ->once()
-            ->andReturn(new FulfilledPromise($response));
+        if ($this->isNoCredentials) {
+            $this->mock
+                ->shouldReceive('sendAsync')
+                ->once()
+                ->andReturn(new FulfilledPromise($response));
+        }
 
         $promise = $this->client->sendAsync($request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(UpcloudApiResponse::class, $result = $promise->wait());
-        $this->assertEquals($this->fakeRawBody, $result->getBody());
-        $this->assertIsArray($responseArray = $result->toArray('\Upcloud\ApiClient\Model\AccountResponse'));
-        $this->assertInstanceOf('\Upcloud\ApiClient\Model\Account', $responseArray[0]['account']);
+        $this->assertIsArray($responseArray = $result->toArray(AccountResponse::class));
+        $this->assertInstanceOf(AccountResponse::class, $accountResponse = $responseArray[0]);
+        $this->assertInstanceOf(Account::class, $account = $accountResponse->getAccount());
+        $this->assertEquals($this->getUsername(), $account->getUsername());
     }
 
     public function testThrowsExceptionOnSendAsyncRequest(): void
     {
         $this->expectException(ApiException::class);
-        $this->expectExceptionCode(400);
+        $this->expectExceptionCode(401);
 
-        $request = new Request('GET', $this->url);
-        $response = new Response(400, $this->fakeHeadersAsArray, $this->fakeRawBody);
+        $this->client->getConfig()->setUsername($this->generateRandomString());
+        $this->client->getConfig()->setPassword($this->generateRandomString());
 
-        $this->mock
-            ->shouldReceive('sendAsync')
-            ->once()
-            ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
+        $request = new Request('GET', $this->url . '/account');
+
+
+        if ($this->isNoCredentials) {
+            $response = new Response(401, $this->fakeHeadersAsArray, $this->fakeRawBody);
+            $this->mock
+                ->shouldReceive('sendAsync')
+                ->once()
+                ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
+        }
 
         $this->client->sendAsync($request)->wait();
     }

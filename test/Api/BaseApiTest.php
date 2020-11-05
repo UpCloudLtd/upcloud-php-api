@@ -42,4 +42,38 @@ abstract class BaseApiTest extends TestCase
         'Content-Type' => 'application/json; charset=UTF-8',
         'Strict-Transport-Security' => ['max-age=63072000']
     ];
+
+    protected $isNoCredentials = false;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+
+        $this->isNoCredentials = \getenv('UPCLOUD_SDK_TEST_NO_CREDENTIALS');
+    }
+
+    protected function getUsername()
+    {
+        return \getenv('UPCLOUD_SDK_TEST_USER') && !$this->isNoCredentials
+            ? \getenv('UPCLOUD_SDK_TEST_USER')
+            : 'test';
+    }
+
+    protected function getPassword()
+    {
+        return \getenv('UPCLOUD_SDK_TEST_PASSWORD') && !$this->isNoCredentials
+            ? \getenv('UPCLOUD_SDK_TEST_PASSWORD')
+            : '';
+    }
+
+    protected function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }
