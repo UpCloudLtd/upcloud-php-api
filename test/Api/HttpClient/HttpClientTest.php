@@ -17,6 +17,7 @@ use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\HttpClient\UpcloudHttpClient;
 use Upcloud\ApiClient\Model\Account;
 use Upcloud\ApiClient\Model\AccountResponse;
+use Upcloud\ApiClient\Serializer;
 use Upcloud\Tests\Api\BaseApiTest;
 
 class HttpClientTest extends BaseApiTest
@@ -61,7 +62,11 @@ class HttpClientTest extends BaseApiTest
         $response = $this->client->send($request);
         $this->assertInstanceOf(UpcloudApiResponse::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertIsArray($responseArray = $response->toArray(AccountResponse::class));
+
+
+        $this->assertIsArray(
+            $responseArray = $response->setSerializer(new Serializer())->toArray(AccountResponse::class)
+        );
         $this->assertInstanceOf(AccountResponse::class, $accountResponse = $responseArray[0]);
         $this->assertInstanceOf(Account::class, $account = $accountResponse->getAccount());
         $this->assertEquals($this->getUsername(), $account->getUsername());
@@ -105,7 +110,9 @@ class HttpClientTest extends BaseApiTest
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(UpcloudApiResponse::class, $result = $promise->wait());
-        $this->assertIsArray($responseArray = $result->toArray(AccountResponse::class));
+        $this->assertIsArray(
+            $responseArray = $result->setSerializer(new Serializer())->toArray(AccountResponse::class)
+        );
         $this->assertInstanceOf(AccountResponse::class, $accountResponse = $responseArray[0]);
         $this->assertInstanceOf(Account::class, $account = $accountResponse->getAccount());
         $this->assertEquals($this->getUsername(), $account->getUsername());

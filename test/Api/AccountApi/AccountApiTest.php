@@ -12,8 +12,10 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\Model\Account;
+use Upcloud\ApiClient\Model\AccountResourceLimits;
 use Upcloud\ApiClient\Model\AccountResponse;
 use Upcloud\ApiClient\Upcloud\AccountApi;
 use Upcloud\Tests\Api\BaseApiTest;
@@ -40,76 +42,121 @@ class AccountApiTest extends BaseApiTest
 
     protected function setUp(): void
     {
-        $this->mock = Mockery::mock(Client::class);
-        $this->api = new AccountApi($this->mock);
+        if ($this->isNoCredentials) {
+            $this->mock = Mockery::mock(Client::class);
+            $this->api = new AccountApi($this->mock);
+        } else {
+            $this->api = new AccountApi();
+            $this->api->getConfig()->setUsername($this->getUsername());
+            $this->api->getConfig()->setPassword($this->getPassword());
+        }
     }
 
+    /**
+     * @throws ApiException
+     * @throws GuzzleException
+     */
     public function testGetAccount()
     {
-        $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
 
-        $this->mock
-            ->shouldReceive('send')
-            ->once()
-            ->andReturn($response);
+        if ($this->isNoCredentials) {
+            $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
 
-        $account = $this->api->getAccount()->getAccount();
-        $this->assertArrayHasKey('username', $account);
-        $this->assertEquals($this->testUsername, $account->getUsername());
-        $this->assertArrayHasKey('credits', $account);
-        $this->assertEquals('42292.682', $account->getCredits());
+            $this->mock
+                ->shouldReceive('send')
+                ->once()
+                ->andReturn($response);
+        }
+
+        $response = $this->api->getAccount();
+
+        $this->assertInstanceOf(AccountResponse::class, $response);
+        $this->assertInstanceOf(Account::class, $account = $response->getAccount());
+        $this->assertEquals($this->getUsername(), $account->getUsername());
+
+        $this->assertInstanceOf(AccountResourceLimits::class, $resourceLimits = $account->getResourceLimits());
+        $this->assertNotNull($resourceLimits->getCores());
+        $this->assertNotNull($resourceLimits->getMemory());
+        $this->assertNotNull($resourceLimits->getNetworks());
+        $this->assertNotNull($resourceLimits->getPublicIpv4());
+        $this->assertNotNull($resourceLimits->getPublicIpv6());
+        $this->assertNotNull($resourceLimits->getStorageHdd());
+        $this->assertNotNull($resourceLimits->getStorageSsd());
     }
 
 
+    /**
+     * @throws ApiException
+     * @throws GuzzleException
+     */
     public function testThrowsExceptionOnGetAccount(): void
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(401);
 
-        $request = new Request('GET', $this->url . 'account', $this->fakeHeadersAsArray);
-        $response = new Response(401, $this->fakeResponseHeadersAsArray);
+        $this->api->getConfig()->setUsername($this->generateRandomString());
+        $this->api->getConfig()->setPassword($this->generateRandomString());
 
-        $this->mock
-            ->shouldReceive('send')
-            ->once()
-            ->andThrow(new RequestException('Bad Request', $request, $response));
+        if ($this->isNoCredentials) {
+            $request = new Request('GET', $this->url . 'account', $this->fakeHeadersAsArray);
+            $response = new Response(401, $this->fakeResponseHeadersAsArray);
+
+            $this->mock
+                ->shouldReceive('send')
+                ->once()
+                ->andThrow(new RequestException('Bad Request', $request, $response));
+        }
 
         $this->api->getAccount();
     }
 
+
     public function testGetAccountAsync()
     {
-        $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
+        if ($this->isNoCredentials) {
+            $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
 
-        $this->mock
-            ->shouldReceive('sendAsync')
-            ->once()
-            ->andReturn(new FulfilledPromise($response));
+            $this->mock
+                ->shouldReceive('sendAsync')
+                ->once()
+                ->andReturn(new FulfilledPromise($response));
+        }
 
         $promise = $this->api->getAccountAsync();
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(AccountResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Account::class, $account = $result->getAccount());
-        $this->assertArrayHasKey('username', $account);
-        $this->assertEquals($this->testUsername, $account->getUsername());
-        $this->assertArrayHasKey('credits', $account);
-        $this->assertEquals('42292.682', $account->getCredits());
+        $this->assertEquals($this->getUsername(), $account->getUsername());
+
+        $this->assertInstanceOf(AccountResourceLimits::class, $resourceLimits = $account->getResourceLimits());
+        $this->assertNotNull($resourceLimits->getCores());
+        $this->assertNotNull($resourceLimits->getMemory());
+        $this->assertNotNull($resourceLimits->getNetworks());
+        $this->assertNotNull($resourceLimits->getPublicIpv4());
+        $this->assertNotNull($resourceLimits->getPublicIpv6());
+        $this->assertNotNull($resourceLimits->getStorageHdd());
+        $this->assertNotNull($resourceLimits->getStorageSsd());
     }
+
 
     public function testThrowsExceptionOnGetAccountAsync(): void
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(401);
 
-        $request = new Request('GET', $this->url . 'account', $this->fakeHeadersAsArray);
-        $response = new Response(401, $this->fakeResponseHeadersAsArray);
+        $this->api->getConfig()->setUsername($this->generateRandomString());
+        $this->api->getConfig()->setPassword($this->generateRandomString());
 
-        $this->mock
-            ->shouldReceive('sendAsync')
-            ->once()
-            ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
+        if ($this->isNoCredentials) {
+            $request = new Request('GET', $this->url . 'account', $this->fakeHeadersAsArray);
+            $response = new Response(401, $this->fakeResponseHeadersAsArray);
 
+            $this->mock
+                ->shouldReceive('sendAsync')
+                ->once()
+                ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
+        }
         $this->api->getAccountAsync()->wait();
     }
 }

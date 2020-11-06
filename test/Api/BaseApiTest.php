@@ -21,7 +21,22 @@ abstract class BaseApiTest extends TestCase
 
     protected $fakeRawProxyHeader = "HTTP/1.0 200 Connection established\r\n\r\n";
 
-    protected $fakeRawBody = "{\"account\":{\"credits\":\"42292.682\",\"username\":\"test\"}}";
+    protected $fakeRawBody = "{
+        \"account\":{
+            \"credits\": 42292.682,
+            \"username\": \"test\",
+            \"resource_limits\": {
+                \"cores\": 200,
+                \"detached_floating_ips\": 10,
+                \"memory\": 1048576,
+                \"networks\": 100,
+                \"public_ipv4\": 100,
+                \"public_ipv6\": 100,
+                \"storage_hdd\": 10240,
+                \"storage_ssd\": 10240
+            }
+        }
+    }";
 
     protected $fakeHeadersAsArray = [
         'Etag' => '"9d86b21aa74d74e574bbb35ba13524a52deb96e3"',
@@ -49,20 +64,20 @@ abstract class BaseApiTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->isNoCredentials = \getenv('UPCLOUD_SDK_TEST_NO_CREDENTIALS');
+        $this->isNoCredentials = \getenv('UPCLOUD_API_TEST_NO_CREDENTIALS');
     }
 
     protected function getUsername()
     {
-        return \getenv('UPCLOUD_SDK_TEST_USER') && !$this->isNoCredentials
-            ? \getenv('UPCLOUD_SDK_TEST_USER')
+        return \getenv('UPCLOUD_API_TEST_USER') && !$this->isNoCredentials
+            ? \getenv('UPCLOUD_API_TEST_USER')
             : 'test';
     }
 
     protected function getPassword()
     {
-        return \getenv('UPCLOUD_SDK_TEST_PASSWORD') && !$this->isNoCredentials
-            ? \getenv('UPCLOUD_SDK_TEST_PASSWORD')
+        return \getenv('UPCLOUD_API_TEST_PASSWORD') && !$this->isNoCredentials
+            ? \getenv('UPCLOUD_API_TEST_PASSWORD')
             : '';
     }
 

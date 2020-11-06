@@ -1,178 +1,54 @@
 <?php
-/**
- * Account
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
-
-/**
- * Account Class Doc Comment
- *
- * @category    Class
- * @description An API user account and password is required to access the UpCloud API. The API user is associated with an UpCloud account. A user account may have multiple API users to be used in different client software. In order to use resources from the cloud, the account must have enough credits.
- * @package     Upcloud\ApiClient
- */
-class Account implements ArrayAccess
+class Account
 {
-    const DISCRIMINATOR = null;
-
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'Account';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'credits' => 'float',
-        'username' => 'string'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'credits' => null,
-        'username' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var float|null
      */
-    protected static $attributeMap = [
-        'credits' => 'credits',
-        'username' => 'username'
-    ];
-
+    private $credits;
 
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
+     * @var string|null
      */
-    protected static $setters = [
-        'credits' => 'setCredits',
-        'username' => 'setUsername'
-    ];
-
+    private $username;
 
     /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
+     * @var AccountResourceLimits|null
      */
-    protected static $getters = [
-        'credits' => 'getCredits',
-        'username' => 'getUsername'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    
-
-    
-
-    /**
-     * Associative array for storing property values
-     * @var mixed[]
-     */
-    protected $container = [];
+    private $resourceLimits;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['credits'] = isset($data['credits']) ? $data['credits'] : null;
-        $this->container['username'] = isset($data['username']) ? $data['username'] : null;
+        $this->credits  = $data['credits'] ?? null;
+        $this->username = $data['username'] ?? null;
+        $this->setResourceLimits($data['resource_limits'] ?? null);
     }
-
-    /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
-     */
-    public function listInvalidProperties()
-    {
-        $invalid_properties = [];
-
-        return $invalid_properties;
-    }
-
-    /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-
-        return true;
-    }
-
 
     /**
      * Gets credits
-     * @return float
+     * @return float|null
      */
-    public function getCredits()
+    public function getCredits(): ?float
     {
-        return $this->container['credits'];
+        return $this->credits;
     }
 
     /**
      * Sets credits
-     * @param float $credits Credits are used to pay for cloud resources such as servers, storages, network traffic and IP addresses. Credits are automatically deducted for used resources on an hourly basis. Should the user run out of credits, active resources will be disabled and reactivated after the credit balance returns to positive. Credits can be purchased from the UpCloud website.
-     * @return $this
+     * @param float|null $credits
+     * @return Account
      */
-    public function setCredits($credits)
+    public function setCredits(?float $credits): Account
     {
-        $this->container['credits'] = $credits;
+        $this->credits = $credits;
 
         return $this;
     }
@@ -181,79 +57,43 @@ class Account implements ArrayAccess
      * Gets username
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): ?string
     {
-        return $this->container['username'];
+        return $this->username;
     }
 
     /**
      * Sets username
-     * @param string $username
-     * @return $this
+     * @param string|null $username
+     * @return Account
      */
-    public function setUsername($username)
+    public function setUsername(?string $username): Account
     {
-        $this->container['username'] = $username;
+        $this->username = $username;
 
         return $this;
     }
+
     /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
+     * @return AccountResourceLimits|null
      */
-    public function offsetExists($offset)
+    public function getResourceLimits(): ?AccountResourceLimits
     {
-        return isset($this->container[$offset]);
+        return $this->resourceLimits;
     }
 
     /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
+     * @param AccountResourceLimits|array|null $resourceLimits
+     * @return Account
      */
-    public function offsetGet($offset)
+    public function setResourceLimits($resourceLimits): Account
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
+        if (is_array($resourceLimits)) {
+            $this->resourceLimits = new AccountResourceLimits($resourceLimits);
         } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            $this->resourceLimits = $resourceLimits;
         }
 
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
+        return $this;
     }
 }
-
-

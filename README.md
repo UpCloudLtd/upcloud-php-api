@@ -194,6 +194,7 @@ Class | Method | HTTP request | Description
 ## Documentation of the models
 
  - [Account](docs/Model/Account.md)
+ - [AccountResourceLimits](docs/Model/AccountResourceLimits.md)
  - [AccountResponse](docs/Model/AccountResponse.md)
  - [AddIpRequest](docs/Model/AddIpRequest.md)
  - [AddressFamily](docs/Model/AddressFamily.md)
@@ -224,6 +225,7 @@ Class | Method | HTTP request | Description
  - [IpAddressListResponse](docs/Model/IpAddressListResponse.md)
  - [IpAddresses](docs/Model/IpAddresses.md)
  - [ModifyIpRequest](docs/Model/ModifyIpRequest.md)
+ - [ModifyServerRequest](docs/Model/ModifyServerRequest.md)
  - [ModifyStorageRequest](docs/Model/ModifyStorageRequest.md)
  - [ModifyTagRequest](docs/Model/ModifyTagRequest.md)
  - [Plan](docs/Model/Plan.md)
