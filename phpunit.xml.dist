@@ -20,8 +20,8 @@
 
     <php>
         <ini name="memory_limit" value="2048M" />
-        <env name="UPCLOUD_SDK_TEST_NO_CREDENTIALS" value="true" />
-        <env name="UPCLOUD_SDK_TEST_USER" value="" />
-        <env name="UPCLOUD_SDK_TEST_PASSWORD" value="" />
+        <env name="UPCLOUD_API_TEST_NO_CREDENTIALS" value="true" />
+        <env name="UPCLOUD_API_TEST_USER" value="" />
+        <env name="UPCLOUD_API_TEST_PASSWORD" value="" />
     </php>
 </phpunit>

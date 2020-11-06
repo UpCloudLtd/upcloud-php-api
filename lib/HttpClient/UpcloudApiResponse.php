@@ -8,6 +8,7 @@ use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\SerializerInterface;
 
 class UpcloudApiResponse
 {
@@ -25,6 +26,11 @@ class UpcloudApiResponse
      * @var int The HTTP status response code.
      */
     protected $statusCode;
+
+    /**
+     * @var SerializerInterface|null
+     */
+    protected $serializer = null;
 
     /**
      * Creates a new UpcloudApiResponse
@@ -79,13 +85,31 @@ class UpcloudApiResponse
         return $this->statusCode;
     }
 
+    /**
+     * @param SerializerInterface $serializer
+     * @return $this
+     */
+    public function setSerializer(SerializerInterface $serializer): self
+    {
+
+        $this->serializer = $serializer;
+
+        return $this;
+    }
 
     /**
      * @param $class
-     * @return array|\DateTime|object|\SplFileObject|null
+     * @return array|mixed|object
      */
     public function deserializeBody($class)
     {
+        if ($this->serializer) {
+            return $this->serializer->deserialize(
+                (string) $this->getBody(),
+                $class
+            );
+        }
+
         return ObjectSerializer::deserialize(
             Utils::jsonDecode((string) $this->body),
             $class,
