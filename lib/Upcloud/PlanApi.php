@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\AvailablePlanListResponse;
+use Upcloud\ApiClient\Serializer;
 
 /**
  * PlanApi Class Doc Comment
@@ -49,7 +50,7 @@ class PlanApi extends BaseApi
     {
         $request = new Request('GET', 'plan');
         $response = $this->client->send($request);
-        return $response->toArray(AvailablePlanListResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(AvailablePlanListResponse::class);
     }
 
     /**
@@ -80,7 +81,7 @@ class PlanApi extends BaseApi
         $request = new Request('GET', 'plan');
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(AvailablePlanListResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(AvailablePlanListResponse::class);
         });
     }
 }

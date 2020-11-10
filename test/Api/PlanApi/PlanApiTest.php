@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Upcloud\Tests\Api\PlanApi;
 
-use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Promise\PromiseInterface;
 use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use Upcloud\ApiClient\Model\AvailablePlanListResponse;
 use Upcloud\ApiClient\Upcloud\PlanApi;
 use Upcloud\Tests\Api\BaseApiTest;
