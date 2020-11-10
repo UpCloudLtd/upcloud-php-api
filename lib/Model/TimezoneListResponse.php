@@ -1,230 +1,46 @@
 <?php
-/**
- * TimezoneListResponse
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
-
-/**
- * TimezoneListResponse Class Doc Comment
- *
- * @category    Class
- * @package     Upcloud\ApiClient
- */
-class TimezoneListResponse implements ArrayAccess
+class TimezoneListResponse
 {
-    const DISCRIMINATOR = null;
-
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'timezone list response';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'timezones' => '\Upcloud\ApiClient\Model\TimezoneListResponseTimezones'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'timezones' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var TimezoneListResponseTimezones|null
      */
-    protected static $attributeMap = [
-        'timezones' => 'timezones'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'timezones' => 'setTimezones'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'timezones' => 'getTimezones'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    
-
-    
-
-    /**
-     * Associative array for storing property values
-     * @var mixed[]
-     */
-    protected $container = [];
+    private $timezones;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['timezones'] = isset($data['timezones']) ? $data['timezones'] : null;
+        $this->setTimezones($data['timezones'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return TimezoneListResponseTimezones|null
      */
-    public function listInvalidProperties()
+    public function getTimezones(): ?TimezoneListResponseTimezones
     {
-        $invalid_properties = [];
-
-        return $invalid_properties;
+        return $this->timezones;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
+     * @param TimezoneListResponseTimezones|array|null $timezones
+     * @return TimezoneListResponse
      */
-    public function valid()
+    public function setTimezones($timezones): TimezoneListResponse
     {
-
-        return true;
-    }
-
-
-    /**
-     * Gets timezones
-     * @return \Upcloud\ApiClient\Model\TimezoneListResponseTimezones
-     */
-    public function getTimezones()
-    {
-        return $this->container['timezones'];
-    }
-
-    /**
-     * Sets timezones
-     * @param \Upcloud\ApiClient\Model\TimezoneListResponseTimezones $timezones
-     * @return $this
-     */
-    public function setTimezones($timezones)
-    {
-        $this->container['timezones'] = $timezones;
+        if (is_array($timezones)) {
+            $this->timezones = new TimezoneListResponseTimezones($timezones);
+        } else {
+            $this->timezones = $timezones;
+        }
 
         return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        }
-
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 
