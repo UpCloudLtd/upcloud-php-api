@@ -261,7 +261,6 @@ Class | Method | HTTP request | Description
  - [TagListResponseTags](docs/Model/TagListResponseTags.md)
  - [TagServers](docs/Model/TagServers.md)
  - [TemplitizeStorageRequest](docs/Model/TemplitizeStorageRequest.md)
- - [Timezone](docs/Model/Timezone.md)
  - [TimezoneListResponse](docs/Model/TimezoneListResponse.md)
  - [TimezoneListResponseTimezones](docs/Model/TimezoneListResponseTimezones.md)
  - [Zone](docs/Model/Zone.md)

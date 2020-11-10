@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\TimezoneListResponse;
+use Upcloud\ApiClient\Serializer;
 
 /**
  * TimezoneApi Class Doc Comment
@@ -50,7 +51,7 @@ class TimezoneApi extends BaseApi
         $request = new Request('GET', 'timezone');
         $response = $this->client->send($request);
 
-        return $response->toArray(TimezoneListResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(TimezoneListResponse::class);
     }
 
     /**
@@ -81,7 +82,7 @@ class TimezoneApi extends BaseApi
         $request = new Request('GET', 'timezone');
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(TimezoneListResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(TimezoneListResponse::class);
         });
     }
 }

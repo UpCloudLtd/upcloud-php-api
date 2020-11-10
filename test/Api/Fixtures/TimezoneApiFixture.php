@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Upcloud\Tests\Api\Fixtures;
 
 use Upcloud\ApiClient\Model\TimezoneListResponse;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class TimezoneApiFixture
+class TimezoneApiFixture extends BaseFixture
 {
     /**
      * @return string
@@ -22,10 +21,9 @@ class TimezoneApiFixture
      */
     public function getResponse()
     {
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
+        return $this->serializer->deserialize(
+            $this->getResponseBody(),
             TimezoneListResponse::class,
-            []
         );
     }
 
