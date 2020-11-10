@@ -14,6 +14,7 @@ use Upcloud\ApiClient\Model\ModifyIpRequest;
 use Upcloud\ApiClient\Model\AssignIpResponse;
 use Upcloud\ApiClient\Model\IpAddressListResponse;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
+use Upcloud\ApiClient\Serializer;
 
 /**
  * IPAddressApi Class Doc Comment
@@ -56,7 +57,7 @@ class IPAddressApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(AssignIpResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(AssignIpResponse::class);
     }
 
     /**
@@ -89,7 +90,7 @@ class IPAddressApi extends BaseApi
         $request = new Request('POST', 'ip_address', [], $ipAddress);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(AssignIpResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(AssignIpResponse::class);
         });
     }
 
@@ -197,7 +198,7 @@ class IPAddressApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(AssignIpResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(AssignIpResponse::class);
     }
 
     /**
@@ -231,7 +232,7 @@ class IPAddressApi extends BaseApi
         $request = new Request('GET', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(AssignIpResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(AssignIpResponse::class);
         });
     }
 
@@ -264,7 +265,7 @@ class IPAddressApi extends BaseApi
         $request = new Request('GET', 'ip_address');
         $response = $this->client->send($request);
 
-        return $response->toArray(IpAddressListResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(IpAddressListResponse::class);
     }
 
     /**
@@ -294,7 +295,7 @@ class IPAddressApi extends BaseApi
     {
         $request = new Request('GET', 'ip_address');
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(IpAddressListResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(IpAddressListResponse::class);
         });
     }
 
@@ -334,7 +335,7 @@ class IPAddressApi extends BaseApi
         $request = new Request('PATCH', $url, [], $ipAddress);
 
         $response = $this->client->send($request);
-        return $response->toArray(AssignIpResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(AssignIpResponse::class);
     }
 
     /**
@@ -371,7 +372,7 @@ class IPAddressApi extends BaseApi
         $request = new Request('PATCH', $url, [], $ipAddress);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(AssignIpResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(AssignIpResponse::class);
         });
     }
 }

@@ -59,7 +59,6 @@ class IPAddressApiTest extends BaseApiTest
 
         $response =  $this->api->listIps();
 
-
         $list = $response->getIpAddresses()->getIpAddress();
         $this->assertCount(5, $list);
 
@@ -67,11 +66,7 @@ class IPAddressApiTest extends BaseApiTest
 
         foreach ($list as $key => $item) {
             $this->assertInstanceOf(IpAddress::class, $item);
-            $fixtureItem = $fixtureList[$key];
-
-            foreach ($item->getters() as $property => $getter) {
-                $this->assertEquals($item->$getter(), $fixtureItem->$getter());
-            }
+            $this->assertEquals($item, $fixtureList[$key]);
         }
     }
 

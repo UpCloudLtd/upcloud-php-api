@@ -1,119 +1,15 @@
 <?php
-/**
- * IpAddressListResponse
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
-
-/**
- * IpAddressListResponse Class Doc Comment
- *
- * @category    Class
- * @package     Upcloud\ApiClient
- */
-class IpAddressListResponse implements ArrayAccess
+class IpAddressListResponse
 {
-    const DISCRIMINATOR = null;
-
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'ip address list response';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'ip_addresses' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var IpAddresses|null
      */
-    protected static $attributeMap = [
-        'ip_addresses' => 'ip_addresses'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'ip_addresses' => 'setIpAddresses'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'ip_addresses' => 'getIpAddresses'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    
-
-    
-
-    /**
-     * Associative array for storing property values
-     * @var mixed[]
-     */
-    protected $container = [];
+    private $ipAddresses;
 
     /**
      * Constructor
@@ -121,110 +17,31 @@ class IpAddressListResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['ip_addresses'] = isset($data['ip_addresses']) ? $data['ip_addresses'] : null;
+        $this->setIpAddresses($data['ip_addresses'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * @return IpAddresses|null
+     */
+    public function getIpAddresses(): ?IpAddresses
+    {
+        return $this->ipAddresses;
+    }
+
+    /**
+     * @param IpAddresses|array|null $ipAddresses
      *
-     * @return array invalid properties with reasons
+     * @return IpAddressListResponse
      */
-    public function listInvalidProperties()
+    public function setIpAddresses($ipAddresses): IpAddressListResponse
     {
-        $invalid_properties = [];
-
-        return $invalid_properties;
-    }
-
-    /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-
-        return true;
-    }
-
-
-    /**
-     * Gets ip_addresses
-     * @return \Upcloud\ApiClient\Model\IpAddresses
-     */
-    public function getIpAddresses()
-    {
-        return $this->container['ip_addresses'];
-    }
-
-    /**
-     * Sets ip_addresses
-     * @param \Upcloud\ApiClient\Model\IpAddresses $ip_addresses
-     * @return $this
-     */
-    public function setIpAddresses($ip_addresses)
-    {
-        $this->container['ip_addresses'] = $ip_addresses;
+        if (is_array($ipAddresses)) {
+            $this->ipAddresses = new IpAddresses($ipAddresses);
+        } else {
+            $this->ipAddresses = $ipAddresses;
+        }
 
         return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        }
-
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 
