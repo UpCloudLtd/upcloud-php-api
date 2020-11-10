@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\ZoneListResponse;
+use Upcloud\ApiClient\Serializer;
 
 /**
  * ZoneApi Class Doc Comment
@@ -49,7 +50,7 @@ class ZoneApi extends BaseApi
         $request =  new Request('GET', 'zone');
         $response = $this->client->send($request);
 
-        return $response->toArray(ZoneListResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(ZoneListResponse::class);
     }
 
     /**
@@ -80,7 +81,7 @@ class ZoneApi extends BaseApi
         $request =  new Request('GET', 'zone');
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(ZoneListResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(ZoneListResponse::class);
         });
     }
 }

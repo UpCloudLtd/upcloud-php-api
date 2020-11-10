@@ -1,259 +1,106 @@
 <?php
-/**
- * Zone
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- *
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use Webmozart\Assert\Assert;
 
-/**
- * Zone Class Doc Comment
- *
- * @category    Class
- * @description A zone identifies the physical site where the cloud services are located. Different zones may be used to provide geographical and logical separation of servers.
- * @package     Upcloud\ApiClient
- */
-class Zone implements ArrayAccess
+class Zone
 {
-    const DISCRIMINATOR = null;
+    const PUBLIC_YES = 'yes';
+    const PUBLIC_NO = 'no';
 
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'Zone';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'id' => 'string',
-        'description' => 'string'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'id' => null,
-        'description' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var string|null
      */
-    protected static $attributeMap = [
-        'id' => 'id',
-        'description' => 'description'
-    ];
-
+    private $id;
 
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
+     * @var string|null
      */
-    protected static $setters = [
-        'id' => 'setId',
-        'description' => 'setDescription'
-    ];
-
+    private $description;
 
     /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
+     * @var string|null
      */
-    protected static $getters = [
-        'id' => 'getId',
-        'description' => 'getDescription'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-
-
-
-
-    /**
-     * Associative array for storing property values
-     * @var mixed[]
-     */
-    protected $container = [];
+    private $public;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->setId($data['id'] ?? null);
+        $this->setDescription($data['description'] ?? null);
+        $this->setPublic($data['public'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return string|null
      */
-    public function listInvalidProperties()
+    public function getId(): ?string
     {
-        $invalid_properties = [];
-
-        return $invalid_properties;
+        return $this->id;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
+     * @param string|null $id
+     * @return Zone
      */
-    public function valid()
+    public function setId(?string $id): Zone
     {
-
-        return true;
-    }
-
-
-    /**
-     * Gets Zone ID
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets zone ID
-     * @param string $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Gets description
-     * @return string
+     * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
-        return $this->container['description'];
+        return $this->description;
     }
 
     /**
-     * Sets description
-     * @param string $description
-     * @return $this
+     * @param string|null $description
+     * @return Zone
      */
-    public function setDescription($description)
+    public function setDescription(?string $description): Zone
     {
-        $this->container['description'] = $description;
+        $this->description = $description;
 
         return $this;
     }
+
     /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
+     * @return string|null
      */
-    public function offsetExists($offset)
+    public function getPublic(): ?string
     {
-        return isset($this->container[$offset]);
+        return $this->public;
     }
 
     /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
+     * @param string|null $public
+     * @return Zone
      */
-    public function offsetGet($offset)
+    public function setPublic(?string $public): Zone
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+        if (!is_null($public)) {
+            Assert::oneOf($public, [
+                self::PUBLIC_NO,
+                self::PUBLIC_YES,
+            ]);
         }
 
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
+        $this->public = $public;
+
+        return $this;
     }
+
 }
 
 

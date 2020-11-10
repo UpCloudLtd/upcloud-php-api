@@ -9,21 +9,11 @@ use Upcloud\ApiClient\Model\AssignIpResponse;
 use Upcloud\ApiClient\Model\IpAddress;
 use Upcloud\ApiClient\Model\IpAddressListResponse;
 use Upcloud\ApiClient\Model\ModifyIpRequest;
-use Upcloud\ApiClient\Serializer;
 
-class IPAddressApiFixture
+class IPAddressApiFixture extends BaseFixture
 {
-    /**
-     * @var Serializer
-     */
-    private $serializer;
 
     public $ip = '10.0.0.1';
-
-    public function __construct()
-    {
-        $this->serializer = new Serializer;
-    }
 
     /**
      * @return string
