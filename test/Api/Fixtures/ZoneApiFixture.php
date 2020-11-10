@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Upcloud\Tests\Api\Fixtures;
 
 use Upcloud\ApiClient\Model\ZoneListResponse;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class ZoneApiFixture
+class ZoneApiFixture extends BaseFixture
 {
     /**
      * @return string
@@ -22,10 +21,9 @@ class ZoneApiFixture
      */
     public function getResponse()
     {
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
-            ZoneListResponse::class,
-            []
+        return $this->serializer->deserialize(
+            $this->getResponseBody(),
+            ZoneListResponse::class
         );
     }
 
