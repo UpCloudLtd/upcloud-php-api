@@ -1,474 +1,296 @@
 <?php
-/**
- * IpAddress
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- *
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use InvalidArgumentException;
+use Webmozart\Assert\Assert;
 
-/**
- * IpAddress Class Doc Comment
- *
- * @category    Class
- * @description The UpCloud network has public and private IP addresses.
- * @package     Upcloud\ApiClient
- */
-class IpAddress implements ArrayAccess
+class IpAddress
 {
-    const DISCRIMINATOR = null;
-
-    /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'Ip address';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'access' => 'string',
-        'address' => 'string',
-        'family' => 'string',
-        'ptr_record' => 'string',
-        'server' => 'string',
-        'part_of_plan' => 'string'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'access' => null,
-        'address' => null,
-        'family' => null,
-        'ptr_record' => null,
-        'server' => 'uuid',
-        'part_of_plan' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'access' => 'access',
-        'address' => 'address',
-        'family' => 'family',
-        'ptr_record' => 'ptr_record',
-        'server' => 'server',
-        'part_of_plan' => 'part_of_plan'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'access' => 'setAccess',
-        'address' => 'setAddress',
-        'family' => 'setFamily',
-        'ptr_record' => 'setPtrRecord',
-        'server' => 'setServer',
-        'part_of_plan' => 'setPartOfPlan'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'access' => 'getAccess',
-        'address' => 'getAddress',
-        'family' => 'getFamily',
-        'ptr_record' => 'getPtrRecord',
-        'server' => 'getServer',
-        'part_of_plan' => 'getPartOfPlan'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
     const ACCESS__PUBLIC = 'public';
     const ACCESS__PRIVATE = 'private';
     const ACCESS__UTILITY = 'utility';
-    const FAMILY_I_PV4 = 'IPv4';
-    const FAMILY_I_PV6 = 'IPv6';
+
+    const FAMILY_IP_V4 = 'IPv4';
+    const FAMILY_IP_V6 = 'IPv6';
+
+
     const PART_OF_PLAN_YES = 'yes';
     const PART_OF_PLAN_NO = 'no';
 
-
-
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getAccessAllowableValues()
-    {
-        return [
-            self::ACCESS__PUBLIC,
-            self::ACCESS__PRIVATE,
-            self::ACCESS__UTILITY,
-        ];
-    }
+    const FLOATING_YES = 'yes';
+    const FLOATING_NO = 'no';
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var string|null
      */
-    public function getFamilyAllowableValues()
-    {
-        return [
-            self::FAMILY_I_PV4,
-            self::FAMILY_I_PV6,
-        ];
-    }
+    private $access;
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var string|null
      */
-    public function getPartOfPlanAllowableValues()
-    {
-        return [
-            self::PART_OF_PLAN_YES,
-            self::PART_OF_PLAN_NO,
-        ];
-    }
-
+    private $family;
 
     /**
-     * Associative array for storing property values
-     * @var mixed[]
+     * @var string|null
      */
-    protected $container = [];
+    private $address;
+
+    /**
+     * @var string|null
+     */
+    private $ptrRecord;
+
+    /**
+     * @var string|null
+     */
+    private $server;
+
+    /**
+     * @var string|null
+     */
+    private $partOfPlan;
+
+    /**
+     * @var string|null
+     */
+    private $mac;
+
+    /**
+     * @var string|null
+     */
+    private $floating;
+
+    /**
+     * @var string|null
+     */
+    private $zone;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['access'] = isset($data['access']) ? $data['access'] : null;
-        $this->container['address'] = isset($data['address']) ? $data['address'] : null;
-        $this->container['family'] = isset($data['family']) ? $data['family'] : null;
-        $this->container['ptr_record'] = isset($data['ptr_record']) ? $data['ptr_record'] : null;
-        $this->container['server'] = isset($data['server']) ? $data['server'] : null;
-        $this->container['part_of_plan'] = isset($data['part_of_plan']) ? $data['part_of_plan'] : null;
+        $this->setAccess($data['access'] ?? null);
+        $this->setFamily($data['family'] ?? null);
+        $this->setAddress($data['address'] ?? null);
+        $this->setPtrRecord($data['ptr_record'] ?? null);
+        $this->setServer($data['server'] ?? null);
+        $this->setPartOfPlan($data['part_of_plan'] ?? null);
+        $this->setMac($data['mac'] ?? null);
+        $this->setFloating($data['floating'] ?? null);
+        $this->setZone($data['zone'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * @return string|null
+     */
+    public function getAccess(): ?string
+    {
+        return $this->access;
+    }
+
+    /**
+     * @param string|null $access
      *
-     * @return array invalid properties with reasons
+     * @return IpAddress
+     * @throws InvalidArgumentException
      */
-    public function listInvalidProperties()
+    public function setAccess(?string $access): IpAddress
     {
-        $invalid_properties = [];
-
-        $allowed_values = $this->getAccessAllowableValues();
-        if (!in_array($this->container['access'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'access', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
+        if (!is_null($access)) {
+            Assert::oneOf($access, [
+                self::ACCESS__UTILITY,
+                self::ACCESS__PRIVATE,
+                self::ACCESS__PUBLIC
+            ]);
         }
 
-        $allowed_values = $this->getFamilyAllowableValues();
-        if (!in_array($this->container['family'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'family', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
+        $this->access = $access;
 
-        $allowed_values = $this->getPartOfPlanAllowableValues();
-        if (!in_array($this->container['part_of_plan'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'part_of_plan', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        return $invalid_properties;
+        return $this;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
+     * @return string|null
+     */
+    public function getFamily(): ?string
+    {
+        return $this->family;
+    }
+
+    /**
+     * @param string|null $family
+     * @return IpAddress
+     */
+    public function setFamily(?string $family): IpAddress
+    {
+        if (!is_null($family)) {
+            Assert::oneOf($family, [
+                self::FAMILY_IP_V4,
+                self::FAMILY_IP_V6,
+            ]);
+        }
+
+        $this->family = $family;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string|null $address
      *
-     * @return bool True if all properties are valid
+     * @return IpAddress
      */
-    public function valid()
+    public function setAddress(?string $address): IpAddress
     {
-
-        $allowed_values = $this->getAccessAllowableValues();
-        if (!in_array($this->container['access'], $allowed_values)) {
-            return false;
-        }
-        $allowed_values = $this->getFamilyAllowableValues();
-        if (!in_array($this->container['family'], $allowed_values)) {
-            return false;
-        }
-        $allowed_values = $this->getPartOfPlanAllowableValues();
-        if (!in_array($this->container['part_of_plan'], $allowed_values)) {
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
-     * Gets access
-     * @return string
-     */
-    public function getAccess()
-    {
-        return $this->container['access'];
-    }
-
-    /**
-     * Sets access
-     * @param string $access Is address for private or public network.
-     * @return $this
-     */
-    public function setAccess($access)
-    {
-        $allowed_values = $this->getAccessAllowableValues();
-        if (!is_null($access) && !in_array($access, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'access', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['access'] = $access;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Gets address
-     * @return string
+     * @return string|null
      */
-    public function getAddress()
+    public function getPtrRecord(): ?string
     {
-        return $this->container['address'];
+        return $this->ptrRecord;
     }
 
     /**
-     * Sets address
-     * @param string $address
-     * @return $this
+     * @param string|null $ptrRecord
+     *
+     * @return IpAddress
      */
-    public function setAddress($address)
+    public function setPtrRecord(?string $ptrRecord): IpAddress
     {
-        $this->container['address'] = $address;
+        $this->ptrRecord = $ptrRecord;
 
         return $this;
     }
 
     /**
-     * Gets family
-     * @return string
+     * @return string|null
      */
-    public function getFamily()
+    public function getServer(): ?string
     {
-        return $this->container['family'];
+        return $this->server;
     }
 
     /**
-     * Sets family
-     * @param string $family The address family of new IP address.
-     * @return $this
+     * @param string|null $server
+     *
+     * @return IpAddress
      */
-    public function setFamily($family)
+    public function setServer(?string $server): IpAddress
     {
-        $allowed_values = $this->getFamilyAllowableValues();
-        if (!is_null($family) && !in_array($family, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'family', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['family'] = $family;
+        $this->server = $server;
 
         return $this;
     }
 
     /**
-     * Gets ptr_record
-     * @return string
+     * @return string|null
      */
-    public function getPtrRecord()
+    public function getPartOfPlan(): ?string
     {
-        return $this->container['ptr_record'];
+        return $this->partOfPlan;
     }
 
     /**
-     * Sets ptr_record
-     * @param string $ptr_record
-     * @return $this
+     * @param string|null $partOfPlan
+     *
+     * @return IpAddress
      */
-    public function setPtrRecord($ptr_record)
+    public function setPartOfPlan(?string $partOfPlan): IpAddress
     {
-        $this->container['ptr_record'] = $ptr_record;
-
-        return $this;
-    }
-
-    /**
-     * Gets server
-     * @return string
-     */
-    public function getServer()
-    {
-        return $this->container['server'];
-    }
-
-    /**
-     * Sets server
-     * @param string $server
-     * @return $this
-     */
-    public function setServer($server)
-    {
-        $this->container['server'] = $server;
-
-        return $this;
-    }
-
-    /**
-     * Gets part_of_plan
-     * @return string
-     */
-    public function getPartOfPlan()
-    {
-        return $this->container['part_of_plan'];
-    }
-
-    /**
-     * Sets part_of_plan
-     * @param string $part_of_plan
-     * @return $this
-     */
-    public function setPartOfPlan($part_of_plan)
-    {
-        $allowed_values = $this->getPartOfPlanAllowableValues();
-        if (!is_null($part_of_plan) && !in_array($part_of_plan, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'part_of_plan', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['part_of_plan'] = $part_of_plan;
-
-        return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+        if (!is_null($partOfPlan)) {
+            Assert::oneOf($partOfPlan, [
+                self::PART_OF_PLAN_NO,
+                self::PART_OF_PLAN_YES,
+            ]);
         }
 
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
+        $this->partOfPlan = $partOfPlan;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMac(): ?string
+    {
+        return $this->mac;
+    }
+
+    /**
+     * @param string|null $mac
+     *
+     * @return IpAddress
+     */
+    public function setMac(?string $mac): IpAddress
+    {
+        $this->mac = $mac;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFloating(): ?string
+    {
+        return $this->floating;
+    }
+
+    /**
+     * @param string|null $floating
+     *
+     * @return IpAddress
+     */
+    public function setFloating(?string $floating): IpAddress
+    {
+        if (!is_null($floating)) {
+            Assert::oneOf($floating, [
+                self::FLOATING_NO,
+                self::FLOATING_YES,
+            ]);
+        }
+
+        $this->floating = $floating;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getZone(): ?string
+    {
+        return $this->zone;
+    }
+
+    /**
+     * @param string|null $zone
+     *
+     * @return IpAddress
+     */
+    public function setZone(?string $zone): IpAddress
+    {
+        $this->zone = $zone;
+
+        return $this;
     }
 }
-
-

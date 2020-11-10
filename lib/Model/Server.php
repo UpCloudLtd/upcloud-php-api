@@ -49,7 +49,7 @@ class Server implements ArrayAccess
         'firewall' => 'string',
         'host' => 'float',
         'hostname' => 'string',
-        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses',
+//        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses',
         'license' => 'float',
         'memory_amount' => 'float',
         'nic_model' => 'string',
@@ -121,7 +121,7 @@ class Server implements ArrayAccess
         'firewall' => 'firewall',
         'host' => 'host',
         'hostname' => 'hostname',
-        'ip_addresses' => 'ip_addresses',
+//        'ip_addresses' => 'ip_addresses',
         'license' => 'license',
         'memory_amount' => 'memory_amount',
         'nic_model' => 'nic_model',
@@ -153,7 +153,7 @@ class Server implements ArrayAccess
         'firewall' => 'setFirewall',
         'host' => 'setHost',
         'hostname' => 'setHostname',
-        'ip_addresses' => 'setIpAddresses',
+//        'ip_addresses' => 'setIpAddresses',
         'license' => 'setLicense',
         'memory_amount' => 'setMemoryAmount',
         'nic_model' => 'setNicModel',
@@ -185,7 +185,7 @@ class Server implements ArrayAccess
         'firewall' => 'getFirewall',
         'host' => 'getHost',
         'hostname' => 'getHostname',
-        'ip_addresses' => 'getIpAddresses',
+//        'ip_addresses' => 'getIpAddresses',
         'license' => 'getLicense',
         'memory_amount' => 'getMemoryAmount',
         'nic_model' => 'getNicModel',
@@ -315,7 +315,7 @@ class Server implements ArrayAccess
         $this->container['firewall'] = isset($data['firewall']) ? $data['firewall'] : 'on';
         $this->container['host'] = isset($data['host']) ? $data['host'] : null;
         $this->container['hostname'] = isset($data['hostname']) ? $data['hostname'] : null;
-        $this->container['ip_addresses'] = isset($data['ip_addresses']) ? $data['ip_addresses'] : null;
+//        $this->container['ip_addresses'] = isset($data['ip_addresses']) ? $data['ip_addresses'] : null;
         $this->container['license'] = isset($data['license']) ? $data['license'] : null;
         $this->container['memory_amount'] = isset($data['memory_amount']) ? $data['memory_amount'] : null;
         $this->container['nic_model'] = isset($data['nic_model']) ? $data['nic_model'] : 'virtio';
@@ -546,26 +546,26 @@ class Server implements ArrayAccess
         return $this;
     }
 
-    /**
-     * Gets ip_addresses
-     * @return \Upcloud\ApiClient\Model\IpAddresses
-     */
-    public function getIpAddresses()
-    {
-        return $this->container['ip_addresses'];
-    }
-
-    /**
-     * Sets ip_addresses
-     * @param \Upcloud\ApiClient\Model\IpAddresses $ip_addresses
-     * @return $this
-     */
-    public function setIpAddresses($ip_addresses)
-    {
-        $this->container['ip_addresses'] = $ip_addresses;
-
-        return $this;
-    }
+//    /**
+//     * Gets ip_addresses
+//     * @return \Upcloud\ApiClient\Model\IpAddresses
+//     */
+//    public function getIpAddresses()
+//    {
+//        return $this->container['ip_addresses'];
+//    }
+//
+//    /**
+//     * Sets ip_addresses
+//     * @param \Upcloud\ApiClient\Model\IpAddresses $ip_addresses
+//     * @return $this
+//     */
+//    public function setIpAddresses($ip_addresses)
+//    {
+//        $this->container['ip_addresses'] = $ip_addresses;
+//
+//        return $this;
+//    }
 
     /**
      * Gets license

@@ -9,12 +9,21 @@ use Upcloud\ApiClient\Model\AssignIpResponse;
 use Upcloud\ApiClient\Model\IpAddress;
 use Upcloud\ApiClient\Model\IpAddressListResponse;
 use Upcloud\ApiClient\Model\ModifyIpRequest;
-use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\Serializer;
 
 class IPAddressApiFixture
 {
+    /**
+     * @var Serializer
+     */
+    private $serializer;
 
     public $ip = '10.0.0.1';
+
+    public function __construct()
+    {
+        $this->serializer = new Serializer;
+    }
 
     /**
      * @return string
@@ -43,11 +52,9 @@ class IPAddressApiFixture
      */
     public function getResponse()
     {
-
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
-            IpAddressListResponse::class,
-            []
+        return $this->serializer->deserialize(
+            $this->getResponseBody(),
+            IpAddressListResponse::class
         );
     }
 
@@ -101,11 +108,9 @@ class IPAddressApiFixture
      */
     public function getResponseByIndex(int $fromListIndex = 0)
     {
-
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            AssignIpResponse::class,
-            []
+        return $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            AssignIpResponse::class
         );
     }
 
