@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Upcloud\Tests\Api\Fixtures;
 
 use Upcloud\ApiClient\Model\AvailablePlanListResponse;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class PlanApiFixture
+class PlanApiFixture extends BaseFixture
 {
     /**
      * @return string
@@ -22,10 +21,9 @@ class PlanApiFixture
      */
     public function getResponse()
     {
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
-            AvailablePlanListResponse::class,
-            []
+        return $this->serializer->deserialize(
+            $this->getResponseBody(),
+            AvailablePlanListResponse::class
         );
     }
 
