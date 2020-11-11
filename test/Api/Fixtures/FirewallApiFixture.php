@@ -8,9 +8,8 @@ use Upcloud\ApiClient\Model\FirewallRule;
 use Upcloud\ApiClient\Model\FirewallRuleCreateResponse;
 use Upcloud\ApiClient\Model\FirewallRuleListResponse;
 use Upcloud\ApiClient\Model\FirewallRuleRequest;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class FirewallApiFixture
+class FirewallApiFixture extends BaseFixture
 {
 
     /**
@@ -41,11 +40,9 @@ class FirewallApiFixture
      */
     public function getRulesResponseByIndex(int $fromListIndex = 0)
     {
-
-        return ObjectSerializer::deserialize(
-            json_decode($this->getRulesResponseBodyByIndex($fromListIndex)),
+        return $this->serializer->deserialize(
+            $this->getRulesResponseBodyByIndex($fromListIndex),
             FirewallRuleCreateResponse::class,
-            []
         );
     }
 
@@ -54,11 +51,9 @@ class FirewallApiFixture
      */
     public function getRulesResponse()
     {
-
-        return ObjectSerializer::deserialize(
-            json_decode($this->getRulesResponseBody()),
+        return $this->serializer->deserialize(
+            $this->getRulesResponseBody(),
             FirewallRuleListResponse::class,
-            []
         );
     }
 
@@ -71,7 +66,7 @@ class FirewallApiFixture
 
         $rule = $this->getRoleByIndex($fromListIndex);
 
-        $rule['icmp_type'] = 500;
+        $rule['icmp_type'] = '255';
 
         return  new FirewallRuleRequest([
             'firewall_rule' => new FirewallRule($rule),
@@ -150,8 +145,8 @@ class FirewallApiFixture
                        "icmp_type" => "",
                        "position" => "3",
                        "protocol" => "tcp",
-                       "source_address_end" => "2a04:3540:1000:aaaa:bbbb:cccc:d001",
-                       "source_address_start" => "2a04:3540:1000:aaaa:bbbb:cccc:d001",
+                       "source_address_end" => "2001:0db8:11a3:09d7:1f34:8a2e:07a0:765d",
+                       "source_address_start" => "2001:0db8:11a3:09d7:1f34:8a2e:07a0:765d",
                        "source_port_end" => "22",
                        "source_port_start" => "22",
                    ],
