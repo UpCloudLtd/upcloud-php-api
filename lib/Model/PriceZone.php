@@ -1,934 +1,768 @@
 <?php
-/**
- * PriceZone
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
-
-/**
- * PriceZone Class Doc Comment
- *
- * @category    Class
- * @package     Upcloud\ApiClient
- */
-class PriceZone implements ArrayAccess
+class PriceZone
 {
-    const DISCRIMINATOR = null;
-
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'PriceZone';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'name' => 'string',
-        'firewall' => '\Upcloud\ApiClient\Model\Price',
-        'io_request_backup' => '\Upcloud\ApiClient\Model\Price',
-        'io_request_hdd' => '\Upcloud\ApiClient\Model\Price',
-        'io_request_maxiops' => '\Upcloud\ApiClient\Model\Price',
-        'ipv4_address' => '\Upcloud\ApiClient\Model\Price',
-        'ipv6_address' => '\Upcloud\ApiClient\Model\Price',
-        'public_ipv4_bandwidth_in' => '\Upcloud\ApiClient\Model\Price',
-        'public_ipv4_bandwidth_out' => '\Upcloud\ApiClient\Model\Price',
-        'public_ipv6_bandwidth_in' => '\Upcloud\ApiClient\Model\Price',
-        'public_ipv6_bandwidth_out' => '\Upcloud\ApiClient\Model\Price',
-        'server_core' => '\Upcloud\ApiClient\Model\Price',
-        'server_memory' => '\Upcloud\ApiClient\Model\Price',
-        'storage_backup' => '\Upcloud\ApiClient\Model\Price',
-        'storage_hdd' => '\Upcloud\ApiClient\Model\Price',
-        'storage_maxiops' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_1x_cpu_1_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_1x_cpu_2_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_20x_cpu_128_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_20x_cpu_96_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_2x_cpu_4_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_4x_cpu_8_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_6x_cpu_16_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_8x_cpu_32_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_12x_cpu_48_gb' => '\Upcloud\ApiClient\Model\Price',
-        'server_plan_16x_cpu_64_gb' => '\Upcloud\ApiClient\Model\Price'
-
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'name' => null,
-        'firewall' => null,
-        'io_request_backup' => null,
-        'io_request_hdd' => null,
-        'io_request_maxiops' => null,
-        'ipv4_address' => null,
-        'ipv6_address' => null,
-        'public_ipv4_bandwidth_in' => null,
-        'public_ipv4_bandwidth_out' => null,
-        'public_ipv6_bandwidth_in' => null,
-        'public_ipv6_bandwidth_out' => null,
-        'server_core' => null,
-        'server_memory' => null,
-        'storage_backup' => null,
-        'storage_hdd' => null,
-        'storage_maxiops' => null,
-        'server_plan_1x_cpu_1_gb' => null,
-        'server_plan_1x_cpu_2_gb' => null,
-        'server_plan_20x_cpu_128_gb' => null,
-        'server_plan_20x_cpu_96_gb' => null,
-        'server_plan_2x_cpu_4_gb' => null,
-        'server_plan_4x_cpu_8_gb' => null,
-        'server_plan_6x_cpu_16_gb' => null,
-        'server_plan_8x_cpu_32_gb' => null,
-        'server_plan_12x_cpu_48_gb' => null,
-        'server_plan_16x_cpu_64_gb' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var string|null
      */
-    protected static $attributeMap = [
-        'name' => 'name',
-        'firewall' => 'firewall',
-        'io_request_backup' => 'io_request_backup',
-        'io_request_hdd' => 'io_request_hdd',
-        'io_request_maxiops' => 'io_request_maxiops',
-        'ipv4_address' => 'ipv4_address',
-        'ipv6_address' => 'ipv6_address',
-        'public_ipv4_bandwidth_in' => 'public_ipv4_bandwidth_in',
-        'public_ipv4_bandwidth_out' => 'public_ipv4_bandwidth_out',
-        'public_ipv6_bandwidth_in' => 'public_ipv6_bandwidth_in',
-        'public_ipv6_bandwidth_out' => 'public_ipv6_bandwidth_out',
-        'server_core' => 'server_core',
-        'server_memory' => 'server_memory',
-        'storage_backup' => 'storage_backup',
-        'storage_hdd' => 'storage_hdd',
-        'storage_maxiops' => 'storage_maxiops',
-        'server_plan_1x_cpu_1_gb' => 'server_plan_1xCPU-1GB',
-        'server_plan_1x_cpu_2_gb' => 'server_plan_1xCPU-2GB',
-        'server_plan_20x_cpu_128_gb' => 'server_plan_20xCPU-128GB',
-        'server_plan_20x_cpu_96_gb' => 'server_plan_20xCPU-96GB',
-        'server_plan_2x_cpu_4_gb' => 'server_plan_2xCPU-4GB',
-        'server_plan_4x_cpu_8_gb' => 'server_plan_4xCPU-8GB',
-        'server_plan_6x_cpu_16_gb' => 'server_plan_6xCPU-16GB',
-        'server_plan_8x_cpu_32_gb' => 'server_plan_8xCPU-32GB',
-        'server_plan_12x_cpu_48_gb' => 'server_plan_12xCPU-48GB',
-        'server_plan_16x_cpu_64_gb' => 'server_plan_16xCPU-64GB'
-    ];
-
+    private $name;
 
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
+     * @var Price|null
      */
-    protected static $setters = [
-        'name' => 'setName',
-        'firewall' => 'setFirewall',
-        'io_request_backup' => 'setIoRequestBackup',
-        'io_request_hdd' => 'setIoRequestHdd',
-        'io_request_maxiops' => 'setIoRequestMaxiops',
-        'ipv4_address' => 'setIpv4Address',
-        'ipv6_address' => 'setIpv6Address',
-        'public_ipv4_bandwidth_in' => 'setPublicIpv4BandwidthIn',
-        'public_ipv4_bandwidth_out' => 'setPublicIpv4BandwidthOut',
-        'public_ipv6_bandwidth_in' => 'setPublicIpv6BandwidthIn',
-        'public_ipv6_bandwidth_out' => 'setPublicIpv6BandwidthOut',
-        'server_core' => 'setServerCore',
-        'server_memory' => 'setServerMemory',
-        'storage_backup' => 'setStorageBackup',
-        'storage_hdd' => 'setStorageHdd',
-        'storage_maxiops' => 'setStorageMaxiops',
-        'server_plan_1x_cpu_1_gb' => 'setServerPlan1xCpu1Gb',
-        'server_plan_1x_cpu_2_gb' => 'setServerPlan1xCpu2Gb',
-        'server_plan_20x_cpu_128_gb' => 'setServerPlan20xCpuGb',
-        'server_plan_20x_cpu_96_gb' => 'setServerPlan20xCpu96Gb',
-        'server_plan_2x_cpu_4_gb' => 'setServerPlan2xCpu4Gb',
-        'server_plan_4x_cpu_8_gb' => 'setServerPlan4xCpu8Gb',
-        'server_plan_6x_cpu_16_gb' => 'setServerPlan6xCpu16Gb',
-        'server_plan_8x_cpu_32_gb' => 'setServerPlan8xCpu32Gb',
-        'server_plan_12x_cpu_48_gb' => 'setServerPlan12xCpu48Gb',
-        'server_plan_16x_cpu_64_gb' => 'setServerPlan16xCpu64Gb'
-    ];
-
+    private $firewall;
 
     /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
+     * @var Price|null
      */
-    protected static $getters = [
-        'name' => 'getName',
-        'firewall' => 'getFirewall',
-        'io_request_backup' => 'getIoRequestBackup',
-        'io_request_hdd' => 'getIoRequestHdd',
-        'io_request_maxiops' => 'getIoRequestMaxiops',
-        'ipv4_address' => 'getIpv4Address',
-        'ipv6_address' => 'getIpv6Address',
-        'public_ipv4_bandwidth_in' => 'getPublicIpv4BandwidthIn',
-        'public_ipv4_bandwidth_out' => 'getPublicIpv4BandwidthOut',
-        'public_ipv6_bandwidth_in' => 'getPublicIpv6BandwidthIn',
-        'public_ipv6_bandwidth_out' => 'getPublicIpv6BandwidthOut',
-        'server_core' => 'getServerCore',
-        'server_memory' => 'getServerMemory',
-        'storage_backup' => 'getStorageBackup',
-        'storage_hdd' => 'getStorageHdd',
-        'storage_maxiops' => 'getStorageMaxiops',
-        'server_plan_1x_cpu_1_gb' => 'getServerPlan1xCpu1Gb',
-        'server_plan_1x_cpu_2_gb' => 'getServerPlan1xCpu2Gb',
-        'server_plan_20x_cpu_128_gb' => 'getServerPlan20xCpuGb',
-        'server_plan_20x_cpu_96_gb' => 'getServerPlan20xCpu96Gb',
-        'server_plan_2x_cpu_4_gb' => 'getServerPlan2xCpu4Gb',
-        'server_plan_4x_cpu_8_gb' => 'getServerPlan4xCpu8Gb',
-        'server_plan_6x_cpu_16_gb' => 'getServerPlan6xCpu16Gb',
-        'server_plan_8x_cpu_32_gb' => 'getServerPlan8xCpu32Gb',
-        'server_plan_12x_cpu_48_gb' => 'getServerPlan12xCpu48Gb',
-        'server_plan_16x_cpu_64_gb' => 'getServerPlan16xCpu64Gb'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    
-
-    
+    private $ioRequestBackup;
 
     /**
-     * Associative array for storing property values
-     * @var mixed[]
+     * @var Price|null
      */
-    protected $container = [];
+    private $ioRequestHdd;
+
+    /**
+     * @var Price|null
+     */
+    private $ioRequestMaxiops;
+
+    /**
+     * @var Price|null
+     */
+    private $ipv4Address;
+
+    /**
+     * @var Price|null
+     */
+    private $ipv6Address;
+
+    /**
+     * @var Price|null
+     */
+    private $publicIpv4BandwidthIn;
+
+    /**
+     * @var Price|null
+     */
+    private $publicIpv4BandwidthOut;
+
+    /**
+     * @var Price|null
+     */
+    private $publicIpv6BandwidthIn;
+
+    /**
+     * @var Price|null
+     */
+    private $publicIpv6BandwidthOut;
+
+    /**
+     * @var Price|null
+     */
+    private $serverCore;
+
+    /**
+     * @var Price|null
+     */
+    private $serverMemory;
+
+    /**
+     * @var Price|null
+     */
+    private $storageBackup;
+
+    /**
+     * @var Price|null
+     */
+    private $storageHdd;
+
+    /**
+     * @var Price|null
+     */
+    private $storageMaxiops;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan1xCpu1Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan1xCpu2Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan20xCpu128Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan20xCpu96Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan2xCpu4Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan4xCpu8Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan6xCpu16Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan8xCpu32Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan12xCpu48Gb;
+
+    /**
+     * @var Price|null
+     */
+    private $serverPlan16xCpu64Gb;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['firewall'] = isset($data['firewall']) ? $data['firewall'] : null;
-        $this->container['io_request_backup'] = isset($data['io_request_backup']) ? $data['io_request_backup'] : null;
-        $this->container['io_request_hdd'] = isset($data['io_request_hdd']) ? $data['io_request_hdd'] : null;
-        $this->container['io_request_maxiops'] = isset($data['io_request_maxiops']) ? $data['io_request_maxiops'] : null;
-        $this->container['ipv4_address'] = isset($data['ipv4_address']) ? $data['ipv4_address'] : null;
-        $this->container['ipv6_address'] = isset($data['ipv6_address']) ? $data['ipv6_address'] : null;
-        $this->container['public_ipv4_bandwidth_in'] = isset($data['public_ipv4_bandwidth_in']) ? $data['public_ipv4_bandwidth_in'] : null;
-        $this->container['public_ipv4_bandwidth_out'] = isset($data['public_ipv4_bandwidth_out']) ? $data['public_ipv4_bandwidth_out'] : null;
-        $this->container['public_ipv6_bandwidth_in'] = isset($data['public_ipv6_bandwidth_in']) ? $data['public_ipv6_bandwidth_in'] : null;
-        $this->container['public_ipv6_bandwidth_out'] = isset($data['public_ipv6_bandwidth_out']) ? $data['public_ipv6_bandwidth_out'] : null;
-        $this->container['server_core'] = isset($data['server_core']) ? $data['server_core'] : null;
-        $this->container['server_memory'] = isset($data['server_memory']) ? $data['server_memory'] : null;
-        $this->container['storage_backup'] = isset($data['storage_backup']) ? $data['storage_backup'] : null;
-        $this->container['storage_hdd'] = isset($data['storage_hdd']) ? $data['storage_hdd'] : null;
-        $this->container['storage_maxiops'] = isset($data['storage_maxiops']) ? $data['storage_maxiops'] : null;
-        $this->container['server_plan_1x_cpu_1_gb'] = isset($data['server_plan_1x_cpu_1_gb']) ? $data['server_plan_1x_cpu_1_gb'] : null;
-        $this->container['server_plan_1x_cpu_2_gb'] = isset($data['server_plan_1x_cpu_2_gb']) ? $data['server_plan_1x_cpu_2_gb'] : null;
-        $this->container['server_plan_20x_cpu_128_gb'] = isset($data['server_plan_20x_cpu_128_gb']) ? $data['server_plan_20x_cpu_128_gb'] : null;
-        $this->container['server_plan_20x_cpu_96_gb'] = isset($data['server_plan_20x_cpu_96_gb']) ? $data['server_plan_20x_cpu_96_gb'] : null;
-        $this->container['server_plan_2x_cpu_4_gb'] = isset($data['server_plan_2x_cpu_4_gb']) ? $data['server_plan_2x_cpu_4_gb'] : null;
-        $this->container['server_plan_4x_cpu_8_gb'] = isset($data['server_plan_4x_cpu_8_gb']) ? $data['server_plan_4x_cpu_8_gb'] : null;
-        $this->container['server_plan_6x_cpu_16_gb'] = isset($data['server_plan_6x_cpu_16_gb']) ? $data['server_plan_6x_cpu_16_gb'] : null;
-        $this->container['server_plan_8x_cpu_32_gb'] = isset($data['server_plan_8x_cpu_32_gb']) ? $data['server_plan_8x_cpu_32_gb'] : null;
-        $this->container['server_plan_12x_cpu_48_gb'] = isset($data['server_plan_12x_cpu_48_gb']) ? $data['server_plan_12x_cpu_48_gb'] : null;
-        $this->container['server_plan_16x_cpu_64_gb'] = isset($data['server_plan_16x_cpu_64_gb']) ? $data['server_plan_16x_cpu_64_gb'] : null;
+        $this->setName($data['name'] ?? null);
+        $this->setFirewall($data['firewall'] ?? null);
+        $this->setIoRequestBackup($data['io_request_backup'] ?? null);
+        $this->setIoRequestHdd($data['io_request_hdd'] ?? null);
+        $this->setIoRequestMaxiops($data['io_request_maxiops'] ?? null);
+        $this->setIpv4Address($data['ipv4_address'] ?? null);
+        $this->setIpv6Address($data['ipv6_address'] ?? null);
+        $this->setPublicIpv4BandwidthIn($data['public_ipv4_bandwidth_in'] ?? null);
+        $this->setPublicIpv4BandwidthOut($data['public_ipv4_bandwidth_out'] ?? null);
+        $this->setPublicIpv6BandwidthIn($data['public_ipv6_bandwidth_in'] ?? null);
+        $this->setPublicIpv6BandwidthOut($data['public_ipv6_bandwidth_out'] ?? null);
+        $this->setServerCore($data['server_core'] ?? null);
+        $this->setServerMemory($data['server_memory'] ?? null);
+        $this->setStorageBackup($data['storage_backup'] ?? null);
+        $this->setStorageHdd($data['storage_hdd'] ?? null);
+        $this->setStorageMaxiops($data['storage_maxiops'] ?? null);
+        $this->setServerPlan1xCpu1Gb($data['server_plan_1xCPU-1GB'] ?? null);
+        $this->setServerPlan1xCpu2Gb($data['server_plan_1xCPU-2GB'] ?? null);
+        $this->setServerPlan20xCpu128Gb($data['server_plan_20xCPU-128GB'] ?? null);
+        $this->setServerPlan20xCpu96Gb($data['server_plan_20xCPU-96GB'] ?? null);
+        $this->setServerPlan2xCpu4Gb($data['server_plan_2xCPU-4GB'] ?? null);
+        $this->setServerPlan4xCpu8Gb($data['server_plan_4xCPU-8GB'] ?? null);
+        $this->setServerPlan6xCpu16Gb($data['server_plan_6xCPU-16GB'] ?? null);
+        $this->setServerPlan8xCpu32Gb($data['server_plan_8xCPU-32GB'] ?? null);
+        $this->setServerPlan12xCpu48Gb($data['server_plan_12xCPU-48GB'] ?? null);
+        $this->setServerPlan16xCpu64Gb($data['server_plan_16xCPU-64GB'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return string|null
      */
-    public function listInvalidProperties()
+    public function getName(): ?string
     {
-        $invalid_properties = [];
-
-        return $invalid_properties;
+        return $this->name;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
+     * @param string|null $name
+     * @return PriceZone
      */
-    public function valid()
+    public function setName(?string $name): PriceZone
     {
-
-        return true;
-    }
-
-
-    /**
-     * Gets name
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Gets firewall
-     * @return \Upcloud\ApiClient\Model\Price
+     * @return Price|null
      */
-    public function getFirewall()
+    public function getFirewall(): ?Price
     {
-        return $this->container['firewall'];
+        return $this->firewall;
     }
 
     /**
-     * Sets firewall
-     * @param \Upcloud\ApiClient\Model\Price $firewall
-     * @return $this
+     * @param Price|array|null $firewall
+     * @return PriceZone
      */
-    public function setFirewall($firewall)
+    public function setFirewall($firewall): PriceZone
     {
-        $this->container['firewall'] = $firewall;
-
-        return $this;
-    }
-
-    /**
-     * Gets io_request_backup
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getIoRequestBackup()
-    {
-        return $this->container['io_request_backup'];
-    }
-
-    /**
-     * Sets io_request_backup
-     * @param \Upcloud\ApiClient\Model\Price $io_request_backup
-     * @return $this
-     */
-    public function setIoRequestBackup($io_request_backup)
-    {
-        $this->container['io_request_backup'] = $io_request_backup;
-
-        return $this;
-    }
-
-    /**
-     * Gets io_request_hdd
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getIoRequestHdd()
-    {
-        return $this->container['io_request_hdd'];
-    }
-
-    /**
-     * Sets io_request_hdd
-     * @param \Upcloud\ApiClient\Model\Price $io_request_hdd
-     * @return $this
-     */
-    public function setIoRequestHdd($io_request_hdd)
-    {
-        $this->container['io_request_hdd'] = $io_request_hdd;
-
-        return $this;
-    }
-
-    /**
-     * Gets io_request_maxiops
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getIoRequestMaxiops()
-    {
-        return $this->container['io_request_maxiops'];
-    }
-
-    /**
-     * Sets io_request_maxiops
-     * @param \Upcloud\ApiClient\Model\Price $io_request_maxiops
-     * @return $this
-     */
-    public function setIoRequestMaxiops($io_request_maxiops)
-    {
-        $this->container['io_request_maxiops'] = $io_request_maxiops;
-
-        return $this;
-    }
-
-    /**
-     * Gets ipv4_address
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getIpv4Address()
-    {
-        return $this->container['ipv4_address'];
-    }
-
-    /**
-     * Sets ipv4_address
-     * @param \Upcloud\ApiClient\Model\Price $ipv4_address
-     * @return $this
-     */
-    public function setIpv4Address($ipv4_address)
-    {
-        $this->container['ipv4_address'] = $ipv4_address;
-
-        return $this;
-    }
-
-    /**
-     * Gets ipv6_address
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getIpv6Address()
-    {
-        return $this->container['ipv6_address'];
-    }
-
-    /**
-     * Sets ipv6_address
-     * @param \Upcloud\ApiClient\Model\Price $ipv6_address
-     * @return $this
-     */
-    public function setIpv6Address($ipv6_address)
-    {
-        $this->container['ipv6_address'] = $ipv6_address;
-
-        return $this;
-    }
-
-    /**
-     * Gets public_ipv4_bandwidth_in
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getPublicIpv4BandwidthIn()
-    {
-        return $this->container['public_ipv4_bandwidth_in'];
-    }
-
-    /**
-     * Sets public_ipv4_bandwidth_in
-     * @param \Upcloud\ApiClient\Model\Price $public_ipv4_bandwidth_in
-     * @return $this
-     */
-    public function setPublicIpv4BandwidthIn($public_ipv4_bandwidth_in)
-    {
-        $this->container['public_ipv4_bandwidth_in'] = $public_ipv4_bandwidth_in;
-
-        return $this;
-    }
-
-    /**
-     * Gets public_ipv4_bandwidth_out
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getPublicIpv4BandwidthOut()
-    {
-        return $this->container['public_ipv4_bandwidth_out'];
-    }
-
-    /**
-     * Sets public_ipv4_bandwidth_out
-     * @param \Upcloud\ApiClient\Model\Price $public_ipv4_bandwidth_out
-     * @return $this
-     */
-    public function setPublicIpv4BandwidthOut($public_ipv4_bandwidth_out)
-    {
-        $this->container['public_ipv4_bandwidth_out'] = $public_ipv4_bandwidth_out;
-
-        return $this;
-    }
-
-    /**
-     * Gets public_ipv6_bandwidth_in
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getPublicIpv6BandwidthIn()
-    {
-        return $this->container['public_ipv6_bandwidth_in'];
-    }
-
-    /**
-     * Sets public_ipv6_bandwidth_in
-     * @param \Upcloud\ApiClient\Model\Price $public_ipv6_bandwidth_in
-     * @return $this
-     */
-    public function setPublicIpv6BandwidthIn($public_ipv6_bandwidth_in)
-    {
-        $this->container['public_ipv6_bandwidth_in'] = $public_ipv6_bandwidth_in;
-
-        return $this;
-    }
-
-    /**
-     * Gets public_ipv6_bandwidth_out
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getPublicIpv6BandwidthOut()
-    {
-        return $this->container['public_ipv6_bandwidth_out'];
-    }
-
-    /**
-     * Sets public_ipv6_bandwidth_out
-     * @param \Upcloud\ApiClient\Model\Price $public_ipv6_bandwidth_out
-     * @return $this
-     */
-    public function setPublicIpv6BandwidthOut($public_ipv6_bandwidth_out)
-    {
-        $this->container['public_ipv6_bandwidth_out'] = $public_ipv6_bandwidth_out;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_core
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerCore()
-    {
-        return $this->container['server_core'];
-    }
-
-    /**
-     * Sets server_core
-     * @param \Upcloud\ApiClient\Model\Price $server_core
-     * @return $this
-     */
-    public function setServerCore($server_core)
-    {
-        $this->container['server_core'] = $server_core;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_memory
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerMemory()
-    {
-        return $this->container['server_memory'];
-    }
-
-    /**
-     * Sets server_memory
-     * @param \Upcloud\ApiClient\Model\Price $server_memory
-     * @return $this
-     */
-    public function setServerMemory($server_memory)
-    {
-        $this->container['server_memory'] = $server_memory;
-
-        return $this;
-    }
-
-    /**
-     * Gets storage_backup
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getStorageBackup()
-    {
-        return $this->container['storage_backup'];
-    }
-
-    /**
-     * Sets storage_backup
-     * @param \Upcloud\ApiClient\Model\Price $storage_backup
-     * @return $this
-     */
-    public function setStorageBackup($storage_backup)
-    {
-        $this->container['storage_backup'] = $storage_backup;
-
-        return $this;
-    }
-
-    /**
-     * Gets storage_hdd
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getStorageHdd()
-    {
-        return $this->container['storage_hdd'];
-    }
-
-    /**
-     * Sets storage_hdd
-     * @param \Upcloud\ApiClient\Model\Price $storage_hdd
-     * @return $this
-     */
-    public function setStorageHdd($storage_hdd)
-    {
-        $this->container['storage_hdd'] = $storage_hdd;
-
-        return $this;
-    }
-
-    /**
-     * Gets storage_maxiops
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getStorageMaxiops()
-    {
-        return $this->container['storage_maxiops'];
-    }
-
-    /**
-     * Sets storage_maxiops
-     * @param \Upcloud\ApiClient\Model\Price $storage_maxiops
-     * @return $this
-     */
-    public function setStorageMaxiops($storage_maxiops)
-    {
-        $this->container['storage_maxiops'] = $storage_maxiops;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_plan_1x_cpu_1_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan1xCpu1Gb()
-    {
-        return $this->container['server_plan_1x_cpu_1_gb'];
-    }
-
-    /**
-     * Sets server_plan_1x_cpu_1_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_1x_cpu_1_gb
-     * @return $this
-     */
-    public function setServerPlan1xCpu1Gb($server_plan_1x_cpu_1_gb)
-    {
-        $this->container['server_plan_1x_cpu_1_gb'] = $server_plan_1x_cpu_1_gb;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_plan_2x_cpu_2_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan2xCpu2Gb()
-    {
-        return $this->container['server_plan_2x_cpu_2_gb'];
-    }
-
-    /**
-     * Sets server_plan_2x_cpu_2_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_2x_cpu_2_gb
-     * @return $this
-     */
-    public function setServerPlan2xCpu2Gb($server_plan_2x_cpu_2_gb)
-    {
-        $this->container['server_plan_2x_cpu_2_gb'] = $server_plan_2x_cpu_2_gb;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_plan_1x_cpu_2_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan1xCpu2Gb()
-    {
-        return $this->container['server_plan_1x_cpu_2_gb'];
-    }
-
-    /**
-     * Sets server_plan_1x_cpu_2_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_1x_cpu_2_gb
-     * @return $this
-     */
-    public function setServerPlan1xCpu2Gb($server_plan_1x_cpu_2_gb)
-    {
-        $this->container['server_plan_1x_cpu_2_gb'] = $server_plan_1x_cpu_2_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_20x_cpu_128_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan20xCpuGb()
-    {
-        return $this->container['server_plan_20x_cpu_128_gb'];
-    }
-
-    /**
-     * Sets server_plan_20x_cpu_128_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_20x_cpu_128_gb
-     * @return $this
-     */
-    public function setServerPlan20xCpuGb($server_plan_20x_cpu_128_gb)
-    {
-        $this->container['server_plan_20x_cpu_128_gb'] = $server_plan_20x_cpu_128_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_20x_cpu_96_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan20xCpu96Gb()
-    {
-        return $this->container['server_plan_20x_cpu_96_gb'];
-    }
-
-    /**
-     * Sets server_plan_20x_cpu_96_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_20x_cpu_96_gb
-     * @return $this
-     */
-    public function setServerPlan20xCpu96Gb($server_plan_20x_cpu_96_gb)
-    {
-        $this->container['server_plan_20x_cpu_96_gb'] = $server_plan_20x_cpu_96_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_2x_cpu_4_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan2xCpu4Gb()
-    {
-        return $this->container['server_plan_2x_cpu_4_gb'];
-    }
-
-    /**
-     * Sets server_plan_2x_cpu_4_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_2x_cpu_4_gb
-     * @return $this
-     */
-    public function setServerPlan2xCpu4Gb($server_plan_2x_cpu_4_gb)
-    {
-        $this->container['server_plan_2x_cpu_4_gb'] = $server_plan_2x_cpu_4_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_4x_cpu_8_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan4xCpu8Gb()
-    {
-        return $this->container['server_plan_4x_cpu_8_gb'];
-    }
-
-    /**
-     * Sets server_plan_4x_cpu_8_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_4x_cpu_8_gb
-     * @return $this
-     */
-    public function setServerPlan4xCpu8Gb($server_plan_4x_cpu_8_gb)
-    {
-        $this->container['server_plan_4x_cpu_8_gb'] = $server_plan_4x_cpu_8_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_6x_cpu_16_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan6xCpu16Gb()
-    {
-        return $this->container['server_plan_6x_cpu_16_gb'];
-    }
-
-    /**
-     * Sets server_plan_6x_cpu_16_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_6x_cpu_16_gb
-     * @return $this
-     */
-    public function setServerPlan6xCpu16Gb($server_plan_6x_cpu_16_gb)
-    {
-        $this->container['server_plan_6x_cpu_16_gb'] = $server_plan_6x_cpu_16_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_8x_cpu_32_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan8xCpu32Gb()
-    {
-        return $this->container['server_plan_8x_cpu_32_gb'];
-    }
-
-    /**
-     * Sets server_plan_8x_cpu_32_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_8x_cpu_32_gb
-     * @return $this
-     */
-    public function setServerPlan8xCpu32Gb($server_plan_8x_cpu_32_gb)
-    {
-        $this->container['server_plan_8x_cpu_32_gb'] = $server_plan_8x_cpu_32_gb;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_plan_12x_cpu_48_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan12xCpu48Gb()
-    {
-        return $this->container['server_plan_12x_cpu_48_gb'];
-    }
-
-    /**
-     * Sets server_plan_12x_cpu_48_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_12x_cpu_48_gb
-     * @return $this
-     */
-    public function setServerPlan12xCpu48Gb($server_plan_12x_cpu_48_gb)
-    {
-        $this->container['server_plan_12x_cpu_48_gb'] = $server_plan_12x_cpu_48_gb;
-
-        return $this;
-    }
-    /**
-     * Gets server_plan_16x_cpu_64_gb
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan16xCpu64Gb()
-    {
-        return $this->container['server_plan_16x_cpu_64_gb'];
-    }
-
-    /**
-     * Sets server_plan_16x_cpu_64_gb
-     * @param \Upcloud\ApiClient\Model\Price $server_plan_16x_cpu_64_gb
-     * @return $this
-     */
-    public function setServerPlan16xCpu64Gb($server_plan_16x_cpu_64_gb)
-    {
-        $this->container['server_plan_16x_cpu_64_gb'] = $server_plan_16x_cpu_64_gb;
-
-        return $this;
-    }
-
-    /**
-     * Gets server_plan based on name in Server->getPlan
-     * @return \Upcloud\ApiClient\Model\Price
-     */
-    public function getServerPlan($serverPlan){
-        $plan = strtolower("server_plan_".$serverPlan);
-        $plan = str_replace('x', 'x_', $plan);
-        $plan = str_replace('-', '_', $plan);
-        $plan = str_replace('gb', '_gb', $plan);
-
-        return $this->container[$plan];
-    }
-
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
+        if (is_array($firewall)) {
+            $this->firewall = new Price($firewall);
         } else {
-            $this->container[$offset] = $value;
+            $this->firewall = $firewall;
         }
+
+        return $this;
     }
 
     /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
+     * @return Price|null
      */
-    public function offsetUnset($offset)
+    public function getIoRequestBackup(): ?Price
     {
-        unset($this->container[$offset]);
+        return $this->ioRequestBackup;
     }
 
     /**
-     * Gets the string presentation of the object
-     * @return string
+     * @param Price|array|null $ioRequestBackup
+     * @return PriceZone
      */
-    public function __toString()
+    public function setIoRequestBackup($ioRequestBackup): PriceZone
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+        if (is_array($ioRequestBackup)) {
+            $this->ioRequestBackup = new Price($ioRequestBackup);
+        } else {
+            $this->ioRequestBackup = $ioRequestBackup;
         }
 
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getIoRequestHdd(): ?Price
+    {
+        return $this->ioRequestHdd;
+    }
+
+    /**
+     * @param Price|array|null $ioRequestHdd
+     * @return PriceZone
+     */
+    public function setIoRequestHdd($ioRequestHdd): PriceZone
+    {
+        if (is_array($ioRequestHdd)) {
+            $this->ioRequestHdd = new Price($ioRequestHdd);
+        } else {
+            $this->ioRequestHdd = $ioRequestHdd;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getIoRequestMaxiops(): ?Price
+    {
+        return $this->ioRequestMaxiops;
+    }
+
+    /**
+     * @param Price|array|null $ioRequestMaxiops
+     * @return PriceZone
+     */
+    public function setIoRequestMaxiops($ioRequestMaxiops): PriceZone
+    {
+        if (is_array($ioRequestMaxiops)) {
+            $this->ioRequestMaxiops = new Price($ioRequestMaxiops);
+        } else {
+            $this->ioRequestMaxiops = $ioRequestMaxiops;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getIpv4Address(): ?Price
+    {
+        return $this->ipv4Address;
+    }
+
+    /**
+     * @param Price|array|null $ipv4Address
+     * @return PriceZone
+     */
+    public function setIpv4Address($ipv4Address): PriceZone
+    {
+        if (is_array($ipv4Address)) {
+            $this->ipv4Address = new Price($ipv4Address);
+        } else {
+            $this->ipv4Address = $ipv4Address;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getIpv6Address(): ?Price
+    {
+        return $this->ipv6Address;
+    }
+
+    /**
+     * @param Price|array|null $ipv6Address
+     * @return PriceZone
+     */
+    public function setIpv6Address($ipv6Address): PriceZone
+    {
+        if (is_array($ipv6Address)) {
+            $this->ipv6Address = new Price($ipv6Address);
+        } else {
+            $this->ipv6Address = $ipv6Address;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getPublicIpv4BandwidthIn(): ?Price
+    {
+        return $this->publicIpv4BandwidthIn;
+    }
+
+    /**
+     * @param Price|array|null $publicIpv4BandwidthIn
+     * @return PriceZone
+     */
+    public function setPublicIpv4BandwidthIn($publicIpv4BandwidthIn): PriceZone
+    {
+
+        if (is_array($publicIpv4BandwidthIn)) {
+            $this->publicIpv4BandwidthIn = new Price($publicIpv4BandwidthIn);
+        } else {
+            $this->publicIpv4BandwidthIn = $publicIpv4BandwidthIn;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getPublicIpv4BandwidthOut(): ?Price
+    {
+        return $this->publicIpv4BandwidthOut;
+    }
+
+    /**
+     * @param Price|array|null $publicIpv4BandwidthOut
+     * @return PriceZone
+     */
+    public function setPublicIpv4BandwidthOut($publicIpv4BandwidthOut): PriceZone
+    {
+        if (is_array($publicIpv4BandwidthOut)) {
+            $this->publicIpv4BandwidthOut = new Price($publicIpv4BandwidthOut);
+        } else {
+            $this->publicIpv4BandwidthOut = $publicIpv4BandwidthOut;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getPublicIpv6BandwidthIn(): ?Price
+    {
+        return $this->publicIpv6BandwidthIn;
+    }
+
+    /**
+     * @param Price|array|null $publicIpv6BandwidthIn
+     * @return PriceZone
+     */
+    public function setPublicIpv6BandwidthIn($publicIpv6BandwidthIn): PriceZone
+    {
+        if (is_array($publicIpv6BandwidthIn)) {
+            $this->publicIpv6BandwidthIn = new Price($publicIpv6BandwidthIn);
+        } else {
+            $this->publicIpv6BandwidthIn = $publicIpv6BandwidthIn;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getPublicIpv6BandwidthOut(): ?Price
+    {
+        return $this->publicIpv6BandwidthOut;
+    }
+
+    /**
+     * @param Price|array|null $publicIpv6BandwidthOut
+     * @return PriceZone
+     */
+    public function setPublicIpv6BandwidthOut($publicIpv6BandwidthOut): PriceZone
+    {
+        if (is_array($publicIpv6BandwidthOut)) {
+            $this->publicIpv6BandwidthOut = new Price($publicIpv6BandwidthOut);
+        } else {
+            $this->publicIpv6BandwidthOut = $publicIpv6BandwidthOut;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerCore(): ?Price
+    {
+        return $this->serverCore;
+    }
+
+    /**
+     * @param Price|array|null $serverCore
+     * @return PriceZone
+     */
+    public function setServerCore($serverCore): PriceZone
+    {
+        if (is_array($serverCore)) {
+            $this->serverCore = new Price($serverCore);
+        } else {
+            $this->serverCore = $serverCore;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerMemory(): ?Price
+    {
+        return $this->serverMemory;
+    }
+
+    /**
+     * @param Price|array|null $serverMemory
+     * @return PriceZone
+     */
+    public function setServerMemory($serverMemory): PriceZone
+    {
+        if (is_array($serverMemory)) {
+            $this->serverMemory = new Price($serverMemory);
+        } else {
+            $this->serverMemory = $serverMemory;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getStorageBackup(): ?Price
+    {
+        return $this->storageBackup;
+    }
+
+    /**
+     * @param Price|array|null $storageBackup
+     * @return PriceZone
+     */
+    public function setStorageBackup($storageBackup): PriceZone
+    {
+        if (is_array($storageBackup)) {
+            $this->storageBackup = new Price($storageBackup);
+        } else {
+            $this->storageBackup = $storageBackup;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getStorageHdd(): ?Price
+    {
+        return $this->storageHdd;
+    }
+
+    /**
+     * @param Price|array|null $storageHdd
+     * @return PriceZone
+     */
+    public function setStorageHdd($storageHdd): PriceZone
+    {
+        if (is_array($storageHdd)) {
+            $this->storageHdd = new Price($storageHdd);
+        } else {
+            $this->storageHdd = $storageHdd;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getStorageMaxiops(): ?Price
+    {
+        return $this->storageMaxiops;
+    }
+
+    /**
+     * @param Price|array|null $storageMaxiops
+     * @return PriceZone
+     */
+    public function setStorageMaxiops($storageMaxiops): PriceZone
+    {
+        if (is_array($storageMaxiops)) {
+            $this->storageMaxiops = new Price($storageMaxiops);
+        } else {
+            $this->storageMaxiops = $storageMaxiops;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan1xCpu1Gb(): ?Price
+    {
+        return $this->serverPlan1xCpu1Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan1xCpu1Gb
+     * @return PriceZone
+     */
+    public function setServerPlan1xCpu1Gb($serverPlan1xCpu1Gb): PriceZone
+    {
+        if (is_array($serverPlan1xCpu1Gb)) {
+            $this->serverPlan1xCpu1Gb = new Price($serverPlan1xCpu1Gb);
+        } else {
+            $this->serverPlan1xCpu1Gb = $serverPlan1xCpu1Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan1xCpu2Gb(): ?Price
+    {
+        return $this->serverPlan1xCpu2Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan1xCpu2Gb
+     * @return PriceZone
+     */
+    public function setServerPlan1xCpu2Gb($serverPlan1xCpu2Gb): PriceZone
+    {
+        if (is_array($serverPlan1xCpu2Gb)) {
+            $this->serverPlan1xCpu2Gb = new Price($serverPlan1xCpu2Gb);
+        } else {
+            $this->serverPlan1xCpu2Gb = $serverPlan1xCpu2Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan20xCpu128Gb(): ?Price
+    {
+        return $this->serverPlan20xCpu128Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan20xCpu128Gb
+     * @return PriceZone
+     */
+    public function setServerPlan20xCpu128Gb($serverPlan20xCpu128Gb): PriceZone
+    {
+        if (is_array($serverPlan20xCpu128Gb)) {
+            $this->serverPlan20xCpu128Gb = new Price($serverPlan20xCpu128Gb);
+        } else {
+            $this->serverPlan20xCpu128Gb = $serverPlan20xCpu128Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan20xCpu96Gb(): ?Price
+    {
+        return $this->serverPlan20xCpu96Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan20xCpu96Gb
+     * @return PriceZone
+     */
+    public function setServerPlan20xCpu96Gb($serverPlan20xCpu96Gb): PriceZone
+    {
+        if (is_array($serverPlan20xCpu96Gb)) {
+            $this->serverPlan20xCpu96Gb = new Price($serverPlan20xCpu96Gb);
+        } else {
+            $this->serverPlan20xCpu96Gb = $serverPlan20xCpu96Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan2xCpu4Gb(): ?Price
+    {
+        return $this->serverPlan2xCpu4Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan2xCpu4Gb
+     * @return PriceZone
+     */
+    public function setServerPlan2xCpu4Gb($serverPlan2xCpu4Gb): PriceZone
+    {
+        if (is_array($serverPlan2xCpu4Gb)) {
+            $this->serverPlan2xCpu4Gb = new Price($serverPlan2xCpu4Gb);
+        } else {
+            $this->serverPlan2xCpu4Gb = $serverPlan2xCpu4Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan4xCpu8Gb(): ?Price
+    {
+        return $this->serverPlan4xCpu8Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan4xCpu8Gb
+     * @return PriceZone
+     */
+    public function setServerPlan4xCpu8Gb($serverPlan4xCpu8Gb): PriceZone
+    {
+        if (is_array($serverPlan4xCpu8Gb)) {
+            $this->serverPlan4xCpu8Gb = new Price($serverPlan4xCpu8Gb);
+        } else {
+            $this->serverPlan4xCpu8Gb = $serverPlan4xCpu8Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan6xCpu16Gb(): ?Price
+    {
+        return $this->serverPlan6xCpu16Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan6xCpu16Gb
+     * @return PriceZone
+     */
+    public function setServerPlan6xCpu16Gb($serverPlan6xCpu16Gb): PriceZone
+    {
+        if (is_array($serverPlan6xCpu16Gb)) {
+            $this->serverPlan6xCpu16Gb = new Price($serverPlan6xCpu16Gb);
+        } else {
+            $this->serverPlan6xCpu16Gb = $serverPlan6xCpu16Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan8xCpu32Gb(): ?Price
+    {
+        return $this->serverPlan8xCpu32Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan8xCpu32Gb
+     * @return PriceZone
+     */
+    public function setServerPlan8xCpu32Gb($serverPlan8xCpu32Gb): PriceZone
+    {
+        if (is_array($serverPlan8xCpu32Gb)) {
+            $this->serverPlan8xCpu32Gb = new Price($serverPlan8xCpu32Gb);
+        } else {
+            $this->serverPlan8xCpu32Gb = $serverPlan8xCpu32Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan12xCpu48Gb(): ?Price
+    {
+        return $this->serverPlan12xCpu48Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan12xCpu48Gb
+     * @return PriceZone
+     */
+    public function setServerPlan12xCpu48Gb($serverPlan12xCpu48Gb): PriceZone
+    {
+        if (is_array($serverPlan12xCpu48Gb)) {
+            $this->serverPlan12xCpu48Gb = new Price($serverPlan12xCpu48Gb);
+        } else {
+            $this->serverPlan12xCpu48Gb = $serverPlan12xCpu48Gb;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getServerPlan16xCpu64Gb(): ?Price
+    {
+        return $this->serverPlan16xCpu64Gb;
+    }
+
+    /**
+     * @param Price|array|null $serverPlan16xCpu64Gb
+     * @return PriceZone
+     */
+    public function setServerPlan16xCpu64Gb($serverPlan16xCpu64Gb): PriceZone
+    {
+        if (is_array($serverPlan16xCpu64Gb)) {
+            $this->serverPlan16xCpu64Gb = new Price($serverPlan16xCpu64Gb);
+        } else {
+            $this->serverPlan16xCpu64Gb = $serverPlan16xCpu64Gb;
+        }
+
+        return $this;
     }
 }
 
