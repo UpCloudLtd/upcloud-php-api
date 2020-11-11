@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Upcloud\Tests\Api\Fixtures;
 
 use Upcloud\ApiClient\Model\PriceListResponse;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class PricesApiFixture
+class PricesApiFixture extends BaseFixture
 {
     /**
      * @return string
@@ -22,10 +21,9 @@ class PricesApiFixture
      */
     public function getResponse()
     {
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
+        return $this->serializer->deserialize(
+            $this->getResponseBody(),
             PriceListResponse::class,
-            []
         );
     }
 

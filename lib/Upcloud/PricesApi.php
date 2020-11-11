@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\PriceListResponse;
+use Upcloud\ApiClient\Serializer;
 
 /**
  * PricesApi Class Doc Comment
@@ -51,7 +52,7 @@ class PricesApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(PriceListResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(PriceListResponse::class);
     }
 
     /**
@@ -82,7 +83,7 @@ class PricesApi extends BaseApi
         $request = new Request('GET', 'price');
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(PriceListResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(PriceListResponse::class);
         });
     }
 }
