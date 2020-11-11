@@ -13,6 +13,7 @@ use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\FirewallRuleCreateResponse;
 use Upcloud\ApiClient\Model\FirewallRuleListResponse;
 use Upcloud\ApiClient\Model\FirewallRuleRequest;
+use Upcloud\ApiClient\Serializer;
 
 /**
  * FirewallApi Class Doc Comment
@@ -60,7 +61,7 @@ class FirewallApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(FirewallRuleCreateResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(FirewallRuleCreateResponse::class);
     }
 
     /**
@@ -99,7 +100,7 @@ class FirewallApi extends BaseApi
         $request = new Request('POST', $url, [], $firewallRule);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(FirewallRuleCreateResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(FirewallRuleCreateResponse::class);
         });
     }
 
@@ -232,7 +233,7 @@ class FirewallApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(FirewallRuleCreateResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(FirewallRuleCreateResponse::class);
     }
 
     /**
@@ -274,7 +275,7 @@ class FirewallApi extends BaseApi
         $request = new Request('GET', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(FirewallRuleCreateResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(FirewallRuleCreateResponse::class);
         });
     }
 
@@ -314,7 +315,7 @@ class FirewallApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(FirewallRuleListResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(FirewallRuleListResponse::class);
     }
 
     /**
@@ -349,7 +350,7 @@ class FirewallApi extends BaseApi
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
 
-            return $response->toArray(FirewallRuleListResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(FirewallRuleListResponse::class);
         });
     }
 }

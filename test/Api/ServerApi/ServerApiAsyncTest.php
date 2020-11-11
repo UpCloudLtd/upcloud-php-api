@@ -777,18 +777,14 @@ class ServerApiAsyncTest extends BaseApiTest
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(FirewallRuleListResponse::class, $result = $promise->wait());
-        $rolesList = $result->getFirewallRules()->getFirewallRule();
-        $this->assertCount(4, $rolesList);
+        $rulesList = $result->getFirewallRules()->getFirewallRule();
+        $this->assertCount(4, $rulesList);
 
         $fixtureRolesList = $this->firewallFixture->getRulesResponse()->getFirewallRules()->getFirewallRule();
 
-        foreach ($rolesList as $key => $role) {
-            $this->assertInstanceOf(FirewallRule::class, $role);
-            $fixtureRole = $fixtureRolesList[$key];
-
-            foreach ($role->getters() as $property => $getter) {
-                $this->assertEquals($role->$getter(), $fixtureRole->$getter());
-            }
+        foreach ($rulesList as $key => $rule) {
+            $this->assertInstanceOf(FirewallRule::class, $rule);
+            $this->assertEquals($rule, $fixtureRolesList[$key]);
         }
     }
 

@@ -1,867 +1,493 @@
 <?php
-/**
- * FirewallRule
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
+declare(strict_types=1);
 
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use Webmozart\Assert\Assert;
 
-/**
- * FirewallRule Class Doc Comment
- *
- * @category    Class
- * @package     Upcloud\ApiClient
- */
-class FirewallRule implements ArrayAccess
+class FirewallRule
 {
-    const DISCRIMINATOR = null;
-
-    /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'FirewallRule';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'direction' => 'string',
-        'action' => 'string',
-        'position' => 'float',
-        'family' => '\Upcloud\ApiClient\Model\AddressFamily',
-        'protocol' => 'string',
-        'icmp_type' => 'string',
-        'destination_address_start' => 'string',
-        'destination_address_end' => 'string',
-        'destination_port_start' => 'float',
-        'destination_port_end' => 'float',
-        'source_address_start' => 'string',
-        'source_address_end' => 'string',
-        'source_port_start' => 'float',
-        'source_port_end' => 'float',
-        'comment' => 'string'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'direction' => null,
-        'action' => null,
-        'position' => null,
-        'family' => null,
-        'protocol' => null,
-        'icmp_type' => null,
-        'destination_address_start' => 'IP',
-        'destination_address_end' => 'IP',
-        'destination_port_start' => null,
-        'destination_port_end' => null,
-        'source_address_start' => 'IP',
-        'source_address_end' => 'IP',
-        'source_port_start' => null,
-        'source_port_end' => null,
-        'comment' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'direction' => 'direction',
-        'action' => 'action',
-        'position' => 'position',
-        'family' => 'family',
-        'protocol' => 'protocol',
-        'icmp_type' => 'icmp_type',
-        'destination_address_start' => 'destination_address_start',
-        'destination_address_end' => 'destination_address_end',
-        'destination_port_start' => 'destination_port_start',
-        'destination_port_end' => 'destination_port_end',
-        'source_address_start' => 'source_address_start',
-        'source_address_end' => 'source_address_end',
-        'source_port_start' => 'source_port_start',
-        'source_port_end' => 'source_port_end',
-        'comment' => 'comment'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'direction' => 'setDirection',
-        'action' => 'setAction',
-        'position' => 'setPosition',
-        'family' => 'setFamily',
-        'protocol' => 'setProtocol',
-        'icmp_type' => 'setIcmpType',
-        'destination_address_start' => 'setDestinationAddressStart',
-        'destination_address_end' => 'setDestinationAddressEnd',
-        'destination_port_start' => 'setDestinationPortStart',
-        'destination_port_end' => 'setDestinationPortEnd',
-        'source_address_start' => 'setSourceAddressStart',
-        'source_address_end' => 'setSourceAddressEnd',
-        'source_port_start' => 'setSourcePortStart',
-        'source_port_end' => 'setSourcePortEnd',
-        'comment' => 'setComment'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'direction' => 'getDirection',
-        'action' => 'getAction',
-        'position' => 'getPosition',
-        'family' => 'getFamily',
-        'protocol' => 'getProtocol',
-        'icmp_type' => 'getIcmpType',
-        'destination_address_start' => 'getDestinationAddressStart',
-        'destination_address_end' => 'getDestinationAddressEnd',
-        'destination_port_start' => 'getDestinationPortStart',
-        'destination_port_end' => 'getDestinationPortEnd',
-        'source_address_start' => 'getSourceAddressStart',
-        'source_address_end' => 'getSourceAddressEnd',
-        'source_port_start' => 'getSourcePortStart',
-        'source_port_end' => 'getSourcePortEnd',
-        'comment' => 'getComment'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
 
     const DIRECTION_IN = 'in';
     const DIRECTION_OUT = 'out';
+
     const ACTION_ACCEPT = 'accept';
     const ACTION_REJECT = 'reject';
     const ACTION_DROP = 'drop';
+
     const PROTOCOL_TCP = 'tcp';
     const PROTOCOL_UDP = 'udp';
     const PROTOCOL_ICMP = 'icmp';
-    
 
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getDirectionAllowableValues()
-    {
-        return [
-            self::DIRECTION_IN,
-            self::DIRECTION_OUT,
-        ];
-    }
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getActionAllowableValues()
-    {
-        return [
-            self::ACTION_ACCEPT,
-            self::ACTION_REJECT,
-            self::ACTION_DROP,
-        ];
-    }
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getProtocolAllowableValues()
-    {
-        return [
-            self::PROTOCOL_TCP,
-            self::PROTOCOL_UDP,
-            self::PROTOCOL_ICMP,
-        ];
-    }
-    
+    const FAMILY_IP_V4 = 'IPv4';
+    const FAMILY_IP_V6 = 'IPv6';
 
     /**
-     * Associative array for storing property values
-     * @var mixed[]
+     * @var string
      */
-    protected $container = [];
+    private $direction;
+
+    /**
+     * @var string
+     */
+    private $action;
+
+    /**
+     * @var string|float|null
+     */
+    private $position;
+
+    /**
+     * @var string
+     */
+    private $family;
+
+    /**
+     * @var string|null
+     */
+    private $protocol;
+
+    /**
+     * @var string|null
+     */
+    private $icmpType;
+
+    /**
+     * @var string|null
+     */
+    private $destinationAddressStart;
+
+    /**
+     * @var string|null
+     */
+    private $destinationAddressEnd;
+
+    /**
+     * @var string|float|null
+     */
+    private $destinationPortStart;
+
+    /**
+     * @var string|float|null
+     */
+    private $destinationPortEnd;
+
+    /**
+     * @var string|null
+     */
+    private $sourceAddressStart;
+
+    /**
+     * @var string|null
+     */
+    private $sourceAddressEnd;
+
+    /**
+     * @var string|float|null
+     */
+    private $sourcePortStart;
+
+    /**
+     * @var string|float|null
+     */
+    private $sourcePortEnd;
+
+    /**
+     * @var string|null
+     */
+    private $comment;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['direction'] = isset($data['direction']) ? $data['direction'] : null;
-        $this->container['action'] = isset($data['action']) ? $data['action'] : null;
-        $this->container['position'] = isset($data['position']) ? $data['position'] : null;
-        $this->container['family'] = isset($data['family']) ? $data['family'] : null;
-        $this->container['protocol'] = isset($data['protocol']) ? $data['protocol'] : null;
-        $this->container['icmp_type'] = isset($data['icmp_type']) ? $data['icmp_type'] : null;
-        $this->container['destination_address_start'] = isset($data['destination_address_start']) ? $data['destination_address_start'] : null;
-        $this->container['destination_address_end'] = isset($data['destination_address_end']) ? $data['destination_address_end'] : null;
-        $this->container['destination_port_start'] = isset($data['destination_port_start']) ? $data['destination_port_start'] : null;
-        $this->container['destination_port_end'] = isset($data['destination_port_end']) ? $data['destination_port_end'] : null;
-        $this->container['source_address_start'] = isset($data['source_address_start']) ? $data['source_address_start'] : null;
-        $this->container['source_address_end'] = isset($data['source_address_end']) ? $data['source_address_end'] : null;
-        $this->container['source_port_start'] = isset($data['source_port_start']) ? $data['source_port_start'] : null;
-        $this->container['source_port_end'] = isset($data['source_port_end']) ? $data['source_port_end'] : null;
-        $this->container['comment'] = isset($data['comment']) ? $data['comment'] : null;
+        $this->setDirection($data['direction'] ?? null);
+        $this->setAction($data['action'] ?? null);
+        $this->setPosition($data['position'] ?? null);
+        $this->setFamily($data['family'] ?? null);
+        $this->setProtocol($data['protocol'] ?? null);
+        $this->setIcmpType($data['icmp_type'] ?? null);
+        $this->setDestinationAddressStart($data['destination_address_start'] ?? null);
+        $this->setDestinationAddressEnd($data['destination_address_end'] ?? null);
+        $this->setDestinationPortStart($data['destination_port_start'] ?? null);
+        $this->setDestinationPortEnd($data['destination_port_end'] ?? null);
+        $this->setSourceAddressStart($data['source_address_start'] ?? null);
+        $this->setSourceAddressEnd($data['source_address_end'] ?? null);
+        $this->setSourcePortStart($data['source_port_start'] ?? null);
+        $this->setSourcePortEnd($data['source_port_end'] ?? null);
+        $this->setComment($data['comment'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
-     */
-    public function listInvalidProperties()
-    {
-        $invalid_properties = [];
-
-        if ($this->container['direction'] === null) {
-            $invalid_properties[] = "'direction' can't be null";
-        }
-        $allowed_values = $this->getDirectionAllowableValues();
-        if (!in_array($this->container['direction'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'direction', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        if ($this->container['action'] === null) {
-            $invalid_properties[] = "'action' can't be null";
-        }
-        $allowed_values = $this->getActionAllowableValues();
-        if (!in_array($this->container['action'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'action', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        if (!is_null($this->container['position']) && ($this->container['position'] > 1000)) {
-            $invalid_properties[] = "invalid value for 'position', must be smaller than or equal to 1000.";
-        }
-
-        if (!is_null($this->container['position']) && ($this->container['position'] < 1)) {
-            $invalid_properties[] = "invalid value for 'position', must be bigger than or equal to 1.";
-        }
-
-        if ($this->container['family'] === null) {
-            $invalid_properties[] = "'family' can't be null";
-        }
-        $allowed_values = $this->getProtocolAllowableValues();
-        if (!in_array($this->container['protocol'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'protocol', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        if (!is_null($this->container['destination_port_start']) && ($this->container['destination_port_start'] > 65535)) {
-            $invalid_properties[] = "invalid value for 'destination_port_start', must be smaller than or equal to 65535.";
-        }
-
-        if (!is_null($this->container['destination_port_start']) && ($this->container['destination_port_start'] < 1)) {
-            $invalid_properties[] = "invalid value for 'destination_port_start', must be bigger than or equal to 1.";
-        }
-
-        if (!is_null($this->container['destination_port_end']) && ($this->container['destination_port_end'] > 65535)) {
-            $invalid_properties[] = "invalid value for 'destination_port_end', must be smaller than or equal to 65535.";
-        }
-
-        if (!is_null($this->container['destination_port_end']) && ($this->container['destination_port_end'] < 1)) {
-            $invalid_properties[] = "invalid value for 'destination_port_end', must be bigger than or equal to 1.";
-        }
-
-        if (!is_null($this->container['source_port_start']) && ($this->container['source_port_start'] > 65535)) {
-            $invalid_properties[] = "invalid value for 'source_port_start', must be smaller than or equal to 65535.";
-        }
-
-        if (!is_null($this->container['source_port_start']) && ($this->container['source_port_start'] < 1)) {
-            $invalid_properties[] = "invalid value for 'source_port_start', must be bigger than or equal to 1.";
-        }
-
-        if (!is_null($this->container['source_port_end']) && ($this->container['source_port_end'] > 65535)) {
-            $invalid_properties[] = "invalid value for 'source_port_end', must be smaller than or equal to 65535.";
-        }
-
-        if (!is_null($this->container['source_port_end']) && ($this->container['source_port_end'] < 1)) {
-            $invalid_properties[] = "invalid value for 'source_port_end', must be bigger than or equal to 1.";
-        }
-
-        if (!is_null($this->container['comment']) && (strlen($this->container['comment']) > 255)) {
-            $invalid_properties[] = "invalid value for 'comment', the character length must be smaller than or equal to 255.";
-        }
-
-        if (!is_null($this->container['comment']) && (strlen($this->container['comment']) < 0)) {
-            $invalid_properties[] = "invalid value for 'comment', the character length must be bigger than or equal to 0.";
-        }
-
-        return $invalid_properties;
-    }
-
-    /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-
-        if ($this->container['direction'] === null) {
-            return false;
-        }
-        $allowed_values = $this->getDirectionAllowableValues();
-        if (!in_array($this->container['direction'], $allowed_values)) {
-            return false;
-        }
-        if ($this->container['action'] === null) {
-            return false;
-        }
-        $allowed_values = $this->getActionAllowableValues();
-        if (!in_array($this->container['action'], $allowed_values)) {
-            return false;
-        }
-        if ($this->container['position'] > 1000) {
-            return false;
-        }
-        if ($this->container['position'] < 1) {
-            return false;
-        }
-        if ($this->container['family'] === null) {
-            return false;
-        }
-        $allowed_values = $this->getProtocolAllowableValues();
-        if (!in_array($this->container['protocol'], $allowed_values)) {
-            return false;
-        }
-        if ($this->container['destination_port_start'] > 65535) {
-            return false;
-        }
-        if ($this->container['destination_port_start'] < 1) {
-            return false;
-        }
-        if ($this->container['destination_port_end'] > 65535) {
-            return false;
-        }
-        if ($this->container['destination_port_end'] < 1) {
-            return false;
-        }
-        if ($this->container['source_port_start'] > 65535) {
-            return false;
-        }
-        if ($this->container['source_port_start'] < 1) {
-            return false;
-        }
-        if ($this->container['source_port_end'] > 65535) {
-            return false;
-        }
-        if ($this->container['source_port_end'] < 1) {
-            return false;
-        }
-        if (strlen($this->container['comment']) > 255) {
-            return false;
-        }
-        if (strlen($this->container['comment']) < 0) {
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
-     * Gets direction
      * @return string
      */
-    public function getDirection()
+    public function getDirection(): string
     {
-        return $this->container['direction'];
+        return $this->direction;
     }
 
     /**
-     * Sets direction
-     * @param string $direction The direction of network traffic this rule will be applied to.
-     * @return $this
+     * @param string|null $direction
+     * @return FirewallRule
      */
-    public function setDirection($direction)
+    public function setDirection(?string $direction): FirewallRule
     {
-        $allowed_values = $this->getDirectionAllowableValues();
-        if (!in_array($direction, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'direction', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['direction'] = $direction;
+
+        Assert::oneOf($direction, [
+            self::DIRECTION_IN,
+            self::DIRECTION_OUT,
+        ]);
+
+        $this->direction = $direction;
 
         return $this;
     }
 
     /**
-     * Gets action
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
-        return $this->container['action'];
+        return $this->action;
     }
 
     /**
-     * Sets action
-     * @param string $action Action to take if the rule conditions are met.
-     * @return $this
+     * @param string|null $action
+     * @return FirewallRule
      */
-    public function setAction($action)
+    public function setAction(?string $action): FirewallRule
     {
-        $allowed_values = $this->getActionAllowableValues();
-        if (!in_array($action, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'action', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['action'] = $action;
+        Assert::oneOf($action, [
+            self::ACTION_ACCEPT,
+            self::ACTION_DROP,
+            self::ACTION_REJECT
+        ]);
+
+        $this->action = $action;
 
         return $this;
     }
 
     /**
-     * Gets position
-     * @return float
+     * @return string|float|null
      */
     public function getPosition()
     {
-        return $this->container['position'];
+        return $this->position;
     }
 
     /**
-     * Sets position
-     * @param float $position Add the firewall rule to this position in the server's firewall list.
-     * @return $this
+     * @param string|float|null $position
+     * @return FirewallRule
      */
-    public function setPosition($position)
+    public function setPosition($position): FirewallRule
     {
-
-        if (!is_null($position) && ($position > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $position when calling FirewallRule., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($position) && ($position < 1)) {
-            throw new \InvalidArgumentException('invalid value for $position when calling FirewallRule., must be bigger than or equal to 1.');
+        if (!is_null($position) && $position !== '') {
+            Assert::range($position, '1', '10000');
         }
 
-        $this->container['position'] = $position;
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Gets family
-     * @return \Upcloud\ApiClient\Model\AddressFamily
-     */
-    public function getFamily()
-    {
-        return $this->container['family'];
-    }
-
-    /**
-     * Sets family
-     * @param \Upcloud\ApiClient\Model\AddressFamily $family if protocol is set The address family of new firewall rule
-     * @return $this
-     */
-    public function setFamily($family)
-    {
-        $this->container['family'] = $family;
-
-        return $this;
-    }
-
-    /**
-     * Gets protocol
      * @return string
      */
-    public function getProtocol()
+    public function getFamily(): string
     {
-        return $this->container['protocol'];
+        return $this->family;
     }
 
     /**
-     * Sets protocol
-     * @param string $protocol The protocol this rule will be applied to.
-     * @return $this
+     * @param string|null $family
+     * @return FirewallRule
      */
-    public function setProtocol($protocol)
+    public function setFamily(?string $family): FirewallRule
     {
-        $allowed_values = $this->getProtocolAllowableValues();
-        if (!is_null($protocol) && !in_array($protocol, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'protocol', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
+        Assert::oneOf($family, [
+            self::FAMILY_IP_V4,
+            self::FAMILY_IP_V6,
+        ]);
+
+        $this->family = $family;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProtocol(): ?string
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * @param string|null $protocol
+     * @return FirewallRule
+     */
+    public function setProtocol(?string $protocol): FirewallRule
+    {
+        Assert::oneOf($protocol, [
+            self::PROTOCOL_TCP,
+            self::PROTOCOL_UDP,
+            self::PROTOCOL_ICMP
+        ]);
+
+        $this->protocol = $protocol;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIcmpType(): ?string
+    {
+        return $this->icmpType;
+    }
+
+    /**
+     * @param string|null $icmpType
+     * @return FirewallRule
+     */
+    public function setIcmpType(?string $icmpType): FirewallRule
+    {
+        if (!is_null($icmpType) && $icmpType !== '') {
+            Assert::range($icmpType, '0', '255');
         }
-        $this->container['protocol'] = $protocol;
+
+        $this->icmpType = $icmpType;
 
         return $this;
     }
 
     /**
-     * Gets icmp_type
-     * @return string
+     * @return string|null
      */
-    public function getIcmpType()
+    public function getDestinationAddressStart(): ?string
     {
-        return $this->container['icmp_type'];
+        return $this->destinationAddressStart;
     }
 
     /**
-     * Sets icmp_type
-     * @param string $icmp_type The ICMP type.
-     * @return $this
+     * @param string|null $destinationAddressStart
+     * @return FirewallRule
      */
-    public function setIcmpType($icmp_type)
+    public function setDestinationAddressStart(?string $destinationAddressStart): FirewallRule
     {
-        $this->container['icmp_type'] = $icmp_type;
+        if (!is_null($destinationAddressStart) && $destinationAddressStart !== '') {
+            if ($this->family === self::FAMILY_IP_V6) {
+                Assert::ipv6($destinationAddressStart);
+            } else {
+                Assert::ipv4($destinationAddressStart);
+            }
+        }
+
+        $this->destinationAddressStart = $destinationAddressStart;
 
         return $this;
     }
 
     /**
-     * Gets destination_address_start
-     * @return string
+     * @return string|null
      */
-    public function getDestinationAddressStart()
+    public function getDestinationAddressEnd(): ?string
     {
-        return $this->container['destination_address_start'];
+        return $this->destinationAddressEnd;
     }
 
     /**
-     * Sets destination_address_start
-     * @param string $destination_address_start The destination address range starts from this address.
-     * @return $this
+     * @param string|null $destinationAddressEnd
+     * @return FirewallRule
      */
-    public function setDestinationAddressStart($destination_address_start)
+    public function setDestinationAddressEnd(?string $destinationAddressEnd): FirewallRule
     {
-        $this->container['destination_address_start'] = $destination_address_start;
+        if (!is_null($destinationAddressEnd) && $destinationAddressEnd !== '') {
+            if ($this->family === self::FAMILY_IP_V6) {
+                Assert::ipv6($destinationAddressEnd);
+            } else {
+                Assert::ipv4($destinationAddressEnd);
+            }
+        }
+
+        $this->destinationAddressEnd = $destinationAddressEnd;
 
         return $this;
     }
 
     /**
-     * Gets destination_address_end
-     * @return string
-     */
-    public function getDestinationAddressEnd()
-    {
-        return $this->container['destination_address_end'];
-    }
-
-    /**
-     * Sets destination_address_end
-     * @param string $destination_address_end The destination address range ends to this address.
-     * @return $this
-     */
-    public function setDestinationAddressEnd($destination_address_end)
-    {
-        $this->container['destination_address_end'] = $destination_address_end;
-
-        return $this;
-    }
-
-    /**
-     * Gets destination_port_start
-     * @return float
+     * @return string|float|null
      */
     public function getDestinationPortStart()
     {
-        return $this->container['destination_port_start'];
+        return $this->destinationPortStart;
     }
 
     /**
-     * Sets destination_port_start
-     * @param float $destination_port_start The destination port range starts from this port number.
-     * @return $this
+     * @param string|float|null $destinationPortStart
+     * @return FirewallRule
      */
-    public function setDestinationPortStart($destination_port_start)
+    public function setDestinationPortStart($destinationPortStart): FirewallRule
     {
 
-        if (!is_null($destination_port_start) && ($destination_port_start > 65535)) {
-            throw new \InvalidArgumentException('invalid value for $destination_port_start when calling FirewallRule., must be smaller than or equal to 65535.');
-        }
-        if (!is_null($destination_port_start) && ($destination_port_start < 1)) {
-            throw new \InvalidArgumentException('invalid value for $destination_port_start when calling FirewallRule., must be bigger than or equal to 1.');
+        if (!is_null($destinationPortStart) && $destinationPortStart !== "") {
+            Assert::range($destinationPortStart, '1', '65535');
         }
 
-        $this->container['destination_port_start'] = $destination_port_start;
+        $this->destinationPortStart = $destinationPortStart;
 
         return $this;
     }
 
     /**
-     * Gets destination_port_end
-     * @return float
+     * @return string|float|null
      */
     public function getDestinationPortEnd()
     {
-        return $this->container['destination_port_end'];
+        return $this->destinationPortEnd;
     }
 
     /**
-     * Sets destination_port_end
-     * @param float $destination_port_end The destination port range ends to this port number.
-     * @return $this
+     * @param string|float|null $destinationPortEnd
+     * @return FirewallRule
      */
-    public function setDestinationPortEnd($destination_port_end)
+    public function setDestinationPortEnd($destinationPortEnd): FirewallRule
     {
-
-        if (!is_null($destination_port_end) && ($destination_port_end > 65535)) {
-            throw new \InvalidArgumentException('invalid value for $destination_port_end when calling FirewallRule., must be smaller than or equal to 65535.');
-        }
-        if (!is_null($destination_port_end) && ($destination_port_end < 1)) {
-            throw new \InvalidArgumentException('invalid value for $destination_port_end when calling FirewallRule., must be bigger than or equal to 1.');
+        if (!is_null($destinationPortEnd) && $destinationPortEnd !== "") {
+            Assert::range($destinationPortEnd, '1', '65535');
         }
 
-        $this->container['destination_port_end'] = $destination_port_end;
+        $this->destinationPortEnd = $destinationPortEnd;
 
         return $this;
     }
 
     /**
-     * Gets source_address_start
-     * @return string
+     * @return string|null
      */
-    public function getSourceAddressStart()
+    public function getSourceAddressStart(): ?string
     {
-        return $this->container['source_address_start'];
+        return $this->sourceAddressStart;
     }
 
     /**
-     * Sets source_address_start
-     * @param string $source_address_start The source address range starts from this address.
-     * @return $this
+     * @param string|null $sourceAddressStart
+     * @return FirewallRule
      */
-    public function setSourceAddressStart($source_address_start)
+    public function setSourceAddressStart(?string $sourceAddressStart): FirewallRule
     {
-        $this->container['source_address_start'] = $source_address_start;
+        if (!is_null($sourceAddressStart) && $sourceAddressStart !== '') {
+            if ($this->family === self::FAMILY_IP_V6) {
+                Assert::ipv6($sourceAddressStart);
+            } else {
+                Assert::ipv4($sourceAddressStart);
+            }
+        }
+
+        $this->sourceAddressStart = $sourceAddressStart;
 
         return $this;
     }
 
     /**
-     * Gets source_address_end
-     * @return string
+     * @return string|null
      */
-    public function getSourceAddressEnd()
+    public function getSourceAddressEnd(): ?string
     {
-        return $this->container['source_address_end'];
+        return $this->sourceAddressEnd;
     }
 
     /**
-     * Sets source_address_end
-     * @param string $source_address_end The source address range ends to this address.
-     * @return $this
+     * @param string|null $sourceAddressEnd
+     * @return FirewallRule
      */
-    public function setSourceAddressEnd($source_address_end)
+    public function setSourceAddressEnd(?string $sourceAddressEnd): FirewallRule
     {
-        $this->container['source_address_end'] = $source_address_end;
+        if (!is_null($sourceAddressEnd) && $sourceAddressEnd !== '') {
+            if ($this->family === self::FAMILY_IP_V6) {
+                Assert::ipv6($sourceAddressEnd);
+            } else {
+                Assert::ipv4($sourceAddressEnd);
+            }
+        }
+
+        $this->sourceAddressEnd = $sourceAddressEnd;
 
         return $this;
     }
 
     /**
-     * Gets source_port_start
-     * @return float
+     * @return string|float|null
      */
     public function getSourcePortStart()
     {
-        return $this->container['source_port_start'];
+        return $this->sourcePortStart;
     }
 
     /**
-     * Sets source_port_start
-     * @param float $source_port_start The source port range starts from this port number.
-     * @return $this
+     * @param string|float|null $sourcePortStart
+     * @return FirewallRule
      */
-    public function setSourcePortStart($source_port_start)
+    public function setSourcePortStart($sourcePortStart): FirewallRule
     {
-
-        if (!is_null($source_port_start) && ($source_port_start > 65535)) {
-            throw new \InvalidArgumentException('invalid value for $source_port_start when calling FirewallRule., must be smaller than or equal to 65535.');
-        }
-        if (!is_null($source_port_start) && ($source_port_start < 1)) {
-            throw new \InvalidArgumentException('invalid value for $source_port_start when calling FirewallRule., must be bigger than or equal to 1.');
+        if (!is_null($sourcePortStart) && $sourcePortStart !== "") {
+            Assert::range($sourcePortStart, '1', '65535');
         }
 
-        $this->container['source_port_start'] = $source_port_start;
+        $this->sourcePortStart = $sourcePortStart;
 
         return $this;
     }
 
     /**
-     * Gets source_port_end
-     * @return float
+     * @return string|float|null
      */
     public function getSourcePortEnd()
     {
-        return $this->container['source_port_end'];
+        return $this->sourcePortEnd;
     }
 
     /**
-     * Sets source_port_end
-     * @param float $source_port_end The source port range ends to this port number.
-     * @return $this
+     * @param string|float|null $sourcePortEnd
+     * @return FirewallRule
      */
-    public function setSourcePortEnd($source_port_end)
+    public function setSourcePortEnd($sourcePortEnd): FirewallRule
     {
-
-        if (!is_null($source_port_end) && ($source_port_end > 65535)) {
-            throw new \InvalidArgumentException('invalid value for $source_port_end when calling FirewallRule., must be smaller than or equal to 65535.');
-        }
-        if (!is_null($source_port_end) && ($source_port_end < 1)) {
-            throw new \InvalidArgumentException('invalid value for $source_port_end when calling FirewallRule., must be bigger than or equal to 1.');
+        if (!is_null($sourcePortEnd) && $sourcePortEnd !== "") {
+            Assert::range($sourcePortEnd, '1', '65535');
         }
 
-        $this->container['source_port_end'] = $source_port_end;
+        $this->sourcePortEnd = $sourcePortEnd;
 
         return $this;
     }
 
     /**
-     * Gets comment
-     * @return string
+     * @return string|null
      */
-    public function getComment()
+    public function getComment(): ?string
     {
-        return $this->container['comment'];
+        return $this->comment;
     }
 
     /**
-     * Sets comment
-     * @param string $comment Freeform comment string for the rule.
-     * @return $this
+     * @param string|null $comment
+     * @return FirewallRule
      */
-    public function setComment($comment)
+    public function setComment(?string $comment): FirewallRule
     {
-        if (!is_null($comment) && (strlen($comment) > 255)) {
-            throw new \InvalidArgumentException('invalid length for $comment when calling FirewallRule., must be smaller than or equal to 255.');
-        }
-        if (!is_null($comment) && (strlen($comment) < 0)) {
-            throw new \InvalidArgumentException('invalid length for $comment when calling FirewallRule., must be bigger than or equal to 0.');
+        if (!is_null($comment) && $comment !== "") {
+            Assert::maxLength($comment, '250');
         }
 
-        $this->container['comment'] = $comment;
+        $this->comment = $comment;
 
         return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        }
-
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-
