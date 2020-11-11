@@ -9,9 +9,8 @@ use Upcloud\ApiClient\Model\ModifyTagRequest;
 use Upcloud\ApiClient\Model\Tag;
 use Upcloud\ApiClient\Model\TagCreateRequest;
 use Upcloud\ApiClient\Model\TagListResponse;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class TagApiFixture
+class TagApiFixture extends BaseFixture
 {
 
     /**
@@ -48,10 +47,9 @@ class TagApiFixture
 
     public function getCreateResponse(int $fromListIndex = 0)
     {
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            CreateNewTagResponse::class,
-            []
+        return $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            CreateNewTagResponse::class
         );
     }
 
@@ -60,10 +58,9 @@ class TagApiFixture
      */
     public function getResponse()
     {
-        return ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
+        return $this->serializer->deserialize(
+            $this->getResponseBody(),
             TagListResponse::class,
-            []
         );
     }
 
