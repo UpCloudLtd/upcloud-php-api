@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Upcloud\ApiClient;
 
+use InvalidArgumentException;
+
 /**
  * Configuration Class Doc Comment
  *
@@ -75,21 +77,6 @@ class Configuration
      * @var string
      */
     protected $debugFile = 'php://output';
-
-    /**
-     * Debug file location (log to STDOUT by default).
-     *
-     * @var string
-     */
-    protected $tempFolderPath;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->tempFolderPath = \sys_get_temp_dir();
-    }
 
     /**
      * Sets API key.
@@ -246,7 +233,7 @@ class Configuration
      *
      * @param string $userAgent the user agent of the api client
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return $this
      */
@@ -316,30 +303,6 @@ class Configuration
     }
 
     /**
-     * Sets the temp folder path.
-     *
-     * @param string $tempFolderPath Temp folder path
-     *
-     * @return $this
-     */
-    public function setTempFolderPath(string $tempFolderPath)
-    {
-        $this->tempFolderPath = $tempFolderPath;
-
-        return $this;
-    }
-
-    /**
-     * Gets the temp folder path.
-     *
-     * @return null|string Temp folder path
-     */
-    public function getTempFolderPath()
-    {
-        return $this->tempFolderPath;
-    }
-
-    /**
      * Gets the default configuration instance.
      *
      * @return Configuration
@@ -370,11 +333,10 @@ class Configuration
      */
     public static function toDebugReport()
     {
-        $report = 'PHP SDK (Upcloud\ApiClient) Debug Report:'.\PHP_EOL;
-        $report .= '    OS: '.\php_uname().\PHP_EOL;
-        $report .= '    PHP Version: '.\PHP_VERSION.\PHP_EOL;
-        $report .= '    OpenAPI Spec Version: 1.2.0'.\PHP_EOL;
-        $report .= '    Temp Folder Path: '.self::getDefaultConfiguration()->getTempFolderPath().\PHP_EOL;
+        $report = 'PHP SDK (Upcloud\ApiClient) Debug Report:'.PHP_EOL;
+        $report .= '    OS: '.php_uname().PHP_EOL;
+        $report .= '    PHP Version: '.PHP_VERSION.PHP_EOL;
+        $report .= '    OpenAPI Spec Version: 1.2.0'.PHP_EOL;
 
         return $report;
     }
