@@ -11,7 +11,6 @@ use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
 use Upcloud\ApiClient\Model\AccountResponse;
-use Upcloud\ApiClient\Serializer;
 
 /**
  * AccountApi Class Doc Comment
@@ -52,7 +51,7 @@ class AccountApi extends BaseApi
         $request = new Request('GET', 'account');
         $response = $this->client->send($request);
 
-        return $response->setSerializer(new Serializer())->toArray(AccountResponse::class);
+        return $response->toArray(AccountResponse::class);
     }
 
     /**
@@ -83,7 +82,7 @@ class AccountApi extends BaseApi
         $request = new Request('GET', 'account');
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->setSerializer(new Serializer())->toArray(AccountResponse::class);
+            return $response->toArray(AccountResponse::class);
         });
     }
 }

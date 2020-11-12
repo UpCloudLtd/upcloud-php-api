@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Upcloud\ApiClient\HttpClient;
 
-use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\Serializer;
 use Upcloud\ApiClient\SerializerInterface;
 
 class UpcloudApiResponse
@@ -44,6 +43,7 @@ class UpcloudApiResponse
         $this->statusCode = $statusCode;
         $this->headers = $headers;
         $this->body = $body;
+        $this->serializer = new Serializer;
     }
 
     public static function createFromResponse(ResponseInterface $response): self
@@ -103,17 +103,9 @@ class UpcloudApiResponse
      */
     public function deserializeBody($class)
     {
-        if ($this->serializer) {
-            return $this->serializer->deserialize(
-                (string) $this->getBody(),
-                $class
-            );
-        }
-
-        return ObjectSerializer::deserialize(
-            Utils::jsonDecode((string) $this->body),
-            $class,
-            $this->headers
+        return $this->serializer->deserialize(
+            (string) $this->getBody(),
+            $class
         );
     }
 

@@ -25,7 +25,7 @@ class StorageDevice
     private $title;
 
     /**
-     * @var float|null
+     * @var float|string|null
      */
     private $size;
 
@@ -113,18 +113,18 @@ class StorageDevice
     }
 
     /**
-     * @return float|null
+     * @return float|string|null
      */
-    public function getSize(): ?float
+    public function getSize()
     {
         return $this->size;
     }
 
     /**
-     * @param float|null $size
+     * @param float|string|null $size
      * @return StorageDevice
      */
-    public function setSize(?float $size): StorageDevice
+    public function setSize($size): StorageDevice
     {
         $this->size = $size;
 

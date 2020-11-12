@@ -119,11 +119,7 @@ class ServerApiAsyncTest extends BaseApiTest
 
         foreach ($list as $key => $item) {
             $this->assertInstanceOf(Server::class, $item);
-            $fixtureItem = $fixtureList[$key];
-
-            foreach ($item->getters() as $property => $getter) {
-                $this->assertEquals($item->$getter(), $fixtureItem->$getter());
-            }
+            $this->assertEquals($item, $fixtureList[$key]);
         }
     }
 

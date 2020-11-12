@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-class ServerListResponseServers
+use Upcloud\ApiClient\HttpClient\UpcloudApiRequest;
+
+class ServerRequest extends UpcloudApiRequest
 {
     /**
-     * @var Server[]|null
+     * @var Server|null
      */
     private $server;
 
@@ -17,27 +19,26 @@ class ServerListResponseServers
      */
     public function __construct(array $data = null)
     {
+        parent::__construct();
         $this->setServer($data['server'] ?? null);
     }
 
     /**
-     * @return Server[]|null
+     * @return Server|null
      */
-    public function getServer(): ?array
+    public function getServer(): ?Server
     {
         return $this->server;
     }
 
     /**
-     * @param Server[]|null $server
-     * @return ServerListResponseServers
+     * @param Server|array|null $server
+     * @return $this
      */
-    public function setServer(?array $server): ServerListResponseServers
+    public function setServer($server): self
     {
         if (is_array($server)) {
-            foreach ($server as $item) {
-                $this->server[] = new Server($item);
-            }
+            $this->server = new Server($server);
         } else {
             $this->server = $server;
         }
@@ -45,5 +46,3 @@ class ServerListResponseServers
         return $this;
     }
 }
-
-
