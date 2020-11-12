@@ -42,7 +42,7 @@ class FirewallApiFixture extends BaseFixture
     {
         return $this->serializer->deserialize(
             $this->getRulesResponseBodyByIndex($fromListIndex),
-            FirewallRuleCreateResponse::class,
+            FirewallRuleCreateResponse::class
         );
     }
 
@@ -53,7 +53,7 @@ class FirewallApiFixture extends BaseFixture
     {
         return $this->serializer->deserialize(
             $this->getRulesResponseBody(),
-            FirewallRuleListResponse::class,
+            FirewallRuleListResponse::class
         );
     }
 

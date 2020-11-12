@@ -13,7 +13,7 @@ class IpAddressListResponse
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {

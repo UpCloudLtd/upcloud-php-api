@@ -22,6 +22,8 @@ use Upcloud\ApiClient\Model\StorageDeviceLoadRequest;
 use Upcloud\ApiClient\Model\StorageType;
 use Upcloud\ApiClient\Model\SuccessStoragesResponse;
 use Upcloud\ApiClient\Model\TemplitizeStorageRequest;
+use Upcloud\ApiClient\Serializer;
+use Webmozart\Assert\Assert;
 
 /**
  * StorageApi Class Doc Comment
@@ -63,6 +65,7 @@ class StorageApi extends BaseApi
     {
         $url = $this->buildPath('server/{serverId}/storage/attach', compact('serverId'));
         $request = new Request('POST', $url, [], $storageDevice);
+
         $response = $this->client->send($request);
         return $response->toArray(CreateServerResponse::class);
     }
@@ -143,7 +146,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(CreateStorageResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -182,7 +185,7 @@ class StorageApi extends BaseApi
         $request = new Request('POST', $url, [], $storage);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(CreateStorageResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
         });
     }
 
@@ -291,7 +294,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(CreateStorageResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -328,7 +331,7 @@ class StorageApi extends BaseApi
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
 
-            return $response->toArray(CreateStorageResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
         });
     }
 
@@ -363,7 +366,7 @@ class StorageApi extends BaseApi
         $request = new Request('POST', 'storage', [], $storage);
         $response = $this->client->send($request);
 
-        return $response->toArray(CreateStorageResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -396,7 +399,7 @@ class StorageApi extends BaseApi
         $request = new Request('POST', 'storage', [], $storage);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(CreateStorageResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
         });
     }
 
@@ -720,7 +723,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(CreateStorageResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -754,7 +757,7 @@ class StorageApi extends BaseApi
         $request = new Request('GET', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(CreateStorageResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
         });
     }
 
@@ -866,11 +869,7 @@ class StorageApi extends BaseApi
     public function listStoragesWithHttpInfo(?string $type = null): array
     {
         if ($type) {
-            if (!in_array($type, StorageType::getAllowableEnumValues())) {
-                $types = implode("', '", StorageType::getAllowableEnumValues());
-                throw new InvalidArgumentException("Invalid type '$type', must be one of: '$types'");
-            }
-
+            Assert::oneOf($type, StorageType::getAllowableEnumValues());
             $url = $this->buildPath('storage/{type}', compact('type'));
         } else {
             $url ='storage';
@@ -880,7 +879,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(SuccessStoragesResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(SuccessStoragesResponse::class);
     }
 
     /**
@@ -911,11 +910,7 @@ class StorageApi extends BaseApi
     public function listStoragesAsyncWithHttpInfo(?string $type = null): PromiseInterface
     {
         if ($type) {
-            if (!in_array($type, StorageType::getAllowableEnumValues())) {
-                $types = implode("', '", StorageType::getAllowableEnumValues());
-                throw new InvalidArgumentException("Invalid type '$type', must be one of: '$types'");
-            }
-
+            Assert::oneOf($type, StorageType::getAllowableEnumValues());
             $url = $this->buildPath('storage/{type}', compact('type'));
         } else {
             $url ='storage';
@@ -924,7 +919,7 @@ class StorageApi extends BaseApi
         $request = new Request('GET', $url);
 
         return $this->client->sendAsync($request)->then(function ($response) {
-            return $response->toArray(SuccessStoragesResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(SuccessStoragesResponse::class);
         });
     }
 
@@ -1041,7 +1036,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(CreateStorageResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -1077,7 +1072,7 @@ class StorageApi extends BaseApi
         $request = new Request('PUT', $url, [], $storage);
 
         return $this->client->sendAsync($request)->then(function ($response) {
-            return $response->toArray(CreateStorageResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
         });
     }
 
@@ -1188,7 +1183,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray(CreateStorageResponse::class);
+        return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -1228,7 +1223,7 @@ class StorageApi extends BaseApi
         $request = new Request('POST', $url, [], $storage);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray(CreateStorageResponse::class);
+            return $response->setSerializer(new Serializer)->toArray(CreateStorageResponse::class);
         });
     }
 

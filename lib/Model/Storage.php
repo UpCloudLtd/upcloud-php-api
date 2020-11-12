@@ -1,582 +1,405 @@
 <?php
-/**
- * Storage
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use Webmozart\Assert\Assert;
 
-/**
- * Storage Class Doc Comment
- *
- * @category    Class
- * @package     Upcloud\ApiClient
- */
-class Storage implements ArrayAccess
+class Storage
 {
-    const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'Storage';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'access' => '\Upcloud\ApiClient\Model\StorageAccessType',
-        'backup_rule' => '\Upcloud\ApiClient\Model\BackupRule',
-        'backups' => '\Upcloud\ApiClient\Model\StorageBackups',
-        'license' => 'float',
-        'servers' => '\Upcloud\ApiClient\Model\StorageServers',
-        'size' => 'float',
-        'state' => '\Upcloud\ApiClient\Model\StorageState',
-        'tier' => '\Upcloud\ApiClient\Model\StorageTier',
-        'title' => 'string',
-        'type' => '\Upcloud\ApiClient\Model\StorageType',
-        'uuid' => 'string',
-        'zone' => 'string',
-        'origin' => 'string',
-        'created' => 'string'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'access' => null,
-        'backup_rule' => null,
-        'backups' => null,
-        'license' => null,
-        'servers' => null,
-        'size' => null,
-        'state' => null,
-        'tier' => null,
-        'title' => null,
-        'type' => null,
-        'uuid' => 'uuid',
-        'zone' => null,
-        'origin' => 'uuid',
-        'created' => 'datetime'
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var string|null
      */
-    protected static $attributeMap = [
-        'access' => 'access',
-        'backup_rule' => 'backup_rule',
-        'backups' => 'backups',
-        'license' => 'license',
-        'servers' => 'servers',
-        'size' => 'size',
-        'state' => 'state',
-        'tier' => 'tier',
-        'title' => 'title',
-        'type' => 'type',
-        'uuid' => 'uuid',
-        'zone' => 'zone',
-        'origin' => 'origin',
-        'created' => 'created'
-    ];
-
+    private $access;
 
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
+     * @var BackupRule|null
      */
-    protected static $setters = [
-        'access' => 'setAccess',
-        'backup_rule' => 'setBackupRule',
-        'backups' => 'setBackups',
-        'license' => 'setLicense',
-        'servers' => 'setServers',
-        'size' => 'setSize',
-        'state' => 'setState',
-        'tier' => 'setTier',
-        'title' => 'setTitle',
-        'type' => 'setType',
-        'uuid' => 'setUuid',
-        'zone' => 'setZone',
-        'origin' => 'setOrigin',
-        'created' => 'setCreated'
-    ];
-
+    private $backupRule;
 
     /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
+     * @var StorageBackups|null
      */
-    protected static $getters = [
-        'access' => 'getAccess',
-        'backup_rule' => 'getBackupRule',
-        'backups' => 'getBackups',
-        'license' => 'getLicense',
-        'servers' => 'getServers',
-        'size' => 'getSize',
-        'state' => 'getState',
-        'tier' => 'getTier',
-        'title' => 'getTitle',
-        'type' => 'getType',
-        'uuid' => 'getUuid',
-        'zone' => 'getZone',
-        'origin' => 'getOrigin',
-        'created' => 'getCreated'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    
-
-    
+    private $backups;
 
     /**
-     * Associative array for storing property values
-     * @var mixed[]
+     * @var float|string|null
      */
-    protected $container = [];
+    private $license;
+
+    /**
+     * @var StorageServers|null
+     */
+    private $servers;
+
+    /**
+     * @var string|float|null
+     */
+    private $size;
+
+    /**
+     * @var string|null
+     */
+    private $state;
+
+    /**
+     * @var string|null
+     */
+    private $tier;
+
+    /**
+     * @var string|null
+     */
+    private $title;
+
+    /**
+     * @var string|null
+     */
+    private $type;
+
+    /**
+     * @var string|null
+     */
+    private $uuid;
+
+    /**
+     * @var string|null
+     */
+    private $zone;
+
+    /**
+     * @var string|null
+     */
+    private $origin;
+
+    /**
+     * @var string|null
+     */
+    private $created;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['access'] = isset($data['access']) ? $data['access'] : null;
-        $this->container['backup_rule'] = isset($data['backup_rule']) ? $data['backup_rule'] : null;
-        $this->container['backups'] = isset($data['backups']) ? $data['backups'] : null;
-        $this->container['license'] = isset($data['license']) ? $data['license'] : null;
-        $this->container['servers'] = isset($data['servers']) ? $data['servers'] : null;
-        $this->container['size'] = isset($data['size']) ? $data['size'] : null;
-        $this->container['state'] = isset($data['state']) ? $data['state'] : null;
-        $this->container['tier'] = isset($data['tier']) ? $data['tier'] : null;
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['uuid'] = isset($data['uuid']) ? $data['uuid'] : null;
-        $this->container['zone'] = isset($data['zone']) ? $data['zone'] : null;
-        $this->container['origin'] = isset($data['origin']) ? $data['origin'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
+        $this->setAccess($data['access'] ?? null);
+        $this->setBackupRule($data['backup_rule'] ?? null);
+        $this->setBackups($data['backups'] ?? null);
+        $this->setLicense($data['license'] ?? null);
+        $this->setServers($data['servers'] ?? null);
+        $this->setSize($data['size'] ?? null);
+        $this->setState($data['state'] ?? null);
+        $this->setTier($data['tier'] ?? null);
+        $this->setTitle($data['title'] ?? null);
+        $this->setType($data['type'] ?? null);
+        $this->setUuid($data['uuid'] ?? null);
+        $this->setZone($data['zone'] ?? null);
+        $this->setOrigin($data['origin'] ?? null);
+        $this->setCreated($data['created'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return string|null
      */
-    public function listInvalidProperties()
+    public function getAccess(): ?string
     {
-        $invalid_properties = [];
-
-        return $invalid_properties;
+        return $this->access;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
+     * @param string|null $access
+     * @return Storage
      */
-    public function valid()
+    public function setAccess(?string $access): Storage
     {
+        if (!is_null($access)) {
+            Assert::oneOf($access, StorageAccessType::getAllowableEnumValues());
+        }
 
-        return true;
-    }
-
-
-    /**
-     * Gets access
-     * @return \Upcloud\ApiClient\Model\StorageAccessType
-     */
-    public function getAccess()
-    {
-        return $this->container['access'];
-    }
-
-    /**
-     * Sets access
-     * @param \Upcloud\ApiClient\Model\StorageAccessType $access
-     * @return $this
-     */
-    public function setAccess($access)
-    {
-        $this->container['access'] = $access;
+        $this->access = $access;
 
         return $this;
     }
 
     /**
-     * Gets backup_rule
-     * @return \Upcloud\ApiClient\Model\BackupRule
+     * @return BackupRule|null
      */
-    public function getBackupRule()
+    public function getBackupRule(): ?BackupRule
     {
-        return $this->container['backup_rule'];
+        return $this->backupRule;
     }
 
     /**
-     * Sets backup_rule
-     * @param \Upcloud\ApiClient\Model\BackupRule $backup_rule
-     * @return $this
+     * @param BackupRule|array|null $backupRule
+     * @return Storage
      */
-    public function setBackupRule($backup_rule)
+    public function setBackupRule($backupRule): Storage
     {
-        $this->container['backup_rule'] = $backup_rule;
+        if (is_array($backupRule)) {
+            $this->backupRule = new BackupRule($backupRule);
+        } else {
+            $this->backupRule = $backupRule;
+        }
 
         return $this;
     }
 
     /**
-     * Gets backups
-     * @return \Upcloud\ApiClient\Model\StorageBackups
+     * @return StorageBackups|null
      */
-    public function getBackups()
+    public function getBackups(): ?StorageBackups
     {
-        return $this->container['backups'];
+        return $this->backups;
     }
 
     /**
-     * Sets backups
-     * @param \Upcloud\ApiClient\Model\StorageBackups $backups
-     * @return $this
+     * @param StorageBackups|array|null $backups
+     * @return Storage
      */
-    public function setBackups($backups)
+    public function setBackups($backups): Storage
     {
-        $this->container['backups'] = $backups;
+        if (is_array($backups)) {
+            $this->backups = new StorageBackups($backups);
+        } else {
+            $this->backups = $backups;
+        }
 
         return $this;
     }
 
     /**
-     * Gets license
-     * @return float
+     * @return float|string|null
      */
     public function getLicense()
     {
-        return $this->container['license'];
+        return $this->license;
     }
 
     /**
-     * Sets license
-     * @param float $license
-     * @return $this
+     * @param float|string|null $license
+     * @return Storage
      */
-    public function setLicense($license)
+    public function setLicense($license): Storage
     {
-        $this->container['license'] = $license;
+        $this->license = $license;
 
         return $this;
     }
 
     /**
-     * Gets servers
-     * @return \Upcloud\ApiClient\Model\StorageServers
+     * @return StorageServers|null
      */
-    public function getServers()
+    public function getServers(): ?StorageServers
     {
-        return $this->container['servers'];
+        return $this->servers;
     }
 
     /**
-     * Sets servers
-     * @param \Upcloud\ApiClient\Model\StorageServers $servers
-     * @return $this
+     * @param StorageServers|array|null $servers
+     * @return Storage
      */
-    public function setServers($servers)
+    public function setServers($servers): Storage
     {
-        $this->container['servers'] = $servers;
+        if (is_array($servers)) {
+            $this->servers = new StorageServers($servers);
+        } else {
+            $this->servers = $servers;
+        }
 
         return $this;
     }
 
     /**
-     * Gets size
-     * @return float
+     * @return float|string|null
      */
     public function getSize()
     {
-        return $this->container['size'];
+        return $this->size;
     }
 
     /**
-     * Sets size
-     * @param float $size
-     * @return $this
+     * @param float|string|null $size
+     * @return Storage
      */
-    public function setSize($size)
+    public function setSize($size): Storage
     {
-        $this->container['size'] = $size;
+        $this->size = $size;
 
         return $this;
     }
 
     /**
-     * Gets state
-     * @return \Upcloud\ApiClient\Model\StorageState
+     * @return string|null
      */
-    public function getState()
+    public function getState(): ?string
     {
-        return $this->container['state'];
+        return $this->state;
     }
 
     /**
-     * Sets state
-     * @param \Upcloud\ApiClient\Model\StorageState $state
-     * @return $this
+     * @param string|null $state
+     * @return Storage
      */
-    public function setState($state)
+    public function setState(?string $state): Storage
     {
-        $this->container['state'] = $state;
-
-        return $this;
-    }
-
-    /**
-     * Gets tier
-     * @return \Upcloud\ApiClient\Model\StorageTier
-     */
-    public function getTier()
-    {
-        return $this->container['tier'];
-    }
-
-    /**
-     * Sets tier
-     * @param \Upcloud\ApiClient\Model\StorageTier $tier
-     * @return $this
-     */
-    public function setTier($tier)
-    {
-        $this->container['tier'] = $tier;
-
-        return $this;
-    }
-
-    /**
-     * Gets title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->container['title'];
-    }
-
-    /**
-     * Sets title
-     * @param string $title
-     * @return $this
-     */
-    public function setTitle($title)
-    {
-        $this->container['title'] = $title;
-
-        return $this;
-    }
-
-    /**
-     * Gets type
-     * @return \Upcloud\ApiClient\Model\StorageType
-     */
-    public function getType()
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     * @param \Upcloud\ApiClient\Model\StorageType $type
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets uuid
-     * @return string
-     */
-    public function getUuid()
-    {
-        return $this->container['uuid'];
-    }
-
-    /**
-     * Sets uuid
-     * @param string $uuid
-     * @return $this
-     */
-    public function setUuid($uuid)
-    {
-        $this->container['uuid'] = $uuid;
-
-        return $this;
-    }
-
-    /**
-     * Gets zone
-     * @return string
-     */
-    public function getZone()
-    {
-        return $this->container['zone'];
-    }
-
-    /**
-     * Sets zone
-     * @param string $zone
-     * @return $this
-     */
-    public function setZone($zone)
-    {
-        $this->container['zone'] = $zone;
-
-        return $this;
-    }
-
-    /**
-     * Gets origin
-     * @return string
-     */
-    public function getOrigin()
-    {
-        return $this->container['origin'];
-    }
-
-    /**
-     * Sets origin
-     * @param string $origin
-     * @return $this
-     */
-    public function setOrigin($origin)
-    {
-        $this->container['origin'] = $origin;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
-     * @return string
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     * @param string $created
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+        if (!is_null($state)) {
+            Assert::oneOf($state, StorageState::getAllowableEnumValues());
         }
 
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTier(): ?string
+    {
+        return $this->tier;
+    }
+
+    /**
+     * @param string|null $tier
+     * @return Storage
+     */
+    public function setTier(?string $tier): Storage
+    {
+        if (!is_null($tier)) {
+            Assert::oneOf($tier, StorageTier::getAllowableEnumValues());
+        }
+
+        $this->tier = $tier;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string|null $title
+     * @return Storage
+     */
+    public function setTitle(?string $title): Storage
+    {
+        if (!is_null($title)) {
+            Assert::maxLength($title, 64);
+        }
+
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     * @return Storage
+     */
+    public function setType(?string $type): Storage
+    {
+        if (!is_null($type)) {
+            Assert::oneOf($type, StorageType::getAllowableEnumValues());
+        }
+
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param string|null $uuid
+     * @return Storage
+     */
+    public function setUuid(?string $uuid): Storage
+    {
+        if (!is_null($uuid)) {
+            Assert::uuid($uuid);
+        }
+
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getZone(): ?string
+    {
+        return $this->zone;
+    }
+
+    /**
+     * @param string|null $zone
+     * @return Storage
+     */
+    public function setZone(?string $zone): Storage
+    {
+        $this->zone = $zone;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrigin(): ?string
+    {
+        return $this->origin;
+    }
+
+    /**
+     * @param string|null $origin
+     * @return Storage
+     */
+    public function setOrigin(?string $origin): Storage
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCreated(): ?string
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param string|null $created
+     * @return Storage
+     */
+    public function setCreated(?string $created): Storage
+    {
+        $this->created = $created;
+
+        return $this;
     }
 }
-
-

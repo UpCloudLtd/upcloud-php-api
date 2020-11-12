@@ -23,7 +23,7 @@ class PricesApiFixture extends BaseFixture
     {
         return $this->serializer->deserialize(
             $this->getResponseBody(),
-            PriceListResponse::class,
+            PriceListResponse::class
         );
     }
 

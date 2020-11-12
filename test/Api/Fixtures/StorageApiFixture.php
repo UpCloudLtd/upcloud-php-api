@@ -14,9 +14,8 @@ use Upcloud\ApiClient\Model\StorageDeviceDetachRequest;
 use Upcloud\ApiClient\Model\StorageDeviceLoadRequest;
 use Upcloud\ApiClient\Model\SuccessStoragesResponse;
 use Upcloud\ApiClient\Model\TemplitizeStorageRequest;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class StorageApiFixture
+class StorageApiFixture extends BaseFixture
 {
 
     /**
@@ -57,10 +56,9 @@ class StorageApiFixture
         /**
          * @var SuccessStoragesResponse $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
-            SuccessStoragesResponse::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBody(),
+            SuccessStoragesResponse::class
         );
         return $request;
     }
@@ -74,10 +72,9 @@ class StorageApiFixture
         /**
          * @var CreateStorageRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            CreateStorageRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            CreateStorageRequest::class
         );
         return $request;
     }
@@ -91,10 +88,9 @@ class StorageApiFixture
         /**
          * @var ModifyStorageRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            ModifyStorageRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            ModifyStorageRequest::class
         );
         return $request;
     }
@@ -108,10 +104,9 @@ class StorageApiFixture
         /**
          * @var CloneStorageRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            CloneStorageRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            CloneStorageRequest::class
         );
         return $request;
     }
@@ -125,10 +120,9 @@ class StorageApiFixture
         /**
          * @var TemplitizeStorageRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            TemplitizeStorageRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            TemplitizeStorageRequest::class
         );
 
         return $request;
@@ -143,10 +137,9 @@ class StorageApiFixture
         /**
          * @var CreateBackupStorageRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($fromListIndex)),
-            CreateBackupStorageRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($fromListIndex),
+            CreateBackupStorageRequest::class
         );
 
         return $request;
@@ -183,7 +176,7 @@ class StorageApiFixture
     {
         return new StorageDeviceLoadRequest([
             'storage_device' => new StorageDevice([
-                'storage' => '01eff7ad-168e-413e-83b0-054f6a28fa23'
+                'storage' => '01eff7ad-168e-413e-83b0-054f6a28fa23',
             ])
         ]);
     }
@@ -304,7 +297,7 @@ class StorageApiFixture
                         [
                             'address' => 'scsi:0:0',
                             'storage' => '01eff7ad-168e-413e-83b0-054f6a28fa23',
-                            'storage_size' => '10',
+                            'storage_size' => 10,
                             'storage_title' => 'Operating system disk',
                             'type' => 'disk',
                             'boot_disk' => '0'

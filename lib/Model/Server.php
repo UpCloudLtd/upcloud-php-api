@@ -57,7 +57,7 @@ class Server implements ArrayAccess
         'plan_ipv4_bytes' => 'float',
         'plan_ipv6_bytes' => 'float',
         'state' => '\Upcloud\ApiClient\Model\ServerState',
-        'storage_devices' => '\Upcloud\ApiClient\Model\ServerStorageDevices',
+//        'storage_devices' => '\Upcloud\ApiClient\Model\ServerStorageDevices',
         'tags' => '\Upcloud\ApiClient\Model\ServerTags',
         'timezone' => 'string',
         'title' => 'string',
@@ -80,7 +80,7 @@ class Server implements ArrayAccess
         'firewall' => null,
         'host' => null,
         'hostname' => null,
-        'ip_addresses' => null,
+//        'ip_addresses' => null,
         'license' => null,
         'memory_amount' => null,
         'nic_model' => null,
@@ -88,7 +88,7 @@ class Server implements ArrayAccess
         'plan_ipv4_bytes' => null,
         'plan_ipv6_bytes' => null,
         'state' => null,
-        'storage_devices' => null,
+//        'storage_devices' => null,
         'tags' => null,
         'timezone' => null,
         'title' => null,
@@ -129,7 +129,7 @@ class Server implements ArrayAccess
         'plan_ipv4_bytes' => 'plan_ipv4_bytes',
         'plan_ipv6_bytes' => 'plan_ipv6_bytes',
         'state' => 'state',
-        'storage_devices' => 'storage_devices',
+//        'storage_devices' => 'storage_devices',
         'tags' => 'tags',
         'timezone' => 'timezone',
         'title' => 'title',
@@ -161,7 +161,7 @@ class Server implements ArrayAccess
         'plan_ipv4_bytes' => 'setPlanIpv4Bytes',
         'plan_ipv6_bytes' => 'setPlanIpv6Bytes',
         'state' => 'setState',
-        'storage_devices' => 'setStorageDevices',
+//        'storage_devices' => 'setStorageDevices',
         'tags' => 'setTags',
         'timezone' => 'setTimezone',
         'title' => 'setTitle',
@@ -193,7 +193,7 @@ class Server implements ArrayAccess
         'plan_ipv4_bytes' => 'getPlanIpv4Bytes',
         'plan_ipv6_bytes' => 'getPlanIpv6Bytes',
         'state' => 'getState',
-        'storage_devices' => 'getStorageDevices',
+//        'storage_devices' => 'getStorageDevices',
         'tags' => 'getTags',
         'timezone' => 'getTimezone',
         'title' => 'getTitle',
@@ -323,7 +323,7 @@ class Server implements ArrayAccess
         $this->container['plan_ipv4_bytes'] = isset($data['plan_ipv4_bytes']) ? $data['plan_ipv4_bytes'] : null;
         $this->container['plan_ipv6_bytes'] = isset($data['plan_ipv6_bytes']) ? $data['plan_ipv6_bytes'] : null;
         $this->container['state'] = isset($data['state']) ? $data['state'] : null;
-        $this->container['storage_devices'] = isset($data['storage_devices']) ? $data['storage_devices'] : null;
+//        $this->container['storage_devices'] = isset($data['storage_devices']) ? $data['storage_devices'] : null;
         $this->container['tags'] = isset($data['tags']) ? $data['tags'] : null;
         $this->container['timezone'] = isset($data['timezone']) ? $data['timezone'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
@@ -714,26 +714,26 @@ class Server implements ArrayAccess
         return $this;
     }
 
-    /**
-     * Gets storage_devices
-     * @return \Upcloud\ApiClient\Model\ServerStorageDevices
-     */
-    public function getStorageDevices()
-    {
-        return $this->container['storage_devices'];
-    }
-
-    /**
-     * Sets storage_devices
-     * @param \Upcloud\ApiClient\Model\ServerStorageDevices $storage_devices
-     * @return $this
-     */
-    public function setStorageDevices($storage_devices)
-    {
-        $this->container['storage_devices'] = $storage_devices;
-
-        return $this;
-    }
+//    /**
+//     * Gets storage_devices
+//     * @return \Upcloud\ApiClient\Model\ServerStorageDevices
+//     */
+//    public function getStorageDevices()
+//    {
+//        return $this->container['storage_devices'];
+//    }
+//
+//    /**
+//     * Sets storage_devices
+//     * @param \Upcloud\ApiClient\Model\ServerStorageDevices $storage_devices
+//     * @return $this
+//     */
+//    public function setStorageDevices($storage_devices)
+//    {
+//        $this->container['storage_devices'] = $storage_devices;
+//
+//        return $this;
+//    }
 
     /**
      * Gets tags
