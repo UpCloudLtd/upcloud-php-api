@@ -73,7 +73,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **backupStorage**
 
@@ -126,7 +126,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **cancelOperation**
 
@@ -176,7 +176,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **cloneStorage**
 
@@ -229,7 +229,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **createStorage**
 
@@ -280,7 +280,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **deleteStorage**
 
@@ -330,7 +330,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **detachStorage**
 
@@ -383,7 +383,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **ejectCdrom**
 
@@ -433,7 +433,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **favoriteStorage**
 
@@ -483,7 +483,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **getStorageDetails**
 
@@ -534,7 +534,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **listStorages**
 
@@ -583,7 +583,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **loadCdrom**
 
@@ -636,7 +636,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **modifyStorage**
 
@@ -689,7 +689,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **restoreStorage**
 
@@ -739,7 +739,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **templatizeStorage**
 
@@ -792,7 +792,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **unfavoriteStorage**
 
@@ -842,4 +842,4 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)

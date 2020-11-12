@@ -28,6 +28,6 @@ Name | Type | Description | Notes
 **simple_backup** | **string** | Simple backup time in UTC, followed by dailies, weeklies, or monthlies option separated by comma, or no when disabled. | [optional] 
 **zone** | **string** | The zone in which the server will be hosted, e.g. fi-hel1. See Zones. | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to API list]](../../README.md#documentation) [[Back to README]](../../README.md)
 
 
