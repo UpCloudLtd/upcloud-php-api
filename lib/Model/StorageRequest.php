@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-class CreateStorageResponse
+use Upcloud\ApiClient\HttpClient\UpcloudApiRequest;
+
+class StorageRequest extends UpcloudApiRequest
 {
     /**
      * @var Storage|null
      */
-    private $storage;
+    protected $storage;
 
     /**
      * Constructor
@@ -17,6 +19,7 @@ class CreateStorageResponse
      */
     public function __construct(array $data = null)
     {
+        parent::__construct();
         $this->setStorage($data['storage'] ?? null);
     }
 
@@ -30,9 +33,9 @@ class CreateStorageResponse
 
     /**
      * @param Storage|array|null $storage
-     * @return CreateStorageResponse
+     * @return $this
      */
-    public function setStorage($storage): CreateStorageResponse
+    public function setStorage($storage): self
     {
         if (is_array($storage)) {
             $this->storage = new Storage($storage);
@@ -43,5 +46,3 @@ class CreateStorageResponse
         return $this;
     }
 }
-
-

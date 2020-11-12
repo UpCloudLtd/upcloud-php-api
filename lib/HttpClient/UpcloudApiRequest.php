@@ -12,7 +12,7 @@ abstract class UpcloudApiRequest
     /**
      * @var SerializerInterface
      */
-    private $serializer;
+    protected $serializer;
 
     public function __construct(?SerializerInterface $serializer = null)
     {

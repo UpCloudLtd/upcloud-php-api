@@ -60,7 +60,7 @@ class TagApiFixture extends BaseFixture
     {
         return $this->serializer->deserialize(
             $this->getResponseBody(),
-            TagListResponse::class,
+            TagListResponse::class
         );
     }
 

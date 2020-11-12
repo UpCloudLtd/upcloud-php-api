@@ -23,7 +23,7 @@ class TimezoneApiFixture extends BaseFixture
     {
         return $this->serializer->deserialize(
             $this->getResponseBody(),
-            TimezoneListResponse::class,
+            TimezoneListResponse::class
         );
     }
 

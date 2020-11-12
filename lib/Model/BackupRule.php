@@ -1,121 +1,14 @@
 <?php
-/**
- * BackupRule
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
+declare(strict_types=1);
 
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use Webmozart\Assert\Assert;
 
-/**
- * BackupRule Class Doc Comment
- *
- * @category    Class
- * @description The backup_rule block defines when the storage device is backed up automatically.
- * @package     Upcloud\ApiClient
- */
-class BackupRule implements ArrayAccess
+class BackupRule
 {
-    const DISCRIMINATOR = null;
-
-    /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'BackupRule';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'interval' => 'string',
-        'time' => 'string',
-        'retention' => 'float'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'interval' => null,
-        'time' => null,
-        'retention' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'interval' => 'interval',
-        'time' => 'time',
-        'retention' => 'retention'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'interval' => 'setInterval',
-        'time' => 'setTime',
-        'retention' => 'setRetention'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'interval' => 'getInterval',
-        'time' => 'getTime',
-        'retention' => 'getRetention'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
     const INTERVAL_DAILY = 'daily';
     const INTERVAL_MON = 'mon';
     const INTERVAL_TUE = 'tue';
@@ -124,209 +17,101 @@ class BackupRule implements ArrayAccess
     const INTERVAL_FRI = 'fri';
     const INTERVAL_SAT = 'sat';
     const INTERVAL_SUN = 'sun';
-    
-
-    
-    /**
-     * Gets allowable values of the enum
-     * @return string[]
-     */
-    public function getIntervalAllowableValues()
-    {
-        return [
-            self::INTERVAL_DAILY,
-            self::INTERVAL_MON,
-            self::INTERVAL_TUE,
-            self::INTERVAL_WED,
-            self::INTERVAL_THU,
-            self::INTERVAL_FRI,
-            self::INTERVAL_SAT,
-            self::INTERVAL_SUN,
-        ];
-    }
-    
 
     /**
-     * Associative array for storing property values
-     * @var mixed[]
+     * @var string|null
      */
-    protected $container = [];
+    private $interval;
+
+    /**
+     * @var string|null
+     */
+    private $time;
+
+    /**
+     * @var string|float|null
+     */
+    private $retention;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['interval'] = isset($data['interval']) ? $data['interval'] : null;
-        $this->container['time'] = isset($data['time']) ? $data['time'] : null;
-        $this->container['retention'] = isset($data['retention']) ? $data['retention'] : null;
+        $this->setInterval($data['interval'] ?? null);
+        $this->time =  $data['time'] ?? null;
+        $this->retention =  $data['retention'] ?? null;
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return string|null
      */
-    public function listInvalidProperties()
+    public function getInterval(): ?string
     {
-        $invalid_properties = [];
+        return $this->interval;
+    }
 
-        $allowed_values = $this->getIntervalAllowableValues();
-        if (!in_array($this->container['interval'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'interval', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
+    /**
+     * @param string|null $interval
+     * @return BackupRule
+     */
+    public function setInterval(?string $interval): BackupRule
+    {
+        if (!is_null($interval)) {
+            Assert::oneOf($interval, [
+                self::INTERVAL_DAILY,
+                self::INTERVAL_MON,
+                self::INTERVAL_TUE,
+                self::INTERVAL_WED,
+                self::INTERVAL_THU,
+                self::INTERVAL_FRI,
+                self::INTERVAL_SAT,
+                self::INTERVAL_SUN,
+            ]);
         }
 
-        return $invalid_properties;
-    }
-
-    /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-
-        $allowed_values = $this->getIntervalAllowableValues();
-        if (!in_array($this->container['interval'], $allowed_values)) {
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
-     * Gets interval
-     * @return string
-     */
-    public function getInterval()
-    {
-        return $this->container['interval'];
-    }
-
-    /**
-     * Sets interval
-     * @param string $interval
-     * @return $this
-     */
-    public function setInterval($interval)
-    {
-        $allowed_values = $this->getIntervalAllowableValues();
-        if (!is_null($interval) && !in_array($interval, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'interval', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['interval'] = $interval;
+        $this->interval = $interval;
 
         return $this;
     }
 
     /**
-     * Gets time
-     * @return string
+     * @return string|null
      */
-    public function getTime()
+    public function getTime(): ?string
     {
-        return $this->container['time'];
+        return $this->time;
     }
 
     /**
-     * Sets time
-     * @param string $time
-     * @return $this
+     * @param string|null $time
+     * @return BackupRule
      */
-    public function setTime($time)
+    public function setTime(?string $time): BackupRule
     {
-        $this->container['time'] = $time;
+        $this->time = $time;
 
         return $this;
     }
 
     /**
-     * Gets retention
-     * @return float
+     * @return float|string|null
      */
     public function getRetention()
     {
-        return $this->container['retention'];
+        return $this->retention;
     }
 
     /**
-     * Sets retention
-     * @param float $retention
-     * @return $this
+     * @param float|string|null $retention
+     * @return BackupRule
      */
-    public function setRetention($retention)
+    public function setRetention($retention): BackupRule
     {
-        $this->container['retention'] = $retention;
+        $this->retention = $retention;
 
         return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        }
-
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 
