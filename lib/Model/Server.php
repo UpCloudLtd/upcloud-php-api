@@ -1,1033 +1,702 @@
 <?php
-/**
- * Server
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- *
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use Webmozart\Assert\Assert;
 
-/**
- * Server Class Doc Comment
- *
- * @category    Class
- * @description The server configuration defines which storage devices the server is attached to, which IP addresses can be used and how the server can be reached for remote management. A server must have at least one storage device attached in order to be started. Servers may have from zero to five public IPv4 and IPv6 addresses. All servers have a private IP address that cannot be removed.
- * @package     Upcloud\ApiClient
- */
-class Server implements ArrayAccess
+class Server
 {
-    const DISCRIMINATOR = null;
-
-    /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'Server';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'boot_order' => 'string',
-        'core_number' => 'float',
-        'firewall' => 'string',
-        'host' => 'float',
-        'hostname' => 'string',
-//        'ip_addresses' => '\Upcloud\ApiClient\Model\IpAddresses',
-        'license' => 'float',
-        'memory_amount' => 'float',
-        'nic_model' => 'string',
-        'plan' => 'string',
-        'plan_ipv4_bytes' => 'float',
-        'plan_ipv6_bytes' => 'float',
-        'state' => '\Upcloud\ApiClient\Model\ServerState',
-//        'storage_devices' => '\Upcloud\ApiClient\Model\ServerStorageDevices',
-        'tags' => '\Upcloud\ApiClient\Model\ServerTags',
-        'timezone' => 'string',
-        'title' => 'string',
-        'uuid' => 'string',
-        'video_model' => 'string',
-        'remote_access_type' => 'string',
-        'remote_access_enabled' => 'string',
-        'remote_access_password' => 'string',
-        'simple_backup' => 'string',
-        'zone' => 'string'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'boot_order' => null,
-        'core_number' => null,
-        'firewall' => null,
-        'host' => null,
-        'hostname' => null,
-//        'ip_addresses' => null,
-        'license' => null,
-        'memory_amount' => null,
-        'nic_model' => null,
-        'plan' => null,
-        'plan_ipv4_bytes' => null,
-        'plan_ipv6_bytes' => null,
-        'state' => null,
-//        'storage_devices' => null,
-        'tags' => null,
-        'timezone' => null,
-        'title' => null,
-        'uuid' => 'uuid',
-        'video_model' => null,
-        'remote_access_type' => null,
-        'remote_access_enabled' => null,
-        'remote_access_password' => null,
-        'simple_backup' => null,
-        'zone' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'boot_order' => 'boot_order',
-        'core_number' => 'core_number',
-        'firewall' => 'firewall',
-        'host' => 'host',
-        'hostname' => 'hostname',
-//        'ip_addresses' => 'ip_addresses',
-        'license' => 'license',
-        'memory_amount' => 'memory_amount',
-        'nic_model' => 'nic_model',
-        'plan' => 'plan',
-        'plan_ipv4_bytes' => 'plan_ipv4_bytes',
-        'plan_ipv6_bytes' => 'plan_ipv6_bytes',
-        'state' => 'state',
-//        'storage_devices' => 'storage_devices',
-        'tags' => 'tags',
-        'timezone' => 'timezone',
-        'title' => 'title',
-        'uuid' => 'uuid',
-        'video_model' => 'video_model',
-        'remote_access_type' => 'remote_access_type',
-        'remote_access_enabled' => 'remote_access_enabled',
-        'remote_access_password' => 'remote_access_password',
-        'simple_backup' => 'simple_backup',
-        'zone' => 'zone'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'boot_order' => 'setBootOrder',
-        'core_number' => 'setCoreNumber',
-        'firewall' => 'setFirewall',
-        'host' => 'setHost',
-        'hostname' => 'setHostname',
-//        'ip_addresses' => 'setIpAddresses',
-        'license' => 'setLicense',
-        'memory_amount' => 'setMemoryAmount',
-        'nic_model' => 'setNicModel',
-        'plan' => 'setPlan',
-        'plan_ipv4_bytes' => 'setPlanIpv4Bytes',
-        'plan_ipv6_bytes' => 'setPlanIpv6Bytes',
-        'state' => 'setState',
-//        'storage_devices' => 'setStorageDevices',
-        'tags' => 'setTags',
-        'timezone' => 'setTimezone',
-        'title' => 'setTitle',
-        'uuid' => 'setUuid',
-        'video_model' => 'setVideoModel',
-        'remote_access_type' => 'setRemoteAccessType',
-        'remote_access_enabled' => 'setRemoteAccessEnabled',
-        'remote_access_password' => 'setRemoteAccessPassword',
-        'simple_backup' => 'setSimpleBackup',
-        'zone' => 'setZone'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'boot_order' => 'getBootOrder',
-        'core_number' => 'getCoreNumber',
-        'firewall' => 'getFirewall',
-        'host' => 'getHost',
-        'hostname' => 'getHostname',
-//        'ip_addresses' => 'getIpAddresses',
-        'license' => 'getLicense',
-        'memory_amount' => 'getMemoryAmount',
-        'nic_model' => 'getNicModel',
-        'plan' => 'getPlan',
-        'plan_ipv4_bytes' => 'getPlanIpv4Bytes',
-        'plan_ipv6_bytes' => 'getPlanIpv6Bytes',
-        'state' => 'getState',
-//        'storage_devices' => 'getStorageDevices',
-        'tags' => 'getTags',
-        'timezone' => 'getTimezone',
-        'title' => 'getTitle',
-        'uuid' => 'getUuid',
-        'video_model' => 'getVideoModel',
-        'remote_access_type' => 'getRemoteAccessType',
-        'remote_access_enabled' => 'getRemoteAccessEnabled',
-        'remote_access_password' => 'getRemoteAccessPassword',
-        'simple_backup' => 'getSimpleBackup',
-        'zone' => 'getZone'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
 
     const BOOT_ORDER_DISK = 'disk';
     const BOOT_ORDER_CDROM = 'cdrom';
     const BOOT_ORDER_DISKCDROM = 'disk,cdrom';
     const BOOT_ORDER_CDROMDISK = 'cdrom,disk';
+
     const FIREWALL_ON = 'on';
     const FIREWALL_OFF = 'off';
+
     const VIDEO_MODEL_VGA = 'vga';
     const VIDEO_MODEL_CIRRUS = 'cirrus';
 
+    const NIC_MODEL_VIRTIO = 'virtio';
+    const NIC_MODEL_E1000 = 'e1000';
+    const NIC_MODEL_RTL8139 = 'rtl8139';
+
     const REMOTE_ACCESS_TYPE_VNC = 'vnc';
     const REMOTE_ACCESS_TYPE_SPICE = 'spice';
+
     const REMOTE_ACCESS_ENABLED_YES = 'yes';
     const REMOTE_ACCESS_ENABLED_NO = 'no';
 
+    /**
+     * @var string|null
+     */
+    private $bootOrder;
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var string|float|null
      */
-    public function getBootOrderAllowableValues()
-    {
-        return [
-            self::BOOT_ORDER_DISK,
-            self::BOOT_ORDER_CDROM,
-            self::BOOT_ORDER_DISKCDROM,
-            self::BOOT_ORDER_CDROMDISK,
-        ];
-    }
+    private $coreNumber;
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var string
      */
-    public function getFirewallAllowableValues()
-    {
-        return [
-            self::FIREWALL_ON,
-            self::FIREWALL_OFF,
-        ];
-    }
+    private $firewall;
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var float|string|null
      */
-    public function getVideoModelAllowableValues()
-    {
-        return [
-            self::VIDEO_MODEL_VGA,
-            self::VIDEO_MODEL_CIRRUS,
-        ];
-    }
+    private $host;
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var string|null
      */
-    public function getRemoteAccessTypeAllowableValues()
-    {
-        return [
-            self::REMOTE_ACCESS_TYPE_VNC,
-            self::REMOTE_ACCESS_TYPE_SPICE,
-        ];
-    }
+    private $hostname;
 
     /**
-     * Gets allowable values of the enum
-     * @return string[]
+     * @var IpAddresses|null
      */
-    public function getRemoteAccessEnabledValues()
-    {
-        return [
-            self::REMOTE_ACCESS_ENABLED_NO,
-            self::REMOTE_ACCESS_ENABLED_YES,
-        ];
-    }
+    private $ipAddresses;
 
     /**
-     * Associative array for storing property values
-     * @var mixed[]
+     * @var float|string|null
      */
-    protected $container = [];
+    private $license;
+
+    /**
+     * @var float|string|null
+     */
+    private $memoryAmount;
+
+    /**
+     * @var string
+     */
+    private $nicModel;
+
+    /**
+     * @var string
+     */
+    private $plan;
+
+    /**
+     * @var string|float|null
+     */
+    private $planIpv4Bytes;
+
+    /**
+     * @var string|float|null
+     */
+    private $planIpv6Bytes;
+
+    /**
+     * @var string|null
+     */
+    private $state;
+
+    /**
+     * @var ServerStorageDevices|null
+     */
+    private $storageDevices;
+
+    /**
+     * @var ServerTags|null
+     */
+    private $tags;
+
+    /**
+     * @var string|null
+     */
+    private $timezone;
+
+    /**
+     * @var string|null
+     */
+    private $title;
+
+    /**
+     * @var string|null
+     */
+    private $uuid;
+
+    /**
+     * @var string
+     */
+    private $videoModel;
+
+    /**
+     * @var string
+     */
+    private $remoteAccessType;
+
+    /**
+     * @var string
+     */
+    private $remoteAccessEnabled;
+
+    /**
+     * @var string|null
+     */
+    private $remoteAccessPassword;
+
+    /**
+     * @var string|null
+     */
+    private $simpleBackup;
+
+    /**
+     * @var string|null
+     */
+    private $zone;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
+
     public function __construct(array $data = null)
     {
-        $this->container['boot_order'] = isset($data['boot_order']) ? $data['boot_order'] : null;
-        $this->container['core_number'] = isset($data['core_number']) ? $data['core_number'] : null;
-        $this->container['firewall'] = isset($data['firewall']) ? $data['firewall'] : 'on';
-        $this->container['host'] = isset($data['host']) ? $data['host'] : null;
-        $this->container['hostname'] = isset($data['hostname']) ? $data['hostname'] : null;
-//        $this->container['ip_addresses'] = isset($data['ip_addresses']) ? $data['ip_addresses'] : null;
-        $this->container['license'] = isset($data['license']) ? $data['license'] : null;
-        $this->container['memory_amount'] = isset($data['memory_amount']) ? $data['memory_amount'] : null;
-        $this->container['nic_model'] = isset($data['nic_model']) ? $data['nic_model'] : 'virtio';
-        $this->container['plan'] = isset($data['plan']) ? $data['plan'] : 'custom';
-        $this->container['plan_ipv4_bytes'] = isset($data['plan_ipv4_bytes']) ? $data['plan_ipv4_bytes'] : null;
-        $this->container['plan_ipv6_bytes'] = isset($data['plan_ipv6_bytes']) ? $data['plan_ipv6_bytes'] : null;
-        $this->container['state'] = isset($data['state']) ? $data['state'] : null;
-//        $this->container['storage_devices'] = isset($data['storage_devices']) ? $data['storage_devices'] : null;
-        $this->container['tags'] = isset($data['tags']) ? $data['tags'] : null;
-        $this->container['timezone'] = isset($data['timezone']) ? $data['timezone'] : null;
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['uuid'] = isset($data['uuid']) ? $data['uuid'] : null;
-        $this->container['video_model'] = isset($data['video_model']) ? $data['video_model'] : 'vga';
-        $this->container['remote_access_type'] = $data['remote_access_type'] ??  'vnc';
-        $this->container['remote_access_enabled'] = $data['remote_access_enabled'] ?? 'no';
-        $this->container['remote_access_password'] = $data['remote_access_password'] ?? null;
-        $this->container['simple_backup'] = $data['simple_backup'] ?? null;
-        $this->container['zone'] = isset($data['zone']) ? $data['zone'] : null;
+        $this->setBootOrder($data['boot_order'] ?? null);
+        $this->setCoreNumber($data['core_number'] ?? null);
+        $this->setFirewall($data['firewall'] ?? self::FIREWALL_ON);
+        $this->setHost($data['host'] ?? null);
+        $this->setHostname($data['hostname'] ?? null);
+        $this->setIpAddresses($data['ip_addresses'] ?? null);
+        $this->setLicense($data['license'] ?? null);
+        $this->setMemoryAmount($data['memory_amount'] ?? null);
+        $this->setNicModel($data['nic_model'] ?? self::NIC_MODEL_VIRTIO);
+        $this->setPlan($data['plan'] ?? 'custom');
+        $this->setPlanIpv4Bytes($data['plan_ipv4_bytes'] ?? null);
+        $this->setPlanIpv6Bytes($data['plan_ipv6_bytes'] ?? null);
+        $this->setState($data['state'] ?? null);
+        $this->setStorageDevices($data['storage_devices'] ?? null);
+        $this->setTags($data['tags'] ?? null);
+        $this->setTimezone($data['timezone'] ?? null);
+        $this->setTitle($data['title'] ?? null);
+        $this->setUuid($data['uuid'] ?? null);
+        $this->setVideoModel($data['video_model'] ?? self::VIDEO_MODEL_VGA);
+        $this->setRemoteAccessType($data['remote_access_type'] ??  self::REMOTE_ACCESS_TYPE_VNC);
+        $this->setRemoteAccessEnabled($data['remote_access_enabled'] ?? self::REMOTE_ACCESS_ENABLED_NO);
+        $this->setRemoteAccessPassword($data['remote_access_password'] ?? null);
+        $this->setSimpleBackup($data['simple_backup'] ?? null);
+        $this->setZone($data['zone'] ?? null);
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return string|null
      */
-    public function listInvalidProperties()
+    public function getBootOrder(): ?string
     {
-        $invalid_properties = [];
-
-        $allowed_values = $this->getBootOrderAllowableValues();
-        if (!in_array($this->container['boot_order'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'boot_order', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        $allowed_values = $this->getFirewallAllowableValues();
-        if (!in_array($this->container['firewall'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'firewall', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        $allowed_values = $this->getVideoModelAllowableValues();
-        if (!in_array($this->container['video_model'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'video_model', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        $allowed_values = $this->getRemoteAccessEnabledValues();
-        if (!in_array($this->container['remote_access_enabled'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'remote_access_enabled', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-        $allowed_values = $this->getRemoteAccessTypeAllowableValues();
-        if (!in_array($this->container['remote_access_type'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for 'remote_access_type', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
-        }
-
-
-        return $invalid_properties;
+        return $this->bootOrder;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
+     * @param string|null $bootOrder
+     * @return Server
      */
-    public function valid()
+    public function setBootOrder(?string $bootOrder): Server
     {
-
-        $allowed_values = $this->getBootOrderAllowableValues();
-        if (!in_array($this->container['boot_order'], $allowed_values)) {
-            return false;
+        if (!is_null($bootOrder)) {
+            Assert::oneOf($bootOrder, [
+                 self::BOOT_ORDER_DISK,
+                self::BOOT_ORDER_CDROM,
+                self::BOOT_ORDER_DISKCDROM,
+                self::BOOT_ORDER_CDROMDISK
+            ]);
         }
-        $allowed_values = $this->getFirewallAllowableValues();
-        if (!in_array($this->container['firewall'], $allowed_values)) {
-            return false;
-        }
-        $allowed_values = $this->getVideoModelAllowableValues();
-        if (!in_array($this->container['video_model'], $allowed_values)) {
-            return false;
-        }
-        $allowed_values = $this->getRemoteAccessEnabledValues();
-        if (!in_array($this->container['remote_access_enabled'], $allowed_values)) {
-            return false;
-        }
-
-        $allowed_values = $this->getRemoteAccessTypeAllowableValues();
-        if (!in_array($this->container['remote_access_type'], $allowed_values)) {
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
-     * Gets boot_order
-     * @return string
-     */
-    public function getBootOrder()
-    {
-        return $this->container['boot_order'];
-    }
-
-    /**
-     * Sets boot_order
-     * @param string $boot_order The storage device boot order.
-     * @return $this
-     */
-    public function setBootOrder($boot_order)
-    {
-        $allowed_values = $this->getBootOrderAllowableValues();
-        if (!is_null($boot_order) && !in_array($boot_order, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'boot_order', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['boot_order'] = $boot_order;
+        $this->bootOrder = $bootOrder;
 
         return $this;
     }
 
     /**
-     * Gets core_number
-     * @return float
+     * @return float|string|null
      */
     public function getCoreNumber()
     {
-        return $this->container['core_number'];
+        return $this->coreNumber;
     }
 
     /**
-     * Sets core_number
-     * @param float $core_number The number of CPU cores dedicated to the server. See List server configurations.
-     * @return $this
+     * @param float|string|null $coreNumber
+     * @return Server
      */
-    public function setCoreNumber($core_number)
+    public function setCoreNumber($coreNumber): Server
     {
-        $this->container['core_number'] = $core_number;
+        $this->coreNumber = $coreNumber;
 
         return $this;
     }
 
     /**
-     * Gets firewall
      * @return string
      */
-    public function getFirewall()
+    public function getFirewall(): string
     {
-        return $this->container['firewall'];
+        return $this->firewall;
     }
 
     /**
-     * Sets firewall
-     * @param string $firewall The state of the server firewall rules.
-     * @return $this
+     * @param string $firewall
+     * @return Server
      */
-    public function setFirewall($firewall)
+    public function setFirewall(string $firewall): Server
     {
-        $allowed_values = $this->getFirewallAllowableValues();
-        if (!is_null($firewall) && !in_array($firewall, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'firewall', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['firewall'] = $firewall;
+        Assert::oneOf($firewall, [
+            self::FIREWALL_ON,
+            self::FIREWALL_OFF
+        ]);
+
+        $this->firewall = $firewall;
 
         return $this;
     }
 
     /**
-     * Gets host
-     * @return float
+     * @return float|string|null
      */
     public function getHost()
     {
-        return $this->container['host'];
+        return $this->host;
     }
 
     /**
-     * Sets host
-     * @param float $host
-     * @return $this
+     * @param float|string|null $host
+     * @return Server
      */
-    public function setHost($host)
+    public function setHost($host): Server
     {
-        $this->container['host'] = $host;
+        $this->host = $host;
 
         return $this;
     }
 
     /**
-     * Gets hostname
-     * @return string
+     * @return string|null
      */
-    public function getHostname()
+    public function getHostname(): ?string
     {
-        return $this->container['hostname'];
+        return $this->hostname;
     }
 
     /**
-     * Sets hostname
-     * @param string $hostname A valid hostname, e.g. host.example.com. The maximum length is 128 characters.
-     * @return $this
+     * @param string|null $hostname
+     * @return Server
      */
-    public function setHostname($hostname)
+    public function setHostname(?string $hostname): Server
     {
-        $this->container['hostname'] = $hostname;
+        $this->hostname = $hostname;
 
         return $this;
     }
 
-//    /**
-//     * Gets ip_addresses
-//     * @return \Upcloud\ApiClient\Model\IpAddresses
-//     */
-//    public function getIpAddresses()
-//    {
-//        return $this->container['ip_addresses'];
-//    }
-//
-//    /**
-//     * Sets ip_addresses
-//     * @param \Upcloud\ApiClient\Model\IpAddresses $ip_addresses
-//     * @return $this
-//     */
-//    public function setIpAddresses($ip_addresses)
-//    {
-//        $this->container['ip_addresses'] = $ip_addresses;
-//
-//        return $this;
-//    }
+    /**
+     * @return IpAddresses|null
+     */
+    public function getIpAddresses(): ?IpAddresses
+    {
+        return $this->ipAddresses;
+    }
 
     /**
-     * Gets license
-     * @return float
+     * @param IpAddresses|array|null $ipAddresses
+     * @return Server
+     */
+    public function setIpAddresses($ipAddresses): Server
+    {
+        if (is_array($ipAddresses)) {
+            $this->ipAddresses = new IpAddresses($ipAddresses);
+        } else {
+            $this->ipAddresses = $ipAddresses;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return float|string|null
      */
     public function getLicense()
     {
-        return $this->container['license'];
+        return $this->license;
     }
 
     /**
-     * Sets license
-     * @param float $license
-     * @return $this
+     * @param float|string|null $license
+     * @return Server
      */
-    public function setLicense($license)
+    public function setLicense($license): Server
     {
-        $this->container['license'] = $license;
+        $this->license = $license;
 
         return $this;
     }
 
     /**
-     * Gets memory_amount
-     * @return float
+     * @return float|string|null
      */
     public function getMemoryAmount()
     {
-        return $this->container['memory_amount'];
+        return $this->memoryAmount;
     }
 
     /**
-     * Sets memory_amount
-     * @param float $memory_amount The amount of main memory in megabytes. See List server configurations.
-     * @return $this
+     * @param float|string|null $memoryAmount
+     * @return Server
      */
-    public function setMemoryAmount($memory_amount)
+    public function setMemoryAmount($memoryAmount): Server
     {
-        $this->container['memory_amount'] = $memory_amount;
+        $this->memoryAmount = $memoryAmount;
 
         return $this;
     }
 
     /**
-     * Gets nic_model
      * @return string
      */
-    public function getNicModel()
+    public function getNicModel(): string
     {
-        return $this->container['nic_model'];
+        return $this->nicModel;
     }
 
     /**
-     * Sets nic_model
-     * @param string $nic_model The model of the server's network interfaces.
-     * @return $this
+     * @param string $nicModel
+     * @return Server
      */
-    public function setNicModel($nic_model)
+    public function setNicModel(string $nicModel): Server
     {
-        $this->container['nic_model'] = $nic_model;
+        Assert::oneOf($nicModel, [
+            self::NIC_MODEL_VIRTIO,
+            self::NIC_MODEL_E1000,
+            self::NIC_MODEL_RTL8139
+        ]);
+
+        $this->nicModel = $nicModel;
 
         return $this;
     }
 
     /**
-     * Gets plan
      * @return string
      */
-    public function getPlan()
+    public function getPlan(): string
     {
-        return $this->container['plan'];
+        return $this->plan;
     }
 
     /**
-     * Sets plan
-     * @param string $plan The pricing plan used. If a plan is selected, the core_number and  memory_amount must match the plan if they are present.
-     * @return $this
+     * @param string $plan
+     * @return Server
      */
-    public function setPlan($plan)
+    public function setPlan(string $plan): Server
     {
-        $this->container['plan'] = $plan;
+        $this->plan = $plan;
 
         return $this;
     }
 
     /**
-     * Gets plan_ipv4_bytes
-     * @return float
+     * @return float|string|null
      */
     public function getPlanIpv4Bytes()
     {
-        return $this->container['plan_ipv4_bytes'];
+        return $this->planIpv4Bytes;
     }
 
     /**
-     * Sets plan_ipv4_bytes
-     * @param float $plan_ipv4_bytes
-     * @return $this
+     * @param float|string|null $planIpv4Bytes
+     * @return Server
      */
-    public function setPlanIpv4Bytes($plan_ipv4_bytes)
+    public function setPlanIpv4Bytes($planIpv4Bytes): Server
     {
-        $this->container['plan_ipv4_bytes'] = $plan_ipv4_bytes;
+        $this->planIpv4Bytes = $planIpv4Bytes;
 
         return $this;
     }
 
     /**
-     * Gets plan_ipv6_bytes
-     * @return float
+     * @return float|string|null
      */
     public function getPlanIpv6Bytes()
     {
-        return $this->container['plan_ipv6_bytes'];
+        return $this->planIpv6Bytes;
     }
 
     /**
-     * Sets plan_ipv6_bytes
-     * @param float $plan_ipv6_bytes
-     * @return $this
+     * @param float|string|null $planIpv6Bytes
+     * @return Server
      */
-    public function setPlanIpv6Bytes($plan_ipv6_bytes)
+    public function setPlanIpv6Bytes($planIpv6Bytes): Server
     {
-        $this->container['plan_ipv6_bytes'] = $plan_ipv6_bytes;
+        $this->planIpv6Bytes = $planIpv6Bytes;
 
         return $this;
     }
 
     /**
-     * Gets state
-     * @return \Upcloud\ApiClient\Model\ServerState
+     * @return string|null
      */
-    public function getState()
+    public function getState(): ?string
     {
-        return $this->container['state'];
+        return $this->state;
     }
 
     /**
-     * Sets state
-     * @param \Upcloud\ApiClient\Model\ServerState $state
-     * @return $this
+     * @param string|null $state
+     * @return Server
      */
-    public function setState($state)
+    public function setState(?string $state): Server
     {
-        $this->container['state'] = $state;
-
-        return $this;
-    }
-
-//    /**
-//     * Gets storage_devices
-//     * @return \Upcloud\ApiClient\Model\ServerStorageDevices
-//     */
-//    public function getStorageDevices()
-//    {
-//        return $this->container['storage_devices'];
-//    }
-//
-//    /**
-//     * Sets storage_devices
-//     * @param \Upcloud\ApiClient\Model\ServerStorageDevices $storage_devices
-//     * @return $this
-//     */
-//    public function setStorageDevices($storage_devices)
-//    {
-//        $this->container['storage_devices'] = $storage_devices;
-//
-//        return $this;
-//    }
-
-    /**
-     * Gets tags
-     * @return \Upcloud\ApiClient\Model\ServerTags
-     */
-    public function getTags()
-    {
-        return $this->container['tags'];
-    }
-
-    /**
-     * Sets tags
-     * @param \Upcloud\ApiClient\Model\ServerTags $tags
-     * @return $this
-     */
-    public function setTags($tags)
-    {
-        $this->container['tags'] = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Gets timezone
-     * @return string
-     */
-    public function getTimezone()
-    {
-        return $this->container['timezone'];
-    }
-
-    /**
-     * Sets timezone
-     * @param string $timezone A timezone identifier, e.g. Europe/Helsinki. See Timezones.
-     * @return $this
-     */
-    public function setTimezone($timezone)
-    {
-        $this->container['timezone'] = $timezone;
-
-        return $this;
-    }
-
-    /**
-     * Gets title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->container['title'];
-    }
-
-    /**
-     * Sets title
-     * @param string $title A short description.
-     * @return $this
-     */
-    public function setTitle($title)
-    {
-        $this->container['title'] = $title;
-
-        return $this;
-    }
-
-    /**
-     * Gets uuid
-     * @return string
-     */
-    public function getUuid()
-    {
-        return $this->container['uuid'];
-    }
-
-    /**
-     * Sets uuid
-     * @param string $uuid
-     * @return $this
-     */
-    public function setUuid($uuid)
-    {
-        $this->container['uuid'] = $uuid;
-
-        return $this;
-    }
-
-    /**
-     * Gets video_model
-     * @return string
-     */
-    public function getVideoModel()
-    {
-        return $this->container['video_model'];
-    }
-
-    /**
-     * Sets video_model
-     * @param string $video_model The model of the server's video interface.
-     * @return $this
-     */
-    public function setVideoModel($video_model)
-    {
-        $allowed_values = $this->getVideoModelAllowableValues();
-        if (!is_null($video_model) && !in_array($video_model, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'video_model', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
+        if (!is_null($state)) {
+            Assert::oneOf($state, ServerState::getAllowableEnumValues());
         }
-        $this->container['video_model'] = $video_model;
+
+        $this->state = $state;
 
         return $this;
     }
 
     /**
-     * Gets remote_access_type
-     * @return string
+     * @return ServerStorageDevices|null
      */
-    public function getRemoteAccessType()
+    public function getStorageDevices(): ?ServerStorageDevices
     {
-        return $this->container['remote_access_type'];
+        return $this->storageDevices;
     }
 
     /**
-     * Sets remote_access_type
-     * @param string $remote_access_type
-     * @return $this
+     * @param ServerStorageDevices|array|null $storageDevices
+     * @return Server
      */
-    public function setRemoteAccessType($remote_access_type)
+    public function setStorageDevices($storageDevices): Server
     {
-        $allowed_values = $this->getRemoteAccessTypeAllowableValues();
-        if (!is_null($remote_access_type) && !in_array($remote_access_type, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'remote_access_type', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['remote_access_type'] = $remote_access_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets remote_access_enabled
-     * @return string
-     */
-    public function getRemoteAccessEnabled()
-    {
-        return $this->container['remote_access_enabled'];
-    }
-
-    /**
-     * Sets remote_access_enabled
-     * @param string $remote_access_enabled
-     * @return $this
-     */
-    public function setRemoteAccessEnabled($remote_access_enabled)
-    {
-        $allowed_values = $this->getRemoteAccessEnabledValues();
-        if (!is_null($remote_access_enabled) && !in_array($remote_access_enabled, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'remote_access_enabled', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
-        }
-        $this->container['remote_access_enabled'] = $remote_access_enabled;
-
-        return $this;
-    }
-
-    /**
-     * Gets remote_access_password
-     * @return string
-     */
-    public function getRemoteAccessPassword()
-    {
-        return $this->container['remote_access_password'];
-    }
-
-    /**
-     * Sets remote_access_password
-     * @param string $remote_access_password
-     * @return $this
-     */
-    public function setRemoteAccessPassword($remote_access_password)
-    {
-        $this->container['remote_access_password'] = $remote_access_password;
-
-        return $this;
-    }
-
-    /**
-     * Gets simple_backup
-     * @return string
-     */
-    public function getSimpleBackup()
-    {
-        return $this->container['simple_backup'];
-    }
-
-    /**
-     * Sets simple_backup
-     * @param string $simple_backup
-     * @return $this
-     */
-    public function setSimpleBackup($simple_backup)
-    {
-        $this->container['simple_backup'] = $simple_backup;
-
-        return $this;
-    }
-
-    /**
-     * Gets zone
-     * @return string
-     */
-    public function getZone()
-    {
-        return $this->container['zone'];
-    }
-
-    /**
-     * Sets zone
-     * @param string $zone
-     * @return $this
-     */
-    public function setZone($zone)
-    {
-        $this->container['zone'] = $zone;
-
-        return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
+        if (is_array($storageDevices)) {
+            $this->storageDevices = new ServerStorageDevices($storageDevices);
         } else {
-            $this->container[$offset] = $value;
+            $this->storageDevices = $storageDevices;
         }
+
+        return $this;
     }
 
     /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
+     * @return ServerTags|null
      */
-    public function offsetUnset($offset)
+    public function getTags(): ?ServerTags
     {
-        unset($this->container[$offset]);
+        return $this->tags;
     }
 
     /**
-     * Gets the string presentation of the object
+     * @param ServerTags|array|null $tags
+     * @return Server
+     */
+    public function setTags($tags): Server
+    {
+        if (is_array($tags)) {
+            $this->tags = new ServerTags($tags);
+        } else {
+            $this->tags = $tags;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param string|null $timezone
+     * @return Server
+     */
+    public function setTimezone(?string $timezone): Server
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string|null $title
+     * @return Server
+     */
+    public function setTitle(?string $title): Server
+    {
+        if (!is_null($title)) {
+            Assert::maxLength($title, 64);
+        }
+
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param string|null $uuid
+     * @return Server
+     */
+    public function setUuid(?string $uuid): Server
+    {
+        if (!is_null($uuid)) {
+            Assert::uuid($uuid);
+        }
+
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function __toString()
+    public function getVideoModel(): string
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        }
-
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
+        return $this->videoModel;
     }
+
+    /**
+     * @param string $videoModel
+     * @return Server
+     */
+    public function setVideoModel(string $videoModel): Server
+    {
+        Assert::oneOf($videoModel, [
+             self::VIDEO_MODEL_VGA,
+            self::VIDEO_MODEL_CIRRUS
+        ]);
+
+        $this->videoModel = $videoModel;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRemoteAccessType(): string
+    {
+        return $this->remoteAccessType;
+    }
+
+    /**
+     * @param string $remoteAccessType
+     * @return Server
+     */
+    public function setRemoteAccessType(string $remoteAccessType): Server
+    {
+        Assert::oneOf($remoteAccessType, [
+            self::REMOTE_ACCESS_TYPE_VNC,
+            self::REMOTE_ACCESS_TYPE_SPICE
+        ]);
+
+        $this->remoteAccessType = $remoteAccessType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRemoteAccessEnabled(): string
+    {
+        return $this->remoteAccessEnabled;
+    }
+
+    /**
+     * @param string $remoteAccessEnabled
+     * @return Server
+     */
+    public function setRemoteAccessEnabled(string $remoteAccessEnabled): Server
+    {
+        Assert::oneOf($remoteAccessEnabled, [
+            self::REMOTE_ACCESS_ENABLED_YES,
+            self::REMOTE_ACCESS_ENABLED_NO
+        ]);
+
+        $this->remoteAccessEnabled = $remoteAccessEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRemoteAccessPassword(): ?string
+    {
+        return $this->remoteAccessPassword;
+    }
+
+    /**
+     * @param string|null $remoteAccessPassword
+     * @return Server
+     */
+    public function setRemoteAccessPassword(?string $remoteAccessPassword): Server
+    {
+        $this->remoteAccessPassword = $remoteAccessPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSimpleBackup(): ?string
+    {
+        return $this->simpleBackup;
+    }
+
+    /**
+     * @param string|null $simpleBackup
+     * @return Server
+     */
+    public function setSimpleBackup(?string $simpleBackup): Server
+    {
+        $this->simpleBackup = $simpleBackup;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getZone(): ?string
+    {
+        return $this->zone;
+    }
+
+    /**
+     * @param string|null $zone
+     * @return Server
+     */
+    public function setZone(?string $zone): Server
+    {
+        $this->zone = $zone;
+
+        return $this;
+    }
+
 }
 
 

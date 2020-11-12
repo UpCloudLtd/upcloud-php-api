@@ -109,11 +109,7 @@ class ServerApiTest extends BaseApiTest
 
         foreach ($list as $key => $item) {
             $this->assertInstanceOf(Server::class, $item);
-            $fixtureItem = $fixtureList[$key];
-
-            foreach ($item->getters() as $property => $getter) {
-                $this->assertEquals($item->$getter(), $fixtureItem->$getter());
-            }
+            $this->assertEquals($item, $fixtureList[$key]);
         }
     }
 
@@ -121,6 +117,7 @@ class ServerApiTest extends BaseApiTest
     {
         $fakeResponse = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBodyByIndex());
         $fakeRequest = $this->fixture->getCreateRequest();
+
         $this->mock
             ->shouldReceive('send')
             ->once()

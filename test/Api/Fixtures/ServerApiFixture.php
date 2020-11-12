@@ -10,9 +10,8 @@ use Upcloud\ApiClient\Model\ModifyServerRequest;
 use Upcloud\ApiClient\Model\RestartServer;
 use Upcloud\ApiClient\Model\ServerListResponse;
 use Upcloud\ApiClient\Model\StopServer;
-use Upcloud\ApiClient\ObjectSerializer;
 
-class ServerApiFixture
+class ServerApiFixture extends BaseFixture
 {
     /**
      * @return string
@@ -52,10 +51,9 @@ class ServerApiFixture
         /**
          * @var ServerListResponse $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBody()),
-            ServerListResponse::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBody(),
+            ServerListResponse::class
         );
         return $request;
     }
@@ -68,10 +66,9 @@ class ServerApiFixture
         /**
          * @var ConfigurationListResponse $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseConfigBody()),
-            ConfigurationListResponse::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseConfigBody(),
+            ConfigurationListResponse::class
         );
         return $request;
     }
@@ -86,10 +83,9 @@ class ServerApiFixture
         /**
          * @var CreateServerRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($index)),
-            CreateServerRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($index),
+            CreateServerRequest::class
         );
         return $request;
     }
@@ -104,10 +100,9 @@ class ServerApiFixture
         /**
          * @var ModifyServerRequest $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode($this->getResponseBodyByIndex($index)),
-            ModifyServerRequest::class,
-            []
+        $request = $this->serializer->deserialize(
+            $this->getResponseBodyByIndex($index),
+            ModifyServerRequest::class
         );
         return $request;
     }
@@ -120,10 +115,9 @@ class ServerApiFixture
         /**
          * @var StopServer $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode('{"stop_server": {"stop_type": "soft","timeout": "60"}}'),
-            StopServer::class,
-            []
+        $request = $this->serializer->deserialize(
+            '{"stop_server": {"stop_type": "soft","timeout": "600"}}',
+            StopServer::class
         );
         return $request;
     }
@@ -135,10 +129,9 @@ class ServerApiFixture
         /**
          * @var RestartServer $request
          */
-        $request = ObjectSerializer::deserialize(
-            json_decode('{"restart_server": {"stop_type": "soft","timeout": "60","timeout_action": "destroy"}}'),
-            RestartServer::class,
-            []
+        $request = $this->serializer->deserialize(
+            '{"restart_server": {"stop_type": "soft","timeout": "60", "timeout_action": "destroy"}}',
+            RestartServer::class
         );
         return $request;
     }

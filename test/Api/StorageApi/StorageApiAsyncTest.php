@@ -108,7 +108,7 @@ class StorageApiAsyncTest extends BaseApiTest
         }
     }
 
-    public function testThrowsExceptionOnListStoragesWithType(): void
+    public function testThrowsExceptionOnListStoragesWithTypeAsync(): void
     {
 
         $response = new Response(200, $this->fakeHeadersAsArray, $this->fixture->getResponseBody());
@@ -126,7 +126,7 @@ class StorageApiAsyncTest extends BaseApiTest
             ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
 
 
-        $this->api->listStorages('normals');
+        $this->api->listStoragesAsync('normals')->wait();
     }
 
     public function testGetStorageDetailsAsync(): void
@@ -240,8 +240,8 @@ class StorageApiAsyncTest extends BaseApiTest
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(CreateServerResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Server::class, $server = $result->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnAttachStorageAsync(): void
@@ -281,8 +281,8 @@ class StorageApiAsyncTest extends BaseApiTest
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(CreateServerResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Server::class, $server = $result->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertNotEquals($storageDevice[0]->getAddress(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertNotEquals($storageDevice[0]->getAddress(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnDetachStorageAsync(): void
@@ -322,8 +322,8 @@ class StorageApiAsyncTest extends BaseApiTest
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(CreateServerResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Server::class, $server = $result->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnLoadCdromAsync(): void

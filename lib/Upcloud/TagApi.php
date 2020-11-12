@@ -15,7 +15,6 @@ use Upcloud\ApiClient\Model\CreateServerResponse;
 use Upcloud\ApiClient\Model\ModifyTagRequest;
 use Upcloud\ApiClient\Model\TagCreateRequest;
 use Upcloud\ApiClient\Model\TagListResponse;
-use Upcloud\ApiClient\Serializer;
 
 /**
  * TagApi Class Doc Comment
@@ -134,7 +133,7 @@ class TagApi extends BaseApi
         $request = new Request('POST', 'tag', [], $tag);
         $response = $this->client->send($request);
 
-        return $response->setSerializer(new Serializer)->toArray(CreateNewTagResponse::class);
+        return $response->toArray(CreateNewTagResponse::class);
     }
 
     /**
@@ -167,7 +166,7 @@ class TagApi extends BaseApi
         $request = new Request('POST', 'tag', [], $tag);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->setSerializer(new Serializer)->toArray(CreateNewTagResponse::class);
+            return $response->toArray(CreateNewTagResponse::class);
         });
     }
 
@@ -269,7 +268,7 @@ class TagApi extends BaseApi
         $request = new Request('GET', 'tag');
 
         $response = $this->client->send($request);
-        return $response->setSerializer(new Serializer)->toArray(TagListResponse::class);
+        return $response->toArray(TagListResponse::class);
     }
 
     /**
@@ -300,7 +299,7 @@ class TagApi extends BaseApi
         $request = new Request('GET', 'tag');
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->setSerializer(new Serializer)->toArray(TagListResponse::class);
+            return $response->toArray(TagListResponse::class);
         });
     }
 
@@ -339,7 +338,7 @@ class TagApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->setSerializer(new Serializer)->toArray(CreateNewTagResponse::class);
+        return $response->toArray(CreateNewTagResponse::class);
     }
 
     /**
@@ -375,7 +374,7 @@ class TagApi extends BaseApi
         $request = new Request('PUT', $url, [], $tag);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->setSerializer(new Serializer)->toArray(CreateNewTagResponse::class);
+            return $response->toArray(CreateNewTagResponse::class);
         });
     }
 
