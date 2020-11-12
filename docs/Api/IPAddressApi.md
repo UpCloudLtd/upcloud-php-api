@@ -59,7 +59,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **deleteIp**
 
