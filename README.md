@@ -143,6 +143,11 @@ Class | Method | HTTP request | Description
 *IPAddressApi* | [**getDetails**](docs/Api/IPAddressApi.md#getdetails) | **GET** /ip_address/{ip} | Get IP address details
 *IPAddressApi* | [**listIps**](docs/Api/IPAddressApi.md#listips) | **GET** /ip_address | List IP addresses
 *IPAddressApi* | [**modifyIp**](docs/Api/IPAddressApi.md#modifyip) | **PUT** /ip_address/{ip} | Modify IP address
+*ObjectStorageApi* | [**getListObjectStorage**](docs/Api/ObjectStorageApi.md#getlistobjectstorage) | **GET** /object-storage    | List all Object Storage  
+*ObjectStorageApi* | [**getObjectStorageDetails**](docs/Api/ObjectStorageApi.md#getobjectstoragedetails) | **GET** /object-storage/{uuid} | Get Object Storage details 
+*ObjectStorageApi* | [**createObjectStorage**](docs/Api/ObjectStorageApi.md#createobjectstorage)     | **POST** /object-storage | Create a new  Object Storage 
+*ObjectStorageApi* | [**modifyObjectStorage**](docs/Api/ObjectStorageApi.md#modifyobjectstorage)     | **PATCH** /object-storage/{id} | Modify Object Storage 
+*ObjectStorageApi* | [**deleteObjectStorage**](docs/Api/ObjectStorageApi.md#deleteobjectstorage)     | **DELETE** /object-storage/{id} | Release Object Storage 
 *HostsApi* | [**getListHosts**](docs/Api/HostsApi.md#getlisthosts) | **GET** /host | List of available hosts
 *HostsApi* | [**getHostDetails**](docs/Api/HostsApi.md#gethostdetails) | **GET** /host/{id} | Get detailed information about a specific host
 *HostsApi* | [**modifyHost**](docs/Api/HostsApi.md#modifyhost) | **PATCH** /host/{id} | Modify specific host
@@ -232,6 +237,7 @@ Class | Method | HTTP request | Description
  - [ModifyStorageRequest](docs/Model/ModifyStorageRequest.md)
  - [ModifyTagRequest](docs/Model/ModifyTagRequest.md)
  - [NetworkInterface](docs/Model/NetworkInterface.md)
+ - [ObjectStorage](docs/Model/ObjectStorage.md)
  - [Plan](docs/Model/Plan.md)
  - [Price](docs/Model/Price.md)
  - [PriceListResponse](docs/Model/PriceListResponse.md)
