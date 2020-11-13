@@ -27,8 +27,8 @@ class Account
      */
     public function __construct(array $data = null)
     {
-        $this->credits  = $data['credits'] ?? null;
-        $this->username = $data['username'] ?? null;
+        $this->setCredits($data['credits'] ?? null);
+        $this->setUsername($data['username'] ?? null);
         $this->setResourceLimits($data['resource_limits'] ?? null);
     }
 
