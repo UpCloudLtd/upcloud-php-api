@@ -143,6 +143,9 @@ Class | Method | HTTP request | Description
 *IPAddressApi* | [**getDetails**](docs/Api/IPAddressApi.md#getdetails) | **GET** /ip_address/{ip} | Get IP address details
 *IPAddressApi* | [**listIps**](docs/Api/IPAddressApi.md#listips) | **GET** /ip_address | List IP addresses
 *IPAddressApi* | [**modifyIp**](docs/Api/IPAddressApi.md#modifyip) | **PUT** /ip_address/{ip} | Modify IP address
+*HostsApi* | [**getListHosts**](docs/Api/HostsApi.md#getlisthosts) | **GET** /host | List of available hosts
+*HostsApi* | [**getHostDetails**](docs/Api/HostsApi.md#gethostdetails) | **GET** /host/{id} | Get detailed information about a specific host
+*HostsApi* | [**modifyHost**](docs/Api/HostsApi.md#modifyhost) | **PATCH** /host/{id} | Modify specific host
 *PlanApi* | [**listPlans**](docs/Api/PlanApi.md#listplans) | **GET** /plan | List available plans
 *PricesApi* | [**listPrices**](docs/Api/PricesApi.md#listprices) | **GET** /price | List prices
 *ServerApi* | [**assignTag**](docs/Api/ServerApi.md#assigntag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
@@ -220,6 +223,7 @@ Class | Method | HTTP request | Description
  - [FirewallRuleListResponse](docs/Model/FirewallRuleListResponse.md)
  - [FirewallRuleListResponseFirewallRules](docs/Model/FirewallRuleListResponseFirewallRules.md)
  - [FirewallRuleRequest](docs/Model/FirewallRuleRequest.md)
+ - [Host](docs/Model/Host.md)
  - [IpAddress](docs/Model/IpAddress.md)
  - [IpAddressListResponse](docs/Model/IpAddressListResponse.md)
  - [IpAddresses](docs/Model/IpAddresses.md)
@@ -242,6 +246,7 @@ Class | Method | HTTP request | Description
  - [ServerState](docs/Model/ServerState.md)
  - [ServerStorageDevices](docs/Model/ServerStorageDevices.md)
  - [ServerTags](docs/Model/ServerTags.md)
+ - [Stat](docs/Model/Stat.md)
  - [StopServer](docs/Model/StopServer.md)
  - [StopServerRequest](docs/Model/StopServerRequest.md)
  - [Storage](docs/Model/Storage.md)
