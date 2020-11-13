@@ -557,9 +557,9 @@ class StorageApi extends BaseApi
      * @param string $serverId Server id (required)
      * @throws ApiException  on non-2xx response
      * @throws InvalidArgumentException|GuzzleException
-     * @return void
+     * @return CreateServerResponse
      */
-    public function ejectCdrom(string $serverId): void
+    public function ejectCdrom(string $serverId): CreateServerResponse
     {
         $this->ejectCdromWithHttpInfo($serverId);
     }
@@ -572,7 +572,7 @@ class StorageApi extends BaseApi
      * @param string $serverId Server id (required)
      * @throws ApiException  on non-2xx response
      * @throws InvalidArgumentException|GuzzleException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function ejectCdromWithHttpInfo(string $serverId): array
     {
@@ -581,7 +581,7 @@ class StorageApi extends BaseApi
 
         $response = $this->client->send($request);
 
-        return $response->toArray();
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -615,7 +615,7 @@ class StorageApi extends BaseApi
         $request = new Request('POST', $url);
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
-            return $response->toArray();
+            return $response->toArray(CreateServerResponse::class);
         });
     }
 
