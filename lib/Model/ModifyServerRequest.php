@@ -12,8 +12,9 @@ class ModifyServerRequest extends ServerRequest
     {
         return $this->serializer->serialize($this, 'json', [
             AbstractNormalizer::IGNORED_ATTRIBUTES => [
-                'host', 'ipAddresses', 'license', 'planIpv4Bytes', 'planIpv6Bytes',
-                'state', 'storageDevices', 'tags', 'uuid', 'zone'
+                'avoidHost', 'host', 'networking', 'loginUser', 'ipAddresses', 'license', 'metadata',
+                'passwordDelivery', 'planIpv4Bytes', 'planIpv6Bytes', 'state', 'storageDevices',
+                'tags', 'uuid', 'userData', 'zone'
             ]
         ]);
     }

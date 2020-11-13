@@ -263,6 +263,52 @@ class ServerApiFixture extends BaseFixture
                         'title' => 'Test London server',
                         'uuid' => '009d64ef-31d1-4684-a26b-c86c955cbf46',
                         'zone' => 'uk-lon1',
+                        "login_user" => [
+                            "username" => "upclouduser",
+                            "ssh_keys" => [
+                                "ssh_key" => [
+                                    "ssh-rsa AAAAB3NzaC1yc2EAA[...]ptshi44x user@some.host",
+                                    "ssh-dss AAAAB3NzaC1kc3MAA[...]VHRzAA== someuser@some.other.host"
+                                ]
+                            ]
+                        ],
+                        'ip_addresses' => [
+                            'ip_address' => [
+                                [
+                                    'access' => 'utility',
+                                    'address' => '10.0.0.00',
+                                    'family' => 'IPv4'
+                                ],
+                                [
+                                    'access' => 'public',
+                                    'address' => '0.0.0.0',
+                                    'family' => 'IPv4'
+                                ],
+                                [
+                                    'access' => 'public',
+                                    'address' => 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx',
+                                    'family' => 'IPv6'
+                                ]
+                            ]
+                        ],
+                        "networking" => [
+                            "interfaces" => [
+                                "interface" => [
+                                    [
+                                        "ip_addresses" => ["ip_address" => [["family" => "IPv4"]]],
+                                        "type" => "public"
+                                    ],
+                                    [
+                                        "ip_addresses" => ["ip_address" => [["family" => "IPv4"]]],
+                                        "type" => "utility"
+                                    ],
+                                    [
+                                        "ip_addresses" => ["ip_address" => [["family" => "IPv6"]]],
+                                        "type" => "public"
+                                    ]
+                                ]
+                            ]
+                        ]
                     ],
                     [
                         'title' => 'Test Modify server',

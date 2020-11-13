@@ -30,6 +30,18 @@ class Server
     const REMOTE_ACCESS_ENABLED_YES = 'yes';
     const REMOTE_ACCESS_ENABLED_NO = 'no';
 
+    const METADATA_YES = 'yes';
+    const METADATA_NO = 'no';
+
+    const PASSWORD_DELIVERY_NONE = 'none';
+    const PASSWORD_DELIVERY_EMAIL = 'email';
+    const PASSWORD_DELIVERY_SMS = 'sms';
+
+    /**
+     * @var string|float|null
+     */
+    private $avoidHost;
+
     /**
      * @var string|null
      */
@@ -56,6 +68,16 @@ class Server
     private $hostname;
 
     /**
+     * @var NetworkInterfaceList|null
+     */
+    private $networking;
+
+    /**
+     * @var ServerLoginUser|null
+     */
+    private $loginUser;
+
+    /**
      * @var IpAddresses|null
      */
     private $ipAddresses;
@@ -71,9 +93,19 @@ class Server
     private $memoryAmount;
 
     /**
+     * @var string|null
+     */
+    private $metadata;
+
+    /**
      * @var string
      */
     private $nicModel;
+
+    /**
+     * @var string|null
+     */
+    private $passwordDelivery;
 
     /**
      * @var string
@@ -121,6 +153,11 @@ class Server
     private $uuid;
 
     /**
+     * @var string|null
+     */
+    private $userData;
+
+    /**
      * @var string
      */
     private $videoModel;
@@ -157,15 +194,20 @@ class Server
 
     public function __construct(array $data = null)
     {
+        $this->setAvoidHost($data['avoid_host'] ?? null);
         $this->setBootOrder($data['boot_order'] ?? null);
         $this->setCoreNumber($data['core_number'] ?? null);
         $this->setFirewall($data['firewall'] ?? self::FIREWALL_ON);
         $this->setHost($data['host'] ?? null);
         $this->setHostname($data['hostname'] ?? null);
+        $this->setNetworking($data['networking'] ?? null);
+        $this->setLoginUser($data['login_user'] ?? null);
         $this->setIpAddresses($data['ip_addresses'] ?? null);
         $this->setLicense($data['license'] ?? null);
         $this->setMemoryAmount($data['memory_amount'] ?? null);
+        $this->setMetadata($data['metadata'] ?? null);
         $this->setNicModel($data['nic_model'] ?? self::NIC_MODEL_VIRTIO);
+        $this->setPasswordDelivery($data['password_delivery'] ?? null);
         $this->setPlan($data['plan'] ?? 'custom');
         $this->setPlanIpv4Bytes($data['plan_ipv4_bytes'] ?? null);
         $this->setPlanIpv6Bytes($data['plan_ipv6_bytes'] ?? null);
@@ -175,12 +217,32 @@ class Server
         $this->setTimezone($data['timezone'] ?? null);
         $this->setTitle($data['title'] ?? null);
         $this->setUuid($data['uuid'] ?? null);
+        $this->setUserData($data['user_data'] ?? null);
         $this->setVideoModel($data['video_model'] ?? self::VIDEO_MODEL_VGA);
         $this->setRemoteAccessType($data['remote_access_type'] ??  self::REMOTE_ACCESS_TYPE_VNC);
         $this->setRemoteAccessEnabled($data['remote_access_enabled'] ?? self::REMOTE_ACCESS_ENABLED_NO);
         $this->setRemoteAccessPassword($data['remote_access_password'] ?? null);
         $this->setSimpleBackup($data['simple_backup'] ?? null);
         $this->setZone($data['zone'] ?? null);
+    }
+
+    /**
+     * @return float|string|null
+     */
+    public function getAvoidHost()
+    {
+        return $this->avoidHost;
+    }
+
+    /**
+     * @param float|string|null $avoidHost
+     * @return Server
+     */
+    public function setAvoidHost($avoidHost): Server
+    {
+        $this->avoidHost = $avoidHost;
+
+        return $this;
     }
 
     /**
@@ -292,6 +354,51 @@ class Server
     }
 
     /**
+     * @return NetworkInterfaceList|null
+     */
+    public function getNetworking(): ?NetworkInterfaceList
+    {
+        return $this->networking;
+    }
+
+    /**
+     * @param NetworkInterfaceList|array|null $networking
+     * @return Server
+     */
+    public function setNetworking($networking): Server
+    {
+        if (is_array($networking)) {
+            $this->networking = new NetworkInterfaceList($networking);
+        } else {
+            $this->networking = $networking;
+        }
+        return $this;
+    }
+
+    /**
+     * @return ServerLoginUser|null
+     */
+    public function getLoginUser(): ?ServerLoginUser
+    {
+        return $this->loginUser;
+    }
+
+    /**
+     * @param ServerLoginUser|array|null $loginUser
+     * @return Server
+     */
+    public function setLoginUser($loginUser): Server
+    {
+        if (is_array($loginUser)) {
+            $this->loginUser = new ServerLoginUser($loginUser);
+        } else {
+            $this->loginUser = $loginUser;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return IpAddresses|null
      */
     public function getIpAddresses(): ?IpAddresses
@@ -353,6 +460,31 @@ class Server
     }
 
     /**
+     * @return string|null
+     */
+    public function getMetadata(): ?string
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @param string|null $metadata
+     * @return Server
+     */
+    public function setMetadata(?string $metadata): Server
+    {
+        if (!is_null($metadata)) {
+            Assert::oneOf($metadata, [
+                self::METADATA_YES,
+                self::METADATA_NO
+            ]);
+        }
+        $this->metadata = $metadata;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getNicModel(): string
@@ -373,6 +505,33 @@ class Server
         ]);
 
         $this->nicModel = $nicModel;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPasswordDelivery(): ?string
+    {
+        return $this->passwordDelivery;
+    }
+
+    /**
+     * @param string|null $passwordDelivery
+     * @return Server
+     */
+    public function setPasswordDelivery(?string $passwordDelivery): Server
+    {
+        if (!is_null($passwordDelivery)) {
+            Assert::oneOf($passwordDelivery, [
+                self::PASSWORD_DELIVERY_NONE,
+                self::PASSWORD_DELIVERY_EMAIL,
+                self::PASSWORD_DELIVERY_SMS
+            ]);
+        }
+
+        $this->passwordDelivery = $passwordDelivery;
 
         return $this;
     }
@@ -564,6 +723,25 @@ class Server
         }
 
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUserData(): ?string
+    {
+        return $this->userData;
+    }
+
+    /**
+     * @param string|null $userData
+     * @return Server
+     */
+    public function setUserData(?string $userData): Server
+    {
+        $this->userData = $userData;
 
         return $this;
     }
