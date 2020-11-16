@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-class StorageServers
+class Servers
 {
     /**
      * @var string[]|null
@@ -30,9 +30,9 @@ class StorageServers
 
     /**
      * @param string[]|null $server
-     * @return StorageServers
+     * @return Servers
      */
-    public function setServer(?array $server): StorageServers
+    public function setServer(?array $server): Servers
     {
         if (is_array($server)) {
             foreach ($server as $item) {

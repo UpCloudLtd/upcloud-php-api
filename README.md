@@ -143,6 +143,20 @@ Class | Method | HTTP request | Description
 *IPAddressApi* | [**getDetails**](docs/Api/IPAddressApi.md#getdetails) | **GET** /ip_address/{ip} | Get IP address details
 *IPAddressApi* | [**listIps**](docs/Api/IPAddressApi.md#listips) | **GET** /ip_address | List IP addresses
 *IPAddressApi* | [**modifyIp**](docs/Api/IPAddressApi.md#modifyip) | **PUT** /ip_address/{ip} | Modify IP address
+*NetworkApi* | [**getListNetworks**](docs/Api/NetworkApi.md#getlistnetworks) | **GET** /network    | List all Networks  |
+*NetworkApi* | [**getNetworkDetails**](docs/Api/NetworkApi.md#getnetworkdetails) | **GET** /network/{uuid} | Get Network details |
+*NetworkApi* | [**createNetwork**](docs/Api/NetworkApi.md#createnetwork)     | **POST** /network | Create a new SDN private network |
+*NetworkApi* | [**modifyNetwork**](docs/Api/NetworkApi.md#modifynetwork)     | **PUT** /network/{id} | Modify a specific SDN private network |
+*NetworkApi* | [**deleteNetwork**](docs/Api/NetworkApi.md#deletenetwork)     | **DELETE** /network/{id} | Delete a SDN private network |
+*NetworkApi* | [**getListServerNetworks**](docs/Api/NetworkApi.md#getlistservernetworks) | **GET** server/{server_id}/networking    | List all Networks  |
+*NetworkApi* | [**createNetworkInterface**](docs/Api/NetworkApi.md#createnetworkinterface) | **POST** server/{server}/networking/interface | Create a new network interface |
+*NetworkApi* | [**modifyNetworkInterface**](docs/Api/NetworkApi.md#modifynetworkinterface)     | **PUT** /network/{id} | Modify network interface |
+*NetworkApi* | [**deleteNetworkInterface**](docs/Api/NetworkApi.md#deletenetworkinterface)     | **DELETE** /network/{id} | Delete network interface |
+*NetworkApi* | [**getListRouters**](docs/Api/NetworkApi.md#getlistrouters) | **GET** /router    | List of all available routers  |
+*NetworkApi* | [**getRouterDetails**](docs/Api/NetworkApi.md#getrouterdetails) | **GET** /router/{uuid} | Get router details |
+*NetworkApi* | [**createRouter**](docs/Api/NetworkApi.md#createrouter) | **POST** /router | Create a new router |
+*NetworkApi* | [**modifyRouter**](docs/Api/NetworkApi.md#modifyrouter)     | **PUT** /router/{id} | Modify an existing router |
+*NetworkApi* | [**deleteRouter**](docs/Api/NetworkApi.md#deleterouter)     | **DELETE** /router/{id} | Delete an existing router |
 *ObjectStorageApi* | [**getListObjectStorage**](docs/Api/ObjectStorageApi.md#getlistobjectstorage) | **GET** /object-storage    | List all Object Storage  
 *ObjectStorageApi* | [**getObjectStorageDetails**](docs/Api/ObjectStorageApi.md#getobjectstoragedetails) | **GET** /object-storage/{uuid} | Get Object Storage details 
 *ObjectStorageApi* | [**createObjectStorage**](docs/Api/ObjectStorageApi.md#createobjectstorage)     | **POST** /object-storage | Create a new  Object Storage 
@@ -206,6 +220,7 @@ Class | Method | HTTP request | Description
  - [AccountResponse](docs/Model/AccountResponse.md)
  - [AddIpRequest](docs/Model/AddIpRequest.md)
  - [AssignIpResponse](docs/Model/AssignIpResponse.md)
+ - [AttachNetwork](docs/Model/AttachNetwork.md)
  - [AttachStorageDeviceRequest](docs/Model/AttachStorageDeviceRequest.md)
  - [AvailablePlanListResponse](docs/Model/AvailablePlanListResponse.md)
  - [AvailablePlanListResponsePlans](docs/Model/AvailablePlanListResponsePlans.md)
@@ -232,10 +247,12 @@ Class | Method | HTTP request | Description
  - [IpAddress](docs/Model/IpAddress.md)
  - [IpAddressListResponse](docs/Model/IpAddressListResponse.md)
  - [IpAddresses](docs/Model/IpAddresses.md)
+ - [IpNetwork](docs/Model/IpNetwork.md)
  - [ModifyIpRequest](docs/Model/ModifyIpRequest.md)
  - [ModifyServerRequest](docs/Model/ModifyServerRequest.md)
  - [ModifyStorageRequest](docs/Model/ModifyStorageRequest.md)
  - [ModifyTagRequest](docs/Model/ModifyTagRequest.md)
+ - [Network](docs/Model/Network.md)
  - [NetworkInterface](docs/Model/NetworkInterface.md)
  - [ObjectStorage](docs/Model/ObjectStorage.md)
  - [Plan](docs/Model/Plan.md)
@@ -244,6 +261,7 @@ Class | Method | HTTP request | Description
  - [PriceListResponsePrices](docs/Model/PriceListResponsePrices.md)
  - [PriceZone](docs/Model/PriceZone.md)
  - [RestartServer](docs/Model/RestartServer.md)
+ - [Router](docs/Model/Router.md)
  - [Server](docs/Model/Server.md)
  - [ServerListResponse](docs/Model/ServerListResponse.md)
  - [ServerListResponseServers](docs/Model/ServerListResponseServers.md)
@@ -261,7 +279,7 @@ Class | Method | HTTP request | Description
  - [StorageDevice](docs/Model/StorageDevice.md)
  - [StorageDeviceDetachRequest](docs/Model/StorageDeviceDetachRequest.md)
  - [StorageDeviceLoadRequest](docs/Model/StorageDeviceLoadRequest.md)
- - [StorageServers](docs/Model/StorageServers.md)
+ - [Servers](docs/Model/Servers.md)
  - [StorageState](docs/Model/StorageState.md)
  - [StorageTier](docs/Model/StorageTier.md)
  - [StorageType](docs/Model/StorageType.md)

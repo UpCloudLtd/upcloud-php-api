@@ -30,7 +30,7 @@ class Storage
     private $license;
 
     /**
-     * @var StorageServers|null
+     * @var Servers|null
      */
     private $servers;
 
@@ -190,21 +190,21 @@ class Storage
     }
 
     /**
-     * @return StorageServers|null
+     * @return Servers|null
      */
-    public function getServers(): ?StorageServers
+    public function getServers(): ?Servers
     {
         return $this->servers;
     }
 
     /**
-     * @param StorageServers|array|null $servers
+     * @param Servers|array|null $servers
      * @return Storage
      */
     public function setServers($servers): Storage
     {
         if (is_array($servers)) {
-            $this->servers = new StorageServers($servers);
+            $this->servers = new Servers($servers);
         } else {
             $this->servers = $servers;
         }
