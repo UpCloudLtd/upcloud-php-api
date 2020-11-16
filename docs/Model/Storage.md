@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **backup_rule** | [**\Upcloud\ApiClient\Model\BackupRule**](BackupRule.md) |  | [optional] 
 **backups** | [**\Upcloud\ApiClient\Model\StorageBackups**](StorageBackups.md) |  | [optional] 
 **license** | **float** |  | [optional] 
-**servers** | [**\Upcloud\ApiClient\Model\StorageServers**](StorageServers.md) |  | [optional] 
+**servers** | [**\Upcloud\ApiClient\Model\Servers**](Servers.md) |  | [optional] 
 **size** | **float** |  | [optional] 
 **state** | [**\Upcloud\ApiClient\Model\StorageState**](StorageState.md) |  | [optional] 
 **tier** | [**\Upcloud\ApiClient\Model\StorageTier**](StorageTier.md) |  | [optional] 

@@ -29,7 +29,7 @@ class NetworkInterface
     private $type;
 
     /**
-     * @var float|string|null
+     * @var int|null
      */
     private $index;
 
@@ -119,18 +119,18 @@ class NetworkInterface
     }
 
     /**
-     * @return float|string|null
+     * @return int|null
      */
-    public function getIndex()
+    public function getIndex(): ?int
     {
         return $this->index;
     }
 
     /**
-     * @param float|string|null $index
+     * @param int|null $index
      * @return NetworkInterface
      */
-    public function setIndex($index): NetworkInterface
+    public function setIndex(?int $index): NetworkInterface
     {
         $this->index = $index;
 
