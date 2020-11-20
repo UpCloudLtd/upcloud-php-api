@@ -18,7 +18,8 @@
     "guzzlehttp/guzzle": "^7.1",
     "symfony/serializer": "^5.1",
     "symfony/property-access": "^5.1",
-    "webmozart/assert": "^1.9"
+    "webmozart/assert": "^1.9",
+    "doctrine/annotations": "^1.11"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.5.8",
