@@ -36,7 +36,7 @@ class TagListResponseTags
     {
         if (is_array($tag)) {
             foreach ($tag as $item) {
-                $this->tag[] = new Tag($item);
+                $this->tag[] = $item instanceof Tag ? $item : new Tag($item);
             }
         } else {
             $this->tag = $tag;

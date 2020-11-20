@@ -36,7 +36,9 @@ class AvailablePlanListResponsePlans
     {
         if (is_array($plan)) {
             foreach ($plan as $item) {
-                $this->plan[] = new Plan($item);
+                $this->plan[] = $item instanceof Plan
+                ? $item
+                : new Plan($item);
             }
         } else {
             $this->plan = $plan;
@@ -44,7 +46,4 @@ class AvailablePlanListResponsePlans
 
         return $this;
     }
-
 }
-
-

@@ -36,7 +36,9 @@ class FirewallRuleListResponseFirewallRules
     {
         if (is_array($firewallRule)) {
             foreach ($firewallRule as $item) {
-                $this->firewallRule[] = new FirewallRule($item);
+                $this->firewallRule[] = $item instanceof FirewallRule
+                ? $item
+                : new FirewallRule($item);
             }
         } else {
             $this->firewallRule = $firewallRule;

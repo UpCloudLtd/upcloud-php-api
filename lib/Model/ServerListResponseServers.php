@@ -36,7 +36,7 @@ class ServerListResponseServers
     {
         if (is_array($server)) {
             foreach ($server as $item) {
-                $this->server[] = new Server($item);
+                $this->server[] = $item instanceof Server ? $item : new Server($item);
             }
         } else {
             $this->server = $server;
