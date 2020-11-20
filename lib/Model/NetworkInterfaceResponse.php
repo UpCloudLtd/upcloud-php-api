@@ -35,7 +35,9 @@ class NetworkInterfaceResponse
     public function setInterface(?array $interface): NetworkInterfaceResponse
     {
         if (is_array($interface)) {
-                $this->interface[] = new NetworkInterface($interface);
+                $this->interface[] = $interface instanceof NetworkInterface
+                    ? $interface
+                    : new NetworkInterface($interface);
         } else {
             $this->interface = $interface;
         }

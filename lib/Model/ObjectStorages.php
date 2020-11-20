@@ -36,7 +36,7 @@ class ObjectStorages
     {
         if (is_array($objectStorage)) {
             foreach ($objectStorage as $item) {
-                $this->objectStorage[] = new ObjectStorage($item);
+                $this->objectStorage[] = $item instanceof ObjectStorage ? $item : new ObjectStorage($item);
             }
         } else {
             $this->objectStorage = $objectStorage;

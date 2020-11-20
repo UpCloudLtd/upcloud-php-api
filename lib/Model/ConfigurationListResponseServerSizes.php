@@ -36,7 +36,9 @@ class ConfigurationListResponseServerSizes
     {
         if (is_array($serverSize)) {
             foreach ($serverSize as $item) {
-                $this->serverSize[] = new ServerSize($item);
+                $this->serverSize[] = $item instanceof ServerSize
+                ? $item
+                : new ServerSize($item);
             }
         } else {
             $this->serverSize = $serverSize;
@@ -44,7 +46,4 @@ class ConfigurationListResponseServerSizes
 
         return $this;
     }
-
 }
-
-

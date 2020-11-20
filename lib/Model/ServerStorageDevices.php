@@ -36,7 +36,7 @@ class ServerStorageDevices
     {
         if (is_array($storageDevice)) {
             foreach ($storageDevice as $item) {
-                $this->storageDevice[] = new StorageDevice($item);
+                $this->storageDevice[] = $item instanceof StorageDevice ? $item : new StorageDevice($item);
             }
         } else {
             $this->storageDevice = $storageDevice;

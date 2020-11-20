@@ -36,7 +36,7 @@ class SuccessStoragesResponseStorages
     {
         if (is_array($storage)) {
             foreach ($storage as $item) {
-                $this->storage[] = new Storage($item);
+                $this->storage[] = $item instanceof Storage ? $item : new Storage($item);
             }
         } else {
             $this->storage = $storage;

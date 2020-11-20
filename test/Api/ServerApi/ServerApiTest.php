@@ -473,8 +473,8 @@ class ServerApiTest extends BaseApiTest
         $this->assertInstanceOf(CreateServerResponse::class, $response);
         $this->assertInstanceOf(Server::class, $server = $response->getServer());
 
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnAttachStorage(): void
@@ -520,8 +520,8 @@ class ServerApiTest extends BaseApiTest
         $response = $this->api->detachStorage($this->serverId, $fakeRequest);
         $this->assertInstanceOf(CreateServerResponse::class, $response);
         $this->assertInstanceOf(Server::class, $server = $response->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertNotEquals($storageDevice[0]->getAddress(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertNotEquals($storageDevice[0]->getAddress(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnDetachStorage(): void
@@ -568,8 +568,8 @@ class ServerApiTest extends BaseApiTest
 
         $this->assertInstanceOf(CreateServerResponse::class, $response);
         $this->assertInstanceOf(Server::class, $server = $response->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnLoadCdrom(): void

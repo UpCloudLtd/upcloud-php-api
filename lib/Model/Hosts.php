@@ -36,7 +36,9 @@ class Hosts
     {
         if (is_array($host)) {
             foreach ($host as $item) {
-                $this->host[] = new Host($item);
+                $this->host[] = $item instanceof Host
+                    ? $item
+                    : new Host($item);
             }
         } else {
             $this->host = $host;

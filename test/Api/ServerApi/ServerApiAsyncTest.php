@@ -495,8 +495,8 @@ class ServerApiAsyncTest extends BaseApiTest
 
         $this->assertInstanceOf(Server::class, $server = $result->getServer());
 
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnAttachStorageAsync(): void
@@ -544,8 +544,8 @@ class ServerApiAsyncTest extends BaseApiTest
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(CreateServerResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Server::class, $server = $result->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertNotEquals($storageDevice[0]->getAddress(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertNotEquals($storageDevice[0]->getAddress(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnDetachStorageAsync(): void
@@ -593,8 +593,8 @@ class ServerApiAsyncTest extends BaseApiTest
         $this->assertInstanceOf(PromiseInterface::class, $promise);
         $this->assertInstanceOf(CreateServerResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Server::class, $server = $result->getServer());
-//        $storageDevice = $server->getStorageDevices()->getStorageDevice();
-//        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
+        $storageDevice = $server->getStorageDevices()->getStorageDevice();
+        $this->assertEquals($storageDevice[0]->getStorage(), $fakeRequest->getStorageDevice()->getStorage());
     }
 
     public function testThrowsExceptionOnLoadCdromAsync(): void
@@ -806,25 +806,5 @@ class ServerApiAsyncTest extends BaseApiTest
         $this->assertInstanceOf(CreateServerResponse::class, $result = $promise->wait());
         $this->assertInstanceOf(Server::class, $result->getServer());
         $this->assertNotContains('DEV', $result->getServer()->getTags()->getTag());
-    }
-
-    public function testThrowsExceptionOnUntagAsync(): void
-    {
-        $this->expectException(ApiException::class);
-        $this->expectExceptionCode(400);
-        $request = new Request(
-            'POST',
-            $this->url . 'server/'.$this->serverId. '/untag/TEST',
-            $this->fakeHeadersAsArray
-        );
-
-        $response = new Response(400, $this->fakeHeadersAsArray);
-
-        $this->mock
-            ->shouldReceive('sendAsync')
-            ->once()
-            ->andReturn(Promise\Create::rejectionFor(new RequestException('Bad Request', $request, $response)));
-
-        $this->api->assignTagAsync($this->serverId, 'TEST')->wait();
     }
 }

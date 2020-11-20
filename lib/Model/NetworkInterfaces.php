@@ -36,7 +36,7 @@ class NetworkInterfaces
     {
         if (is_array($interface)) {
             foreach ($interface as $item) {
-                $this->interface[] = new NetworkInterface($item);
+                $this->interface[] = $item instanceof NetworkInterface ? $item : new NetworkInterface($item);
             }
         } else {
             $this->interface = $interface;

@@ -110,7 +110,7 @@ $storage->setAction('clone');
 $storage->setTitle('php-test-storage');
 
 $storage_devices = new Upcloud\ApiClient\Model\ServerStorageDevices();
-$storage_devices->setStorageDevice($storage);
+$storage_devices->setStorageDevice([$storage]);
 
 $server->setStorageDevices($storage_devices);
 

@@ -36,7 +36,7 @@ class ZoneListResponseZones
     {
         if (is_array($zone)) {
             foreach ($zone as $item) {
-                $this->zone[] = new Zone($item);
+                $this->zone[] = $item instanceof Zone ? $item : new Zone($item);
             }
         } else {
             $this->zone = $zone;

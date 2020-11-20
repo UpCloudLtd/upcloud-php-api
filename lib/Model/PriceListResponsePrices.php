@@ -36,7 +36,9 @@ class PriceListResponsePrices
     {
         if (is_array($zone)) {
             foreach ($zone as $item) {
-                $this->zone[] = new PriceZone($item);
+                $this->zone[] = $item instanceof PriceZone
+                ? $item
+                : new PriceZone($item);
             }
         } else {
             $this->zone = $zone;

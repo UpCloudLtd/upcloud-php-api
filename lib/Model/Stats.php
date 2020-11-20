@@ -37,7 +37,7 @@ class Stats
     {
         if (is_array($stat)) {
             foreach ($stat as $item) {
-                $this->stat[] = new Stat($item);
+                $this->stat[] = $item instanceof Stat ? $item : new Stat($item);
             }
         } else {
             $this->stat = $stat;

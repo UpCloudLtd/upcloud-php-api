@@ -37,7 +37,9 @@ class IpAddresses
     {
         if (is_array($ipAddress)) {
             foreach ($ipAddress as $address) {
-                $this->ipAddress[] = new IpAddress($address);
+                $this->ipAddress[] = $address instanceof IpAddress
+                        ? $address
+                        : new IpAddress($address);
             }
         } else {
             $this->ipAddress = $ipAddress;
