@@ -62,7 +62,7 @@ class Configuration
      *
      * @var string
      */
-    protected $userAgent = 'Upcloud-Sdk/1.3/php';
+    protected $userAgent = 'upcloud-php-api/v1.0.3';
 
     /**
      * Debug switch (default set to false).

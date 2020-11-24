@@ -104,7 +104,7 @@ $server->setHostname('phptest');
 $server->setPlan('1xCPU-1GB');
 
 $storage = new Upcloud\ApiClient\Model\StorageDevice();
-$storage->setStorage('01000000-0000-4000-8000-000030040200');
+$storage->setStorage('01000000-0000-4000-8000-000030060200');
 $storage->setSize(50.0);
 $storage->setAction('clone');
 $storage->setTitle('php-test-storage');
