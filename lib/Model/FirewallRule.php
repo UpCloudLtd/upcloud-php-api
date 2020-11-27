@@ -25,12 +25,12 @@ class FirewallRule
     const FAMILY_IP_V6 = 'IPv6';
 
     /**
-     * @var string
+     * @var string|null
      */
     private $direction;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $action;
 
@@ -40,7 +40,7 @@ class FirewallRule
     private $position;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $family;
 
@@ -105,27 +105,29 @@ class FirewallRule
      */
     public function __construct(array $data = null)
     {
-        $this->setDirection($data['direction'] ?? null);
-        $this->setAction($data['action'] ?? null);
-        $this->setPosition($data['position'] ?? null);
-        $this->setFamily($data['family'] ?? null);
-        $this->setProtocol($data['protocol'] ?? null);
-        $this->setIcmpType($data['icmp_type'] ?? null);
-        $this->setDestinationAddressStart($data['destination_address_start'] ?? null);
-        $this->setDestinationAddressEnd($data['destination_address_end'] ?? null);
-        $this->setDestinationPortStart($data['destination_port_start'] ?? null);
-        $this->setDestinationPortEnd($data['destination_port_end'] ?? null);
-        $this->setSourceAddressStart($data['source_address_start'] ?? null);
-        $this->setSourceAddressEnd($data['source_address_end'] ?? null);
-        $this->setSourcePortStart($data['source_port_start'] ?? null);
-        $this->setSourcePortEnd($data['source_port_end'] ?? null);
-        $this->setComment($data['comment'] ?? null);
+        if ($data) {
+            $this->setDirection($data['direction'] ?? null);
+            $this->setAction($data['action'] ?? null);
+            $this->setPosition($data['position'] ?? null);
+            $this->setFamily($data['family'] ?? null);
+            $this->setProtocol($data['protocol'] ?? null);
+            $this->setIcmpType($data['icmp_type'] ?? null);
+            $this->setDestinationAddressStart($data['destination_address_start'] ?? null);
+            $this->setDestinationAddressEnd($data['destination_address_end'] ?? null);
+            $this->setDestinationPortStart($data['destination_port_start'] ?? null);
+            $this->setDestinationPortEnd($data['destination_port_end'] ?? null);
+            $this->setSourceAddressStart($data['source_address_start'] ?? null);
+            $this->setSourceAddressEnd($data['source_address_end'] ?? null);
+            $this->setSourcePortStart($data['source_port_start'] ?? null);
+            $this->setSourcePortEnd($data['source_port_end'] ?? null);
+            $this->setComment($data['comment'] ?? null);
+        }
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDirection(): string
+    public function getDirection(): ?string
     {
         return $this->direction;
     }
@@ -148,9 +150,9 @@ class FirewallRule
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         return $this->action;
     }
@@ -196,9 +198,9 @@ class FirewallRule
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFamily(): string
+    public function getFamily(): ?string
     {
         return $this->family;
     }
