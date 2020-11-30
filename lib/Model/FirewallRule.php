@@ -235,11 +235,13 @@ class FirewallRule
      */
     public function setProtocol(?string $protocol): FirewallRule
     {
-        Assert::oneOf($protocol, [
-            self::PROTOCOL_TCP,
-            self::PROTOCOL_UDP,
-            self::PROTOCOL_ICMP
-        ]);
+        if (!is_null($protocol)) {
+            Assert::oneOf($protocol, [
+                self::PROTOCOL_TCP,
+                self::PROTOCOL_UDP,
+                self::PROTOCOL_ICMP
+            ]);
+        }
 
         $this->protocol = $protocol;
 
