@@ -159,7 +159,7 @@ class FirewallApiFixture extends BaseFixture
                        "family" => "IPv4",
                        "icmp_type" => "8",
                        "position" => "4",
-                       "protocol" => "icmp",
+                       "protocol" => null,
                    ]
                ]
            ]
