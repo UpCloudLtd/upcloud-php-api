@@ -51,10 +51,9 @@ To run the unit tests:
 
 ```
 composer install
-UPCLOUD_API_TEST_USER=user UPCLOUD_API_TEST_PASSWORD=pass ./vendor/bin/phpunit
-```
 
-Note: You need to supply an UpCloud account's details to run the tests. The tests will create/modify/delete servers under this account in the actual UpCloud environment, so please use a test account.
+./vendor/bin/phpunit
+```
 
 ## Usage
 
