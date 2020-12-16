@@ -574,7 +574,8 @@ class ServerApi extends BaseApi
      */
     public function ejectCdrom(string $serverId): CreateServerResponse
     {
-        $this->ejectCdromWithHttpInfo($serverId);
+        list($response) = $this->ejectCdromWithHttpInfo($serverId);
+        return $response;
     }
 
     /**
