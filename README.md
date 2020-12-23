@@ -1,6 +1,6 @@
 # UpCloud PHP API client library
 
-[![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-php-api.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-php-api)
+![UpCloud php api test](https://github.com/UpCloudLtd/upcloud-php-api/workflows/UpCloud%20php%20api%20test/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/upcloudltd/upcloud-php-api/v/stable)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
 [![License](https://poser.pugx.org/upcloudltd/upcloud-php-api/license)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
 [![Total Downloads](https://poser.pugx.org/upcloudltd/upcloud-php-api/downloads)](https://packagist.org/packages/upcloudltd/upcloud-php-api)
