@@ -1,0 +1,39 @@
+name: UpCloud php api test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  Build:
+    strategy:
+      matrix:
+        os-php-versions: [ 
+          { os: ubuntu-16.04, php: 5.6 },
+          { os: ubuntu-16.04, php: 7.0 },
+          { os: ubuntu-latest, php: 7.1 },
+          { os: ubuntu-latest, php: 7.2 }
+        ]
+    runs-on: ${{ matrix.os-php-versions.os }}
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version:  ${{ matrix.os-php-versions.php }}
+      - uses: actions/checkout@v2
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      # TODO: enable once fixed and updated
+      # - name: run unit tests
+      #   run: vendor/bin/phpunit
+      #   env: 
+      #     xdebug.max_nesting_level: 512
+      #     UPCLOUD_API_TEST_USER: ${{ secrets.UPCLOUD_API_TEST_USER }}
+      #     UPCLOUD_API_TEST_PASSWORD: ${{ secrets.UPCLOUD_API_TEST_PASSWORD }}
