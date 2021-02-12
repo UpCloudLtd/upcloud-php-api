@@ -19,7 +19,6 @@ use Upcloud\ApiClient\Model\CreateStorageResponse;
 use Upcloud\ApiClient\Model\ModifyStorageRequest;
 use Upcloud\ApiClient\Model\StorageDeviceDetachRequest;
 use Upcloud\ApiClient\Model\StorageDeviceLoadRequest;
-use Upcloud\ApiClient\Model\StorageType;
 use Upcloud\ApiClient\Model\SuccessStoragesResponse;
 use Upcloud\ApiClient\Model\TemplitizeStorageRequest;
 use Webmozart\Assert\Assert;
@@ -32,6 +31,31 @@ use Webmozart\Assert\Assert;
  */
 class StorageApi extends BaseApi
 {
+    const CDROM = 'cdrom';
+    const TEMPLATE = 'template';
+    const BACKUP = 'backup';
+    const NORMAL = 'normal';
+    const PUBLIC = 'public';
+    const PRIVATE = 'private';
+    const FAVORITE = 'favorite';
+
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public static function getAllowableStorageType()
+    {
+        return [
+            self::CDROM,
+            self::TEMPLATE,
+            self::BACKUP,
+            self::NORMAL,
+            self::PUBLIC,
+            self::PRIVATE,
+            self::FAVORITE
+        ];
+    }
+
     /**
      * Operation attachStorage
      *
@@ -869,7 +893,7 @@ class StorageApi extends BaseApi
     public function listStoragesWithHttpInfo(?string $type = null): array
     {
         if ($type) {
-            Assert::oneOf($type, StorageType::getAllowableEnumValues());
+            Assert::oneOf($type, self::getAllowableStorageType());
             $url = $this->buildPath('storage/{type}', compact('type'));
         } else {
             $url ='storage';
@@ -910,7 +934,7 @@ class StorageApi extends BaseApi
     public function listStoragesAsyncWithHttpInfo(?string $type = null): PromiseInterface
     {
         if ($type) {
-            Assert::oneOf($type, StorageType::getAllowableEnumValues());
+            Assert::oneOf($type, self::getAllowableStorageType());
             $url = $this->buildPath('storage/{type}', compact('type'));
         } else {
             $url ='storage';

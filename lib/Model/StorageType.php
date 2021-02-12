@@ -14,9 +14,6 @@ class StorageType
     const TEMPLATE = 'template';
     const BACKUP = 'backup';
     const NORMAL = 'normal';
-    const PUBLIC = 'public';
-    const PRIVATE = 'private';
-    const FAVORITE = 'favorite';
 
     /**
      * Gets allowable values of the enum
@@ -30,9 +27,6 @@ class StorageType
             self::TEMPLATE,
             self::BACKUP,
             self::NORMAL,
-            self::PUBLIC,
-            self::PRIVATE,
-            self::FAVORITE
         ];
     }
 }
