@@ -9,6 +9,8 @@ This PHP API client library provides integration with the UpCloud API allowing o
 
 The base URL for all API operations is  https://api.upcloud.com/ and require basic authentication using UpCloud username and password. We recommend [creating a subaccount](https://www.upcloud.com/support/server-tags-and-group-accounts/) dedicated for the API communication for security purposes. This allows you to restrict API access by servers, storages, and tags ensuring you will never accidentally affect critical systems.
 
+NOTE: Please test all of your use cases thoroughly before actual production use. Using a separate UpCloud account for testing / developing the client is recommended.
+
 ## Table of content
 * [Installation](#installation)
 * [Usage](#usage)
@@ -28,7 +30,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
 ```
 {
   "require": {
-    "upcloudltd/upcloud-php-api": "v1.0.3"
+    "upcloudltd/upcloud-php-api": "v2.0.0"
   }
 }
 ```
