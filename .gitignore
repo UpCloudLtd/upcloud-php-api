@@ -2,3 +2,5 @@ vendor
 .DS_Store
 git_push.sh
 .vscode
+/phpunit.xml
+/composer.lock

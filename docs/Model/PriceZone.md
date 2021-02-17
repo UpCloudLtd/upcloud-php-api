@@ -22,6 +22,6 @@ Name | Type | Description | Notes
 **server_plan_1x_cpu_1_gb** | [**\Upcloud\ApiClient\Model\Price**](Price.md) |  | [optional] 
 **server_plan_2x_cpu_2_gb** | [**\Upcloud\ApiClient\Model\Price**](Price.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to API list]](../../README.md#documentation) [[Back to README]](../../README.md)
 
 

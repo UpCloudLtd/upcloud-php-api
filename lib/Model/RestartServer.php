@@ -1,232 +1,50 @@
 <?php
-/**
- * RestartServer
- *
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Model;
 
-use \ArrayAccess;
+use Upcloud\ApiClient\HttpClient\UpcloudApiRequest;
 
-/**
- * RestartServer Class Doc Comment
- *
- * @category    Class
- * @package     Upcloud\ApiClient
- */
-class RestartServer implements ArrayAccess
+class RestartServer extends UpcloudApiRequest
 {
-    const DISCRIMINATOR = null;
-
     /**
-      * The original name of the model.
-      * @var string
-      */
-    protected static $swaggerModelName = 'restartServer';
-
-    /**
-      * Array of property to type mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerTypes = [
-        'restart_server' => '\Upcloud\ApiClient\Model\RestartServerRequest'
-    ];
-
-    /**
-      * Array of property to format mappings. Used for (de)serialization
-      * @var string[]
-      */
-    protected static $swaggerFormats = [
-        'restart_server' => null
-    ];
-
-    public static function swaggerTypes()
-    {
-        return self::$swaggerTypes;
-    }
-
-    public static function swaggerFormats()
-    {
-        return self::$swaggerFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     * @var string[]
+     * @var RestartServerRequest
      */
-    protected static $attributeMap = [
-        'restart_server' => 'restart_server'
-    ];
-
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     * @var string[]
-     */
-    protected static $setters = [
-        'restart_server' => 'setRestartServer'
-    ];
-
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     * @var string[]
-     */
-    protected static $getters = [
-        'restart_server' => 'getRestartServer'
-    ];
-
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    
-
-    
-
-    /**
-     * Associative array for storing property values
-     * @var mixed[]
-     */
-    protected $container = [];
+    private $restartServer;
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data
      */
     public function __construct(array $data = null)
     {
-        $this->container['restart_server'] = isset($data['restart_server']) 
-            ? $data['restart_server']
-            : new \Upcloud\ApiClient\Model\RestartServerRequest(); // If the user sets no values, populate request with default arguments
+        parent::__construct();
+        $this->restartServer = $data['restart_server'] ??
+             new RestartServerRequest;
     }
 
     /**
-     * show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
+     * @return RestartServerRequest
      */
-    public function listInvalidProperties()
+    public function getRestartServer(): RestartServerRequest
     {
-        $invalid_properties = [];
-
-        return $invalid_properties;
+        return $this->restartServer;
     }
 
     /**
-     * validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
+     * @param RestartServerRequest|array $restartServer
+     * @return RestartServer
      */
-    public function valid()
+    public function setRestartServer($restartServer): RestartServer
     {
-
-        return true;
-    }
-
-
-    /**
-     * Gets restart_server
-     * @return \Upcloud\ApiClient\Model\RestartServerRequest
-     */
-    public function getRestartServer()
-    {
-        return $this->container['restart_server'];
-    }
-
-    /**
-     * Sets restart_server
-     * @param \Upcloud\ApiClient\Model\RestartServerRequest $restart_server
-     * @return $this
-     */
-    public function setRestartServer($restart_server)
-    {
-        $this->container['restart_server'] = $restart_server;
+        if (is_array($restartServer)) {
+            $this->restartServer = new RestartServerRequest($restartServer);
+        } else {
+            $this->restartServer = $restartServer;
+        }
 
         return $this;
-    }
-    /**
-     * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     * @param  integer $offset Offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
-
-    /**
-     * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     * @param  integer $offset Offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     * @return string
-     */
-    public function __toString()
-    {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        }
-
-        return json_encode(\Upcloud\ApiClient\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

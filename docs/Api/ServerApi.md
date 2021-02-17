@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\ServerApi
 
-All URIs are relative to _https://api.upcloud.com/1.2_
+All URIs are relative to _https://api.upcloud.com/1.3_
 
 | Method                                                                          | HTTP request                                                     | Description                |
 | ------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------- |
@@ -75,7 +75,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **attachStorage**
 
@@ -128,7 +128,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **createFirewallRule**
 
@@ -181,7 +181,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **createServer**
 
@@ -232,7 +232,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **deleteFirewallRule**
 
@@ -284,7 +284,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **deleteServer**
 
@@ -332,7 +332,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **detachStorage**
 
@@ -385,7 +385,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **ejectCdrom**
 
@@ -435,7 +435,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **getFirewallRule**
 
@@ -488,7 +488,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **listServerConfigurations**
 
@@ -536,7 +536,7 @@ This endpoint does not need any parameter.
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **listServers**
 
@@ -584,7 +584,7 @@ This endpoint does not need any parameter.
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **loadCdrom**
 
@@ -637,7 +637,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **modifyServer**
 
@@ -657,7 +657,7 @@ Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PA
 
 $api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to modify
-$server = new \Upcloud\ApiClient\Model\Server(); // \Upcloud\ApiClient\Model\Server |
+$server = new \Upcloud\ApiClient\Model\ModifyServerRequest(); // \Upcloud\ApiClient\Model\ModifyServerRequest |
 
 try {
     $result = $api_instance->modifyServer($server_id, $server);
@@ -673,7 +673,7 @@ try {
 | Name          | Type                                                      | Description            | Notes      |
 | ------------- | --------------------------------------------------------- | ---------------------- | ---------- |
 | **server_id** | **string**                                                | Id of server to modify |
-| **server**    | [**\Upcloud\ApiClient\Model\Server**](../Model/Server.md) |                        | [optional] |
+| **server**    | [**\Upcloud\ApiClient\Model\ModifyServerRequest**](../Model/ModifyServerRequest.md) |                        | [optional] |
 
 ### Return type
 
@@ -688,7 +688,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **restartServer**
 
@@ -741,7 +741,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **serverDetails**
 
@@ -792,7 +792,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **serverServerIdFirewallRuleGet**
 
@@ -843,7 +843,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **startServer**
 
@@ -894,7 +894,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **stopServer**
 
@@ -947,7 +947,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **untag**
 
@@ -1000,4 +1000,4 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)

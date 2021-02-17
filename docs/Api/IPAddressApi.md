@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\IPAddressApi
 
-All URIs are relative to _https://api.upcloud.com/1.2_
+All URIs are relative to _https://api.upcloud.com/1.3_
 
 | Method                                       | HTTP request                | Description            |
 | -------------------------------------------- | --------------------------- | ---------------------- |
@@ -59,7 +59,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **deleteIp**
 
@@ -109,7 +109,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **getDetails**
 
@@ -160,7 +160,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **listIps**
 
@@ -208,7 +208,7 @@ This endpoint does not need any parameter.
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **modifyIp**
 
@@ -261,4 +261,4 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)

@@ -1,6 +1,6 @@
 # Upcloud\ApiClient\StorageApi
 
-All URIs are relative to _https://api.upcloud.com/1.2_
+All URIs are relative to _https://api.upcloud.com/1.3_
 
 | Method                                                   | HTTP request                                   | Description                   |
 | -------------------------------------------------------- | ---------------------------------------------- | ----------------------------- |
@@ -14,7 +14,7 @@ All URIs are relative to _https://api.upcloud.com/1.2_
 | [**ejectCdrom**](StorageApi.md#ejectCdrom)               | **POST** /server/{serverId}/cdrom/eject        | Eject CD-ROM                  |
 | [**favoriteStorage**](StorageApi.md#favoriteStorage)     | **POST** /storage/{storageId}/favorite         | Add storage to favorites      |
 | [**getStorageDetails**](StorageApi.md#getStorageDetails) | **GET** /storage/{storageId}                   | Get storage details           |
-| [**listStorageTypes**](StorageApi.md#listStorageTypes)   | **GET** /storage/{type}/                       | List of storages by type      |
+| [**listStorages**](StorageApi.md#listStorages)           | **GET** /storage/{type}/                       | List of storages by type      |
 | [**listStorages**](StorageApi.md#listStorages)           | **GET** /storage                               | List of storages              |
 | [**loadCdrom**](StorageApi.md#loadCdrom)                 | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM                   |
 | [**modifyStorage**](StorageApi.md#modifyStorage)         | **PUT** /storage/{storageId}                   | Modify storage                |
@@ -73,7 +73,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **backupStorage**
 
@@ -126,7 +126,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **cancelOperation**
 
@@ -176,7 +176,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **cloneStorage**
 
@@ -229,7 +229,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **createStorage**
 
@@ -280,7 +280,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **deleteStorage**
 
@@ -330,7 +330,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **detachStorage**
 
@@ -383,7 +383,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **ejectCdrom**
 
@@ -433,7 +433,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **favoriteStorage**
 
@@ -483,7 +483,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **getStorageDetails**
 
@@ -534,60 +534,11 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-# **listStorageTypes**
-
-> \Upcloud\ApiClient\Model\SuccessStoragesResponse listStorageTypes($type)
-
-List of storages by type
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-// Configure HTTP basic authorization: baseAuth
-Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setUsername('YOUR_USERNAME');
-Upcloud\ApiClient\Configuration::getDefaultConfiguration()->setPassword('YOUR_PASSWORD');
-
-$api_instance = new Upcloud\ApiClient\Upcloud\StorageApi();
-$type = "type_example"; // string | Storage's access type (`public` or `private`) or storage type (`normal`, `backup`, `cdrom` or `template`) or `favorite` status
-
-try {
-    $result = $api_instance->listStorageTypes($type);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling StorageApi->listStorageTypes: ', $e->getMessage(), PHP_EOL;
-}
-?>
-```
-
-### Parameters
-
-| Name     | Type       | Description                                                                                                                                                                                              | Notes |
-| -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **type** | **string** | Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status |
-
-### Return type
-
-[**\Upcloud\ApiClient\Model\SuccessStoragesResponse**](../Model/SuccessStoragesResponse.md)
-
-### Authorization
-
-[baseAuth](../../README.md#baseAuth)
-
-### HTTP request headers
-
-* **Content-Type**: application/json
-* **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **listStorages**
 
-> \Upcloud\ApiClient\Model\SuccessStoragesResponse listStorages()
+> \Upcloud\ApiClient\Model\SuccessStoragesResponse listStorages($type = null)
 
 List of storages
 
@@ -614,7 +565,10 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name     | Type       | Description                                                                                                                                                                                              | Notes |
+| -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **type** | **string** | Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status |
+
 
 ### Return type
 
@@ -629,7 +583,7 @@ This endpoint does not need any parameter.
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **loadCdrom**
 
@@ -682,7 +636,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **modifyStorage**
 
@@ -735,7 +689,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **restoreStorage**
 
@@ -785,7 +739,7 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **templatizeStorage**
 
@@ -838,7 +792,7 @@ try {
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)
 
 # **unfavoriteStorage**
 
@@ -888,4 +842,4 @@ void (empty response body)
 * **Content-Type**: application/json
 * **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-of-the-models) [[Back to README]](../../README.md)

@@ -18,7 +18,7 @@ The base URL for all API operations is  https://api.upcloud.com/ and require bas
 
 ## Requirements
 
-Using this library requires the PHP version 5.5 and later.
+Using this library requires the PHP version 7.2 and later.
 
 ## Installation
 ### Composer
@@ -51,10 +51,9 @@ To run the unit tests:
 
 ```
 composer install
-UPCLOUD_API_TEST_USER=user UPCLOUD_API_TEST_PASSWORD=pass ./vendor/bin/phpunit
-```
 
-Note: You need to supply an UpCloud account's details to run the tests. The tests will create/modify/delete servers under this account in the actual UpCloud environment, so please use a test account.
+./vendor/bin/phpunit
+```
 
 ## Usage
 
@@ -104,13 +103,13 @@ $server->setHostname('phptest');
 $server->setPlan('1xCPU-1GB');
 
 $storage = new Upcloud\ApiClient\Model\StorageDevice();
-$storage->setStorage('01000000-0000-4000-8000-000030040200');
+$storage->setStorage('01000000-0000-4000-8000-000030060200');
 $storage->setSize(50.0);
 $storage->setAction('clone');
 $storage->setTitle('php-test-storage');
 
 $storage_devices = new Upcloud\ApiClient\Model\ServerStorageDevices();
-$storage_devices->setStorageDevice($storage);
+$storage_devices->setStorageDevice([$storage]);
 
 $server->setStorageDevices($storage_devices);
 
@@ -129,7 +128,7 @@ try {
 
 ## Documentation
 
-All URIs are relative to *https://api.upcloud.com/1.2*
+All URIs are relative to *https://api.upcloud.com/1.3*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -143,6 +142,28 @@ Class | Method | HTTP request | Description
 *IPAddressApi* | [**getDetails**](docs/Api/IPAddressApi.md#getdetails) | **GET** /ip_address/{ip} | Get IP address details
 *IPAddressApi* | [**listIps**](docs/Api/IPAddressApi.md#listips) | **GET** /ip_address | List IP addresses
 *IPAddressApi* | [**modifyIp**](docs/Api/IPAddressApi.md#modifyip) | **PUT** /ip_address/{ip} | Modify IP address
+*NetworkApi* | [**getListNetworks**](docs/Api/NetworkApi.md#getlistnetworks) | **GET** /network    | List all Networks  |
+*NetworkApi* | [**getNetworkDetails**](docs/Api/NetworkApi.md#getnetworkdetails) | **GET** /network/{uuid} | Get Network details |
+*NetworkApi* | [**createNetwork**](docs/Api/NetworkApi.md#createnetwork)     | **POST** /network | Create a new SDN private network |
+*NetworkApi* | [**modifyNetwork**](docs/Api/NetworkApi.md#modifynetwork)     | **PUT** /network/{id} | Modify a specific SDN private network |
+*NetworkApi* | [**deleteNetwork**](docs/Api/NetworkApi.md#deletenetwork)     | **DELETE** /network/{id} | Delete a SDN private network |
+*NetworkApi* | [**getListServerNetworks**](docs/Api/NetworkApi.md#getlistservernetworks) | **GET** server/{server_id}/networking    | List all Networks  |
+*NetworkApi* | [**createNetworkInterface**](docs/Api/NetworkApi.md#createnetworkinterface) | **POST** server/{server}/networking/interface | Create a new network interface |
+*NetworkApi* | [**modifyNetworkInterface**](docs/Api/NetworkApi.md#modifynetworkinterface)     | **PUT** /network/{id} | Modify network interface |
+*NetworkApi* | [**deleteNetworkInterface**](docs/Api/NetworkApi.md#deletenetworkinterface)     | **DELETE** /network/{id} | Delete network interface |
+*NetworkApi* | [**getListRouters**](docs/Api/NetworkApi.md#getlistrouters) | **GET** /router    | List of all available routers  |
+*NetworkApi* | [**getRouterDetails**](docs/Api/NetworkApi.md#getrouterdetails) | **GET** /router/{uuid} | Get router details |
+*NetworkApi* | [**createRouter**](docs/Api/NetworkApi.md#createrouter) | **POST** /router | Create a new router |
+*NetworkApi* | [**modifyRouter**](docs/Api/NetworkApi.md#modifyrouter)     | **PUT** /router/{id} | Modify an existing router |
+*NetworkApi* | [**deleteRouter**](docs/Api/NetworkApi.md#deleterouter)     | **DELETE** /router/{id} | Delete an existing router |
+*ObjectStorageApi* | [**getListObjectStorage**](docs/Api/ObjectStorageApi.md#getlistobjectstorage) | **GET** /object-storage    | List all Object Storage  
+*ObjectStorageApi* | [**getObjectStorageDetails**](docs/Api/ObjectStorageApi.md#getobjectstoragedetails) | **GET** /object-storage/{uuid} | Get Object Storage details 
+*ObjectStorageApi* | [**createObjectStorage**](docs/Api/ObjectStorageApi.md#createobjectstorage)     | **POST** /object-storage | Create a new  Object Storage 
+*ObjectStorageApi* | [**modifyObjectStorage**](docs/Api/ObjectStorageApi.md#modifyobjectstorage)     | **PATCH** /object-storage/{id} | Modify Object Storage 
+*ObjectStorageApi* | [**deleteObjectStorage**](docs/Api/ObjectStorageApi.md#deleteobjectstorage)     | **DELETE** /object-storage/{id} | Release Object Storage 
+*HostsApi* | [**getListHosts**](docs/Api/HostsApi.md#getlisthosts) | **GET** /host | List of available hosts
+*HostsApi* | [**getHostDetails**](docs/Api/HostsApi.md#gethostdetails) | **GET** /host/{id} | Get detailed information about a specific host
+*HostsApi* | [**modifyHost**](docs/Api/HostsApi.md#modifyhost) | **PATCH** /host/{id} | Modify specific host
 *PlanApi* | [**listPlans**](docs/Api/PlanApi.md#listplans) | **GET** /plan | List available plans
 *PricesApi* | [**listPrices**](docs/Api/PricesApi.md#listprices) | **GET** /price | List prices
 *ServerApi* | [**assignTag**](docs/Api/ServerApi.md#assigntag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
@@ -194,10 +215,11 @@ Class | Method | HTTP request | Description
 ## Documentation of the models
 
  - [Account](docs/Model/Account.md)
+ - [AccountResourceLimits](docs/Model/AccountResourceLimits.md)
  - [AccountResponse](docs/Model/AccountResponse.md)
  - [AddIpRequest](docs/Model/AddIpRequest.md)
- - [AddressFamily](docs/Model/AddressFamily.md)
  - [AssignIpResponse](docs/Model/AssignIpResponse.md)
+ - [AttachNetwork](docs/Model/AttachNetwork.md)
  - [AttachStorageDeviceRequest](docs/Model/AttachStorageDeviceRequest.md)
  - [AvailablePlanListResponse](docs/Model/AvailablePlanListResponse.md)
  - [AvailablePlanListResponsePlans](docs/Model/AvailablePlanListResponsePlans.md)
@@ -220,25 +242,34 @@ Class | Method | HTTP request | Description
  - [FirewallRuleListResponse](docs/Model/FirewallRuleListResponse.md)
  - [FirewallRuleListResponseFirewallRules](docs/Model/FirewallRuleListResponseFirewallRules.md)
  - [FirewallRuleRequest](docs/Model/FirewallRuleRequest.md)
+ - [Host](docs/Model/Host.md)
  - [IpAddress](docs/Model/IpAddress.md)
  - [IpAddressListResponse](docs/Model/IpAddressListResponse.md)
  - [IpAddresses](docs/Model/IpAddresses.md)
+ - [IpNetwork](docs/Model/IpNetwork.md)
  - [ModifyIpRequest](docs/Model/ModifyIpRequest.md)
+ - [ModifyServerRequest](docs/Model/ModifyServerRequest.md)
  - [ModifyStorageRequest](docs/Model/ModifyStorageRequest.md)
  - [ModifyTagRequest](docs/Model/ModifyTagRequest.md)
+ - [Network](docs/Model/Network.md)
+ - [NetworkInterface](docs/Model/NetworkInterface.md)
+ - [ObjectStorage](docs/Model/ObjectStorage.md)
  - [Plan](docs/Model/Plan.md)
  - [Price](docs/Model/Price.md)
  - [PriceListResponse](docs/Model/PriceListResponse.md)
  - [PriceListResponsePrices](docs/Model/PriceListResponsePrices.md)
  - [PriceZone](docs/Model/PriceZone.md)
  - [RestartServer](docs/Model/RestartServer.md)
+ - [Router](docs/Model/Router.md)
  - [Server](docs/Model/Server.md)
  - [ServerListResponse](docs/Model/ServerListResponse.md)
  - [ServerListResponseServers](docs/Model/ServerListResponseServers.md)
+ - [ServerLoginUser](docs/Model/ServerLoginUser.md)
  - [ServerSize](docs/Model/ServerSize.md)
  - [ServerState](docs/Model/ServerState.md)
  - [ServerStorageDevices](docs/Model/ServerStorageDevices.md)
  - [ServerTags](docs/Model/ServerTags.md)
+ - [Stat](docs/Model/Stat.md)
  - [StopServer](docs/Model/StopServer.md)
  - [StopServerRequest](docs/Model/StopServerRequest.md)
  - [Storage](docs/Model/Storage.md)
@@ -247,7 +278,7 @@ Class | Method | HTTP request | Description
  - [StorageDevice](docs/Model/StorageDevice.md)
  - [StorageDeviceDetachRequest](docs/Model/StorageDeviceDetachRequest.md)
  - [StorageDeviceLoadRequest](docs/Model/StorageDeviceLoadRequest.md)
- - [StorageServers](docs/Model/StorageServers.md)
+ - [Servers](docs/Model/Servers.md)
  - [StorageState](docs/Model/StorageState.md)
  - [StorageTier](docs/Model/StorageTier.md)
  - [StorageType](docs/Model/StorageType.md)
@@ -259,7 +290,6 @@ Class | Method | HTTP request | Description
  - [TagListResponseTags](docs/Model/TagListResponseTags.md)
  - [TagServers](docs/Model/TagServers.md)
  - [TemplitizeStorageRequest](docs/Model/TemplitizeStorageRequest.md)
- - [Timezone](docs/Model/Timezone.md)
  - [TimezoneListResponse](docs/Model/TimezoneListResponse.md)
  - [TimezoneListResponseTimezones](docs/Model/TimezoneListResponseTimezones.md)
  - [Zone](docs/Model/Zone.md)

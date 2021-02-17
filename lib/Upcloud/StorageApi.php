@@ -1,33 +1,27 @@
 <?php
-/**
- * StorageApi
- * PHP version 5
- *
- * @category Class
- * @package  Upcloud\ApiClient
- */
 
-/**
- * Upcloud api
- *
- * The UpCloud API consists of operations used to control resources on UpCloud. The API is a web service interface. HTTPS is used to connect to the API. The API follows the principles of a RESTful web service wherever possible. The base URL for all API operations is  https://api.upcloud.com/. All API operations require authentication.
- *
- * OpenAPI spec version: 1.2.0
- * 
- */
-
+declare(strict_types=1);
 
 namespace Upcloud\ApiClient\Upcloud;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
+use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
-use Upcloud\ApiClient\Configuration;
-use Upcloud\ApiClient\HeaderSelector;
-use Upcloud\ApiClient\ObjectSerializer;
+use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
+use Upcloud\ApiClient\Model\AttachStorageDeviceRequest;
+use Upcloud\ApiClient\Model\CloneStorageRequest;
+use Upcloud\ApiClient\Model\CreateBackupStorageRequest;
+use Upcloud\ApiClient\Model\CreateServerResponse;
+use Upcloud\ApiClient\Model\CreateStorageRequest;
+use Upcloud\ApiClient\Model\CreateStorageResponse;
+use Upcloud\ApiClient\Model\ModifyStorageRequest;
+use Upcloud\ApiClient\Model\StorageDeviceDetachRequest;
+use Upcloud\ApiClient\Model\StorageDeviceLoadRequest;
+use Upcloud\ApiClient\Model\SuccessStoragesResponse;
+use Upcloud\ApiClient\Model\TemplitizeStorageRequest;
+use Webmozart\Assert\Assert;
 
 /**
  * StorageApi Class Doc Comment
@@ -35,39 +29,31 @@ use Upcloud\ApiClient\ObjectSerializer;
  * @category Class
  * @package  Upcloud\ApiClient
  */
-class StorageApi
+class StorageApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
+    const CDROM = 'cdrom';
+    const TEMPLATE = 'template';
+    const BACKUP = 'backup';
+    const NORMAL = 'normal';
+    const PUBLIC = 'public';
+    const PRIVATE = 'private';
+    const FAVORITE = 'favorite';
 
     /**
-     * @var Configuration
+     * Gets allowable values of the enum
+     * @return string[]
      */
-    protected $config;
-
-    /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: Configuration::getDefaultConfiguration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
+    public static function getAllowableStorageType()
     {
-        return $this->config;
+        return [
+            self::CDROM,
+            self::TEMPLATE,
+            self::BACKUP,
+            self::NORMAL,
+            self::PUBLIC,
+            self::PRIVATE,
+            self::FAVORITE
+        ];
     }
 
     /**
@@ -75,15 +61,15 @@ class StorageApi
      *
      * Attach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateServerResponse
+     * @param string $serverId Server id (required)
+     * @param AttachStorageDeviceRequest $storageDevice  (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateServerResponse
      */
-    public function attachStorage($server_id, $storage_device)
+    public function attachStorage(string $serverId, AttachStorageDeviceRequest $storageDevice): CreateServerResponse
     {
-        list($response) = $this->attachStorageWithHttpInfo($server_id, $storage_device);
+        list($response) = $this->attachStorageWithHttpInfo($serverId, $storageDevice);
         return $response;
     }
 
@@ -92,85 +78,19 @@ class StorageApi
      *
      * Attach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param AttachStorageDeviceRequest $storageDevice  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function attachStorageWithHttpInfo($server_id, $storage_device)
+    public function attachStorageWithHttpInfo(string $serverId, AttachStorageDeviceRequest $storageDevice): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->attachStorageRequest($server_id, $storage_device);
+        $url = $this->buildPath('server/{serverId}/storage/attach', compact('serverId'));
+        $request = new Request('POST', $url, [], $storageDevice);
 
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        $response = $this->client->send($request);
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -178,14 +98,14 @@ class StorageApi
      *
      * Attach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param AttachStorageDeviceRequest $storageDevice  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function attachStorageAsync($server_id, $storage_device)
+    public function attachStorageAsync(string $serverId, AttachStorageDeviceRequest $storageDevice): PromiseInterface
     {
-        return $this->attachStorageAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
+        return $this->attachStorageAsyncWithHttpInfo($serverId, $storageDevice)->then(function ($response) {
             return $response[0];
         });
     }
@@ -195,141 +115,22 @@ class StorageApi
      *
      * Attach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param AttachStorageDeviceRequest $storageDevice  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function attachStorageAsyncWithHttpInfo($server_id, $storage_device)
-    {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->attachStorageRequest($server_id, $storage_device);
+    public function attachStorageAsyncWithHttpInfo(
+        string $serverId,
+        AttachStorageDeviceRequest $storageDevice
+    ): PromiseInterface {
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $url = $this->buildPath('server/{serverId}/storage/attach', compact('serverId'));
+        $request = new Request('POST', $url, [], $storageDevice);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateServerResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'attachStorage'
-     *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\AttachStorageDeviceRequest $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function attachStorageRequest($server_id, $storage_device)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling attachStorage');
-        }
-        // verify the required parameter 'storage_device' is set
-        if ($storage_device === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_device when calling attachStorage');
-        }
-
-        $resourcePath = '/server/{serverId}/storage/attach';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage_device)) {
-            $_tempBody = $storage_device;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -337,15 +138,15 @@ class StorageApi
      *
      * Create backup
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateStorageResponse
+     * @param string $storageId Storage id (required)
+     * @param CreateBackupStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateStorageResponse
      */
-    public function backupStorage($storage_id, $storage)
+    public function backupStorage(string $storageId, CreateBackupStorageRequest $storage): CreateStorageResponse
     {
-        list($response) = $this->backupStorageWithHttpInfo($storage_id, $storage);
+        list($response) = $this->backupStorageWithHttpInfo($storageId, $storage);
         return $response;
     }
 
@@ -354,85 +155,21 @@ class StorageApi
      *
      * Create backup
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $storageId Storage id (required)
+     * @param CreateBackupStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function backupStorageWithHttpInfo($storage_id, $storage)
+    public function backupStorageWithHttpInfo(string $storageId, CreateBackupStorageRequest $storage): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->backupStorageRequest($storage_id, $storage);
 
-        try {
+        $url = $this->buildPath('storage/{storageId}/backup', compact('storageId'));
+        $request = new Request('POST', $url, [], $storage);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
+        $response = $this->client->send($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateStorageResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -440,14 +177,14 @@ class StorageApi
      *
      * Create backup
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @param CreateBackupStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function backupStorageAsync($storage_id, $storage)
+    public function backupStorageAsync(string $storageId, CreateBackupStorageRequest $storage): PromiseInterface
     {
-        return $this->backupStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+        return $this->backupStorageAsyncWithHttpInfo($storageId, $storage)->then(function ($response) {
             return $response[0];
         });
     }
@@ -457,141 +194,22 @@ class StorageApi
      *
      * Create backup
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @param CreateBackupStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function backupStorageAsyncWithHttpInfo($storage_id, $storage)
-    {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->backupStorageRequest($storage_id, $storage);
+    public function backupStorageAsyncWithHttpInfo(
+        string $storageId,
+        CreateBackupStorageRequest $storage
+    ): PromiseInterface {
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $url = $this->buildPath('storage/{storageId}/backup', compact('storageId'));
+        $request = new Request('POST', $url, [], $storage);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateStorageResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'backupStorage'
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CreateBackupStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function backupStorageRequest($storage_id, $storage)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling backupStorage');
-        }
-        // verify the required parameter 'storage' is set
-        if ($storage === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage when calling backupStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}/backup';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -599,14 +217,14 @@ class StorageApi
      *
      * Cancel storage operation
      *
-     * @param string $storage_id Strage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function cancelOperation($storage_id)
+    public function cancelOperation(string $storageId): void
     {
-        $this->cancelOperationWithHttpInfo($storage_id);
+        $this->cancelOperationWithHttpInfo($storageId);
     }
 
     /**
@@ -614,66 +232,19 @@ class StorageApi
      *
      * Cancel storage operation
      *
-     * @param string $storage_id Strage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function cancelOperationWithHttpInfo($storage_id)
+    public function cancelOperationWithHttpInfo(string $storageId): array
     {
-        $returnType = '';
-        $request = $this->cancelOperationRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/cancel', compact('storageId'));
+        $request = new Request('POST', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray();
     }
 
     /**
@@ -681,13 +252,13 @@ class StorageApi
      *
      * Cancel storage operation
      *
-     * @param string $storage_id Strage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function cancelOperationAsync($storage_id)
+    public function cancelOperationAsync(string $storageId): PromiseInterface
     {
-        return $this->cancelOperationAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->cancelOperationAsyncWithHttpInfo($storageId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -697,116 +268,18 @@ class StorageApi
      *
      * Cancel storage operation
      *
-     * @param string $storage_id Strage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function cancelOperationAsyncWithHttpInfo($storage_id)
+    public function cancelOperationAsyncWithHttpInfo(string $storageId): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->cancelOperationRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/cancel', compact('storageId'));
+        $request = new Request('POST', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
-    }
-
-    /**
-     * Create request for operation 'cancelOperation'
-     *
-     * @param string $storage_id Strage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function cancelOperationRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling cancelOperation');
-        }
-
-        $resourcePath = '/storage/{storageId}/cancel';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -814,15 +287,15 @@ class StorageApi
      *
      * Clone storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateStorageResponse
+     * @param string $storageId Storage id (required)
+     * @param CloneStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateStorageResponse
      */
-    public function cloneStorage($storage_id, $storage)
+    public function cloneStorage(string $storageId, CloneStorageRequest $storage): CreateStorageResponse
     {
-        list($response) = $this->cloneStorageWithHttpInfo($storage_id, $storage);
+        list($response) = $this->cloneStorageWithHttpInfo($storageId, $storage);
         return $response;
     }
 
@@ -831,85 +304,20 @@ class StorageApi
      *
      * Clone storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $storageId Storage id (required)
+     * @param CloneStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function cloneStorageWithHttpInfo($storage_id, $storage)
+    public function cloneStorageWithHttpInfo(string $storageId, CloneStorageRequest $storage): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->cloneStorageRequest($storage_id, $storage);
+        $url = $this->buildPath('storage/{storageId}/clone', compact('storageId'));
+        $request = new Request('POST', $url, [], $storage);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateStorageResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -917,14 +325,14 @@ class StorageApi
      *
      * Clone storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @param CloneStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function cloneStorageAsync($storage_id, $storage)
+    public function cloneStorageAsync(string $storageId, CloneStorageRequest $storage): PromiseInterface
     {
-        return $this->cloneStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+        return $this->cloneStorageAsyncWithHttpInfo($storageId, $storage)->then(function ($response) {
             return $response[0];
         });
     }
@@ -934,141 +342,20 @@ class StorageApi
      *
      * Clone storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @param CloneStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function cloneStorageAsyncWithHttpInfo($storage_id, $storage)
+    public function cloneStorageAsyncWithHttpInfo(string $storageId, CloneStorageRequest $storage): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->cloneStorageRequest($storage_id, $storage);
+        $url = $this->buildPath('storage/{storageId}/clone', compact('storageId'));
+        $request = new Request('POST', $url, [], $storage);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+            return $response->toArray(CreateStorageResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'cloneStorage'
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\CloneStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function cloneStorageRequest($storage_id, $storage)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling cloneStorage');
-        }
-        // verify the required parameter 'storage' is set
-        if ($storage === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage when calling cloneStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}/clone';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -1076,12 +363,12 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateStorageResponse
+     * @param CreateStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateStorageResponse
      */
-    public function createStorage($storage)
+    public function createStorage(CreateStorageRequest $storage): CreateStorageResponse
     {
         list($response) = $this->createStorageWithHttpInfo($storage);
         return $response;
@@ -1092,80 +379,17 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param CreateStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createStorageWithHttpInfo($storage)
+    public function createStorageWithHttpInfo(CreateStorageRequest $storage): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->createStorageRequest($storage);
+        $request = new Request('POST', 'storage', [], $storage);
+        $response = $this->client->send($request);
 
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateStorageResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -1173,11 +397,11 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param CreateStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function createStorageAsync($storage)
+    public function createStorageAsync(CreateStorageRequest $storage): PromiseInterface
     {
         return $this->createStorageAsyncWithHttpInfo($storage)->then(function ($response) {
             return $response[0];
@@ -1189,131 +413,17 @@ class StorageApi
      *
      * Create storage
      *
-     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param CreateStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function createStorageAsyncWithHttpInfo($storage)
+    public function createStorageAsyncWithHttpInfo(CreateStorageRequest $storage): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->createStorageRequest($storage);
+        $request = new Request('POST', 'storage', [], $storage);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateStorageResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'createStorage'
-     *
-     * @param \Upcloud\ApiClient\Model\CreateStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function createStorageRequest($storage)
-    {
-        // verify the required parameter 'storage' is set
-        if ($storage === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage when calling createStorage');
-        }
-
-        $resourcePath = '/storage';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -1321,14 +431,14 @@ class StorageApi
      *
      * Delete storage
      *
-     * @param string $storage_id  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function deleteStorage($storage_id)
+    public function deleteStorage(string $storageId): void
     {
-        $this->deleteStorageWithHttpInfo($storage_id);
+        $this->deleteStorageWithHttpInfo($storageId);
     }
 
     /**
@@ -1336,66 +446,18 @@ class StorageApi
      *
      * Delete storage
      *
-     * @param string $storage_id  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteStorageWithHttpInfo($storage_id)
+    public function deleteStorageWithHttpInfo(string $storageId): array
     {
-        $returnType = '';
-        $request = $this->deleteStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}', compact('storageId'));
+        $request =  new Request('DELETE', $url);
 
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        $response = $this->client->send($request);
+        return $response->toArray();
     }
 
     /**
@@ -1403,13 +465,13 @@ class StorageApi
      *
      * Delete storage
      *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function deleteStorageAsync($storage_id)
+    public function deleteStorageAsync(string $storageId): PromiseInterface
     {
-        return $this->deleteStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->deleteStorageAsyncWithHttpInfo($storageId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -1419,116 +481,18 @@ class StorageApi
      *
      * Delete storage
      *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function deleteStorageAsyncWithHttpInfo($storage_id)
+    public function deleteStorageAsyncWithHttpInfo(string $storageId): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->deleteStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}', compact('storageId'));
+        $request =  new Request('DELETE', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
-    }
-
-    /**
-     * Create request for operation 'deleteStorage'
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function deleteStorageRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling deleteStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -1536,15 +500,15 @@ class StorageApi
      *
      * Detach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateServerResponse
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceDetachRequest $storageDevice  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateServerResponse
      */
-    public function detachStorage($server_id, $storage_device)
+    public function detachStorage(string $serverId, StorageDeviceDetachRequest $storageDevice): CreateServerResponse
     {
-        list($response) = $this->detachStorageWithHttpInfo($server_id, $storage_device);
+        list($response) = $this->detachStorageWithHttpInfo($serverId, $storageDevice);
         return $response;
     }
 
@@ -1553,85 +517,20 @@ class StorageApi
      *
      * Detach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceDetachRequest $storageDevice  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function detachStorageWithHttpInfo($server_id, $storage_device)
+    public function detachStorageWithHttpInfo(string $serverId, StorageDeviceDetachRequest $storageDevice): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->detachStorageRequest($server_id, $storage_device);
+        $url = $this->buildPath('server/{serverId}/storage/detach', compact('serverId'));
+        $request = new Request('POST', $url, [], $storageDevice);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -1639,14 +538,14 @@ class StorageApi
      *
      * Detach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceDetachRequest $storageDevice  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function detachStorageAsync($server_id, $storage_device)
+    public function detachStorageAsync(string $serverId, StorageDeviceDetachRequest $storageDevice): PromiseInterface
     {
-        return $this->detachStorageAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
+        return $this->detachStorageAsyncWithHttpInfo($serverId, $storageDevice)->then(function ($response) {
             return $response[0];
         });
     }
@@ -1656,141 +555,22 @@ class StorageApi
      *
      * Detach storage
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceDetachRequest $storageDevice  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function detachStorageAsyncWithHttpInfo($server_id, $storage_device)
-    {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->detachStorageRequest($server_id, $storage_device);
+    public function detachStorageAsyncWithHttpInfo(
+        string $serverId,
+        StorageDeviceDetachRequest $storageDevice
+    ): PromiseInterface {
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $url = $this->buildPath('server/{serverId}/storage/detach', compact('serverId'));
+        $request = new Request('POST', $url, [], $storageDevice);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateServerResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'detachStorage'
-     *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceDetachRequest $storage_device  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function detachStorageRequest($server_id, $storage_device)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling detachStorage');
-        }
-        // verify the required parameter 'storage_device' is set
-        if ($storage_device === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_device when calling detachStorage');
-        }
-
-        $resourcePath = '/server/{serverId}/storage/detach';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage_device)) {
-            $_tempBody = $storage_device;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -1798,14 +578,15 @@ class StorageApi
      *
      * Eject CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
+     * @param string $serverId Server id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateServerResponse
      */
-    public function ejectCdrom($server_id)
+    public function ejectCdrom(string $serverId): CreateServerResponse
     {
-        $this->ejectCdromWithHttpInfo($server_id);
+        list($response) = $this->ejectCdromWithHttpInfo($serverId);
+        return $response;
     }
 
     /**
@@ -1813,66 +594,19 @@ class StorageApi
      *
      * Eject CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ejectCdromWithHttpInfo($server_id)
+    public function ejectCdromWithHttpInfo(string $serverId): array
     {
-        $returnType = '';
-        $request = $this->ejectCdromRequest($server_id);
+        $url = $this->buildPath('server/{serverId}/cdrom/eject', compact('serverId'));
+        $request = new Request('POST', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -1880,13 +614,13 @@ class StorageApi
      *
      * Eject CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function ejectCdromAsync($server_id)
+    public function ejectCdromAsync(string $serverId): PromiseInterface
     {
-        return $this->ejectCdromAsyncWithHttpInfo($server_id)->then(function ($response) {
+        return $this->ejectCdromAsyncWithHttpInfo($serverId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -1896,116 +630,18 @@ class StorageApi
      *
      * Eject CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function ejectCdromAsyncWithHttpInfo($server_id)
+    public function ejectCdromAsyncWithHttpInfo(string $serverId): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->ejectCdromRequest($server_id);
+        $url = $this->buildPath('server/{serverId}/cdrom/eject', compact('serverId'));
+        $request = new Request('POST', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateServerResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'ejectCdrom'
-     *
-     * @param string $server_id Server id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function ejectCdromRequest($server_id)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling ejectCdrom');
-        }
-
-        $resourcePath = '/server/{serverId}/cdrom/eject';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -2013,14 +649,14 @@ class StorageApi
      *
      * Add storage to favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function favoriteStorage($storage_id)
+    public function favoriteStorage(string $storageId): void
     {
-        $this->favoriteStorageWithHttpInfo($storage_id);
+        $this->favoriteStorageWithHttpInfo($storageId);
     }
 
     /**
@@ -2028,58 +664,19 @@ class StorageApi
      *
      * Add storage to favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function favoriteStorageWithHttpInfo($storage_id)
+    public function favoriteStorageWithHttpInfo(string $storageId): array
     {
-        $returnType = '';
-        $request = $this->favoriteStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/favorite', compact('storageId'));
+        $request = new Request('POST', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray();
     }
 
     /**
@@ -2087,13 +684,13 @@ class StorageApi
      *
      * Add storage to favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function favoriteStorageAsync($storage_id)
+    public function favoriteStorageAsync(string $storageId): PromiseInterface
     {
-        return $this->favoriteStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->favoriteStorageAsyncWithHttpInfo($storageId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -2103,116 +700,18 @@ class StorageApi
      *
      * Add storage to favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function favoriteStorageAsyncWithHttpInfo($storage_id)
+    public function favoriteStorageAsyncWithHttpInfo(string $storageId): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->favoriteStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/favorite', compact('storageId'));
+        $request = new Request('POST', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
-    }
-
-    /**
-     * Create request for operation 'favoriteStorage'
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function favoriteStorageRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling favoriteStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}/favorite';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -2220,14 +719,14 @@ class StorageApi
      *
      * Get storage details
      *
-     * @param string $storage_id  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateStorageResponse
+     * @param string $storageId  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateStorageResponse
      */
-    public function getStorageDetails($storage_id)
+    public function getStorageDetails(string $storageId): CreateStorageResponse
     {
-        list($response) = $this->getStorageDetailsWithHttpInfo($storage_id);
+        list($response) = $this->getStorageDetailsWithHttpInfo($storageId);
         return $response;
     }
 
@@ -2236,64 +735,19 @@ class StorageApi
      *
      * Get storage details
      *
-     * @param string $storage_id  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $storageId  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getStorageDetailsWithHttpInfo($storage_id)
+    public function getStorageDetailsWithHttpInfo(string $storageId): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->getStorageDetailsRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}', compact('storageId'));
+        $request = new Request('GET', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateStorageResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -2301,13 +755,13 @@ class StorageApi
      *
      * Get storage details
      *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function getStorageDetailsAsync($storage_id)
+    public function getStorageDetailsAsync(string $storageId): PromiseInterface
     {
-        return $this->getStorageDetailsAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->getStorageDetailsAsyncWithHttpInfo($storageId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -2317,130 +771,18 @@ class StorageApi
      *
      * Get storage details
      *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function getStorageDetailsAsyncWithHttpInfo($storage_id)
+    public function getStorageDetailsAsyncWithHttpInfo(string $storageId): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->getStorageDetailsRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}', compact('storageId'));
+        $request = new Request('GET', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateStorageResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'getStorageDetails'
-     *
-     * @param string $storage_id  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function getStorageDetailsRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling getStorageDetails');
-        }
-
-        $resourcePath = '/storage/{storageId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -2448,15 +790,19 @@ class StorageApi
      *
      * List of storages by type
      *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\SuccessStoragesResponse
+     * @param string $type Storage&#39;s access type
+     *                      (&#x60;public&#x60; or &#x60;private&#x60;)
+     *                      or  storage type
+     *                      (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;)
+     *                      or &#x60;favorite&#x60; status (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return SuccessStoragesResponse
+     * @deprecated listStorageTypes will be removed. Use listStorages($type) instead.
      */
-    public function listStorageTypes($type)
+    public function listStorageTypes(string $type): SuccessStoragesResponse
     {
-        list($response) = $this->listStorageTypesWithHttpInfo($type);
-        return $response;
+        return  $this->listStorages($type);
     }
 
     /**
@@ -2464,64 +810,19 @@ class StorageApi
      *
      * List of storages by type
      *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\SuccessStoragesResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $type Storage&#39;s access type
+     *                      (&#x60;public&#x60; or &#x60;private&#x60;)
+     *                      or  storage type
+     *                      (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;)
+     *                      or &#x60;favorite&#x60; status (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of SuccessStoragesResponse, HTTP status code, HTTP response headers (array of strings)
+     * @deprecated listStorageTypesWithHttpInfo will be removed. Use listStoragesWithHttpInfo($type) instead.
      */
-    public function listStorageTypesWithHttpInfo($type)
+    public function listStorageTypesWithHttpInfo(string $type): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\SuccessStoragesResponse';
-        $request = $this->listStorageTypesRequest($type);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\SuccessStoragesResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $this->listStoragesWithHttpInfo($type);
     }
 
     /**
@@ -2529,15 +830,18 @@ class StorageApi
      *
      * List of storages by type
      *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $type Storage&#39;s access type
+     *                      (&#x60;public&#x60; or &#x60;private&#x60;)
+     *                      or  storage type
+     *                      (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;)
+     *                      or &#x60;favorite&#x60; status (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
+     * @deprecated listStorageTypesAsync will be removed. Use listStoragesAsync($type) instead.
      */
-    public function listStorageTypesAsync($type)
+    public function listStorageTypesAsync(string $type): PromiseInterface
     {
-        return $this->listStorageTypesAsyncWithHttpInfo($type)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->listStoragesAsync($type);
     }
 
     /**
@@ -2545,130 +849,19 @@ class StorageApi
      *
      * List of storages by type
      *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $type Storage&#39;s access type
+     *                      (&#x60;public&#x60; or &#x60;private&#x60;)
+     *                      or  storage type
+     *                      (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;)
+     *                      or &#x60;favorite&#x60; status (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
+     * @deprecated listStorageTypesAsyncWithHttpInfo will be removed.
+     *             Use listStoragesAsyncWithHttpInfo($type) instead.
      */
-    public function listStorageTypesAsyncWithHttpInfo($type)
+    public function listStorageTypesAsyncWithHttpInfo(string $type): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\SuccessStoragesResponse';
-        $request = $this->listStorageTypesRequest($type);
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'listStorageTypes'
-     *
-     * @param string $type Storage&#39;s access type (&#x60;public&#x60; or &#x60;private&#x60;) or storage type (&#x60;normal&#x60;, &#x60;backup&#x60;, &#x60;cdrom&#x60; or &#x60;template&#x60;) or &#x60;favorite&#x60; status (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listStorageTypesRequest($type)
-    {
-        // verify the required parameter 'type' is set
-        if ($type === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $type when calling listStorageTypes');
-        }
-
-        $resourcePath = '/storage/{type}/';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($type !== null) {
-            $resourcePath = str_replace('{' . 'type' . '}', ObjectSerializer::toPathValue($type), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
+        return $this->listStoragesAsyncWithHttpInfo($type);
     }
 
     /**
@@ -2676,13 +869,14 @@ class StorageApi
      *
      * List of storages
      *
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\SuccessStoragesResponse
+     * @param string|null $type
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return SuccessStoragesResponse
      */
-    public function listStorages()
+    public function listStorages(?string $type = null): SuccessStoragesResponse
     {
-        list($response) = $this->listStoragesWithHttpInfo();
+        list($response) = $this->listStoragesWithHttpInfo($type);
         return $response;
     }
 
@@ -2691,63 +885,25 @@ class StorageApi
      *
      * List of storages
      *
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\SuccessStoragesResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string|null $type
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of SuccessStoragesResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listStoragesWithHttpInfo()
+    public function listStoragesWithHttpInfo(?string $type = null): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\SuccessStoragesResponse';
-        $request = $this->listStoragesRequest();
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\SuccessStoragesResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+        if ($type) {
+            Assert::oneOf($type, self::getAllowableStorageType());
+            $url = $this->buildPath('storage/{type}', compact('type'));
+        } else {
+            $url ='storage';
         }
+
+        $request = new Request('GET', $url);
+
+        $response = $this->client->send($request);
+
+        return $response->toArray(SuccessStoragesResponse::class);
     }
 
     /**
@@ -2755,12 +911,13 @@ class StorageApi
      *
      * List of storages
      *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string|null $type
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function listStoragesAsync()
+    public function listStoragesAsync(?string $type = null): PromiseInterface
     {
-        return $this->listStoragesAsyncWithHttpInfo()->then(function ($response) {
+        return $this->listStoragesAsyncWithHttpInfo($type)->then(function ($response) {
             return $response[0];
         });
     }
@@ -2770,120 +927,24 @@ class StorageApi
      *
      * List of storages
      *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string|null $type
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function listStoragesAsyncWithHttpInfo()
+    public function listStoragesAsyncWithHttpInfo(?string $type = null): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\SuccessStoragesResponse';
-        $request = $this->listStoragesRequest();
-
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
-    }
-
-    /**
-     * Create request for operation 'listStorages'
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listStoragesRequest()
-    {
-
-        $resourcePath = '/storage';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
+        if ($type) {
+            Assert::oneOf($type, self::getAllowableStorageType());
+            $url = $this->buildPath('storage/{type}', compact('type'));
         } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
+            $url ='storage';
         }
 
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        $request = new Request('GET', $url);
 
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
+        return $this->client->sendAsync($request)->then(function ($response) {
+            return $response->toArray(SuccessStoragesResponse::class);
+        });
     }
 
     /**
@@ -2891,15 +952,15 @@ class StorageApi
      *
      * Load CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateServerResponse
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceLoadRequest|null $storageDevice  (optional)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateServerResponse
      */
-    public function loadCdrom($server_id, $storage_device = null)
+    public function loadCdrom(string $serverId, ?StorageDeviceLoadRequest $storageDevice = null): CreateServerResponse
     {
-        list($response) = $this->loadCdromWithHttpInfo($server_id, $storage_device);
+        list($response) = $this->loadCdromWithHttpInfo($serverId, $storageDevice);
         return $response;
     }
 
@@ -2908,85 +969,20 @@ class StorageApi
      *
      * Load CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceLoadRequest|null $storageDevice  (optional)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateServerResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function loadCdromWithHttpInfo($server_id, $storage_device = null)
+    public function loadCdromWithHttpInfo(string $serverId, ?StorageDeviceLoadRequest $storageDevice = null): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->loadCdromRequest($server_id, $storage_device);
+        $url = $this->buildPath('server/{serverId}/cdrom/load', compact('serverId'));
+        $request =  new Request('POST', $url, [], $storageDevice);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateServerResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateServerResponse::class);
     }
 
     /**
@@ -2994,14 +990,14 @@ class StorageApi
      *
      * Load CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceLoadRequest|null $storageDevice  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function loadCdromAsync($server_id, $storage_device = null)
+    public function loadCdromAsync(string $serverId, ?StorageDeviceLoadRequest $storageDevice = null): PromiseInterface
     {
-        return $this->loadCdromAsyncWithHttpInfo($server_id, $storage_device)->then(function ($response) {
+        return $this->loadCdromAsyncWithHttpInfo($serverId, $storageDevice)->then(function ($response) {
             return $response[0];
         });
     }
@@ -3011,137 +1007,22 @@ class StorageApi
      *
      * Load CD-ROM
      *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $serverId Server id (required)
+     * @param StorageDeviceLoadRequest|null $storageDevice  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function loadCdromAsyncWithHttpInfo($server_id, $storage_device = null)
-    {
-        $returnType = '\Upcloud\ApiClient\Model\CreateServerResponse';
-        $request = $this->loadCdromRequest($server_id, $storage_device);
+    public function loadCdromAsyncWithHttpInfo(
+        string $serverId,
+        ?StorageDeviceLoadRequest $storageDevice = null
+    ): PromiseInterface {
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
+        $url = $this->buildPath('server/{serverId}/cdrom/load', compact('serverId'));
+        $request =  new Request('POST', $url, [], $storageDevice);
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateServerResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'loadCdrom'
-     *
-     * @param string $server_id Server id (required)
-     * @param \Upcloud\ApiClient\Model\StorageDeviceLoadRequest $storage_device  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function loadCdromRequest($server_id, $storage_device = null)
-    {
-        // verify the required parameter 'server_id' is set
-        if ($server_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $server_id when calling loadCdrom');
-        }
-
-        $resourcePath = '/server/{serverId}/storage/cdrom/load';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($server_id !== null) {
-            $resourcePath = str_replace('{' . 'serverId' . '}', ObjectSerializer::toPathValue($server_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage_device)) {
-            $_tempBody = $storage_device;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -3149,15 +1030,15 @@ class StorageApi
      *
      * Modify storage
      *
-     * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateStorageResponse
+     * @param string $storageId  (required)
+     * @param ModifyStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateStorageResponse
      */
-    public function modifyStorage($storage_id, $storage)
+    public function modifyStorage(string $storageId, ModifyStorageRequest $storage): CreateStorageResponse
     {
-        list($response) = $this->modifyStorageWithHttpInfo($storage_id, $storage);
+        list($response) = $this->modifyStorageWithHttpInfo($storageId, $storage);
         return $response;
     }
 
@@ -3166,85 +1047,20 @@ class StorageApi
      *
      * Modify storage
      *
-     * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $storageId  (required)
+     * @param ModifyStorageRequest $storage  (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function modifyStorageWithHttpInfo($storage_id, $storage)
+    public function modifyStorageWithHttpInfo(string $storageId, ModifyStorageRequest $storage): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->modifyStorageRequest($storage_id, $storage);
+        $url = $this->buildPath('storage/{storageId}', compact('storageId'));
+        $request = new Request('PUT', $url, [], $storage);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 202:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateStorageResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -3252,14 +1068,14 @@ class StorageApi
      *
      * Modify storage
      *
-     * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId  (required)
+     * @param ModifyStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function modifyStorageAsync($storage_id, $storage)
+    public function modifyStorageAsync(string $storageId, ModifyStorageRequest $storage): PromiseInterface
     {
-        return $this->modifyStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+        return $this->modifyStorageAsyncWithHttpInfo($storageId, $storage)->then(function ($response) {
             return $response[0];
         });
     }
@@ -3269,141 +1085,19 @@ class StorageApi
      *
      * Modify storage
      *
-     * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId  (required)
+     * @param ModifyStorageRequest $storage  (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function modifyStorageAsyncWithHttpInfo($storage_id, $storage)
+    public function modifyStorageAsyncWithHttpInfo(string $storageId, ModifyStorageRequest $storage): PromiseInterface
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->modifyStorageRequest($storage_id, $storage);
+        $url = $this->buildPath('storage/{storageId}', compact('storageId'));
+        $request = new Request('PUT', $url, [], $storage);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function ($response) {
+            return $response->toArray(CreateStorageResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'modifyStorage'
-     *
-     * @param string $storage_id  (required)
-     * @param \Upcloud\ApiClient\Model\ModifyStorageRequest $storage  (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function modifyStorageRequest($storage_id, $storage)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling modifyStorage');
-        }
-        // verify the required parameter 'storage' is set
-        if ($storage === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage when calling modifyStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -3411,14 +1105,14 @@ class StorageApi
      *
      * Restore backup
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function restoreStorage($storage_id)
+    public function restoreStorage(string $storageId): void
     {
-        $this->restoreStorageWithHttpInfo($storage_id);
+        $this->restoreStorageWithHttpInfo($storageId);
     }
 
     /**
@@ -3426,66 +1120,18 @@ class StorageApi
      *
      * Restore backup
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function restoreStorageWithHttpInfo($storage_id)
+    public function restoreStorageWithHttpInfo(string $storageId): array
     {
-        $returnType = '';
-        $request = $this->restoreStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/restore', compact('storageId'));
+        $request = new Request('POST', $url);
+        $response = $this->client->send($request);
 
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray();
     }
 
     /**
@@ -3493,13 +1139,13 @@ class StorageApi
      *
      * Restore backup
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function restoreStorageAsync($storage_id)
+    public function restoreStorageAsync(string $storageId): PromiseInterface
     {
-        return $this->restoreStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->restoreStorageAsyncWithHttpInfo($storageId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -3509,132 +1155,37 @@ class StorageApi
      *
      * Restore backup
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function restoreStorageAsyncWithHttpInfo($storage_id)
+    public function restoreStorageAsyncWithHttpInfo(string $storageId): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->restoreStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/restore', compact('storageId'));
+        $request = new Request('POST', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
     }
 
-    /**
-     * Create request for operation 'restoreStorage'
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function restoreStorageRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling restoreStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}/restore';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
 
     /**
      * Operation templatizeStorage
      *
      * Templatize storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Upcloud\ApiClient\Model\CreateStorageResponse
+     * @param string $storageId Storage id (required)
+     * @param TemplitizeStorageRequest|null $storage  (optional)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return CreateStorageResponse
      */
-    public function templatizeStorage($storage_id, $storage = null)
-    {
-        list($response) = $this->templatizeStorageWithHttpInfo($storage_id, $storage);
+    public function templatizeStorage(
+        string $storageId,
+        ?TemplitizeStorageRequest $storage = null
+    ): CreateStorageResponse {
+        list($response) = $this->templatizeStorageWithHttpInfo($storageId, $storage);
         return $response;
     }
 
@@ -3643,85 +1194,20 @@ class StorageApi
      *
      * Templatize storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Upcloud\ApiClient\Model\CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param string $storageId Storage id (required)
+     * @param TemplitizeStorageRequest|null $storage  (optional)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     * @return array of CreateStorageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function templatizeStorageWithHttpInfo($storage_id, $storage = null)
+    public function templatizeStorageWithHttpInfo(string $storageId, ?TemplitizeStorageRequest $storage = null): array
     {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->templatizeStorageRequest($storage_id, $storage);
+        $url = $this->buildPath('storage/{storageId}/templatize', compact('storageId'));
+        $request = new Request('POST', $url, [], $storage);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\CreateStorageResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray(CreateStorageResponse::class);
     }
 
     /**
@@ -3729,14 +1215,16 @@ class StorageApi
      *
      * Templatize storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @param TemplitizeStorageRequest|null $storage  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function templatizeStorageAsync($storage_id, $storage = null)
-    {
-        return $this->templatizeStorageAsyncWithHttpInfo($storage_id, $storage)->then(function ($response) {
+    public function templatizeStorageAsync(
+        string $storageId,
+        ?TemplitizeStorageRequest $storage = null
+    ): PromiseInterface {
+        return $this->templatizeStorageAsyncWithHttpInfo($storageId, $storage)->then(function ($response) {
             return $response[0];
         });
     }
@@ -3746,137 +1234,21 @@ class StorageApi
      *
      * Templatize storage
      *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @param TemplitizeStorageRequest|null $storage  (optional)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function templatizeStorageAsyncWithHttpInfo($storage_id, $storage = null)
-    {
-        $returnType = '\Upcloud\ApiClient\Model\CreateStorageResponse';
-        $request = $this->templatizeStorageRequest($storage_id, $storage);
+    public function templatizeStorageAsyncWithHttpInfo(
+        string $storageId,
+        ?TemplitizeStorageRequest $storage = null
+    ): PromiseInterface {
+        $url = $this->buildPath('storage/{storageId}/templatize', compact('storageId'));
+        $request = new Request('POST', $url, [], $storage);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray(CreateStorageResponse::class);
         });
-    }
-
-    /**
-     * Create request for operation 'templatizeStorage'
-     *
-     * @param string $storage_id Storage id (required)
-     * @param \Upcloud\ApiClient\Model\TemplitizeStorageRequest $storage  (optional)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function templatizeStorageRequest($storage_id, $storage = null)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling templatizeStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}/templatize';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($storage)) {
-            $_tempBody = $storage;
-        }
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
     }
 
     /**
@@ -3884,14 +1256,14 @@ class StorageApi
      *
      * Remove storage from favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function unfavoriteStorage($storage_id)
+    public function unfavoriteStorage(string $storageId): void
     {
-        $this->unfavoriteStorageWithHttpInfo($storage_id);
+        $this->unfavoriteStorageWithHttpInfo($storageId);
     }
 
     /**
@@ -3899,58 +1271,19 @@ class StorageApi
      *
      * Remove storage from favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \Upcloud\ApiClient\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @param string $storageId Storage id (required)
+     * @throws ApiException  on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function unfavoriteStorageWithHttpInfo($storage_id)
+    public function unfavoriteStorageWithHttpInfo(string $storageId): array
     {
-        $returnType = '';
-        $request = $this->unfavoriteStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/favorite', compact('storageId'));
+        $request = new Request('DELETE', $url);
 
-        try {
+        $response = $this->client->send($request);
 
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 400:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Upcloud\ApiClient\Model\Error', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
+        return $response->toArray();
     }
 
     /**
@@ -3958,13 +1291,13 @@ class StorageApi
      *
      * Remove storage from favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function unfavoriteStorageAsync($storage_id)
+    public function unfavoriteStorageAsync(string $storageId): PromiseInterface
     {
-        return $this->unfavoriteStorageAsyncWithHttpInfo($storage_id)->then(function ($response) {
+        return $this->unfavoriteStorageAsyncWithHttpInfo($storageId)->then(function ($response) {
             return $response[0];
         });
     }
@@ -3974,116 +1307,17 @@ class StorageApi
      *
      * Remove storage from favorites
      *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $storageId Storage id (required)
+     * @throws InvalidArgumentException
+     * @return PromiseInterface
      */
-    public function unfavoriteStorageAsyncWithHttpInfo($storage_id)
+    public function unfavoriteStorageAsyncWithHttpInfo(string $storageId): PromiseInterface
     {
-        $returnType = '';
-        $request = $this->unfavoriteStorageRequest($storage_id);
+        $url = $this->buildPath('storage/{storageId}/favorite', compact('storageId'));
+        $request = new Request('DELETE', $url);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
     }
-
-    /**
-     * Create request for operation 'unfavoriteStorage'
-     *
-     * @param string $storage_id Storage id (required)
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function unfavoriteStorageRequest($storage_id)
-    {
-        // verify the required parameter 'storage_id' is set
-        if ($storage_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $storage_id when calling unfavoriteStorage');
-        }
-
-        $resourcePath = '/storage/{storageId}/favorite';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($storage_id !== null) {
-            $resourcePath = str_replace('{' . 'storageId' . '}', ObjectSerializer::toPathValue($storage_id), $resourcePath);
-        }
-
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        return new Request(
-            'DELETE',
-            $url,
-            $headers,
-            $httpBody
-        );
-    }
-
 }

@@ -11,10 +11,9 @@ jobs:
     strategy:
       matrix:
         os-php-versions: [ 
-          { os: ubuntu-16.04, php: 5.6 },
-          { os: ubuntu-16.04, php: 7.0 },
-          { os: ubuntu-latest, php: 7.1 },
-          { os: ubuntu-latest, php: 7.2 }
+          { os: ubuntu-latest, php: 7.2 },
+          { os: ubuntu-latest, php: 7.3 },
+          { os: ubuntu-latest, php: 7.4 },
         ]
     runs-on: ${{ matrix.os-php-versions.os }}
     steps:
@@ -30,10 +29,9 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      # TODO: enable once fixed and updated
-      # - name: run unit tests
-      #   run: vendor/bin/phpunit
-      #   env: 
-      #     xdebug.max_nesting_level: 512
-      #     UPCLOUD_API_TEST_USER: ${{ secrets.UPCLOUD_API_TEST_USER }}
-      #     UPCLOUD_API_TEST_PASSWORD: ${{ secrets.UPCLOUD_API_TEST_PASSWORD }}
+      - name: run unit tests
+        run: vendor/bin/phpunit
+        env: 
+          xdebug.max_nesting_level: 512
+          UPCLOUD_API_TEST_USER: upcloudapitests
+          UPCLOUD_API_TEST_PASSWORD: Biped-shallot-taken-indict3
