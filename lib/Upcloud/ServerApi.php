@@ -447,7 +447,7 @@ class ServerApi extends BaseApi
         $url = $this->buildPath('server/{serverId}', compact('serverId'));
         $request =  new Request('DELETE', $url);
 
-        $options = $deleteStorage ? ['query' => ['storage' => '1']] : [];
+        $options = $deleteStorage ? ['query' => ['storages' => '1']] : [];
         $response = $this->client->send($request, $options);
 
         return $response->toArray();
