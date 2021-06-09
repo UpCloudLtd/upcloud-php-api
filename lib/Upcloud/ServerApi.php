@@ -421,14 +421,14 @@ class ServerApi extends BaseApi
      * Delete server
      *
      * @param string $serverId Id of server to delete (required)
-     * @param bool $deleteStorage Delete attached storage devices
+     * @param bool $deleteAttachedStorageDevices Delete attached storage devices
      * @throws ApiException on non-2xx response
      * @throws InvalidArgumentException|GuzzleException
      * @return void
      */
-    public function deleteServer(string $serverId, bool $deleteStorage = false): void
+    public function deleteServer(string $serverId, bool $deleteAttachedStorageDevices = false): void
     {
-        $this->deleteServerWithHttpInfo($serverId, $deleteStorage);
+        $this->deleteServerWithHttpInfo($serverId, $deleteAttachedStorageDevices);
     }
 
     /**
@@ -437,17 +437,17 @@ class ServerApi extends BaseApi
      * Delete server
      *
      * @param string $serverId Id of server to delete (required)
-     * @param bool $deleteStorage Delete attached storage devices
+     * @param bool $deleteAttachedStorageDevices Delete attached storage devices
      * @throws ApiException on non-2xx response
      * @throws InvalidArgumentException|GuzzleException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteServerWithHttpInfo(string $serverId, bool $deleteStorage = false): array
+    public function deleteServerWithHttpInfo(string $serverId, bool $deleteAttachedStorageDevices = false): array
     {
         $url = $this->buildPath('server/{serverId}', compact('serverId'));
         $request =  new Request('DELETE', $url);
 
-        $options = $deleteStorage ? ['query' => ['storages' => '1']] : [];
+        $options = $deleteAttachedStorageDevices ? ['query' => ['storages' => '1']] : [];
         $response = $this->client->send($request, $options);
 
         return $response->toArray();
