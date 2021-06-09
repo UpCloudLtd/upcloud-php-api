@@ -288,7 +288,7 @@ void (empty response body)
 
 # **deleteServer**
 
-> deleteServer($server_id)
+> deleteServer($server_id, $deleteAttachedStorageDevices)
 
 Delete server
 
@@ -306,7 +306,7 @@ $api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
 $server_id = "server_id_example"; // string | Id of server to delete
 
 try {
-    $api_instance->deleteServer($server_id);
+    $api_instance->deleteServer($server_id, $deleteAttachedStorageDevices);
 } catch (Exception $e) {
     echo 'Exception when calling ServerApi->deleteServer: ', $e->getMessage(), PHP_EOL;
 }
@@ -317,7 +317,8 @@ try {
 
 | Name          | Type       | Description            | Notes |
 | ------------- | ---------- | ---------------------- | ----- |
-| **server_id** | **string** | Id of server to delete |
+| **server_id** | **string** | Id of server to delete | ----- |
+| **deleteAttachedStorageDevices** | **boolean** | Delete attached storage devices at the same time with the server | Defaults to false |
 
 ### Return type
 
