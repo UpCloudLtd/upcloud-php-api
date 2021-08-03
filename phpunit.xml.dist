@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         stopOnFailure="false">
-    <testsuites>
-        <testsuite name="Api">
-            <directory>./test/Api</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./lib/Upcloud</directory>
-            <directory suffix=".php">./lib/Model</directory>
-        </whitelist>
-    </filter>
-
-    <php>
-        <ini name="memory_limit" value="2048M" />
-        <env name="UPCLOUD_API_TEST_NO_CREDENTIALS" value="true" />
-        <env name="UPCLOUD_API_TEST_USER" value="" />
-        <env name="UPCLOUD_API_TEST_PASSWORD" value="" />
-    </php>
+         stopOnFailure="false"
+>
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </coverage>
+  <php>
+    <env name="UPCLOUD_USERNAME" value="testuser" />
+    <env name="UPCLOUD_PASSWORD" value="TestSecret$1" />
+  </php>
+  <testsuites>
+    <testsuite name="unit">
+      <directory>tests/</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

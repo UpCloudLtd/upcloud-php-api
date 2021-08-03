@@ -1,0 +1,63 @@
+{
+  "servers" : {
+     "server" : [
+        {
+           "core_number" : "1",
+           "created" : 1627981264,
+           "host" : 5300306563,
+           "hostname" : "debian-1cpu-1gb-fi-hel1",
+           "license" : 0,
+           "memory_amount" : "1024",
+           "plan" : "1xCPU-1GB",
+           "plan_ipv4_bytes" : "66243628",
+           "plan_ipv6_bytes" : "48662",
+           "simple_backup" : "no",
+           "state" : "started",
+           "tags" : {
+              "tag" : []
+           },
+           "title" : "debian-1cpu-1gb-fi-hel1",
+           "uuid" : "000f8ee8-d826-4597-999d-68b7ba623a4a",
+           "zone" : "fi-hel1"
+        },
+        {
+           "core_number" : "1",
+           "created" : 1627984396,
+           "host" : 5104222851,
+           "hostname" : "server1.upcloud.test",
+           "license" : 0,
+           "memory_amount" : "1024",
+           "plan" : "1xCPU-1GB",
+           "plan_ipv4_bytes" : "104224206",
+           "plan_ipv6_bytes" : "602",
+           "simple_backup" : "no",
+           "state" : "started",
+           "tags" : {
+              "tag" : []
+           },
+           "title" : "test server 1",
+           "uuid" : "0062a011-766f-405c-80b0-cd976a20b013",
+           "zone" : "de-fra1"
+        },
+        {
+           "core_number" : "1",
+           "created" : 1627985162,
+           "host" : 6781944451,
+           "hostname" : "server2.upcloud.test",
+           "license" : 0,
+           "memory_amount" : "1024",
+           "plan" : "1xCPU-1GB",
+           "plan_ipv4_bytes" : "75650370",
+           "plan_ipv6_bytes" : "717380",
+           "simple_backup" : "no",
+           "state" : "started",
+           "tags" : {
+              "tag" : []
+           },
+           "title" : "test server 2",
+           "uuid" : "00ee3dda-4239-48f6-861a-09e739b59f40",
+           "zone" : "de-fra1"
+        }
+     ]
+  }
+}

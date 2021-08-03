@@ -1,0 +1,21 @@
+{
+  "server": {
+    "core_number": "1",
+    "created": 1627981264,
+    "host": 5300306563,
+    "hostname": "debian-1cpu-1gb-fi-hel1",
+    "license": 0,
+    "memory_amount": "1024",
+    "plan": "1xCPU-1GB",
+    "plan_ipv4_bytes": "66243628",
+    "plan_ipv6_bytes": "48662",
+    "simple_backup": "no",
+    "state": "started",
+    "tags": {
+      "tag": []
+    },
+    "title": "debian-1cpu-1gb-fi-hel1",
+    "uuid": "000f8ee8-d826-4597-999d-68b7ba623a4a",
+    "zone": "fi-hel1"
+  }
+}

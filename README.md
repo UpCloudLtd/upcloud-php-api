@@ -23,297 +23,77 @@ NOTE: Please test all of your use cases thoroughly before actual production use.
 Using this library requires the PHP version 7.2 and later.
 
 ## Installation
+
 ### Composer
 
-To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
+[Composer](http://getcomposer.org/) is the recommended way to install:
 
 ```
-{
-  "require": {
-    "upcloudltd/upcloud-php-api": "v2.0.0"
-  }
-}
+composer require upcloudltd/upcloud-php-api
 ```
-
-Then run `composer install`
 
 The upcloudltd/upcloud-php-api can be found from packagist.org, https://packagist.org/packages/upcloudltd/upcloud-php-api
 
 ### Manual installation
 
-Download the files and include `autoload.php`:
+Download the files from https://github.com/UpCloudLtd/upcloud-php-api, place them in your project and require the classes that you wish to use.
+
+## Usage
+
+Here's a quick example for fetching your account info using the SDK in a Composer project:
 
 ```php
-    require_once('/path/to//vendor/autoload.php');
+<?php
+// require the Composer autoloader
+require_once 'vendor/autoload.php';
+
+use UpCloud\ApiClient;
+
+$client = new ApiClient([
+  'username' => 'your_username_here',
+  'password' => 'Some_Secret_1234'
+]);
+
+$result = $client->getAccount();
+print_r($result);
 ```
 
-## Tests
+## Development
+
+Install all the packages:
+
+```
+composer install
+```
+
+### Coding standard
+
+See [ecs.php] for the set coding styles & standards.
+
+To check for code style problems:
+
+```
+vendor/bin/ecs check src
+```
+
+To fix code style problems:
+
+```
+vendor/bin/ecs check src --fix
+```
+
+### Tests
 
 To run the unit tests:
 
 ```
-composer install
-
-./vendor/bin/phpunit
+vendor/bin/phpunit
 ```
-
-## Usage
-
-Please follow the [installation procedure](#installation--usage) and then run the following (**NOTE**: In real production applications you should use for example ENV variables instead of inserting credentials directly to code and to version control):
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Upcloud\ApiClient\Upcloud\AccountApi();
-$config = $api_instance->getConfig();
-$config->setUsername('YOUR UPCLOUD USERNAME');
-$config->setPassword('YOUR UPCLOUD PASSWORD');
-
-try {
-    $result = $api_instance->getAccount();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AccountApi->getAccount: ', $e->getMessage(), PHP_EOL;
-}
-
-?>
-```
-
-To create a server:
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Upcloud\ApiClient\Upcloud\AccountApi();
-$config = $api_instance->getConfig();
-$config->setUsername('YOUR UPCLOUD USERNAME');
-$config->setPassword('YOUR UPCLOUD PASSWORD');
-
-try {
-        $result = $api_instance->getAccount();
-            print_r($result);
-} catch (Exception $e) {
-        echo 'Exception when calling AccountApi->getAccount: ', $e->getMessage(), PHP_EOL;
-}
-
-$server = new Upcloud\ApiClient\Model\Server();
-$server->setTitle('php-test-machine');
-$server->setZone('fi-hel1');
-$server->setHostname('phptest');
-$server->setPlan('1xCPU-1GB');
-
-$storage = new Upcloud\ApiClient\Model\StorageDevice();
-$storage->setStorage('01000000-0000-4000-8000-000030060200');
-$storage->setSize(50.0);
-$storage->setAction('clone');
-$storage->setTitle('php-test-storage');
-
-$storage_devices = new Upcloud\ApiClient\Model\ServerStorageDevices();
-$storage_devices->setStorageDevice([$storage]);
-
-$server->setStorageDevices($storage_devices);
-
-$server_request = new Upcloud\ApiClient\Model\CreateServerRequest();
-$server_request->setServer($server);
-$api_instance = new Upcloud\ApiClient\Upcloud\ServerApi();
-try {
-        $result = $api_instance->createServer($server_request);
-            print_r($result);
-} catch (Exception $e) {
-        echo 'Exception when calling ServerApi->createServer: ', $e->getMessage(), PHP_EOL;
-}
-
-?>
-```
-
-## Documentation
-
-All URIs are relative to *https://api.upcloud.com/1.3*
-
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*AccountApi* | [**getAccount**](docs/Api/AccountApi.md#getaccount) | **GET** /account | Account information
-*FirewallApi* | [**createFirewallRule**](docs/Api/FirewallApi.md#createfirewallrule) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
-*FirewallApi* | [**deleteFirewallRule**](docs/Api/FirewallApi.md#deletefirewallrule) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
-*FirewallApi* | [**getFirewallRule**](docs/Api/FirewallApi.md#getfirewallrule) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
-*FirewallApi* | [**serverServerIdFirewallRuleGet**](docs/Api/FirewallApi.md#serverserveridfirewallruleget) | **GET** /server/{serverId}/firewall_rule | List firewall rules
-*IPAddressApi* | [**addIp**](docs/Api/IPAddressApi.md#addip) | **POST** /ip_address | Assign IP address
-*IPAddressApi* | [**deleteIp**](docs/Api/IPAddressApi.md#deleteip) | **DELETE** /ip_address/{ip} | Release IP address
-*IPAddressApi* | [**getDetails**](docs/Api/IPAddressApi.md#getdetails) | **GET** /ip_address/{ip} | Get IP address details
-*IPAddressApi* | [**listIps**](docs/Api/IPAddressApi.md#listips) | **GET** /ip_address | List IP addresses
-*IPAddressApi* | [**modifyIp**](docs/Api/IPAddressApi.md#modifyip) | **PUT** /ip_address/{ip} | Modify IP address
-*NetworkApi* | [**getListNetworks**](docs/Api/NetworkApi.md#getlistnetworks) | **GET** /network    | List all Networks  |
-*NetworkApi* | [**getNetworkDetails**](docs/Api/NetworkApi.md#getnetworkdetails) | **GET** /network/{uuid} | Get Network details |
-*NetworkApi* | [**createNetwork**](docs/Api/NetworkApi.md#createnetwork)     | **POST** /network | Create a new SDN private network |
-*NetworkApi* | [**modifyNetwork**](docs/Api/NetworkApi.md#modifynetwork)     | **PUT** /network/{id} | Modify a specific SDN private network |
-*NetworkApi* | [**deleteNetwork**](docs/Api/NetworkApi.md#deletenetwork)     | **DELETE** /network/{id} | Delete a SDN private network |
-*NetworkApi* | [**getListServerNetworks**](docs/Api/NetworkApi.md#getlistservernetworks) | **GET** server/{server_id}/networking    | List all Networks  |
-*NetworkApi* | [**createNetworkInterface**](docs/Api/NetworkApi.md#createnetworkinterface) | **POST** server/{server}/networking/interface | Create a new network interface |
-*NetworkApi* | [**modifyNetworkInterface**](docs/Api/NetworkApi.md#modifynetworkinterface)     | **PUT** /network/{id} | Modify network interface |
-*NetworkApi* | [**deleteNetworkInterface**](docs/Api/NetworkApi.md#deletenetworkinterface)     | **DELETE** /network/{id} | Delete network interface |
-*NetworkApi* | [**getListRouters**](docs/Api/NetworkApi.md#getlistrouters) | **GET** /router    | List of all available routers  |
-*NetworkApi* | [**getRouterDetails**](docs/Api/NetworkApi.md#getrouterdetails) | **GET** /router/{uuid} | Get router details |
-*NetworkApi* | [**createRouter**](docs/Api/NetworkApi.md#createrouter) | **POST** /router | Create a new router |
-*NetworkApi* | [**modifyRouter**](docs/Api/NetworkApi.md#modifyrouter)     | **PUT** /router/{id} | Modify an existing router |
-*NetworkApi* | [**deleteRouter**](docs/Api/NetworkApi.md#deleterouter)     | **DELETE** /router/{id} | Delete an existing router |
-*ObjectStorageApi* | [**getListObjectStorage**](docs/Api/ObjectStorageApi.md#getlistobjectstorage) | **GET** /object-storage    | List all Object Storage  
-*ObjectStorageApi* | [**getObjectStorageDetails**](docs/Api/ObjectStorageApi.md#getobjectstoragedetails) | **GET** /object-storage/{uuid} | Get Object Storage details 
-*ObjectStorageApi* | [**createObjectStorage**](docs/Api/ObjectStorageApi.md#createobjectstorage)     | **POST** /object-storage | Create a new  Object Storage 
-*ObjectStorageApi* | [**modifyObjectStorage**](docs/Api/ObjectStorageApi.md#modifyobjectstorage)     | **PATCH** /object-storage/{id} | Modify Object Storage 
-*ObjectStorageApi* | [**deleteObjectStorage**](docs/Api/ObjectStorageApi.md#deleteobjectstorage)     | **DELETE** /object-storage/{id} | Release Object Storage 
-*HostsApi* | [**getListHosts**](docs/Api/HostsApi.md#getlisthosts) | **GET** /host | List of available hosts
-*HostsApi* | [**getHostDetails**](docs/Api/HostsApi.md#gethostdetails) | **GET** /host/{id} | Get detailed information about a specific host
-*HostsApi* | [**modifyHost**](docs/Api/HostsApi.md#modifyhost) | **PATCH** /host/{id} | Modify specific host
-*PlanApi* | [**listPlans**](docs/Api/PlanApi.md#listplans) | **GET** /plan | List available plans
-*PricesApi* | [**listPrices**](docs/Api/PricesApi.md#listprices) | **GET** /price | List prices
-*ServerApi* | [**assignTag**](docs/Api/ServerApi.md#assigntag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
-*ServerApi* | [**attachStorage**](docs/Api/ServerApi.md#attachstorage) | **POST** /server/{serverId}/storage/attach | Attach storage
-*ServerApi* | [**createFirewallRule**](docs/Api/ServerApi.md#createfirewallrule) | **POST** /server/{serverId}/firewall_rule | Create firewall rule
-*ServerApi* | [**createServer**](docs/Api/ServerApi.md#createserver) | **POST** /server | Create server
-*ServerApi* | [**deleteFirewallRule**](docs/Api/ServerApi.md#deletefirewallrule) | **DELETE** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Remove firewall rule
-*ServerApi* | [**deleteServer**](docs/Api/ServerApi.md#deleteserver) | **DELETE** /server/{serverId} | Delete server
-*ServerApi* | [**detachStorage**](docs/Api/ServerApi.md#detachstorage) | **POST** /server/{serverId}/storage/detach | Detach storage
-*ServerApi* | [**ejectCdrom**](docs/Api/ServerApi.md#ejectcdrom) | **POST** /server/{serverId}/cdrom/eject | Eject CD-ROM
-*ServerApi* | [**getFirewallRule**](docs/Api/ServerApi.md#getfirewallrule) | **GET** /server/{serverId}/firewall_rule/{firewallRuleNumber} | Get firewall rule details
-*ServerApi* | [**listServerConfigurations**](docs/Api/ServerApi.md#listserverconfigurations) | **GET** /server_size | List server configurations
-*ServerApi* | [**listServers**](docs/Api/ServerApi.md#listservers) | **GET** /server | List of servers
-*ServerApi* | [**loadCdrom**](docs/Api/ServerApi.md#loadcdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
-*ServerApi* | [**modifyServer**](docs/Api/ServerApi.md#modifyserver) | **PUT** /server/{serverId} | Modify server
-*ServerApi* | [**restartServer**](docs/Api/ServerApi.md#restartserver) | **POST** /server/{serverId}/restart | Restart server
-*ServerApi* | [**serverDetails**](docs/Api/ServerApi.md#serverdetails) | **GET** /server/{serverId} | Get server details
-*ServerApi* | [**serverServerIdFirewallRuleGet**](docs/Api/ServerApi.md#serverserveridfirewallruleget) | **GET** /server/{serverId}/firewall_rule | List firewall rules
-*ServerApi* | [**startServer**](docs/Api/ServerApi.md#startserver) | **POST** /server/{serverId}/start | Start server
-*ServerApi* | [**stopServer**](docs/Api/ServerApi.md#stopserver) | **POST** /server/{serverId}/stop | Stop server
-*ServerApi* | [**untag**](docs/Api/ServerApi.md#untag) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
-*StorageApi* | [**attachStorage**](docs/Api/StorageApi.md#attachstorage) | **POST** /server/{serverId}/storage/attach | Attach storage
-*StorageApi* | [**backupStorage**](docs/Api/StorageApi.md#backupstorage) | **POST** /storage/{storageId}/backup | Create backup
-*StorageApi* | [**cancelOperation**](docs/Api/StorageApi.md#canceloperation) | **POST** /storage/{storageId}/cancel | Cancel storage operation
-*StorageApi* | [**cloneStorage**](docs/Api/StorageApi.md#clonestorage) | **POST** /storage/{storageId}/clone | Clone storage
-*StorageApi* | [**createStorage**](docs/Api/StorageApi.md#createstorage) | **POST** /storage | Create storage
-*StorageApi* | [**deleteStorage**](docs/Api/StorageApi.md#deletestorage) | **DELETE** /storage/{storageId} | Delete storage
-*StorageApi* | [**detachStorage**](docs/Api/StorageApi.md#detachstorage) | **POST** /server/{serverId}/storage/detach | Detach storage
-*StorageApi* | [**ejectCdrom**](docs/Api/StorageApi.md#ejectcdrom) | **POST** /server/{serverId}/cdrom/eject | Eject CD-ROM
-*StorageApi* | [**favoriteStorage**](docs/Api/StorageApi.md#favoritestorage) | **POST** /storage/{storageId}/favorite | Add storage to favorites
-*StorageApi* | [**getStorageDetails**](docs/Api/StorageApi.md#getstoragedetails) | **GET** /storage/{storageId} | Get storage details
-*StorageApi* | [**listStorageTypes**](docs/Api/StorageApi.md#liststoragetypes) | **GET** /storage/{type}/ | List of storages by type
-*StorageApi* | [**listStorages**](docs/Api/StorageApi.md#liststorages) | **GET** /storage | List of storages
-*StorageApi* | [**loadCdrom**](docs/Api/StorageApi.md#loadcdrom) | **POST** /server/{serverId}/storage/cdrom/load | Load CD-ROM
-*StorageApi* | [**modifyStorage**](docs/Api/StorageApi.md#modifystorage) | **PUT** /storage/{storageId} | Modify storage
-*StorageApi* | [**restoreStorage**](docs/Api/StorageApi.md#restorestorage) | **POST** /storage/{storageId}/restore | Restore backup
-*StorageApi* | [**templatizeStorage**](docs/Api/StorageApi.md#templatizestorage) | **POST** /storage/{storageId}/templatize | Templatize storage
-*StorageApi* | [**unfavoriteStorage**](docs/Api/StorageApi.md#unfavoritestorage) | **DELETE** /storage/{storageId}/favorite | Remove storage from favorites
-*TagApi* | [**assignTag**](docs/Api/TagApi.md#assigntag) | **POST** /server/{serverId}/tag/{tagList} | Assign tag to a server
-*TagApi* | [**createTag**](docs/Api/TagApi.md#createtag) | **POST** /tag | Create a new tag
-*TagApi* | [**deleteTag**](docs/Api/TagApi.md#deletetag) | **DELETE** /tag/{tagName} | Delete tag
-*TagApi* | [**listTags**](docs/Api/TagApi.md#listtags) | **GET** /tag | List existing tags
-*TagApi* | [**modifyTag**](docs/Api/TagApi.md#modifytag) | **PUT** /tag/{tagName} | Modify existing tag
-*TagApi* | [**untag**](docs/Api/TagApi.md#untag) | **POST** /server/{serverId}/untag/{tagName} | Remove tag from server
-*TimezoneApi* | [**listTimezones**](docs/Api/TimezoneApi.md#listtimezones) | **GET** /timezone | List timezones
-*ZoneApi* | [**listZones**](docs/Api/ZoneApi.md#listzones) | **GET** /zone | List available zones
-
-
-## Documentation of the models
-
- - [Account](docs/Model/Account.md)
- - [AccountResourceLimits](docs/Model/AccountResourceLimits.md)
- - [AccountResponse](docs/Model/AccountResponse.md)
- - [AddIpRequest](docs/Model/AddIpRequest.md)
- - [AssignIpResponse](docs/Model/AssignIpResponse.md)
- - [AttachNetwork](docs/Model/AttachNetwork.md)
- - [AttachStorageDeviceRequest](docs/Model/AttachStorageDeviceRequest.md)
- - [AvailablePlanListResponse](docs/Model/AvailablePlanListResponse.md)
- - [AvailablePlanListResponsePlans](docs/Model/AvailablePlanListResponsePlans.md)
- - [BackupRule](docs/Model/BackupRule.md)
- - [CloneStorageRequest](docs/Model/CloneStorageRequest.md)
- - [ConfigurationListResponse](docs/Model/ConfigurationListResponse.md)
- - [ConfigurationListResponseServerSizes](docs/Model/ConfigurationListResponseServerSizes.md)
- - [CreateBackupStorageRequest](docs/Model/CreateBackupStorageRequest.md)
- - [CreateNewTagResponse](docs/Model/CreateNewTagResponse.md)
- - [CreateServerRequest](docs/Model/CreateServerRequest.md)
- - [CreateServerResponse](docs/Model/CreateServerResponse.md)
- - [CreateStorageRequest](docs/Model/CreateStorageRequest.md)
- - [CreateStorageResponse](docs/Model/CreateStorageResponse.md)
- - [Error](docs/Model/Error.md)
- - [ErrorCode](docs/Model/ErrorCode.md)
- - [ErrorError](docs/Model/ErrorError.md)
- - [ErrorStatus](docs/Model/ErrorStatus.md)
- - [FirewallRule](docs/Model/FirewallRule.md)
- - [FirewallRuleCreateResponse](docs/Model/FirewallRuleCreateResponse.md)
- - [FirewallRuleListResponse](docs/Model/FirewallRuleListResponse.md)
- - [FirewallRuleListResponseFirewallRules](docs/Model/FirewallRuleListResponseFirewallRules.md)
- - [FirewallRuleRequest](docs/Model/FirewallRuleRequest.md)
- - [Host](docs/Model/Host.md)
- - [IpAddress](docs/Model/IpAddress.md)
- - [IpAddressListResponse](docs/Model/IpAddressListResponse.md)
- - [IpAddresses](docs/Model/IpAddresses.md)
- - [IpNetwork](docs/Model/IpNetwork.md)
- - [ModifyIpRequest](docs/Model/ModifyIpRequest.md)
- - [ModifyServerRequest](docs/Model/ModifyServerRequest.md)
- - [ModifyStorageRequest](docs/Model/ModifyStorageRequest.md)
- - [ModifyTagRequest](docs/Model/ModifyTagRequest.md)
- - [Network](docs/Model/Network.md)
- - [NetworkInterface](docs/Model/NetworkInterface.md)
- - [ObjectStorage](docs/Model/ObjectStorage.md)
- - [Plan](docs/Model/Plan.md)
- - [Price](docs/Model/Price.md)
- - [PriceListResponse](docs/Model/PriceListResponse.md)
- - [PriceListResponsePrices](docs/Model/PriceListResponsePrices.md)
- - [PriceZone](docs/Model/PriceZone.md)
- - [RestartServer](docs/Model/RestartServer.md)
- - [Router](docs/Model/Router.md)
- - [Server](docs/Model/Server.md)
- - [ServerListResponse](docs/Model/ServerListResponse.md)
- - [ServerListResponseServers](docs/Model/ServerListResponseServers.md)
- - [ServerLoginUser](docs/Model/ServerLoginUser.md)
- - [ServerSize](docs/Model/ServerSize.md)
- - [ServerState](docs/Model/ServerState.md)
- - [ServerStorageDevices](docs/Model/ServerStorageDevices.md)
- - [ServerTags](docs/Model/ServerTags.md)
- - [Stat](docs/Model/Stat.md)
- - [StopServer](docs/Model/StopServer.md)
- - [StopServerRequest](docs/Model/StopServerRequest.md)
- - [Storage](docs/Model/Storage.md)
- - [StorageAccessType](docs/Model/StorageAccessType.md)
- - [StorageBackups](docs/Model/StorageBackups.md)
- - [StorageDevice](docs/Model/StorageDevice.md)
- - [StorageDeviceDetachRequest](docs/Model/StorageDeviceDetachRequest.md)
- - [StorageDeviceLoadRequest](docs/Model/StorageDeviceLoadRequest.md)
- - [Servers](docs/Model/Servers.md)
- - [StorageState](docs/Model/StorageState.md)
- - [StorageTier](docs/Model/StorageTier.md)
- - [StorageType](docs/Model/StorageType.md)
- - [SuccessStoragesResponse](docs/Model/SuccessStoragesResponse.md)
- - [SuccessStoragesResponseStorages](docs/Model/SuccessStoragesResponseStorages.md)
- - [Tag](docs/Model/Tag.md)
- - [TagCreateRequest](docs/Model/TagCreateRequest.md)
- - [TagListResponse](docs/Model/TagListResponse.md)
- - [TagListResponseTags](docs/Model/TagListResponseTags.md)
- - [TagServers](docs/Model/TagServers.md)
- - [TemplitizeStorageRequest](docs/Model/TemplitizeStorageRequest.md)
- - [TimezoneListResponse](docs/Model/TimezoneListResponse.md)
- - [TimezoneListResponseTimezones](docs/Model/TimezoneListResponseTimezones.md)
- - [Zone](docs/Model/Zone.md)
- - [ZoneListResponse](docs/Model/ZoneListResponse.md)
- - [ZoneListResponseZones](docs/Model/ZoneListResponseZones.md)
-
-
-## Documentation for authorization
-
-It's recommended to store the username and password in a separate configuration file while developing API applications to avoid accidentally publishing your account credentials.
-
-### baseAuth
-
-- **Type**: HTTP basic authentication
-- **Username**: Your UpCloud API username
-- **Password**: Your UpCloud API user's password
 
 ## Issues
 
 Found a bug, have a problem using the client, or anything else about the library you would want to mention? [Open a new issue here](https://github.com/UpCloudLtd/upcloud-php-api/issues/new) to get in contact.
 
-
 ## License
 
-This project is distributed under the [MIT License](https://opensource.org/licenses/MIT), see LICENSE.txt for more information.
+[MIT License](LICENSE)
