@@ -2,6 +2,9 @@
 
 namespace UpCloud;
 
+/**
+ * Trait for all Server related API methods.
+ */
 trait ServerApiTrait
 {
     /**

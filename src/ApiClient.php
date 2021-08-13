@@ -6,6 +6,9 @@ use RuntimeException;
 
 require_once 'Version.php';
 
+/**
+ * UpCloud API client. The main class for connecting to the UpCloud API.
+ */
 class ApiClient
 {
     use ServerApiTrait;

@@ -90,6 +90,14 @@ To run the unit tests:
 vendor/bin/phpunit
 ```
 
+### Documentation
+
+Generate the documentation using docker & [phpDocumentator](https://docs.phpdoc.org/).
+
+```
+docker run --rm -v $(pwd):/data phpdoc/phpdoc:3 run
+```
+
 ## Issues
 
 Found a bug, have a problem using the client, or anything else about the library you would want to mention? [Open a new issue here](https://github.com/UpCloudLtd/upcloud-php-api/issues/new) to get in contact.

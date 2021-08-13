@@ -2,6 +2,9 @@
 
 namespace UpCloud;
 
+/**
+ * Trait for all Storage related API methods.
+ */
 trait StorageApiTrait
 {
     public function getStorages()
