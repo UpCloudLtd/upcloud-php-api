@@ -1,0 +1,45 @@
+# {{ node.name }}
+
+{{ node.summary|raw }}
+
+{% if node.description -%}
+{{ node.description|raw }}
+{%- endif %}
+
+* Full name: {{ node.FullyQualifiedStructuralElementName }}
+
+{% if node.parent -%}
+* Parent class: {{ node.parent.FullyQualifiedStructuralElementName }}
+{%- endif %}
+
+{% if node.interfaces is not empty %}
+* This class implements: {{ node.interfaces|join(', ')|raw }}
+{% endif %}
+{% if node.deprecated %}* **Warning:** this class is **deprecated**. This means that this class will likely be removed in a future version.
+{% endif %}
+
+{% if node.tags.see is not empty or node.tags.link is not empty %}
+**See Also:**
+
+{% for see in node.tags.see %}
+* {{ see.reference }} {% if see.description %}- {{ see.description|raw }}{% endif %}
+{% endfor %}
+{% for link in node.tags.link %}
+* {{ link.link }} {% if link.description and link.description != link.link %}- {{ link.description|raw }}{% endif %}
+{% endfor %}
+
+{% endif %}{# node.tags.see || node.tags.link #}
+
+## Traits
+
+{% for trait in node.usedTraits %}
+{{ trait.name }}
+{% endfor %}
+
+## Methods
+
+{% for method in node.inheritedMethods.merge(node.methods) if method.visibility == 'public' %}
+{% include 'method.md.twig' %}
+{% else %}
+No public methods found.
+{% endfor %}

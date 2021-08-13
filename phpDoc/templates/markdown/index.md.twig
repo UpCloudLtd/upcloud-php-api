@@ -1,0 +1,13 @@
+{%- import "include/macros.twig" as macros -%}
+
+# {{ project.name|raw }}
+
+This is an automatically generated documentation for **{{project.name}}**.
+
+#### Classes
+
+{% for class in project.indexes.classes|sort_asc %}
+{%- if not class.abstract %}
+* {{ macros.mdClassLink(class) }}
+{% endif -%}
+{%- endfor -%}
