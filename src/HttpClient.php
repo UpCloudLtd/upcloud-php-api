@@ -33,6 +33,18 @@ class HttpClient
     }
 
     /**
+     * Sends a HTTP request with payload encoded as JSON and response decoded from JSON.
+     */
+    public function jsonRequest(string $method, string $path, $payload = null)
+    {
+        $response = $this->request($method, $path, [
+            'body' => json_encode($payload)
+        ]);
+
+        return json_decode($response->getBody());
+    }
+
+    /**
      * Send a raw HTTP request
      */
     public function request(string $method, string $path, $opts = []): ResponseInterface
@@ -51,8 +63,7 @@ class HttpClient
      */
     public function get(string $path)
     {
-        $response = $this->request('GET', $path);
-        return json_decode($response->getBody());
+        return $this->jsonRequest('GET', $path);
     }
 
     /**
@@ -60,25 +71,21 @@ class HttpClient
      */
     public function post(string $path, $payload)
     {
-        $response = $this->request('POST', $path, [
-            'body' => json_encode($payload),
-        ]);
-
-        return json_decode($response->getBody());
+        return $this->jsonRequest('POST', $path, $payload);
     }
 
-    public function put()
+    public function put(string $path, $payload)
     {
-        //
+        return $this->jsonRequest('PUT', $path, $payload);
     }
 
-    public function patch()
+    public function patch(string $path, $payload)
     {
-        //
+        return $this->jsonRequest('PATCH', $path, $payload);
     }
 
-    public function delete()
+    public function delete(string $path)
     {
-        //
+        return $this->jsonRequest('DELETE', $path);
     }
 }
