@@ -25,5 +25,14 @@ trait StorageApiTrait
         return $response->storages->storage;
     }
 
-    /** TODO: add rest of operations */
+    /**
+     * Get storages of a certain type.
+     *
+     * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite $type Type of storages
+     */
+    public function getStoragesByType(string $type)
+    {
+        $response = $this->httpClient->get("storage/$type");
+        return $response->storage;
+    }
 }
