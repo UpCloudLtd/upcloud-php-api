@@ -12,6 +12,7 @@ require_once 'Version.php';
 class ApiClient
 {
     use ServerApiTrait;
+    use ServerFirewallApiTrait;
     use StorageApiTrait;
     // use AccountApiTrait;
     // use PriceApiTrait;
