@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use UpCloud\ApiClient;
 use UpCloud\HttpClient;
@@ -10,7 +11,7 @@ use UpCloud\HttpClient;
 class ApiClientServerTraitTest extends TestCase
 {
   private $client;
-
+  private $httpClient;
   private $mock;
 
   protected function setUp(): void
@@ -23,15 +24,20 @@ class ApiClientServerTraitTest extends TestCase
       return;
     }
 
-    $httpClient = new HttpClient([
-      'apiRoot' => 'http://localhost:6544',
-      'handler' => HandlerStack::create($this->mock),
+    $this->container = [];
+    $history = Middleware::history($this->container);
+    $handlerStack = HandlerStack::create($this->mock);
+    $handlerStack->push($history);
+
+    $this->httpClient = new HttpClient([
+      'apiRoot' => 'https://api.upcloud.test/1.3/',
+      'handler' => $handlerStack,
       'password' => getenv('UPCLOUD_PASSWORD'),
       'username' => getenv('UPCLOUD_USERNAME'),
     ]);
 
     $this->client = new ApiClient([
-      'client' => $httpClient,
+      'client' => $this->httpClient,
     ]);
   }
 
@@ -59,6 +65,166 @@ class ApiClientServerTraitTest extends TestCase
     $this->assertEquals(
       ['debian-1cpu-1gb-fi-hel1', 'test server 1', 'test server 2'],
       array_map($serverTitleMap, $servers)
+    );
+  }
+
+  public function testDeleteServer(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $this->mock->append(new Response(204, [], ''));
+
+    $this->client->deleteServer($uuid);
+
+    $this->assertEquals(count($this->container), 1);
+
+    $this->assertEquals($this->container[0]['request']->getUri(), "https://api.upcloud.test/1.3/server/$uuid");
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'DELETE');
+  }
+
+  public function testDeleteServerWithStoragesAndBackups(): void
+  {
+    $uuid = '002f8ee8-d826-4597-999d-68b7ba623a4a';
+    $this->mock->append(new Response(204, [], ''));
+
+    $this->client->deleteServer($uuid, ['storages' => 1, 'backups' => 'delete']);
+
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid?storages=1&backups=delete"
+    );
+  }
+
+  public function testModifyServer(): void {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/modifyServer.json');
+
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $response = $this->client->modifyServer($uuid, ['title' => 'modified title']);
+
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'PUT');
+
+    $this->assertEquals(
+      $response->title,
+      'modified title'
+    );
+  }
+
+  public function testStartServer(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->startServer($uuid);
+
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'POST');
+
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid/start"
+    );
+  }
+
+  public function testStartServerAvoidHost(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->startServer($uuid, ['avoid_host' => 13245662]);
+
+    $this->assertEquals(
+      $this->container[0]['request']->getBody(),
+      '{"server":{"avoid_host":13245662}}'
+    );
+  }
+
+  public function testStartServerAsync(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->startServer($uuid, ['start_type' => 'async']);
+
+    $this->assertEquals(
+      $this->container[0]['request']->getBody(),
+      '{"server":{"start_type":"async"}}'
+    );
+  }
+
+  public function testStopServer(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->stopServer($uuid);
+
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'POST');
+
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid/stop"
+    );
+  }
+
+  public function testStopServerHardAndTimeout(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->stopServer($uuid, ['stop_type' => 'hard', 'timeout' => 60]);
+
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'POST');
+
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid/stop"
+    );
+
+    $this->assertEquals(
+      $this->container[0]['request']->getBody(),
+      '{"stop_server":{"stop_type":"hard","timeout":60}}'
+    );
+  }
+
+  public function testRestartServer(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->restartServer($uuid);
+
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'POST');
+
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid/restart"
+    );
+  }
+
+  public function testRestartServerHardAndTimeout(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $this->mock->append(new Response(204, [], $serverJson));
+
+    $this->client->restartServer($uuid, ['stop_type' => 'soft', 'timeout' => 60, 'timeout_action' => 'destroy']);
+
+    $this->assertEquals($this->container[0]['request']->getMethod(), 'POST');
+
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid/restart"
+    );
+
+    $this->assertEquals(
+      $this->container[0]['request']->getBody(),
+      '{"restart_server":{"stop_type":"soft","timeout":60,"timeout_action":"destroy"}}'
     );
   }
 }
