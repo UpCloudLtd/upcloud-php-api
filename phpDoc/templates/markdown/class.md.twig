@@ -30,15 +30,19 @@
 
 {% endif %}{# node.tags.see || node.tags.link #}
 
+{% if node.usedTraits is not empty %}
+
 ## Traits
 
 {% for trait in node.usedTraits %}
-{{ trait.name }}
+- {{ trait.name }}
 {% endfor %}
+
+{% endif %}
 
 ## Methods
 
-{% for method in node.inheritedMethods.merge(node.methods) if method.visibility == 'public' %}
+{% for method in node.methods.merge(node.inheritedMethods) if method.visibility == 'public' %}
 {% include 'method.md.twig' %}
 {% else %}
 No public methods found.

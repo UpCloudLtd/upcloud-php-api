@@ -4,7 +4,7 @@
 
 {# Method signature #}
 ```php
-{{ class.name }}::{{ method.name }}( {% for argument in method.arguments %}
+{{ method.name }}( {% for argument in method.arguments %}
 {{- argument.types ? argument.types|join('|')~' ' }}
 {{- argument.byReference ? '&' }}
 {{- argument.name }}{{ argument.default ? ' = '~argument.default }}
