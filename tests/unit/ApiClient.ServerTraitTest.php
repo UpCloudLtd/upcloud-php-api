@@ -1,50 +1,14 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
+use UpCloud\Tests\BaseCase;
 use GuzzleHttp\Psr7\Response;
-use UpCloud\ApiClient;
-use UpCloud\HttpClient;
 
-class ApiClientServerTraitTest extends TestCase
+class ApiClientServerTraitTest extends BaseCase
 {
-  private $client;
-  private $httpClient;
-  private $mock;
-
-  protected function setUp(): void
-  {
-    $this->mock = new MockHandler();
-
-    if (getenv('NO_HTTP_MOCK') === '1') {
-      // do not use HTTP mock, use the actual API
-      $this->client = new ApiClient();
-      return;
-    }
-
-    $this->container = [];
-    $history = Middleware::history($this->container);
-    $handlerStack = HandlerStack::create($this->mock);
-    $handlerStack->push($history);
-
-    $this->httpClient = new HttpClient([
-      'apiRoot' => 'https://api.upcloud.test/1.3/',
-      'handler' => $handlerStack,
-      'password' => getenv('UPCLOUD_PASSWORD'),
-      'username' => getenv('UPCLOUD_USERNAME'),
-    ]);
-
-    $this->client = new ApiClient([
-      'client' => $this->httpClient,
-    ]);
-  }
-
   public function testGetServer(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(201, [], $serverJson));
 
     $server = $this->client->getServer($uuid);
@@ -56,12 +20,14 @@ class ApiClientServerTraitTest extends TestCase
 
   public function testGetServers(): void
   {
-    $serversJson = file_get_contents(__DIR__ . '/json/getServers.json');
+    $serversJson = file_get_contents(__DIR__ . '/../json/getServers.json');
     $this->mock->append(new Response(201, [], $serversJson));
 
     $servers = $this->client->getServers();
 
-    $serverTitleMap = function($server) { return $server->title; };
+    $serverTitleMap = function ($server) {
+      return $server->title;
+    };
     $this->assertEquals(
       ['debian-1cpu-1gb-fi-hel1', 'test server 1', 'test server 2'],
       array_map($serverTitleMap, $servers)
@@ -77,8 +43,15 @@ class ApiClientServerTraitTest extends TestCase
 
     $this->assertEquals(count($this->container), 1);
 
-    $this->assertEquals($this->container[0]['request']->getUri(), "https://api.upcloud.test/1.3/server/$uuid");
-    $this->assertEquals($this->container[0]['request']->getMethod(), 'DELETE');
+    $this->assertEquals(
+      $this->container[0]['request']->getUri(),
+      "https://api.upcloud.test/1.3/server/$uuid"
+    );
+
+    $this->assertEquals(
+      $this->container[0]['request']->getMethod(),
+      'DELETE'
+    );
   }
 
   public function testDeleteServerWithStoragesAndBackups(): void
@@ -94,9 +67,10 @@ class ApiClientServerTraitTest extends TestCase
     );
   }
 
-  public function testModifyServer(): void {
+  public function testModifyServer(): void
+  {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/modifyServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/modifyServer.json');
 
     $this->mock->append(new Response(204, [], $serverJson));
 
@@ -113,7 +87,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testStartServer(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->startServer($uuid);
@@ -129,7 +103,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testStartServerAvoidHost(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->startServer($uuid, ['avoid_host' => 13245662]);
@@ -143,7 +117,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testStartServerAsync(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->startServer($uuid, ['start_type' => 'async']);
@@ -157,7 +131,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testStopServer(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->stopServer($uuid);
@@ -173,7 +147,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testStopServerHardAndTimeout(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->stopServer($uuid, ['stop_type' => 'hard', 'timeout' => 60]);
@@ -194,7 +168,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testRestartServer(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->restartServer($uuid);
@@ -210,7 +184,7 @@ class ApiClientServerTraitTest extends TestCase
   public function testRestartServerHardAndTimeout(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
-    $serverJson = file_get_contents(__DIR__ . '/json/getServer.json');
+    $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(204, [], $serverJson));
 
     $this->client->restartServer($uuid, ['stop_type' => 'soft', 'timeout' => 60, 'timeout_action' => 'destroy']);
