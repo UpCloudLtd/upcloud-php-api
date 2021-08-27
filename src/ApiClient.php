@@ -37,11 +37,11 @@ class ApiClient
         $password = $config['password'] ?? getenv('UPCLOUD_PASSWORD');
 
         if (empty($username)) {
-            throw new RuntimeException('could not initialize API client: username missing');
+            throw new RuntimeException('Please provide your UpCloud account username');
         }
 
         if (empty($password)) {
-            throw new RuntimeException('could not initialize API client: password missing');
+            throw new RuntimeException('Please provide your UpCloud account password');
         }
 
         $this->httpClient = $config['client'] ?? new HttpClient([
