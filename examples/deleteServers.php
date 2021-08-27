@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Add your username & password to UPCLOUD_USERNAME and UPCLOUD_PASSWORD env variables
  * to run this example.
@@ -36,4 +37,3 @@ foreach ($servers as $server) {
 
   echo $server->uuid . " deleted!\n";
 }
-

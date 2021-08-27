@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Add your username & password to UPCLOUD_USERNAME and UPCLOUD_PASSWORD env variables
  * to run this example.
@@ -36,4 +37,4 @@ $server = [
 $server = $client->createServer($server);
 
 echo "Server created!\n";
-print_r($server);
+echo $server->uuid . "\n";
