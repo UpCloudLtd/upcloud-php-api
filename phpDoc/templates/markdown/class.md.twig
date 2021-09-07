@@ -1,3 +1,4 @@
+{%- import "include/macros.twig" as macros -%}
 # {{ node.name }}
 
 {{ node.summary|raw }}
@@ -35,7 +36,7 @@
 ## Traits
 
 {% for trait in node.usedTraits %}
-- {{ trait.name }}
+- {{ macros.mdTraitLink(trait) }}
 {% endfor %}
 
 {% endif %}

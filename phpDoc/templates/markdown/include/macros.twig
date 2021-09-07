@@ -46,4 +46,16 @@
   Create MD link to class node from path
 #}
 {% macro mdClassLink(node, from, name = null) %}
-[{{ name | default(node.name) }}]({{ _self.mdGetRelativePath(from, _self.mdClassPath(node))}}){% endmacro %}
+[{{ name | default(node.name) }}]({{ _self.mdGetRelativePath(from, _self.mdClassPath(node)) }}){% endmacro %}
+
+{#
+  Get full link to class
+#}
+{% macro mdTraitPath(node) %}
+{{ 'traits' ~ _self.mdNodePath(node) | trim}}{% endmacro %}
+
+{#
+  Create MD link to class node from path
+#}
+{% macro mdTraitLink(node, from, name = null) %}
+[{{ name | default(node.name) }}]({{ _self.mdGetRelativePath(from, _self.mdTraitPath(node)) }}){% endmacro %}
