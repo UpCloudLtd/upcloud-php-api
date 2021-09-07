@@ -31,6 +31,24 @@ class ApiClient
      */
     protected $httpClient;
 
+    /**
+     * A UpCloud API client instance.
+     *
+     * Example:
+     *
+     * ```
+     * $client = new \UpCloud\ApiClient([
+     *     'username' => $secrets['username'],
+     *     'password' => $secrets['password'],
+     * ]);
+     * ```
+     *
+     * @param array|null $config (optional) Configuration options:
+     *
+     * - username: (string|null) UpCloud API account username (will attempt to use env variable if null)
+     * - password: (string|null) UpCloud API account password (will attempt to use env variable if null)
+     * - client: (\UpCloud\HttpClient|null) Instance of the HTTP client for making HTTP requests to the UpCloud API
+     */
     public function __construct(array $config = null)
     {
         $username = $config['username'] ?? getenv('UPCLOUD_USERNAME');
@@ -52,10 +70,10 @@ class ApiClient
     }
 
     /**
-     * Send a raw HTTP request
+     * @see \UpCloud\HttpClient::request
      */
-    public function request(string $method, string $path, string $body)
+    public function request(string $method, string $path, $opts)
     {
-        return $this->httpClient->request($method, $path, $body);
+        return $this->httpClient->request($method, $path, $opts);
     }
 }

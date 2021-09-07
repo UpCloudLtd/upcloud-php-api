@@ -15,6 +15,7 @@ trait ServerApiTrait
 
     /**
      * Get all the servers on this account.
+     *
      * @return array<object> Servers in an array
      */
     public function getServers()
@@ -25,7 +26,8 @@ trait ServerApiTrait
 
     /**
      * Get server details.
-     * @param $uuid UUID of the server
+     *
+     * @param string $uuid UUID of the server
      * @return object Server details in an array
      */
     public function getServer(string $uuid)
@@ -48,10 +50,15 @@ trait ServerApiTrait
     /**
      * Create a new server
      *
+     * Server options:
+     *
+     * - cpu_count: (string) Number of cores for the server
+     * - title: (string) Title of the server
+     *
      * @param array $server Arguments for the server creation
      * @return object Details of the created server
      */
-    public function createServer($server)
+    public function createServer(array $server)
     {
         $response = $this->httpClient->post("server", ['server' => $server]);
         return $response->server;
@@ -64,7 +71,7 @@ trait ServerApiTrait
      * @param array $data Server details to change, can be just one field or the whole server object
      * @return object Updated server details
      */
-    public function modifyServer(string $uuid, $data)
+    public function modifyServer(string $uuid, array $data)
     {
         $response = $this->httpClient->put("server/$uuid", ['server' => $data]);
         return $response->server;
@@ -73,12 +80,23 @@ trait ServerApiTrait
     /**
      * Delete a server and optionally also its storages and/or backups.
      *
+     * Options:
+     *
+     * - backups: ('keep'|'keep_latest'|'delete') Optionally delete the server's
+     *   backups along with the server.
+     * - storages: (boolean|0|1) Optinally delete the server's storages along
+     *   with the server.
+     *
      * @param string $uuid UUID of the server to delete
-     * @param array{backups?: 'keep'|'keep_latest'|'delete', storages?: 0|1} $opts Optional settings to delete storages & backups along with the server
+     * @param array{backups?: 'keep'|'keep_latest'|'delete', storages?: 0|1} $opts Options
      * @return mixed HTTP response object status 204 with no content
      */
     public function deleteServer(string $uuid, array $opts = null)
     {
+        if (is_bool($opts['storages'])) {
+            $opts['storages'] = $opts['storages'] ? 1 : 0;
+        }
+
         $path = "server/$uuid" . (empty($opts) ? '' : '?' . http_build_query($opts));
 
         $response = $this->httpClient->delete($path);
@@ -87,6 +105,12 @@ trait ServerApiTrait
 
     /**
      * Start a stopped server.
+     *
+     * Options:
+     *
+     * - avoid_host: (string) Avoid starting on the given host ID.
+     * - start_type: ('async'|'sync') Make the start operation asynchronous or
+     *   synchronous (default: 'sync').
      *
      * @param string $uuid UUID of the server
      * @param array{avoid_host: string, host: string, start_type: 'async'|'sync'} $opts Options for starting the server
@@ -102,7 +126,13 @@ trait ServerApiTrait
     }
 
     /**
-     * Stops a started server. Can be a hard or a soft stop. Hard stop is the equivalent of pulling the plug on the server
+     * Stop a started server.
+     *
+     * Options:
+     *
+     * - stop_type: ('soft'|'hard') Stop type, 'hard' is the equivalent to
+     *   pulling the power plug.
+     * - timeout: (number) Timeout how long to try to stop the server.
      *
      * @param string $uuid UUID of the server
      * @param array $opts Options for stopping the server
@@ -118,7 +148,16 @@ trait ServerApiTrait
     }
 
     /**
-     * Restarts a started server.
+     * Restart a started server.
+     *
+     * Options:
+     *
+     * - stop_type: ('soft'|'hard') Stop type, 'hard' is the equivalent to
+     *   pulling the power plug.
+     * - timeout: (number) Timeout how long to try to stop the server.
+     * - timeout_action: ('destroy'|'ignore') Abort the restart, or ignore the
+     *   timeout.
+     * - host: (number) ID of the host to restart on.
      *
      * @param string $uuid UUID of the server
      * @param array{stop_type: 'soft'|'hard', timeout: number, timeout_action: 'destroy'|'ignore', host: number} $opts Options for the restart operation
@@ -134,7 +173,7 @@ trait ServerApiTrait
     }
 
     /**
-     * Cancels a running server operation, for example cloning.
+     * Cancel a running server operation, for example cloning.
      *
      * @param string $uuid UUID of the server
      * @return array Response containing status 204 and no content if the cancel succeeded

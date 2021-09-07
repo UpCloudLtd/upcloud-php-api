@@ -7,18 +7,31 @@ namespace UpCloud;
  */
 trait StorageApiTrait
 {
+    /**
+     * Get all available storages.
+     * @return array<object> Array of storages
+     */
     public function getStorages()
     {
         $response = $this->httpClient->get('storage');
         return $response->storages->storage;
     }
 
+    /**
+     * Get details of a storage.
+     *
+     * @param string $uuid UUID of the storage.
+     */
     public function getStorage(string $uuid)
     {
         $response = $this->httpClient->get("storage/$uuid");
         return $response->storage;
     }
 
+    /**
+     * Get the public template storages like Debian and Ubuntu.
+     * @return array<object> Array of storages
+     */
     public function getPublicTemplates()
     {
         $response = $this->httpClient->get("storage/public");
@@ -28,7 +41,7 @@ trait StorageApiTrait
     /**
      * Get storages of a certain type.
      *
-     * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite $type Type of storages
+     * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite' $type Type of storages
      */
     public function getStoragesByType(string $type)
     {
@@ -39,10 +52,10 @@ trait StorageApiTrait
     /**
      * Create a storage.
      *
-     * @param $storage The storage object to create
+     * @param array $storage The storage object to create
      * @return object created storage
      */
-    public function createStorage($storage)
+    public function createStorage(array $storage)
     {
         $response = $this->httpClient->post("storage", ['storage' => $storage]);
         return $response->storage;
@@ -51,11 +64,15 @@ trait StorageApiTrait
     /**
      * Delete a storage and optionally also its backups.
      *
+     * Options:
+     *
+     * - backups: ('keep'|'keep_latest'|'delete') Delete or keep backups of the storage (default: 'keep').
+     *
      * @param string $uuid UUID of the storage to delete
-     * @param array{backups?: 'keep'|'keep_latest'|'delete'} $opts Optional settings to backups along with the storage
+     * @param array{backups?: 'keep'|'keep_latest'|'delete'} $opts Options
      * @return mixed HTTP response object status 204 with no content
      */
-    public function deleteStorage(string $storageUuid, $opts = null)
+    public function deleteStorage(string $storageUuid, array $opts = null)
     {
         $path = "storags/$storageUuid" . (empty($opts) ? '' : '?' . http_build_query($opts));
         return $this->httpClient->delete($path);
