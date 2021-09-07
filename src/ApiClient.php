@@ -14,10 +14,10 @@ class ApiClient
     use ServerApiTrait;
     use ServerFirewallApiTrait;
     use StorageApiTrait;
+    use TagApiTrait;
     // use AccountApiTrait;
     // use PriceApiTrait;
     // use PlanApiTrait;
-    // use TagApiTrait;
     // use TimezoneApiTrait;
 
     /**
