@@ -25,7 +25,7 @@
 | Parameter | Type | Description |
 |-----------|------|-------------|
 {% for argument in method.arguments %}
-| `{{ argument.name }}` | **{{ argument.types ? argument.types|join('&#124;')|raw }}** | {{ argument.description|replace({'|': '&#124;'})|raw }} |
+| `{{ argument.name }}` | **{{ argument.types ? argument.types|join('&#124;')|replace({'|': '&#124;'})|raw }}** | {{ argument.description|replace({'|': '&#124;', '\n': '<br>'})|raw }} |
 {% endfor %}
 
 {% endif %}{# method.arguments is not empty #}
