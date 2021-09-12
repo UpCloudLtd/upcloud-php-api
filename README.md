@@ -87,7 +87,19 @@ vendor/bin/ecs check src --fix
 To run the unit tests:
 
 ```
-vendor/bin/phpunit
+vendor/bin/phpunit --testsuite unit
+```
+
+For integration tests (replace env vars with valid ones):
+
+```
+UPCLOUD_USERNAME=some_user UPCLOUD_PASSWORD=some_secret vendor/bin/phpunit --testsuite integration
+```
+
+And to clean up after the integration tests:
+
+```
+UPCLOUD_USERNAME=some_user UPCLOUD_PASSWORD=some_secret php tests/IntegrationCleanup.php
 ```
 
 ### Documentation
