@@ -3,8 +3,9 @@
 use PHPUnit\Framework\TestCase;
 
 use UpCloud\ApiClient;
+use UpCloud\Tests\BaseCase;
 
-class ApiClientTest extends TestCase
+class ApiClientTest extends BaseCase
 {
   public function testInitialization()
   {
@@ -20,7 +21,7 @@ class ApiClientTest extends TestCase
     try {
       new ApiClient();
     } catch (RuntimeException $e) {
-      $this->assertStringContainsString('username missing', $e->getMessage());
+      $this->assertStringContainsString('provide your UpCloud account username', $e->getMessage());
       putenv("UPCLOUD_USERNAME=$origUsername");
     }
   }
@@ -33,7 +34,7 @@ class ApiClientTest extends TestCase
     try {
       new ApiClient();
     } catch (RuntimeException $e) {
-      $this->assertStringContainsString('password missing', $e->getMessage());
+      $this->assertStringContainsString('provide your UpCloud account password', $e->getMessage());
       putenv("UPCLOUD_PASSWORD=$origPass");
     }
   }
