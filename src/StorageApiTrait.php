@@ -8,6 +8,11 @@ namespace UpCloud;
 trait StorageApiTrait
 {
     /**
+     * @var \UpCloud\HttpClient
+     */
+    protected $httpClient;
+
+    /**
      * Get all available storages.
      * @return array<object> Array of storages
      */
@@ -76,5 +81,18 @@ trait StorageApiTrait
     {
         $path = "storags/$storageUuid" . (empty($opts) ? '' : '?' . http_build_query($opts));
         return $this->httpClient->delete($path);
+    }
+
+    /**
+     * Modify a storage.
+     *
+     * @param string $storageUuid UUID of the storage to modify
+     * @param array $storage The storage details
+     */
+    public function modifyStorage(string $storageUuid, array $storage)
+    {
+        $path = "storages/$storageUuid";
+        $response = $this->httpClient->put($path, ['storage' => $storage]);
+        return $response->storage;
     }
 }

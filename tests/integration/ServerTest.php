@@ -117,4 +117,42 @@ class ServerTest extends TestCase
     $this->assertEquals($serverDetails->zone, 'de-fra1');
     $this->assertEquals(count($serverDetails->storage_devices->storage_device), 1);
   }
+
+  /**
+   * Test attaching and detaching a storage
+   */
+  public function testAttachAndDetachStorage()
+  {
+    $server = $this->createOrFindServer();
+
+    $storage = $this->client->createStorage([
+      'size' => 10,
+      'title' => 'attachable storage',
+      'zone' => $server->zone,
+    ]);
+
+    // attach
+    $attachResponse = $this->client->attachStorage(
+      $server->uuid,
+      ['storage' => $storage->uuid]
+    );
+
+    $this->assertEquals(
+      count($attachResponse->storage_devices->storage_device),
+      count($server->storage_devices->storage_device) + 1
+    );
+
+    $this->assertContains(
+      $storage->uuid,
+      array_column($attachResponse->storage_devices->storage_device, 'storage')
+    );
+
+    // detach
+    $detachResponse = $this->client->detachStorage($server->uuid, $storage->uuid);
+
+    $this->assertEquals(
+      count($detachResponse->storage_devices->storage_device),
+      count($server->storage_devices->storage_device)
+    );
+  }
 }

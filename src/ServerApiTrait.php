@@ -182,4 +182,59 @@ trait ServerApiTrait
         $response = $this->httpClient->post("server/$uuid/cancel", null);
         return $response;
     }
+
+    /**
+     * Attach a storage to the server.
+     *
+     * Options:
+     *
+     * - address: ('virtio'|'ide'|'scsi'|'ide[:[01]:[01]]'|'scsi[:0:[0-7]]'|'virtio[:[0-7]]') The address for the new storage (default: virtio)
+     * - storage: (string) Valid UUID of the "disk" storage to attach
+     * - type: ('disk'|'cdrom') Attach a disk or an empty CDROM drive to the server
+     * - boot_disk: (0|1|true|false) Make this storage the first boot device
+     *
+     * @param string $serverUuid UUID of the server to attach to
+     */
+    public function attachStorage(string $serverUuid, array $opts = [])
+    {
+        $path = "server/$serverUuid/storage/attach";
+
+        if (isset($opts['boot_disk'])) {
+            $opts['boot_disk'] = (int) $opts['boot_disk'];
+        }
+
+        // Default to "virtio"; API defaults to "ide" but it's not very relevant nowadays
+        if (empty($opts['address']) && (empty($opts['type']) || $opts['type'] === 'disk')) {
+            $opts['address'] = 'virtio';
+        }
+
+        $response = $this->httpClient->post($path, ['storage_device' => $opts]);
+        return $response->server;
+    }
+
+    /**
+     * Detaches a storage from the server.
+     *
+     * @param string $serverUuid UUID of the server to attach to
+     * @param string $storageUuidOrAddress UUID or address of the storage to detach
+     */
+    public function detachStorage(string $serverUuid, string $storageUuidOrAddress)
+    {
+        foreach (['ide', 'scsi', 'virtio'] as $address) {
+            $isAddress = stripos($storageUuidOrAddress, $address) !== false;
+            if ($isAddress) {
+                break;
+            }
+        }
+
+        if ($isAddress) {
+            $opts = ['address' => $storageUuidOrAddress];
+        } else {
+            $opts = ['storage' => $storageUuidOrAddress];
+        }
+
+        $path = "server/$serverUuid/storage/detach";
+        $response = $this->httpClient->post($path, ['storage_device' => $opts]);
+        return $response->server;
+    }
 }
