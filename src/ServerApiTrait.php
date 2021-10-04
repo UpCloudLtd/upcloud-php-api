@@ -8,13 +8,12 @@ namespace UpCloud;
 trait ServerApiTrait
 {
     /**
-     * The HTTP client for making the requests
      * @var \UpCloud\HttpClient
      */
     protected $httpClient;
 
     /**
-     * Get all the servers on this account.
+     * Get a list of the servers on this account with only the essentail details.
      *
      * @return array<object> Servers in an array
      */
@@ -30,7 +29,7 @@ trait ServerApiTrait
      * @param string $uuid UUID of the server
      * @return object Server details in an array
      */
-    public function getServer(string $uuid)
+    public function getServerDetails(string $uuid)
     {
         $response = $this->httpClient->get("server/$uuid");
         return $response->server;
@@ -94,7 +93,7 @@ trait ServerApiTrait
     public function deleteServer(string $uuid, array $opts = null)
     {
         if (is_bool($opts['storages'])) {
-            $opts['storages'] = $opts['storages'] ? 1 : 0;
+            $opts['storages'] = (int) $opts['storages'];
         }
 
         $path = "server/$uuid" . (empty($opts) ? '' : '?' . http_build_query($opts));

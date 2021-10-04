@@ -21,7 +21,7 @@ foreach ($servers as $server) {
     }
 
     while (true) {
-      $serverCheck = $client->getServer($server->uuid);
+      $serverCheck = $client->getServerDetails($server->uuid);
 
       if ($serverCheck->state == 'stopped') {
         echo "Server stopped!\n";

@@ -14,7 +14,7 @@ function waitForState($uuid, $state, $maxRetries = 50)
   while (true) {
     $retries++;
 
-    $resp = $client->getServer($uuid);
+    $resp = $client->getServerDetails($uuid);
 
     if ($resp->state === $state) {
       break;
@@ -42,7 +42,7 @@ function stopServer($uuid)
   global $client;
   echo "stopping ${uuid}" . PHP_EOL;
 
-  $response = $client->getServer($uuid);
+  $response = $client->getServerDetails($uuid);
 
   if ($response->state === 'stopped') {
     return;

@@ -5,13 +5,13 @@ use GuzzleHttp\Psr7\Response;
 
 class ApiClientServerTraitTest extends BaseCase
 {
-  public function testGetServer(): void
+  public function testgetServerDetails(): void
   {
     $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
     $serverJson = file_get_contents(__DIR__ . '/../json/getServer.json');
     $this->mock->append(new Response(201, [], $serverJson));
 
-    $server = $this->client->getServer($uuid);
+    $server = $this->client->getServerDetails($uuid);
 
     $this->assertEquals('debian-1cpu-1gb-fi-hel1', $server->hostname);
     $this->assertEquals('debian-1cpu-1gb-fi-hel1', $server->title);

@@ -11,9 +11,10 @@ use UpCloud\ApiClient;
 
 $client = new ApiClient();
 
-// Get some random server to modify...
-$servers = $client->getServers();
-$server = $servers[array_rand($servers)];
+// Change this UUID to your server's UUID
+$SERVER_UUID = '00be005f-cc7a-414c-a999-5850170c3767';
+
+$server = $client->getServerDetails($SERVER_UUID);
 
 if ($server->state == 'started') {
   $client->stopServer($server->uuid, ['stop_type' => 'soft', 'timeout' => 30]);
