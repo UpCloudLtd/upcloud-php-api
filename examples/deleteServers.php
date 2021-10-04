@@ -10,9 +10,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use UpCloud\ApiClient;
 
 $client = new ApiClient();
-
 $servers = $client->getServers();
 
+// WARNING! This example will really delete all your servers!
 foreach ($servers as $server) {
   if ($server->state != 'stopped') {
     if ($server->state == 'started') {
