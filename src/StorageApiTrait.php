@@ -14,11 +14,13 @@ trait StorageApiTrait
 
     /**
      * Get all available storages.
+     *
+     * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite' $type Type of storages
      * @return array<object> Array of storages
      */
-    public function getStorages()
+    public function getStorages(string $type = null)
     {
-        $response = $this->httpClient->get('storage');
+        $response = $this->httpClient->get(isset($type) ? "storage/$type" : 'storage');
         return $response->storages->storage;
     }
 
@@ -34,24 +36,26 @@ trait StorageApiTrait
     }
 
     /**
-     * Get the public template storages like Debian and Ubuntu.
+     * Get the public template storages like Debian and Ubuntu. Alias of getStorages() with $type set to "public".
+     *
      * @return array<object> Array of storages
+     * @see getStorages
      */
     public function getPublicTemplates()
     {
-        $response = $this->httpClient->get("storage/public");
-        return $response->storages->storage;
+        return $this->getStorages("public");
     }
 
     /**
-     * Get storages of a certain type.
+     * Get storages of a certain type. Alias of getStorages() with some sugar.
      *
      * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite' $type Type of storages
+     * @return array<object> Array of storages
+     * @see getStorages
      */
     public function getStoragesByType(string $type)
     {
-        $response = $this->httpClient->get("storage/$type");
-        return $response->storages->storage;
+        return $this->getStorages($type);
     }
 
     /**
