@@ -15,7 +15,7 @@ trait ServerApiTrait
     /**
      * Get a list of the servers on this account with only the essentail details.
      *
-     * @return array<object> Servers in an array
+     * @return array Servers in an array
      */
     public function getServers()
     {
@@ -27,7 +27,10 @@ trait ServerApiTrait
      * Get server details.
      *
      * @param string $uuid UUID of the server
-     * @return object Server details in an array
+     *
+     * @return object The server's details
+     *
+     * @link https://developers.upcloud.com/1.3/8-servers/#get-server-details
      */
     public function getServerDetails(string $uuid)
     {
@@ -47,15 +50,15 @@ trait ServerApiTrait
     }
 
     /**
-     * Create a new server
+     * Create a new server.
      *
-     * Server options:
+     * @param array $server Details of the server to create. See
+     *                      https://developers.upcloud.com/1.3/8-servers/#create-server
+     *                      for the most up-to-date list of accepted fields and values.
      *
-     * - cpu_count: (string) Number of cores for the server
-     * - title: (string) Title of the server
+     * @return object The created server
      *
-     * @param array $server Arguments for the server creation
-     * @return object Details of the created server
+     * @link https://developers.upcloud.com/1.3/8-servers/#create-server
      */
     public function createServer(array $server)
     {
@@ -67,8 +70,14 @@ trait ServerApiTrait
      * Modify the details of a server.
      *
      * @param string $uuid UUID of the server to modify
-     * @param array $data Server details to change, can be just one field or the whole server object
+     * @param array  $data Server details to change, can be just one field or the
+     *                     whole server object. See
+     *                     https://developers.upcloud.com/1.3/8-servers/#modify-server
+     *                     for up-to-date list of accepted fields and values.
+     *
      * @return object Updated server details
+     *
+     * @link https://developers.upcloud.com/1.3/8-servers/#modify-server
      */
     public function modifyServer(string $uuid, array $data)
     {
@@ -79,24 +88,26 @@ trait ServerApiTrait
     /**
      * Delete a server and optionally also its storages and/or backups.
      *
-     * Options:
+     * Options array accepts the following options:
      *
      * - backups: ('keep'|'keep_latest'|'delete') Optionally delete the server's
      *   backups along with the server.
-     * - storages: (boolean|0|1) Optinally delete the server's storages along
+     * - storages: (boolean|0|1) Optionally delete the server's storages along
      *   with the server.
      *
-     * @param string $uuid UUID of the server to delete
-     * @param array{backups?: 'keep'|'keep_latest'|'delete', storages?: 0|1} $opts Options
-     * @return mixed HTTP response object status 204 with no content
+     * @param string $uuid    UUID of the server to delete.
+     * @param array  $options (optional) Options for the delete operation, such as
+     *                        backup or storage deletion strategy.
+     *
+     * @return mixed HTTP response object status 204 with no content.
      */
-    public function deleteServer(string $uuid, array $opts = null)
+    public function deleteServer(string $uuid, array $options = null)
     {
-        if (is_bool($opts['storages'])) {
-            $opts['storages'] = (int) $opts['storages'];
+        if (is_bool($options['storages'])) {
+            $options['storages'] = (int) $options['storages'];
         }
 
-        $path = "server/$uuid" . (empty($opts) ? '' : '?' . http_build_query($opts));
+        $path = "server/$uuid" . (empty($options) ? '' : '?' . http_build_query($options));
 
         $response = $this->httpClient->delete($path);
         return $response;
@@ -111,15 +122,16 @@ trait ServerApiTrait
      * - start_type: ('async'|'sync') Make the start operation asynchronous or
      *   synchronous (default: 'sync').
      *
-     * @param string $uuid UUID of the server
-     * @param array{avoid_host: string, host: string, start_type: 'async'|'sync'} $opts Options for starting the server
+     * @param string $uuid    UUID of the server
+     * @param array  $options Options for starting the server
+     *
      * @return object Array containing the details of the server
      */
-    public function startServer(string $uuid, array $opts = null)
+    public function startServer(string $uuid, array $options = null)
     {
         $response = $this->httpClient->post(
             "server/$uuid/start",
-            (empty($opts) ? null : ['server' => $opts])
+            (empty($options) ? null : ['server' => $options])
         );
         return $response->server;
     }
@@ -133,15 +145,16 @@ trait ServerApiTrait
      *   pulling the power plug.
      * - timeout: (number) Timeout how long to try to stop the server.
      *
-     * @param string $uuid UUID of the server
-     * @param array $opts Options for stopping the server
+     * @param string $uuid    UUID of the server
+     * @param array  $options Options for stopping the server
+     *
      * @return object Array containing the details of the server
      */
-    public function stopServer(string $uuid, array $opts = null)
+    public function stopServer(string $uuid, array $options = null)
     {
         $response = $this->httpClient->post(
             "server/$uuid/stop",
-            (empty($opts) ? null : ['stop_server' => $opts])
+            (empty($options) ? null : ['stop_server' => $options])
         );
         return $response->server;
     }
@@ -158,15 +171,16 @@ trait ServerApiTrait
      *   timeout.
      * - host: (number) ID of the host to restart on.
      *
-     * @param string $uuid UUID of the server
-     * @param array{stop_type: 'soft'|'hard', timeout: number, timeout_action: 'destroy'|'ignore', host: number} $opts Options for the restart operation
+     * @param string $uuid    UUID of the server
+     * @param array  $options Options for the restart operation
+     *
      * @return object Array containing the details of the server
      */
-    public function restartServer(string $uuid, array $opts = null)
+    public function restartServer(string $uuid, array $options = null)
     {
         $response = $this->httpClient->post(
             "server/$uuid/restart",
-            (empty($opts) ? null : ['restart_server' => $opts])
+            (empty($options) ? null : ['restart_server' => $options])
         );
         return $response->server;
     }
@@ -175,6 +189,7 @@ trait ServerApiTrait
      * Cancel a running server operation, for example cloning.
      *
      * @param string $uuid UUID of the server
+     *
      * @return array Response containing status 204 and no content if the cancel succeeded
      */
     public function cancelServerOperation(string $uuid)
@@ -188,35 +203,37 @@ trait ServerApiTrait
      *
      * Options:
      *
-     * - address: ('virtio'|'ide'|'scsi'|'ide[:[01]:[01]]'|'scsi[:0:[0-7]]'|'virtio[:[0-7]]') The address for the new storage (default: virtio)
+     * - address: ('virtio'|'ide'|'scsi'|'ide[:[01]:[01]]'|'scsi[:0:[0-7]]'|'virtio[:[0-7]]')
+     *   The address for the new storage (default: virtio)
      * - storage: (string) Valid UUID of the "disk" storage to attach
      * - type: ('disk'|'cdrom') Attach a disk or an empty CDROM drive to the server
      * - boot_disk: (0|1|true|false) Make this storage the first boot device
      *
-     * @param string $serverUuid UUID of the server to attach to
+     * @param string $serverUuid UUID of the server to attach to.
+     * @param array  $options    Configuration options for the attach operation.
      */
-    public function attachStorage(string $serverUuid, array $opts = [])
+    public function attachStorage(string $serverUuid, array $options = [])
     {
         $path = "server/$serverUuid/storage/attach";
 
-        if (isset($opts['boot_disk'])) {
-            $opts['boot_disk'] = (int) $opts['boot_disk'];
+        if (isset($options['boot_disk'])) {
+            $options['boot_disk'] = (int) $options['boot_disk'];
         }
 
         // Default to "virtio"; API defaults to "ide" but it's not very relevant nowadays
-        if (empty($opts['address']) && (empty($opts['type']) || $opts['type'] === 'disk')) {
-            $opts['address'] = 'virtio';
+        if (empty($options['address']) && (empty($options['type']) || $options['type'] === 'disk')) {
+            $options['address'] = 'virtio';
         }
 
-        $response = $this->httpClient->post($path, ['storage_device' => $opts]);
+        $response = $this->httpClient->post($path, ['storage_device' => $options]);
         return $response->server;
     }
 
     /**
      * Detaches a storage from the server.
      *
-     * @param string $serverUuid UUID of the server to attach to
-     * @param string $storageUuidOrAddress UUID or address of the storage to detach
+     * @param string $serverUuid           UUID of the server to attach to.
+     * @param string $storageUuidOrAddress UUID or address of the storage to detach.
      */
     public function detachStorage(string $serverUuid, string $storageUuidOrAddress)
     {

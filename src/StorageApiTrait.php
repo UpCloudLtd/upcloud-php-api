@@ -87,7 +87,7 @@ trait StorageApiTrait
      *
      * The options array accepts the following options:
      *
-     * - backups: ('keep'|'keep_latest'|'delete') Controls what to do to the backups of the storage. Default: 'keep'.
+     * - backups: ('keep'|'keep_latest'|'delete') Controls what to do to the backups of the storage. (default: 'keep')
      *
      * @param string $uuid    UUID of the storage to delete
      * @param array  $options (optional) Options for the deletion, such as strategy for the backups.
