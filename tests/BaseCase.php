@@ -40,4 +40,14 @@ abstract class BaseCase extends \PHPUnit\Framework\TestCase
       'client' => $this->httpClient,
     ]);
   }
+
+  /**
+   * Helper utility to assert the request.
+   */
+  protected function assertRequest($request, string $method, string $uri, string $body)
+  {
+    $this->assertSame($method, $request->getMethod());
+    $this->assertSame($uri, strval($request->getUri()));
+    $this->assertSame($body, strval($request->getBody()));
+  }
 }
