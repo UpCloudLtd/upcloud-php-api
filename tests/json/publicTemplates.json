@@ -1,0 +1,339 @@
+{
+  "storages": {
+    "storage": [
+      {
+        "access": "public",
+        "license": 3.36,
+        "size": 28,
+        "state": "online",
+        "title": "Windows Server 2016 Datacenter",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000010060200"
+      },
+      {
+        "access": "public",
+        "license": 0.694,
+        "size": 29,
+        "state": "online",
+        "title": "Windows Server 2016 Standard",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000010060300"
+      },
+      {
+        "access": "public",
+        "license": 3.36,
+        "size": 25,
+        "state": "online",
+        "title": "Windows Server 2019 Datacenter",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000010070200"
+      },
+      {
+        "access": "public",
+        "license": 0.694,
+        "size": 25,
+        "state": "online",
+        "title": "Windows Server 2019 Standard",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000010070300"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Debian GNU/Linux 8.6.0 (Jessie) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000020030101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 3,
+        "state": "online",
+        "title": "Debian GNU/Linux 9 (Stretch)",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000020040100"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Debian GNU/Linux 9.0.0 (Stretch) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000020040101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 3,
+        "state": "online",
+        "title": "Debian GNU/Linux 10 (Buster)",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000020050100"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Debian GNU/Linux 10.0.0 (Buster) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000020050102"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 3,
+        "state": "online",
+        "title": "Debian GNU/Linux 11 (Bullseye)",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000020060100"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Debian GNU/Linux 11.0.0 (Bullseye) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000020060101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Ubuntu Server 18.04 LTS (Bionic Beaver) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000030080101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 4,
+        "state": "online",
+        "title": "Ubuntu Server 18.04 LTS (Bionic Beaver)",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000030080200"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Ubuntu Server 20.04 LTS (Focal Fossa) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000030200101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 4,
+        "state": "online",
+        "title": "Ubuntu Server 20.04 LTS (Focal Fossa)",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000030200200"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Fedora Server 34 (64-bit) Netinstall CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000040033401"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 3,
+        "state": "online",
+        "title": "CentOS 7",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000050010300"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 5,
+        "state": "online",
+        "title": "CentOS 7.3-1611 DVD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000050010301"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 3,
+        "state": "online",
+        "title": "CentOS 8",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000050010400"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 7,
+        "state": "online",
+        "title": "CentOS 8.0-1905 DVD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000050010401"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Arch Linux 2019.03.01 (64-bit) Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000070020101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Arch Linux 2020.04.01 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000070030101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "CoreOS Alpha (1032.1.0)",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000080010501"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "CoreOS Stable (1068.8.0)",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000080020101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "CoreOS Container Linux Stable (1465.8.0)",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000080030101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Fedora CoreOS 32.20200809.3.0",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000080040101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "Gentoo Linux Minimal Installation CD (64bit)",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000090010101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "FreeBSD 11.0-RELEASE amd64 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000100010101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "FreeBSD 12-0-RELEASE amd64 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000100010201"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "FreeBSD 12-1-RELEASE amd64 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000100010202"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "FreeBSD 12-2-RELEASE amd64 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000100010203"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "FreeBSD 13-0-RELEASE amd64 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000100010301"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 2,
+        "state": "online",
+        "title": "CloudLinux 8.3 Installation DVD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000110020101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 1,
+        "state": "online",
+        "title": "OpenBSD 6.8 Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000120010103"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 5,
+        "state": "online",
+        "title": "Plesk Obsidian",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000130010100"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 2,
+        "state": "online",
+        "title": "AlmaLinux 8.3 x86_64 Minimal Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000140010101"
+      },
+      {
+        "access": "public",
+        "license": 0,
+        "size": 2,
+        "state": "online",
+        "title": "Rocky Linux 8.4 x86_64 Minimal Installation CD",
+        "type": "cdrom",
+        "uuid": "01000000-0000-4000-8000-000150010101"
+      }
+    ]
+  }
+}

@@ -66,7 +66,7 @@ trait StorageApiTrait
      */
     public function createStorage(array $storage)
     {
-        $response = $this->httpClient->post("storage", ['storage' => $storage]);
+        $response = $this->httpClient->post('storage', ['storage' => $storage]);
         return $response->storage;
     }
 
