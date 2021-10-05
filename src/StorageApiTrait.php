@@ -95,7 +95,7 @@ trait StorageApiTrait
      */
     public function modifyStorage(string $storageUuid, array $storage)
     {
-        $path = "storages/$storageUuid";
+        $path = "storage/$storageUuid";
         $response = $this->httpClient->put($path, ['storage' => $storage]);
         return $response->storage;
     }
