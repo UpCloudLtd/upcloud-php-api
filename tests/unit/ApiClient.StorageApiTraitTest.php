@@ -1,6 +1,7 @@
 <?php
 
 use UpCloud\Tests\BaseCase;
+use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Psr7\Response;
 
 class ApiClientStorageApiTraitTest extends BaseCase
@@ -94,7 +95,7 @@ class ApiClientStorageApiTraitTest extends BaseCase
       );
 
       return new Response(
-        204,
+        201,
         [],
         json_encode([
           'storage' => array_merge(['uuid' => '012426363573'], $storageDetails)
@@ -143,12 +144,118 @@ class ApiClientStorageApiTraitTest extends BaseCase
         "https://api.upcloud.test/1.3/storage/$uuid",
         json_encode(['storage' => ['title' => 'modified']])
       );
-      return new Response(204, [], json_encode(['storage' => ['title' => 'modified', 'uuid' => $uuid]]));
+      return new Response(202, [], json_encode(['storage' => ['title' => 'modified', 'uuid' => $uuid]]));
     });
 
     $response = $this->client->modifyStorage($uuid, ['title' => 'modified']);
 
     // assert that we got some data
     $this->assertSame($uuid, $response->uuid);
+  }
+
+  public function testCreateStorageImport(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/import",
+        json_encode(['storage_import' => [
+          'source' => 'http_import',
+          'source_location' => 'https://example.com/disk.iso'
+        ]])
+      );
+      return new Response(201, [], json_encode(['storage_import' => ['state' => 'prepared']]));
+    });
+
+    $response = $this->client->createStorageImportFromUrl($uuid, 'https://example.com/disk.iso');
+
+    // assert that we got some data
+    $this->assertSame('prepared', $response->state);
+  }
+
+  public function testCreateStorageImportUpload(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/import",
+        json_encode(['storage_import' => [
+          'source' => 'direct_upload',
+        ]])
+      );
+      return new Response(201, [], json_encode(['storage_import' => ['state' => 'prepared']]));
+    });
+
+    $response = $this->client->createStorageImportUpload($uuid);
+
+    // assert that we got some data
+    $this->assertSame('prepared', $response->state);
+  }
+
+  public function testUploadToStorageImport(): void
+  {
+    $url = 'https://api.upcloud.test/fakeimport';
+    $file = Utils::tryFopen(__FILE__, 'r');
+
+    $this->mock->append(function ($request) use ($url, $file) {
+      $this->assertSame('PUT', $request->getMethod());
+      $this->assertSame($url, strval($request->getUri()));
+      $this->assertEquals(
+        file_get_contents(__FILE__),
+        $request->getBody()->getContents()
+      );
+
+      return new Response(204, [], json_encode(['written_bytes' => '1']));
+    });
+
+    $response = $this->client->uploadToStorageImport($url, $file);
+
+    // assert that we got some data
+    $this->assertSame('1', $response->written_bytes);
+  }
+  public function testGetStorageImportDetails(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'GET',
+        "https://api.upcloud.test/1.3/storage/$uuid/import",
+        ''
+      );
+      return new Response(201, [], json_encode(['storage_import' => ['state' => 'prepared']]));
+    });
+
+    $response = $this->client->getStorageImportDetails($uuid);
+
+    // assert that we got some data
+    $this->assertSame('prepared', $response->state);
+  }
+
+  public function testCancelStorageImport(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/import/cancel",
+        ''
+      );
+      return new Response(202, [], json_encode(['storage_import' => ['state' => 'cancelling']]));
+    });
+
+    $response = $this->client->cancelStorageImport($uuid);
+
+    // assert that we got some data
+    $this->assertSame('cancelling', $response->state);
   }
 }
