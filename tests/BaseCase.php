@@ -10,8 +10,19 @@ use UpCloud\HttpClient;
 
 abstract class BaseCase extends \PHPUnit\Framework\TestCase
 {
+  /**
+   * @var \UpCloud\ApiClient
+   */
   protected $client;
+
+  /**
+   * @var \UpCloud\HttpClient
+   */
   protected $httpClient;
+
+  /**
+   * @var \GuzzleHttp\Handler\MockHandler
+   */
   protected $mock;
 
   protected function setUp(): void
