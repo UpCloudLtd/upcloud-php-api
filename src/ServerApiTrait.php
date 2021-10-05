@@ -254,4 +254,36 @@ trait ServerApiTrait
         $response = $this->httpClient->post($path, ['storage_device' => $opts]);
         return $response->server;
     }
+
+    /**
+     * Load a CDROM image into the CDROM device. The server must have a CDROM device,
+     * use attachStorage() to add a CDROM device.
+     *
+     * @param string $uuid    UUID of the server.
+     * @param string $storage UUID of the CDROM storage to load.
+     *
+     * @return object Server details.
+     */
+    public function loadCdrom(string $serverUuid, string $storageUuid)
+    {
+        $response = $this->httpClient->post(
+            "server/$serverUuid/cdrom/load",
+            ['storage_device' => ['storage' => $storageUuid]]
+        );
+        return $response->server;
+    }
+
+
+    /**
+     * Eject a CDROM image from the CDROM device.
+     *
+     * @param string $uuid    UUID of the server.
+     *
+     * @return object Server details.
+     */
+    public function ejectCdrom(string $serverUuid)
+    {
+        $response = $this->httpClient->post("server/$serverUuid/cdrom/eject", null);
+        return $response->server;
+    }
 }

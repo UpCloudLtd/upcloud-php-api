@@ -196,4 +196,43 @@ class ApiClientServerApiTraitTest extends BaseCase
 
     $this->client->restartServer($uuid, ['stop_type' => 'soft', 'timeout' => 60, 'timeout_action' => 'destroy']);
   }
+
+  public function testLoadCdrom(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+    $cdromUuid = '01000000-0000-4000-8000-000070030101';
+
+    $this->mock->append(function ($request) use ($uuid, $cdromUuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/server/$uuid/cdrom/load",
+        json_encode(['storage_device' => ['storage' => $cdromUuid]])
+      );
+      return new Response(200, [], json_encode(['server' => ['uuid' => $uuid]]));
+    });
+
+    $response = $this->client->loadCdrom($uuid, $cdromUuid);
+
+    $this->assertSame($uuid, $response->uuid);
+  }
+
+  public function testEjectCdrom(): void
+  {
+    $uuid = '000f8ee8-d826-4597-999d-68b7ba623a4a';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/server/$uuid/cdrom/eject",
+        ''
+      );
+      return new Response(200, [], json_encode(['server' => ['uuid' => $uuid]]));
+    });
+
+    $response = $this->client->ejectCdrom($uuid);
+
+    $this->assertSame($uuid, $response->uuid);
+  }
 }
