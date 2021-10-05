@@ -15,8 +15,11 @@ trait StorageApiTrait
     /**
      * Get all available storages.
      *
-     * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite' $type Type of storages
-     * @return array<object> Array of storages
+     * @param string $type (optional) Type of storages to get.
+     *                     Possible types:
+     *                     "public"|"private"|"normal"|"backup"|"cdrom"|"template"|"favorite"
+     *
+     * @return array Array of storages
      */
     public function getStorages(string $type = null)
     {
@@ -39,6 +42,7 @@ trait StorageApiTrait
      * Get the public template storages like Debian and Ubuntu. Alias of getStorages() with $type set to "public".
      *
      * @return array<object> Array of storages
+     *
      * @see getStorages
      */
     public function getPublicTemplates()
@@ -49,8 +53,11 @@ trait StorageApiTrait
     /**
      * Get storages of a certain type. Alias of getStorages() with some sugar.
      *
-     * @param 'public'|'private'|'normal'|'backup'|'cdrom'|'template'|'favorite' $type Type of storages
+     * @param string $type Type of storages to get. Possible types:
+     *                     "public"|"private"|"normal"|"backup"|"cdrom"|"template"|"favorite"
+     *
      * @return array<object> Array of storages
+     *
      * @see getStorages
      */
     public function getStoragesByType(string $type)
@@ -61,8 +68,13 @@ trait StorageApiTrait
     /**
      * Create a storage.
      *
-     * @param array $storage The storage object to create
-     * @return object created storage
+     * @param array $storage Details of the object to create. See
+     *                       https://developers.upcloud.com/1.3/9-storages/#create-storage
+     *                       for the most up-to-date on available fields
+     *
+     * @return object The created storage
+     *
+     * @link https://developers.upcloud.com/1.3/9-storages/#create-storage
      */
     public function createStorage(array $storage)
     {
@@ -73,12 +85,13 @@ trait StorageApiTrait
     /**
      * Delete a storage and optionally also its backups.
      *
-     * Options:
+     * The options array accepts the following options:
      *
-     * - backups: ('keep'|'keep_latest'|'delete') Delete or keep backups of the storage (default: 'keep').
+     * - backups: ('keep'|'keep_latest'|'delete') Controls what to do to the backups of the storage. Default: 'keep'.
      *
-     * @param string $uuid UUID of the storage to delete
-     * @param array{backups?: 'keep'|'keep_latest'|'delete'} $opts Options
+     * @param string $uuid    UUID of the storage to delete
+     * @param array  $options (optional) Options for the deletion, such as strategy for the backups.
+     *
      * @return mixed HTTP response object status 204 with no content
      */
     public function deleteStorage(string $storageUuid, array $opts = null)
@@ -91,7 +104,13 @@ trait StorageApiTrait
      * Modify a storage.
      *
      * @param string $storageUuid UUID of the storage to modify
-     * @param array $storage The storage details
+     * @param array  $storage     The changes to the storage details. See
+     *                            https://developers.upcloud.com/1.3/9-storages/#modify-storage
+     *                            for up-to-date documentation.
+     *
+     * @return object The modified storage
+     *
+     * @link https://developers.upcloud.com/1.3/9-storages/#modify-storage
      */
     public function modifyStorage(string $storageUuid, array $storage)
     {
