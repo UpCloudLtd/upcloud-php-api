@@ -54,7 +54,7 @@ class HttpClient
     public function jsonRequest(string $method, string $path, $payload = null)
     {
         $response = $this->request($method, $path, [
-            'body' => json_encode($payload)
+            'body' => isset($payload) ? json_encode($payload) : ''
         ]);
 
         return json_decode($response->getBody());
