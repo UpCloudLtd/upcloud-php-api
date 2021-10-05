@@ -74,7 +74,11 @@ class HttpClient
         try {
             $response = $this->guzzle->request($method, $path, $opts);
         } catch (ClientException $e) {
-            throw new \Exception($e->getResponse()->getBody());
+            if (isset($body)) {
+                throw new \Exception($e->getResponse()->getBody());
+            } else {
+                throw $e;
+            }
         }
 
         return $response;
