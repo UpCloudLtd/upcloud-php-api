@@ -79,7 +79,7 @@ trait StorageApiTrait
      */
     public function deleteStorage(string $storageUuid, array $opts = null)
     {
-        $path = "storags/$storageUuid" . (empty($opts) ? '' : '?' . http_build_query($opts));
+        $path = "storage/$storageUuid" . (empty($opts) ? '' : '?' . http_build_query($opts));
         return $this->httpClient->delete($path);
     }
 
