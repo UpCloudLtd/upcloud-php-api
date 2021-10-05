@@ -3,7 +3,7 @@
 use UpCloud\Tests\BaseCase;
 use GuzzleHttp\Psr7\Response;
 
-class ApiClientStorageTraitTest extends BaseCase
+class ApiClientStorageApiTraitTest extends BaseCase
 {
   public function testGetStorages(): void
   {

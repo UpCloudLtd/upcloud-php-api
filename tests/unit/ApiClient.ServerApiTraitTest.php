@@ -3,7 +3,7 @@
 use UpCloud\Tests\BaseCase;
 use GuzzleHttp\Psr7\Response;
 
-class ApiClientServerTraitTest extends BaseCase
+class ApiClientServerApiTraitTest extends BaseCase
 {
   public function testGetServerDetails(): void
   {
