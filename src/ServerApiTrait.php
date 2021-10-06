@@ -273,11 +273,10 @@ trait ServerApiTrait
         return $response->server;
     }
 
-
     /**
      * Eject a CDROM image from the CDROM device.
      *
-     * @param string $uuid    UUID of the server.
+     * @param string $uuid UUID of the server.
      *
      * @return object Server details.
      */
