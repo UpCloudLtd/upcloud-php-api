@@ -258,4 +258,110 @@ class ApiClientStorageApiTraitTest extends BaseCase
     // assert that we got some data
     $this->assertSame('cancelling', $response->state);
   }
+
+  public function testCloneStorage(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/clone",
+        json_encode(['storage' => [
+          'tier' => 'maxiops',
+          'title' => 'Clone of storage',
+          'zone' => 'fi-hel1',
+        ]])
+      );
+      return new Response(201, [], json_encode(['storage' => ['state' => 'maintenance']]));
+    });
+
+    $response = $this->client->cloneStorage($uuid, [
+      'tier' => 'maxiops',
+      'title' => 'Clone of storage',
+      'zone' => 'fi-hel1',
+    ]);
+
+    // assert that we got some data
+    $this->assertSame('maintenance', $response->state);
+  }
+
+  public function testTemplatizeStorage(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/templatize",
+        json_encode(['storage' => ['title' => 'Server Template']])
+      );
+      return new Response(201, [], json_encode(['storage' => ['state' => 'maintenance']]));
+    });
+
+    $response = $this->client->templatizeStorage($uuid, [
+      'title' => 'Server Template',
+    ]);
+
+    // assert that we got some data
+    $this->assertSame('maintenance', $response->state);
+  }
+
+  public function testCreateBackup(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/backup",
+        json_encode(['storage' => ['title' => 'Manual backup']])
+      );
+      return new Response(201, [], json_encode(['storage' => ['state' => 'maintenance']]));
+    });
+
+    $response = $this->client->createBackup($uuid, [
+      'title' => 'Manual backup',
+    ]);
+
+    // assert that we got some data
+    $this->assertSame('maintenance', $response->state);
+  }
+
+  public function testRestoreBackup(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/restore",
+        ''
+      );
+      return new Response(204, [], '');
+    });
+
+    $this->client->restoreBackup($uuid);
+  }
+
+  public function testCancelStorageOperation(): void
+  {
+    $uuid = '01d4fcd4-e446-433b-8a9c-551a1284952e';
+
+    $this->mock->append(function ($request) use ($uuid) {
+      $this->assertRequest(
+        $request,
+        'POST',
+        "https://api.upcloud.test/1.3/storage/$uuid/cancel",
+        ''
+      );
+      return new Response(204, [], '');
+    });
+
+    $this->client->cancelStorageOperation($uuid);
+  }
 }

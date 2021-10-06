@@ -217,4 +217,91 @@ trait StorageApiTrait
         $response = $this->httpClient->post("storage/$storageUuid/import/cancel", null);
         return $response->storage_import;
     }
+
+    /**
+     * Create an exact copy of an existing storage.
+     *
+     * Available options:
+     *
+     * - tier:  ('maxiops'|'hdd') (optional) Storage tier for the new storage. Default: hdd
+     * - title: (string)          UUID of the storage.
+     * - zone:  (string)          Zone to clone the storage into.
+     *
+     * @param string $storageUuid UUID of the storage to clone.
+     * @param array  $options     Supplied options for the cloning.
+     *
+     * @return object The new storage.
+     *
+     * @link https://developers.upcloud.com/1.3/9-storages/#clone-storage
+     */
+    public function cloneStorage(string $storageUuid, array $options)
+    {
+        $response = $this->httpClient->post(
+            "storage/$storageUuid/clone",
+            ['storage' => $options]
+        );
+        return $response->storage;
+    }
+
+    /**
+     * Create an exact copy of an existing storage which can be used as a template
+     * for new servers.
+     *
+     * Available options:
+     *
+     * - title: (string) Title of the new template.
+     *
+     * @param string $storageUuid UUID of the storage.
+     * @param array  $options     Options for the template creation.
+     */
+    public function templatizeStorage(string $storageUuid, array $options)
+    {
+        $response = $this->httpClient->post(
+            "storage/$storageUuid/templatize",
+            ['storage' => $options]
+        );
+        return $response->storage;
+    }
+
+    /**
+     * Create a backup of a storage.
+     *
+     * Available options:
+     *
+     * - title: (string) Title of the new backup.
+     *
+     * @param string $storageUuid UUID of the storage.
+     */
+    public function createBackup(string $storageUuid, array $options)
+    {
+        $response = $this->httpClient->post("storage/$storageUuid/backup", ['storage' => $options]);
+        return $response->storage;
+    }
+
+    /**
+     * Restore a backup into its origin storage.
+     *
+     * @param string $backupUuid UUID of the backup.
+     */
+    public function restoreBackup(string $backupUuid)
+    {
+        $response = $this->httpClient->post("storage/$backupUuid/restore", null);
+        return $response;
+    }
+
+    /**
+     * Cancel an ongoing storage operation (e.g. cloning). Cancelling e.g.
+     * cloning or templatizing will delete the new storage that was being created.
+     *
+     * This will not affect storage imports.
+     *
+     * @param string $storageUuid UUID of the storage.
+     *
+     * @see cancelStorageImport
+     */
+    public function cancelStorageOperation(string $storageUuid)
+    {
+        $response = $this->httpClient->post("storage/$storageUuid/cancel", null);
+        return $response;
+    }
 }
