@@ -103,6 +103,12 @@ And to clean up after the integration tests:
 UPCLOUD_USERNAME=some_user UPCLOUD_PASSWORD=some_secret php tests/IntegrationCleanup.php
 ```
 
+For development, you can run the unit tests continually using:
+
+```
+vendor/bin/phpunit-watcher watch --testsuite unit
+```
+
 ### Documentation
 
 Generate the documentation using docker & [phpDocumentator](https://docs.phpdoc.org/).
