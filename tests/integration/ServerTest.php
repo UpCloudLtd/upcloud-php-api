@@ -22,6 +22,7 @@ class ServerTest extends TestCase
     }
 
     if (empty($this->server)) {
+      // create a server to be used in the tests
       $this->server = IntegrationUtils::createServer($this->client);
     }
   }
