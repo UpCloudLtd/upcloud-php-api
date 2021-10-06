@@ -1,83 +1,29 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
+use UpCloud\Tests\IntegrationUtils;
 use UpCloud\ApiClient;
 
 class ServerTest extends TestCase
 {
-  protected $ubuntuTemplate = '01000000-0000-4000-8000-000030200200';
-
   /**
    * @var UpCloud\ApiClient
    */
   protected $client;
 
-  private $num = 0;
+  protected $ubuntuTemplate = '01000000-0000-4000-8000-000030200200';
+
+  protected $server;
 
   protected function setUp(): void
   {
     if (empty($this->client)) {
       $this->client = new ApiClient();
     }
-  }
 
-  private function waitForState($uuid, $state, $maxRetries = 50)
-  {
-    $retries = 0;
-
-    while (true) {
-      $retries++;
-
-      $resp = $this->client->getServerDetails($uuid);
-
-      if ($resp->state === $state) {
-        break;
-      }
-
-      if ($retries > $maxRetries) {
-        echo "Server ${state} is taking too long (${uuid})" . PHP_EOL;
-        break;
-      }
-
-      sleep(6);
+    if (empty($this->server)) {
+      $this->server = IntegrationUtils::createServer($this->client);
     }
-  }
-
-  private function createOrFindServer()
-  {
-    $this->num++;
-
-    $servers = $this->client->getServers();
-
-    foreach ($servers as $server) {
-      if ($server->state === 'started' || $server->state === 'stopped') {
-        $foundServer = $server;
-      }
-    }
-
-    if (isset($foundServer)) {
-      return $this->client->getServerDetails($foundServer->uuid);
-    }
-
-    $response = $this->client->createServer([
-      'hostname' => 'test.example',
-      'plan' => '1xCPU-1GB',
-      'title' => "php-integration-test-server-$this->num",
-      'zone' => 'de-fra1',
-      'storage_devices' => [
-        'storage_device' => [
-          'action' => 'create',
-          'address' => 'virtio',
-          'size' => 10,
-          'title' => 'test-storage'
-        ]
-      ]
-    ]);
-
-    $this->waitForState($response->uuid, 'started');
-
-    return $response;
   }
 
   /**
@@ -123,7 +69,7 @@ class ServerTest extends TestCase
    */
   public function testAttachAndDetachStorage()
   {
-    $server = $this->createOrFindServer();
+    $server = $this->server;
 
     $storage = $this->client->createStorage([
       'size' => 10,
