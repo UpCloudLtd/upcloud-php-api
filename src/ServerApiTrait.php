@@ -141,9 +141,10 @@ trait ServerApiTrait
      *
      * Options:
      *
-     * - stop_type: ('soft'|'hard') Stop type, 'hard' is the equivalent to
+     * - stop_type: ('soft'|'hard') (optional) Stop type, 'hard' is the equivalent to
      *   pulling the power plug.
-     * - timeout: (number) Timeout how long to try to stop the server.
+     * - timeout: (number) (optional) Timeout for stop in seconds. A hard stop will be
+     *   performed after this time passes.
      *
      * @param string $uuid    UUID of the server
      * @param array  $options Options for stopping the server
