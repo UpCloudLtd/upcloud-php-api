@@ -20,11 +20,20 @@ class ServerTest extends TestCase
     if (empty($this->client)) {
       $this->client = new ApiClient();
     }
+  }
 
+  protected function getServer()
+  {
     if (empty($this->server)) {
       // create a server to be used in the tests
       $this->server = IntegrationUtils::createServer($this->client);
+      \UpCloud\Utils::waitForServerState($this->client, $this->server->uuid, 'started');
+
+      // Wait a bit to make sure the server is properly started and ready to serve requests
+      sleep(5);
     }
+
+    return $this->server;
   }
 
   /**
@@ -70,7 +79,7 @@ class ServerTest extends TestCase
    */
   public function testAttachAndDetachStorage()
   {
-    $server = $this->server;
+    $server = $this->getServer();
 
     $storage = $this->client->createStorage([
       'size' => 10,
@@ -101,5 +110,39 @@ class ServerTest extends TestCase
       count($detachResponse->storage_devices->storage_device),
       count($server->storage_devices->storage_device)
     );
+  }
+
+  /**
+   * Test attaching a CDROM device and loading & ejecting CDROMs in it.
+   */
+  public function testCdroms(): void
+  {
+    $server = $this->getServer();
+
+    if ($server->state !== 'stopped') {
+      $response = $this->client->stopServer($server->uuid, ['stop_type' => 'hard']);
+      \UpCloud\Utils::waitForServerState($this->client, $server->uuid, 'stopped');
+    }
+
+    // TODO: detach cdrom device if one already exists
+    // $cdromIndex = array_search('cdrom', array_column($server->storage_devices->storage_device, 'type'));
+
+    $attachResponse = $this->client->attachStorage($server->uuid, ['type' => 'cdrom']);
+    $cdromIndex = array_search('cdrom', array_column($attachResponse->storage_devices->storage_device, 'type'));
+    $cdromDevice = $attachResponse->storage_devices->storage_device[$cdromIndex];
+
+    $loadResponse = $this->client->loadCdrom($server->uuid, '01000000-0000-4000-8000-000070030101');
+    $loadedCdromDevice = $loadResponse->storage_devices->storage_device[$cdromIndex];
+    $this->assertSame('01000000-0000-4000-8000-000070030101', $loadedCdromDevice->storage);
+    $this->assertSame('Arch Linux 2020.04.01 Installation CD', $loadedCdromDevice->storage_title);
+
+    $ejectResponse = $this->client->ejectCdrom($server->uuid);
+    $ejectedCdromDevice = $ejectResponse->storage_devices->storage_device[$cdromIndex];
+    $this->assertSame('', $ejectedCdromDevice->storage);
+    $this->assertSame('', $ejectedCdromDevice->storage_title);
+
+    $response = $this->client->detachStorage($server->uuid, $cdromDevice->address);
+    $cdromIndex = array_search('cdrom', array_column($response->storage_devices->storage_device, 'type'));
+    $this->assertFalse($cdromIndex);
   }
 }
