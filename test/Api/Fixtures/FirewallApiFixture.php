@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Upcloud\Tests\Api\Fixtures;
 
+use Upcloud\ApiClient\Model\FirewallRulesRequest;
 use Upcloud\ApiClient\Model\FirewallRule;
 use Upcloud\ApiClient\Model\FirewallRuleCreateResponse;
 use Upcloud\ApiClient\Model\FirewallRuleListResponse;
@@ -81,6 +82,26 @@ class FirewallApiFixture extends BaseFixture
     {
         return  new FirewallRuleRequest([
             'firewall_rule' => new FirewallRule($this->getRoleByIndex($fromListIndex)),
+        ]);
+    }
+
+    /**
+     * @param int $fromListIndex
+     * @return FirewallRulesRequest
+     */
+    public function getRulesRequestFailed(int $fromListIndex = 0): FirewallRulesRequest
+    {
+        $firstRule = $this->getRoleByIndex($fromListIndex);
+        $firstRule['icmp_type'] = '255';
+
+        $secondRule = $this->getRoleByIndex($fromListIndex+1);
+        $secondRule['icmp_type'] = '255';
+
+        return new FirewallRulesRequest([
+            'firewall_rules' => [
+                new FirewallRule($firstRule),
+                new FirewallRule($secondRule),
+            ],
         ]);
     }
 

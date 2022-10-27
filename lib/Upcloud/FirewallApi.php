@@ -10,6 +10,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use Upcloud\ApiClient\ApiException;
 use Upcloud\ApiClient\HttpClient\UpcloudApiResponse;
+use Upcloud\ApiClient\Model\FirewallRulesRequest;
 use Upcloud\ApiClient\Model\FirewallRuleCreateResponse;
 use Upcloud\ApiClient\Model\FirewallRuleListResponse;
 use Upcloud\ApiClient\Model\FirewallRuleRequest;
@@ -100,6 +101,88 @@ class FirewallApi extends BaseApi
 
         return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
             return $response->toArray(FirewallRuleCreateResponse::class);
+        });
+    }
+
+    /**
+     * Operation createFirewallRules
+     *
+     * Create multiple firewall rules
+     *
+     * @param string $serverId Server id (required)
+     * @param FirewallRulesRequest $firewallRules  (required)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
+     */
+    public function createFirewallRules(
+        string $serverId,
+        FirewallRulesRequest $firewallRules
+    ): void {
+        $this->createFirewallRulesWithHttpInfo($serverId, $firewallRules);
+    }
+
+    /**
+     * Operation createFirewallRulesWithHttpInfo
+     *
+     * Create multiple firewall rules
+     *
+     * @param string $serverId Server id (required)
+     * @param FirewallRulesRequest $firewallRules  (required)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws InvalidArgumentException|GuzzleException
+     * @throws ApiException on non-2xx response
+     */
+    public function createFirewallRulesWithHttpInfo(
+        string $serverId,
+        FirewallRulesRequest $firewallRules
+    ): array {
+        $url = $this->buildPath('server/{serverId}/firewall_rule', compact('serverId'));
+        $request = new Request('PUT', $url, [], $firewallRules);
+
+        $response = $this->client->send($request);
+
+        return $response->toArray();
+    }
+
+    /**
+     * Operation createFirewallRulesAsync
+     *
+     * Create multiple firewall rules
+     *
+     * @param string $serverId Server id (required)
+     * @param FirewallRulesRequest $firewallRules  (required)
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function createFirewallRulesAsync(
+        string $serverId,
+        FirewallRulesRequest $firewallRules
+    ): PromiseInterface {
+        return $this->createFirewallRulesAsyncWithHttpInfo($serverId, $firewallRules)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation createFirewallRulesAsyncWithHttpInfo
+     *
+     * Create multiple firewall rules
+     *
+     * @param string $serverId Server id (required)
+     * @param FirewallRulesRequest $firewallRules (required)
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function createFirewallRulesAsyncWithHttpInfo(
+        string $serverId,
+        FirewallRulesRequest $firewallRules
+    ): PromiseInterface {
+
+        $url = $this->buildPath('server/{serverId}/firewall_rule', compact('serverId'));
+        $request = new Request('PUT', $url, [], $firewallRules);
+
+        return $this->client->sendAsync($request)->then(function (UpcloudApiResponse $response) {
+            return $response->toArray();
         });
     }
 
