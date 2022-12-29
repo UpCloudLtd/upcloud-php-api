@@ -89,6 +89,20 @@ class FirewallApiFixture extends BaseFixture
      * @param int $fromListIndex
      * @return FirewallRulesRequest
      */
+    public function getRulesRequestSuccess(int $fromListIndex = 0): FirewallRulesRequest
+    {
+        return new FirewallRulesRequest([
+            'firewall_rules' => [
+                new FirewallRule($this->getRoleByIndex($fromListIndex)),
+                new FirewallRule($this->getRoleByIndex($fromListIndex+1)),
+            ],
+        ]);
+    }
+
+    /**
+     * @param int $fromListIndex
+     * @return FirewallRulesRequest
+     */
     public function getRulesRequestFailed(int $fromListIndex = 0): FirewallRulesRequest
     {
         $firstRule = $this->getRoleByIndex($fromListIndex);
