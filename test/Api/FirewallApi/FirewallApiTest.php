@@ -131,6 +131,42 @@ class FirewallApiTest extends BaseApiTest
         $this->api->createFirewallRule($this->serverId, $fakeRequest);
     }
 
+    public function testCreateFirewallRules(): void
+    {
+        $fakeResponse = new Response(204, $this->fakeHeadersAsArray);
+        $fakeRequest = $this->fixture->getRulesRequestSuccess();
+        $this->mock
+            ->shouldReceive('send')
+            ->once()
+            ->andReturn($fakeResponse);
+
+        $response = $this->api->createFirewallRulesWithHttpInfo($this->serverId, $fakeRequest);
+
+        $this->assertEquals(204, $response[1]);
+    }
+
+    public function testThrowsExceptionOnCreateFirewallRules(): void
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(400);
+        $request = new Request(
+            'POST',
+            $this->url . 'server/'.$this->serverId.'/firewall_rule',
+            $this->fakeHeadersAsArray
+        );
+
+        $response = new Response(400, $this->fakeHeadersAsArray);
+
+        $fakeRequest = $this->fixture->getRulesRequestFailed();
+
+        $this->mock
+            ->shouldReceive('send')
+            ->once()
+            ->andThrow(new RequestException('Bad Request', $request, $response));
+
+        $this->api->createFirewallRules($this->serverId, $fakeRequest);
+    }
+
     public function testThrowsExceptionOnDeleteFirewallRule(): void
     {
         $this->expectException(ApiException::class);
