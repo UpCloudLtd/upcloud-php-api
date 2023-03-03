@@ -34,5 +34,5 @@ jobs:
         run: vendor/bin/phpunit
         env: 
           xdebug.max_nesting_level: 512
-          UPCLOUD_API_TEST_USER: upcloudapitests
-          UPCLOUD_API_TEST_PASSWORD: Biped-shallot-taken-indict3
+          UPCLOUD_API_TEST_USER: ${{ secrets.UPCLOUD_API_TEST_USER }}
+          UPCLOUD_API_TEST_PASSWORD: ${{ secrets.UPCLOUD_API_TEST_PASSWORD }}
