@@ -4,3 +4,4 @@ git_push.sh
 .vscode
 /phpunit.xml
 /composer.lock
+.phpunit.result.cache
