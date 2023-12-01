@@ -20,7 +20,7 @@ NOTE: Please test all of your use cases thoroughly before actual production use.
 
 ## Requirements
 
-Using this library requires the PHP version 7.2 and later.
+Using this library requires the PHP version 8.0 and later.
 
 ## Installation
 ### Composer

@@ -105,7 +105,8 @@ class UpcloudApiResponse
     {
         return $this->serializer->deserialize(
             (string) $this->getBody(),
-            $class
+            $class,
+            'json'
         );
     }
 

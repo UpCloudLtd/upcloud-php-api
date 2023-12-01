@@ -4,18 +4,14 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 jobs:
-  Build:
+  Test:
     strategy:
       matrix:
-        os-php-versions: [ 
-          { os: ubuntu-latest, php: 7.2 },
-          { os: ubuntu-latest, php: 7.3 },
-          { os: ubuntu-latest, php: 7.4 },
+        os-php-versions: [
           { os: ubuntu-latest, php: 8.0 },
           { os: ubuntu-latest, php: 8.1 },
+          { os: ubuntu-latest, php: 8.2 },
         ]
     runs-on: ${{ matrix.os-php-versions.os }}
     steps:
@@ -37,3 +33,21 @@ jobs:
           xdebug.max_nesting_level: 512
           UPCLOUD_API_TEST_USER: ${{ secrets.UPCLOUD_API_TEST_USER }}
           UPCLOUD_API_TEST_PASSWORD: ${{ secrets.UPCLOUD_API_TEST_PASSWORD }}
+
+  test-with-laravel:
+    name: Test install with laravel
+    strategy:
+      matrix:
+        laravel-version:
+        - 9
+        - 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+      - uses: actions/checkout@v2
+      - name: Test package can be required into laravel project
+        run: |
+          ./test/test-install-with-laravel.sh ${{ matrix.laravel-version }}
