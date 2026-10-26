@@ -1,0 +1,113 @@
+name: Build PHP SDK Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version.outputs.tag }}
+      commit: ${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify tag is on the default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-(alpha|beta|rc)(\.(0|[1-9][0-9]*))?)?$ ]]; then
+            echo "::error::Expected vX.Y.Z or an alpha, beta, or rc tag, received '$RELEASE_TAG'."
+            exit 1
+          fi
+
+          AUTH_HEADER="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${AUTH_HEADER}" \
+            fetch --no-tags origin "refs/heads/${DEFAULT_BRANCH}"
+          unset AUTH_HEADER
+          TAG_COMMIT="$(git rev-parse "${GITHUB_REF}^{commit}")"
+          if [[ "$TAG_COMMIT" != "$GITHUB_SHA" ]]; then
+            echo "::error::Tag $RELEASE_TAG does not resolve to the event commit."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$TAG_COMMIT" FETCH_HEAD; then
+            echo "::error::Tag $RELEASE_TAG is not on the history of $DEFAULT_BRANCH."
+            exit 1
+          fi
+          echo "Verified $RELEASE_TAG is on $DEFAULT_BRANCH."
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+
+      - name: Extract Version
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Releasing PHP SDK version: $TAG"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Test release guards offline
+        run: node --test generator/tests/release.test.mjs
+
+      - name: Record release identity
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          mkdir -p release-identity
+          php -r '$identity = ["tag" => getenv("RELEASE_TAG"), "commit" => getenv("GITHUB_SHA"), "repository" => getenv("GITHUB_REPOSITORY"), "run_id" => getenv("GITHUB_RUN_ID")]; file_put_contents("release-identity/release.json", json_encode($identity, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) . PHP_EOL);'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdk-release-identity
+          path: release-identity/release.json
+          if-no-files-found: error
+
+      - name: Build Release Artifacts
+        run: |
+          chmod +x generator/scripts/prepare-release.sh
+          generator/scripts/prepare-release.sh "${{ steps.version.outputs.tag }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "PHP SDK Release ${{ steps.version.outputs.tag }}"
+          prerelease: ${{ contains(steps.version.outputs.tag, '-') }}
+          make_latest: ${{ contains(steps.version.outputs.tag, '-') && 'false' || 'true' }}
+          files: |
+            generator/release-artifacts/*
+
+  docs:
+    needs: build-release
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Trigger docs workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: docs-update
+          client-payload: |
+            {
+              "version": "${{ needs.build-release.outputs.version }}"
+            }

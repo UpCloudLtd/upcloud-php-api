@@ -1,0 +1,13 @@
+/.github/** export-ignore
+/docs/** export-ignore
+/generator/** export-ignore
+/fern/fern.config.json export-ignore
+/fern/generators.yaml export-ignore
+/fern/sdk/.fern/** export-ignore
+/fern/sdk/.github/** export-ignore
+/fern/sdk/composer.lock export-ignore
+/fern/sdk/phpstan.neon export-ignore
+/fern/sdk/phpunit.xml export-ignore
+/fern/sdk/tests/** export-ignore
+/fern/sdk/vendor/** export-ignore
+/fern/sdk/wiremock/** export-ignore

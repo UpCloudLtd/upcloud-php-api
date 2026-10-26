@@ -1,8 +1,64 @@
-vendor
+# OS files
 .DS_Store
-git_push.sh
-.vscode
-/phpunit.xml
-/composer.lock
-.phpunit.result.cache
+Thumbs.db
+
+# Editor folders
+.idea/
+.vscode/
+
+# Dependency folders (various languages)
+node_modules/
+vendor/
+target/
+dist/
+build/
+out/
+
+# Python
+__pycache__/
+*.pyc
+
+# Go
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# PHP Composer
+composer.lock
+
+# Logs
+*.log
+
+# Coverage & reports
+coverage/
+.coverage
+coverage.xml
+clover.xml
+lcov.info
+
+# Temp
 tmp/
+temp/
+*.tmp
+*.swp
+
+# SDK generation cache
+generated/
+output/
+generator/openapi/spec.patched.json
+
+# Artefacts
+*.tar.gz
+*.zip
+
+# Local GitHub Pages builds
+_site/
+.sass-cache/
+.jekyll-cache/
+docs/.bundle/
+
+# Local migration planning
+/MIGRATION-RUNBOOK.local.md

@@ -1,0 +1,45 @@
+<?php
+
+namespace Upcloud\Types;
+
+use Upcloud\Core\Json\JsonSerializableType;
+use Upcloud\Core\Json\JsonProperty;
+
+/**
+ * Load Balancer Label
+ */
+class LoadBalancerLabelModify extends JsonSerializableType
+{
+    /**
+     * @var ?string $key Key
+     */
+    #[JsonProperty('key')]
+    public ?string $key;
+
+    /**
+     * @var ?string $value Value
+     */
+    #[JsonProperty('value')]
+    public ?string $value;
+
+    /**
+     * @param array{
+     *   key?: ?string,
+     *   value?: ?string,
+     * } $values
+     */
+    public function __construct(
+        array $values = [],
+    ) {
+        $this->key = $values['key'] ?? null;
+        $this->value = $values['value'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
+}

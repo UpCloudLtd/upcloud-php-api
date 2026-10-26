@@ -1,0 +1,13 @@
+title: UpCloud PHP SDK
+url: https://upcloudltd.github.io
+baseurl: /upcloud-php-api
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  parse_block_html: false
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  # ruby/setup-ruby installs cached dependencies here in CI.
+  - vendor
