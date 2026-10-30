@@ -6,10 +6,10 @@ Protect `main` before releasing: require reviewed pull requests and block force-
 
 Add these under **Settings → Secrets and variables → Actions** for this repository:
 
-- Repository variable `PACKAGIST_PUBLISH_ENABLED` with value `true`, enabled only when ready to publish.
+- Repository variable `PACKAGIST_PUBLISH_ENABLED` with value `true`, enabled only when ready to publish. If it is `false`, the build can still create a GitHub Release, but the separate Packagist job stops before using credentials. Set it to `true` before pushing the tag you intend to publish.
 - Repository secrets `PACKAGIST_USERNAME` and `PACKAGIST_TOKEN` with your Packagist username and safe API token.
 
-The publisher uses only the repository-level variable and secrets above; it does not need a GitHub Environment. It verifies the release tag and commit are on protected `main` before using the Packagist credentials.
+The publisher needs the repository-level variable and Packagist secrets above; it does not need a GitHub Environment. GitHub supplies the built-in `GITHUB_TOKEN` automatically for artifact access and release verification. `SPECS_ACCESS_PAT` is used by the separate SDK regeneration workflow, not by a manual release-tag publish. The publisher verifies the release tag and commit are on protected `main` before using the Packagist credentials.
 
 Keep the existing Packagist package pointed at `https://github.com/UpCloudLtd/upcloud-php-api`. Do not change the package name or move existing v1-v3 tags. The new SDK replaces the implementation in this repository while historical versions remain at their original commits.
 
@@ -35,7 +35,7 @@ The release workflow uploads the tag and exact commit in a release-identity arti
 
 ### Alpha, beta, and release candidates
 
-Prereleases use the upcoming stable version followed by `-alpha`, `-beta`, or `-rc`. You may add a dot and number to distinguish iterations. For example, publish `v4.0.0-alpha.1`, then `v4.0.0-alpha.2`, `v4.0.0-beta.1`, and `v4.0.0-rc.1` before the stable `v4.0.0` release. Each tag creates a GitHub prerelease and is indexed on Packagist.
+Prereleases use the upcoming stable version followed by `-alpha`, `-beta`, or `-rc`. You may add a dot and number to distinguish iterations. For example, publish `v4.0.0-alpha.1`, then `v4.0.0-alpha.2`, `v4.0.0-beta.1`, and `v4.0.0-rc.1` before the stable `v4.0.0` release. Each tag creates a GitHub prerelease. Packagist indexing is confirmed only when the enabled publisher workflow succeeds and uploads its receipt; Packagist may also discover tags independently, so tag visibility alone is not proof that this workflow completed.
 
 Create a prerelease tag in the same way as a stable tag:
 
