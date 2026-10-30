@@ -18,45 +18,70 @@ The release workflow uploads the tag and exact commit in a release-identity arti
 ## Create a Release
 
 1. Make sure the release changes are merged and the default branch is up to date.
-2. Create and push an annotated version tag. For the first stable release, use:
+2. Choose any tag accepted by the release workflow and push it as an annotated tag. The same process applies to stable and prerelease tags:
 
    ```sh
+   read -r -p "Release tag (stable or alpha/beta/rc prerelease): " RELEASE_TAG
    git checkout main
    git pull --ff-only
-   git tag -a v4.0.0 -m "Release v4.0.0"
-   git push origin v4.0.0
+   git tag -a "$RELEASE_TAG" -m "Release $RELEASE_TAG"
+   git push origin "$RELEASE_TAG"
    ```
 
-   For later stable releases, choose the next appropriate version: `v4.0.1` for a patch, `v4.1.0` for a backward-compatible feature, or `v5.0.0` for a breaking change.
+   Stable versions use `vX.Y.Z`; prereleases use `vX.Y.Z-alpha`, `vX.Y.Z-beta`, or `vX.Y.Z-rc`, optionally followed by a numeric iteration such as `.2`. For stable releases, choose the next version according to the change: patch, minor, or major.
 
-3. In **Actions**, watch **Build PHP SDK Release**, then **Publish PHP SDK**. Check the release workflow's `docs` job separately. The GitHub Release is created before registry verification; its existence alone is not proof that publishing succeeded.
+3. In **Actions**, watch **Build PHP SDK Release**, then **Publish PHP SDK**. The GitHub Release is created before Packagist verification; its existence alone is not proof that publishing succeeded.
 4. Check the publish job's receipt: both source and archive must match the tag's commit. Prereleases are marked as such and are not set as GitHub's latest release.
-5. Verify both `v3.0.0` and the new release still install from Packagist using fresh Composer projects.
+5. Install the exact version just published in a fresh Composer project and verify the generated client autoloads. The following commands derive the Composer stability from whichever valid tag you set above; stable tags use Composer's default stability.
 
-### Alpha, beta, and release candidates
+   ```sh
+   read -r -p "Release tag to test: " RELEASE_TAG
+   RELEASE_VERSION="${RELEASE_TAG#v}"
+   TEST_DIR=$(mktemp -d)
+   if [[ "$RELEASE_VERSION" == *-* ]]; then
+      COMPOSER_STABILITY="${RELEASE_VERSION#*-}"
+      COMPOSER_STABILITY="${COMPOSER_STABILITY%%.*}"
+      if [[ "$COMPOSER_STABILITY" == "rc" ]]; then COMPOSER_STABILITY="RC"; fi
+      PACKAGE_CONSTRAINT="${RELEASE_VERSION}@${COMPOSER_STABILITY}"
+   else
+      PACKAGE_CONSTRAINT="$RELEASE_VERSION"
+   fi
+   composer require --working-dir "$TEST_DIR" --no-interaction --no-plugins --no-scripts --prefer-dist "upcloudltd/upcloud-php-api:${PACKAGE_CONSTRAINT}"
+   php -r 'require $argv[1]."/vendor/autoload.php"; if (!class_exists("Upcloud\\UpcloudClient")) { exit(1); }' "$TEST_DIR"
+   ```
 
-Prereleases use the upcoming stable version followed by `-alpha`, `-beta`, or `-rc`. You may add a dot and number to distinguish iterations. For example, publish `v4.0.0-alpha.1`, then `v4.0.0-alpha.2`, `v4.0.0-beta.1`, and `v4.0.0-rc.1` before the stable `v4.0.0` release. Each tag creates a GitHub prerelease. Packagist indexing is confirmed only when the enabled publisher workflow succeeds and uploads its receipt; Packagist may also discover tags independently, so tag visibility alone is not proof that this workflow completed.
+   As a one-time v3-to-v4 migration check, install the previous stable release in another fresh project and verify the legacy class still autoloads:
 
-Create a prerelease tag in the same way as a stable tag:
+   ```sh
+   V3_TEST_DIR=$(mktemp -d)
+   composer require --working-dir "$V3_TEST_DIR" --no-interaction --no-plugins --no-scripts --prefer-dist 'upcloudltd/upcloud-php-api:3.0.0'
+   php -r 'require $argv[1]."/vendor/autoload.php"; if (!class_exists("Upcloud\\ApiClient\\Configuration")) { exit(1); }' "$V3_TEST_DIR"
+   ```
 
-Use lowercase `alpha`, `beta`, or `rc`, optionally followed by one numeric iteration
-such as `.1`. Numeric components must not have leading zeros. Textual iterations
-such as `-rc.foo` and extra components such as `-alpha.1.extra` are rejected because
-they are not supported Composer release versions.
+   This confirms the v4 release did not disturb the old Packagist release. It is a one-time migration check, not a step to repeat for every later v4 release. For each release, test the exact newly published version using the generic command above.
+
+6. Review the documentation PR generated for this release and merge it after confirming the reference and version links look right. `update-docs.yml` dispatches **Validate documentation** manually because a PR created with `GITHUB_TOKEN` does not start normal pull-request workflows. Check that manual run's result; an automatic `action_required` run has no test jobs and can be ignored. The PHP SDK validation workflow does not run for docs-only changes; SDK code is validated separately on PHP 8.1 and 8.2.
+
+### Supported Version Channels
+
+The release procedure is the same for every supported tag. The tag suffix selects the release type and Composer stability:
+
+| Tag pattern | Release type | Composer install stability |
+| --- | --- | --- |
+| `vX.Y.Z` | Stable GitHub release | Default stable |
+| `vX.Y.Z-alpha` or `vX.Y.Z-alpha.N` | Alpha prerelease | `@alpha` |
+| `vX.Y.Z-beta` or `vX.Y.Z-beta.N` | Beta prerelease | `@beta` |
+| `vX.Y.Z-rc` or `vX.Y.Z-rc.N` | Release-candidate prerelease | `@RC` |
+
+An optional prerelease iteration is numeric and must not have leading zeros. Other suffixes or extra components are rejected by the workflow.
 
 ```sh
-VERSION=v4.0.0-alpha.1
-git tag -a "$VERSION" -m "Release $VERSION"
-git push origin "$VERSION"
+read -r -p "Release tag: " RELEASE_TAG
+git tag -a "$RELEASE_TAG" -m "Release $RELEASE_TAG"
+git push origin "$RELEASE_TAG"
 ```
 
-To install a prerelease for testing, request its version and stability explicitly:
-
-```sh
-composer require upcloudltd/upcloud-php-api:4.0.0-alpha.1@alpha
-```
-
-Stable releases remain the default for consumers who do not opt into prerelease stability. See the package at <https://packagist.org/packages/upcloudltd/upcloud-php-api>.
+Stable releases remain the default for consumers who do not opt into prerelease stability. The generic install test above derives the correct Composer stability from the selected tag. See the package at <https://packagist.org/packages/upcloudltd/upcloud-php-api>.
 
 ## Legacy Maintenance
 

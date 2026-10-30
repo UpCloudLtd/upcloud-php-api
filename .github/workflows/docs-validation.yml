@@ -1,12 +1,6 @@
 name: Validate documentation
 
 on:
-  pull_request:
-    paths:
-      - 'docs/**'
-      - 'generator/scripts/prepare_docs.py'
-      - 'generator/tests/*docs*'
-      - '.github/workflows/*docs*'
   workflow_dispatch:
 
 permissions:
