@@ -1,0 +1,8 @@
+{
+  "cliVersion": "2.13.0",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "1.25.0",
+  "generatorConfig": {
+    "enable-wire-tests": true
+  }
+}

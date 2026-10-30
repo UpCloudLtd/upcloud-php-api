@@ -1,0 +1,89 @@
+name: Validate PHP SDK
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - ".gitattributes"
+      - "composer.json"
+      - "fern/**"
+      - "generator/**"
+      - "README.md"
+      - "docs/**"
+      - ".github/workflows/**"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch or commit to validate"
+        required: true
+        type: string
+      pr_number:
+        description: "Generated pull request number"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ["8.1", "8.2"]
+    env:
+      TARGET_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || inputs.ref || github.sha }}
+      TARGET_REPOSITORY: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+    steps:
+      - name: Check out target
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.TARGET_REPOSITORY }}
+          ref: ${{ env.TARGET_REF }}
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Test release trust and registry verification offline
+        run: node --test generator/tests/release.test.mjs
+
+      - name: Validate the Packagist package and autoload
+        run: |
+          composer validate --no-check-publish
+          composer install --no-dev --no-interaction --prefer-dist --no-progress
+          php -r 'require "vendor/autoload.php"; if (!class_exists("Upcloud\\UpcloudClient")) { exit(1); }'
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --working-dir fern/sdk
+
+      - name: Test OpenAPI preprocessing
+        run: python3 -m unittest discover -s generator/tests -p 'test_*.py'
+
+      - name: Build PHP SDK
+        run: composer build --working-dir fern/sdk
+
+      - name: Smoke test generated SDK
+        run: php generator/tests/generated_sdk_smoke.php
+
+      - name: Check endpoint coverage
+        run: python3 generator/tests/check_endpoint_coverage.py generator/openapi/spec.json fern/sdk/src
+
+      - name: Test generated request behavior
+        run: php generator/tests/generated_request_behavior.php
+
+      - name: Test generated model fixtures
+        run: php generator/tests/generated_model_fixtures.php
+
+      - name: Run PHPUnit and generated WireMock tests
+        run: composer test --working-dir fern/sdk
+
+      - name: Run PHPStan
+        run: composer analyze --working-dir fern/sdk

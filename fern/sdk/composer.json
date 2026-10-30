@@ -1,0 +1,43 @@
+{
+  "name": "upcloudltd/upcloud-php-api",
+  "description": "Official UpCloud PHP SDK for the UpCloud API",
+  "homepage": "https://github.com/UpCloudLtd/upcloud-php-api",
+  "support": {
+    "issues": "https://github.com/UpCloudLtd/upcloud-php-api/issues",
+    "source": "https://github.com/UpCloudLtd/upcloud-php-api"
+  },
+  "keywords": [
+    "upcloud",
+    "api",
+    "sdk"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^8.1",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0",
+    "friendsofphp/php-cs-fixer": "3.5.0",
+    "phpstan/phpstan": "^1.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "Upcloud\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Upcloud\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "build": [
+      "@php -l src",
+      "@php -l tests"
+    ],
+    "test": "phpunit",
+    "analyze": "phpstan analyze src tests --memory-limit=1G"
+  }
+}

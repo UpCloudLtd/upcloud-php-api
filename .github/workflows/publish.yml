@@ -1,0 +1,124 @@
+name: Publish PHP SDK
+
+on:
+  workflow_run:
+    workflows: ["Build PHP SDK Release"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    concurrency:
+      group: sdk-packagist-publication
+      cancel-in-progress: false
+
+    steps:
+      - name: Require explicit Packagist publishing enablement
+        env:
+          PACKAGIST_PUBLISH_ENABLED: ${{ vars.PACKAGIST_PUBLISH_ENABLED }}
+        run: |
+          if [[ "$PACKAGIST_PUBLISH_ENABLED" != true ]]; then
+            echo "::error::Configure the existing Packagist package to use this repository, then set PACKAGIST_PUBLISH_ENABLED=true."
+            exit 1
+          fi
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+
+      - name: Download identity from the successful release run
+        uses: actions/download-artifact@v4
+        with:
+          name: sdk-release-identity
+          path: release-identity
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Validate explicit release identity
+        id: get_tag
+        env:
+          RELEASE_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          RELEASE_TAG="$(php -r '
+            $identity = json_decode(file_get_contents("release-identity/release.json"), true, 512, JSON_THROW_ON_ERROR);
+            if (($identity["commit"] ?? null) !== getenv("RELEASE_COMMIT")
+                || ($identity["repository"] ?? null) !== getenv("GITHUB_REPOSITORY")
+                || ($identity["run_id"] ?? null) !== getenv("RELEASE_RUN_ID")
+                || !is_string($identity["tag"] ?? null)) {
+                fwrite(STDERR, "Release identity does not match the successful workflow run\n");
+                exit(1);
+            }
+            echo $identity["tag"];
+          ')"
+          if [[ ! "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-(alpha|beta|rc)(\.(0|[1-9][0-9]*))?)?$ ]]; then
+            echo "::error::Expected vX.Y.Z or an alpha, beta, or rc tag, received '$RELEASE_TAG'."
+            exit 1
+          fi
+          echo "tag=$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+          echo "Publishing PHP SDK for tag: $RELEASE_TAG"
+
+      - name: Check out the exact release commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify release tag and commit are on the default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
+          RELEASE_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          AUTH_HEADER="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${AUTH_HEADER}" \
+            fetch --no-tags origin "+refs/heads/${DEFAULT_BRANCH}:refs/release-verification/main" \
+            "+refs/tags/${RELEASE_TAG}:refs/release-verification/tag"
+          unset AUTH_HEADER
+          TAG_COMMIT="$(git rev-parse "refs/release-verification/tag^{commit}")"
+          if [[ "$TAG_COMMIT" != "$RELEASE_COMMIT" || "$(git rev-parse HEAD)" != "$RELEASE_COMMIT" ]]; then
+            echo "::error::Tag $RELEASE_TAG no longer points to the release workflow commit."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$RELEASE_COMMIT" refs/release-verification/main; then
+            echo "::error::Release commit is not on the history of $DEFAULT_BRANCH."
+            exit 1
+          fi
+          echo "Verified $RELEASE_TAG ($RELEASE_COMMIT) is on $DEFAULT_BRANCH."
+
+      - name: Publish to Packagist
+        env:
+          PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+          RELEASE_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          chmod +x generator/scripts/publish.sh
+          bash generator/scripts/publish.sh "$RELEASE_TAG"
+
+      - name: Record Packagist publication proof
+        run: |
+          echo "## Packagist publication verified" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat publication-receipt.json >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packagist-publication-proof
+          path: publication-receipt.json
+          if-no-files-found: error

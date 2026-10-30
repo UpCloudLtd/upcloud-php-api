@@ -1,0 +1,34 @@
+name: Validate documentation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'generator/scripts/prepare_docs.py'
+      - 'generator/tests/*docs*'
+      - '.github/workflows/*docs*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: docs
+      - name: Check conversion and reproducibility
+        run: |
+          python3 -m unittest discover -s generator/tests -p 'test_*docs*.py'
+          python3 generator/scripts/prepare_docs.py
+          git diff --exit-code -- docs
+      - name: Build with GitHub Pages dependencies
+        working-directory: docs
+        run: bundle exec jekyll build --destination ../_site
+      - name: Check rendered links and method disclosures
+        run: python3 generator/tests/check_docs_site.py _site

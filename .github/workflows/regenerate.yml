@@ -1,0 +1,130 @@
+name: Regenerate SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Spec version (e.g. v0.0.40)"
+        required: true
+      asset_url:
+        description: "GitHub API asset URL for the spec tarball"
+        required: true
+      spec_file:
+        description: "Spec file name inside the tarball"
+        required: true
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    env:
+      SPEC_VERSION: ${{ github.event.inputs.version }}
+      ASSET_URL: ${{ github.event.inputs.asset_url }}
+      SPEC_FILE: ${{ github.event.inputs.spec_file || 'upcloud-public-openapi.json' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+
+      - name: Validate trusted spec asset URL
+        run: |
+          php -r '
+            $parts = parse_url(getenv("ASSET_URL"));
+            if (!is_array($parts)
+                || ($parts["scheme"] ?? null) !== "https"
+                || ($parts["host"] ?? null) !== "api.github.com"
+                || isset($parts["user"]) || isset($parts["pass"])
+                || isset($parts["port"]) || isset($parts["query"]) || isset($parts["fragment"])
+                || !preg_match("{^/repos/UpCloudLtd/upcloud-openapi-spec/releases/assets/[1-9][0-9]*$}D", $parts["path"] ?? "")) {
+                fwrite(STDERR, "Expected an HTTPS release-asset API URL in UpCloudLtd/upcloud-openapi-spec\n");
+                exit(1);
+            }
+          '
+
+      - name: Download OpenAPI Spec
+        env:
+          SPECS_ACCESS_PAT: ${{ secrets.SPECS_ACCESS_PAT }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$SPEC_VERSION" ]; then
+            echo "ERROR: Missing workflow_dispatch input: version"
+            exit 1
+          fi
+
+          if [ -z "$ASSET_URL" ]; then
+            echo "ERROR: Missing asset_url"
+            exit 1
+          fi
+
+          if [ -z "$SPEC_FILE" ]; then
+            echo "ERROR: Missing spec_file"
+            exit 1
+          fi
+
+          echo "Spec version: $SPEC_VERSION"
+          echo "Spec file: $SPEC_FILE"
+          echo "Downloading from ASSET_URL='$ASSET_URL'"
+
+          mkdir -p generator/openapi
+
+          curl --fail --location --proto '=https' --proto-redir '=https' --max-redirs 5 \
+            -H "Authorization: token $SPECS_ACCESS_PAT" \
+            -H "Accept: application/octet-stream" \
+            "$ASSET_URL" \
+            -o spec.tar.gz
+
+          echo "Extracting spec"
+          rm -rf /tmp/spec-extract
+          mkdir -p /tmp/spec-extract generator/openapi
+
+          if ! tar -tzf spec.tar.gz | grep -Fx "$SPEC_FILE" >/dev/null; then
+            echo "ERROR: $SPEC_FILE not found in downloaded tarball"
+            tar -tzf spec.tar.gz
+            exit 1
+          fi
+
+          tar -xzf spec.tar.gz -C /tmp/spec-extract "$SPEC_FILE"
+          mv "/tmp/spec-extract/$SPEC_FILE" generator/openapi/spec.json
+
+          if [ ! -f generator/openapi/spec.json ]; then
+            echo "ERROR: spec.json not found after extraction"
+            find generator/openapi -maxdepth 2 -type f
+            exit 1
+          fi
+
+      - name: Run SDK-specific generator script
+        run: |
+          chmod +x generator/scripts/generate.sh
+          generator/scripts/generate.sh
+
+      - name: Create PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: regenerate SDK from spec ${{ env.SPEC_VERSION }}"
+          branch: "regen/${{ env.SPEC_VERSION }}"
+          title: "Regenerate SDK (${{ env.SPEC_VERSION }})"
+          body: >
+            Automated regeneration for spec version
+            `${{ env.SPEC_VERSION }}`.
+
+      - name: Dispatch validation workflow for generated PR
+        if: steps.create-pr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BRANCH: ${{ steps.create-pr.outputs.pull-request-branch }}
+          PR_NUMBER: ${{ steps.create-pr.outputs.pull-request-number }}
+        run: |
+          set -euo pipefail
+          gh workflow run php-sdk-validation.yml \
+            --ref "$PR_BRANCH" \
+            -f "ref=$PR_BRANCH" \
+            -f "pr_number=$PR_NUMBER"
