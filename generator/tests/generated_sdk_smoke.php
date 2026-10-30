@@ -29,14 +29,8 @@ if ($phpFiles === []) {
     throw new RuntimeException('No generated PHP files found');
 }
 
-// Check syntax and load every generated source file with Composer available.
+// Load every generated source file to validate syntax and declarations.
 foreach ($phpFiles as $file) {
-    exec('php -l ' . escapeshellarg($file), $output, $status);
-    if ($status !== 0) {
-        throw new RuntimeException(
-            "PHP syntax check failed: {$file}\n" . implode("\n", $output)
-        );
-    }
     require_once $file;
 }
 

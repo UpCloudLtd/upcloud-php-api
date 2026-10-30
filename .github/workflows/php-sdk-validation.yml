@@ -7,9 +7,8 @@ on:
     paths:
       - ".gitattributes"
       - "composer.json"
-      - "fern/sdk/**"
+      - "fern/**"
       - "generator/**"
-      - "fern/generators.yaml"
       - "README.md"
       - "docs/**"
       - ".github/workflows/**"
