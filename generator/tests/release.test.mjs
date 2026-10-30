@@ -75,8 +75,11 @@ test('workflow validators match the publisher numeric prerelease contract', () =
   const pattern = publisherText.match(/=~ (\^v\S+) \]\]/)[1];
   const release = readFileSync(resolve(root, '.github/workflows/release.yml'), 'utf8');
   const publish = readFileSync(resolve(root, '.github/workflows/publish.yml'), 'utf8');
-  const patterns = [...`${release}\n${publish}`.matchAll(/=~ (\^v\S+) \]\]/g)];
-  assert.equal(patterns.length, 3);
+  const releasePatterns = [...release.matchAll(/=~ (\^v\S+) \]\]/g)];
+  const publishPatterns = [...publish.matchAll(/=~ (\^v\S+) \]\]/g)];
+  assert.equal(releasePatterns.length, 1);
+  assert.equal(publishPatterns.length, 1);
+  const patterns = [...releasePatterns, ...publishPatterns];
   for (const match of patterns) assert.equal(match[1], pattern);
 });
 
