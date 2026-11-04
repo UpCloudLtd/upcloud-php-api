@@ -15,14 +15,14 @@ use Upcloud\Core\Json\JsonDecoder;
 use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Upcloud\FirewallRuleset\Requests\CreateFirewallRuleset;
+use Upcloud\FirewallRuleset\Requests\FirewallRulesetCreate;
 use Upcloud\FirewallRuleset\Requests\FirewallRulesetModify;
 use Upcloud\FirewallRuleset\Requests\ListFirewallRulesetRulesRequest;
 use Upcloud\Types\FirewallRulesetFirewallRuleListResponse;
 use Upcloud\FirewallRuleset\Requests\CreateFirewallRulesetRuleRequest;
 use Upcloud\Types\FirewallRulesetRuleDetailResponse;
-use Upcloud\FirewallRuleset\Requests\FirewallRulesetFirewallMultipleRuleCreate;
-use Upcloud\FirewallRuleset\Requests\FirewallRulesetFirewallRuleModify;
+use Upcloud\FirewallRuleset\Requests\FirewallRulesetMultipleRuleCreate;
+use Upcloud\FirewallRuleset\Requests\FirewallRulesetRuleModify;
 use Upcloud\Types\FirewallRulesetLabelDetailResponse;
 use Upcloud\FirewallRuleset\Requests\CreateFirewallRulesetLabelRequest;
 use Upcloud\FirewallRuleset\Requests\FirewallRulesetLabelModify;
@@ -137,7 +137,7 @@ class FirewallRulesetClient
     /**
      * Creates a new firewall ruleset.
      *
-     * @param CreateFirewallRuleset $request
+     * @param FirewallRulesetCreate $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -150,7 +150,7 @@ class FirewallRulesetClient
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function createFirewallRuleset(CreateFirewallRuleset $request, ?array $options = null): FirewallRulesetDetailResponse
+    public function createFirewallRuleset(FirewallRulesetCreate $request, ?array $options = null): FirewallRulesetDetailResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -537,7 +537,7 @@ class FirewallRulesetClient
      * Creates multiple firewall ruleset rules by the given {ruleset-uuid}.
      *
      * @param string $rulesetUuid Firewall ruleset UUID
-     * @param FirewallRulesetFirewallMultipleRuleCreate $request
+     * @param FirewallRulesetMultipleRuleCreate $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -550,7 +550,7 @@ class FirewallRulesetClient
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function createMultipleFirewallRulesetRule(string $rulesetUuid, FirewallRulesetFirewallMultipleRuleCreate $request, ?array $options = null): FirewallRulesetFirewallRuleListResponse
+    public function createMultipleFirewallRulesetRule(string $rulesetUuid, FirewallRulesetMultipleRuleCreate $request, ?array $options = null): FirewallRulesetFirewallRuleListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -703,7 +703,7 @@ class FirewallRulesetClient
      *
      * @param string $rulesetUuid Firewall ruleset UUID
      * @param string $ruleId Firewall ruleset rule UUID
-     * @param FirewallRulesetFirewallRuleModify $request
+     * @param FirewallRulesetRuleModify $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -716,7 +716,7 @@ class FirewallRulesetClient
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function modifyFirewallRulesetRule(string $rulesetUuid, string $ruleId, FirewallRulesetFirewallRuleModify $request = new FirewallRulesetFirewallRuleModify(), ?array $options = null): FirewallRulesetRuleDetailResponse
+    public function modifyFirewallRulesetRule(string $rulesetUuid, string $ruleId, FirewallRulesetRuleModify $request = new FirewallRulesetRuleModify(), ?array $options = null): FirewallRulesetRuleDetailResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

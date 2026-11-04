@@ -59,7 +59,7 @@ class AuditLogsClient
      * Returns a list of audit log rows according to the query parameters. Note that this endpoint is paginated by default and the list is limited in results.
      *
      * Pagination
-     * Upcloud-Total-Count header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.
+     * `Upcloud-Total-Count` header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.
      *
      * @param ListAuditLogsRequest $request
      * @param ?array{

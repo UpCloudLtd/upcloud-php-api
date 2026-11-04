@@ -5,18 +5,18 @@ namespace Upcloud\Tests;
 use Upcloud\Tests\Wire\WireMockTestCase;
 use Upcloud\UpcloudClient;
 use Upcloud\FirewallRuleset\Requests\ListFirewallRulesetsRequest;
-use Upcloud\FirewallRuleset\Requests\CreateFirewallRuleset;
+use Upcloud\FirewallRuleset\Requests\FirewallRulesetCreate;
 use Upcloud\FirewallRuleset\Requests\FirewallRulesetModify;
-use Upcloud\Types\FirewallRulesetCreateLabel;
+use Upcloud\Types\FirewallRulesetLabelCreate;
 use Upcloud\FirewallRuleset\Requests\ListFirewallRulesetRulesRequest;
 use Upcloud\FirewallRuleset\Requests\CreateFirewallRulesetRuleRequest;
-use Upcloud\Types\FirewallRulesetFirewallRuleCreate;
+use Upcloud\Types\FirewallRulesetRuleCreate;
 use Upcloud\Types\FirewallRulesetRuleAction;
 use Upcloud\Types\FirewallRulesetRuleDirection;
 use Upcloud\Types\FirewallRulesetRuleFamily;
 use Upcloud\Types\FirewallRulesetRuleProtocol;
-use Upcloud\FirewallRuleset\Requests\FirewallRulesetFirewallMultipleRuleCreate;
-use Upcloud\FirewallRuleset\Requests\FirewallRulesetFirewallRuleModify;
+use Upcloud\FirewallRuleset\Requests\FirewallRulesetMultipleRuleCreate;
+use Upcloud\FirewallRuleset\Requests\FirewallRulesetRuleModify;
 use Upcloud\FirewallRuleset\Requests\CreateFirewallRulesetLabelRequest;
 use Upcloud\FirewallRuleset\Requests\FirewallRulesetLabelModify;
 use Upcloud\FirewallRuleset\Requests\ListServerFirewallRuleRequest;
@@ -62,7 +62,7 @@ class FirewallRulesetWireTest extends WireMockTestCase
     public function testCreateFirewallRuleset(): void {
         $testId = 'firewall_ruleset.create_firewall_ruleset.0';
         $this->client->firewallRuleset->createFirewallRuleset(
-            new CreateFirewallRuleset([
+            new FirewallRulesetCreate([
                 'name' => 'example_firewall_ruleset',
                 'stateful' => true,
                 'enabled' => false,
@@ -135,7 +135,7 @@ class FirewallRulesetWireTest extends WireMockTestCase
                 'name' => 'modified_example_firewall_ruleset',
                 'description' => 'Modified example stateless firewall ruleset',
                 'labels' => [
-                    new FirewallRulesetCreateLabel([
+                    new FirewallRulesetLabelCreate([
                         'key' => 'dev',
                         'value' => 'dev-1',
                     ]),
@@ -212,7 +212,7 @@ class FirewallRulesetWireTest extends WireMockTestCase
         $this->client->firewallRuleset->createFirewallRulesetRule(
             '01234567-89ab-cdef-0123-456789abcdef',
             new CreateFirewallRulesetRuleRequest([
-                'body' => new FirewallRulesetFirewallRuleCreate([
+                'body' => new FirewallRulesetRuleCreate([
                     'enabled' => false,
                     'action' => FirewallRulesetRuleAction::Accept->value,
                     'direction' => FirewallRulesetRuleDirection::In->value,
@@ -241,9 +241,9 @@ class FirewallRulesetWireTest extends WireMockTestCase
         $testId = 'firewall_ruleset.create_multiple_firewall_ruleset_rule.0';
         $this->client->firewallRuleset->createMultipleFirewallRulesetRule(
             '01234567-89ab-cdef-0123-456789abcdef',
-            new FirewallRulesetFirewallMultipleRuleCreate([
+            new FirewallRulesetMultipleRuleCreate([
                 'rules' => [
-                    new FirewallRulesetFirewallRuleCreate([
+                    new FirewallRulesetRuleCreate([
                         'enabled' => false,
                         'action' => FirewallRulesetRuleAction::Accept->value,
                         'direction' => FirewallRulesetRuleDirection::In->value,
@@ -318,7 +318,7 @@ class FirewallRulesetWireTest extends WireMockTestCase
         $this->client->firewallRuleset->modifyFirewallRulesetRule(
             '01234567-89ab-cdef-0123-456789abcdef',
             '01234567-89ab-cdef-0123-456789abcdef',
-            new FirewallRulesetFirewallRuleModify([
+            new FirewallRulesetRuleModify([
                 'enabled' => false,
                 'action' => FirewallRulesetRuleAction::Accept->value,
                 'direction' => FirewallRulesetRuleDirection::In->value,
@@ -368,7 +368,7 @@ class FirewallRulesetWireTest extends WireMockTestCase
         $this->client->firewallRuleset->createFirewallRulesetLabel(
             '01234567-89ab-cdef-0123-456789abcdef',
             new CreateFirewallRulesetLabelRequest([
-                'body' => new FirewallRulesetCreateLabel([
+                'body' => new FirewallRulesetLabelCreate([
                     'key' => 'dev',
                     'value' => 'dev-1',
                 ]),

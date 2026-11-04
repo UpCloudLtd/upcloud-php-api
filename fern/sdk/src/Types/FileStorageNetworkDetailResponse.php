@@ -6,49 +6,49 @@ use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
 /**
- * Schema for the detailed response of a network.
+ * Private network attachment through which clients access a File Storage service
  */
 class FileStorageNetworkDetailResponse extends JsonSerializableType
 {
     /**
-     * @var ?string $family
+     * @var value-of<FileStorageNetworkFamily> $family
      */
     #[JsonProperty('family')]
-    public ?string $family;
+    public string $family;
 
     /**
-     * @var ?string $ipAddress
+     * @var string $ipAddress
      */
     #[JsonProperty('ip_address')]
-    public ?string $ipAddress;
+    public string $ipAddress;
 
     /**
-     * @var ?string $name
+     * @var string $name
      */
     #[JsonProperty('name')]
-    public ?string $name;
+    public string $name;
 
     /**
-     * @var ?string $uuid
+     * @var string $uuid
      */
     #[JsonProperty('uuid')]
-    public ?string $uuid;
+    public string $uuid;
 
     /**
      * @param array{
-     *   family?: ?string,
-     *   ipAddress?: ?string,
-     *   name?: ?string,
-     *   uuid?: ?string,
+     *   family: value-of<FileStorageNetworkFamily>,
+     *   ipAddress: string,
+     *   name: string,
+     *   uuid: string,
      * } $values
      */
     public function __construct(
-        array $values = [],
+        array $values,
     ) {
-        $this->family = $values['family'] ?? null;
-        $this->ipAddress = $values['ipAddress'] ?? null;
-        $this->name = $values['name'] ?? null;
-        $this->uuid = $values['uuid'] ?? null;
+        $this->family = $values['family'];
+        $this->ipAddress = $values['ipAddress'];
+        $this->name = $values['name'];
+        $this->uuid = $values['uuid'];
     }
 
     /**

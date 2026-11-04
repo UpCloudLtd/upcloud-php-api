@@ -6,7 +6,7 @@ use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
 /**
- * Schema for creating a network.
+ * Private network attachment to create for a File Storage service. A service can have at most one attachment. Its name must be unique within the service, and the selected network must be an accessible private network in the service zone. Only IPv4 is supported.
  */
 class FileStorageNetworkCreate extends JsonSerializableType
 {

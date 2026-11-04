@@ -9,4 +9,5 @@ enum KubernetesNodeState: string
     case Running = "running";
     case Terminating = "terminating";
     case Unknown = "unknown";
+    case PendingRemoval = "pending-removal";
 }

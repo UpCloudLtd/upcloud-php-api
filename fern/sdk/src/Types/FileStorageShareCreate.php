@@ -7,12 +7,12 @@ use Upcloud\Core\Json\JsonProperty;
 use Upcloud\Core\Types\ArrayType;
 
 /**
- * Schema for creating a new share with access control lists (ACLs).
+ * NFS share to create. Its name and path must be unique within the service, which can have at most 50 active shares. The immutable path must be absolute, normalized, and contain at most 32 segments. The system creates the backing directory; deleting the share later permanently deletes that directory and all content below it.
  */
 class FileStorageShareCreate extends JsonSerializableType
 {
     /**
-     * @var string $name A resource name.
+     * @var string $name
      */
     #[JsonProperty('name')]
     public string $name;
@@ -24,7 +24,7 @@ class FileStorageShareCreate extends JsonSerializableType
     public string $path;
 
     /**
-     * @var array<FileStorageAclCreate> $acl
+     * @var array<FileStorageAclCreate> $acl Access-control entries for the NFS export. An empty array leaves the share without direct export access. Nested shares may still be visible through a parent share, and the most permissive matching entry determines effective access.
      */
     #[JsonProperty('acl'), ArrayType([FileStorageAclCreate::class])]
     public array $acl;

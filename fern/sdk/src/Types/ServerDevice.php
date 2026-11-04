@@ -29,6 +29,12 @@ class ServerDevice extends JsonSerializableType
     public string $model;
 
     /**
+     * @var ?string $server
+     */
+    #[JsonProperty('server')]
+    public ?string $server;
+
+    /**
      * @var ServerDeviceMetadata $metadata
      */
     #[JsonProperty('metadata')]
@@ -40,6 +46,7 @@ class ServerDevice extends JsonSerializableType
      *   type: string,
      *   model: string,
      *   metadata: ServerDeviceMetadata,
+     *   server?: ?string,
      * } $values
      */
     public function __construct(
@@ -48,6 +55,7 @@ class ServerDevice extends JsonSerializableType
         $this->serial = $values['serial'];
         $this->type = $values['type'];
         $this->model = $values['model'];
+        $this->server = $values['server'] ?? null;
         $this->metadata = $values['metadata'];
     }
 

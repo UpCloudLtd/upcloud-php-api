@@ -26,10 +26,17 @@ class ZonesZonesZoneItem extends JsonSerializableType
     public string $public;
 
     /**
+     * @var ?value-of<ZoneBooleanYesno> $trialAllowed
+     */
+    #[JsonProperty('trial_allowed')]
+    public ?string $trialAllowed;
+
+    /**
      * @param array{
      *   description: string,
      *   id: string,
      *   public: value-of<ZoneBooleanYesno>,
+     *   trialAllowed?: ?value-of<ZoneBooleanYesno>,
      * } $values
      */
     public function __construct(
@@ -38,6 +45,7 @@ class ZonesZonesZoneItem extends JsonSerializableType
         $this->description = $values['description'];
         $this->id = $values['id'];
         $this->public = $values['public'];
+        $this->trialAllowed = $values['trialAllowed'] ?? null;
     }
 
     /**

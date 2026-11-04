@@ -11,11 +11,11 @@ use Upcloud\Types\DatabaseNetworkCreate;
 use Upcloud\Core\Types\ArrayType;
 use Upcloud\Types\DatabaseLabelCreate;
 use Upcloud\Types\DatabaseServiceIntegrationCreate;
-use Upcloud\Types\DatabaseServicePropertiesMysql;
-use Upcloud\Types\DatabaseServicePropertiesPg;
-use Upcloud\Types\DatabaseServicePropertiesRedis;
-use Upcloud\Types\DatabaseServicePropertiesOpensearch;
-use Upcloud\Types\DatabaseServicePropertiesValkey;
+use Upcloud\Types\DatabaseMySql;
+use Upcloud\Types\DatabasePostgreSql;
+use Upcloud\Types\DatabaseRedis;
+use Upcloud\Types\DatabaseOpenSearch;
+use Upcloud\Types\DatabaseValkey;
 use Upcloud\Core\Types\Union;
 
 class DatabaseServiceCreateOpenApi extends JsonSerializableType
@@ -118,15 +118,15 @@ class DatabaseServiceCreateOpenApi extends JsonSerializableType
 
     /**
      * @var (
-     *    DatabaseServicePropertiesMysql
-     *   |DatabaseServicePropertiesPg
-     *   |DatabaseServicePropertiesRedis
-     *   |DatabaseServicePropertiesOpensearch
-     *   |DatabaseServicePropertiesValkey
+     *    DatabaseMySql
+     *   |DatabasePostgreSql
+     *   |DatabaseRedis
+     *   |DatabaseOpenSearch
+     *   |DatabaseValkey
      * )|null $properties Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
      */
-    #[JsonProperty('properties'), Union(DatabaseServicePropertiesMysql::class, DatabaseServicePropertiesPg::class, DatabaseServicePropertiesRedis::class, DatabaseServicePropertiesOpensearch::class, DatabaseServicePropertiesValkey::class, 'null')]
-    public DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null $properties;
+    #[JsonProperty('properties'), Union(DatabaseMySql::class, DatabasePostgreSql::class, DatabaseRedis::class, DatabaseOpenSearch::class, DatabaseValkey::class, 'null')]
+    public DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null $properties;
 
     /**
      * @param array{
@@ -147,11 +147,11 @@ class DatabaseServiceCreateOpenApi extends JsonSerializableType
      *   labels?: ?array<DatabaseLabelCreate>,
      *   serviceIntegrations?: ?array<DatabaseServiceIntegrationCreate>,
      *   properties?: (
-     *    DatabaseServicePropertiesMysql
-     *   |DatabaseServicePropertiesPg
-     *   |DatabaseServicePropertiesRedis
-     *   |DatabaseServicePropertiesOpensearch
-     *   |DatabaseServicePropertiesValkey
+     *    DatabaseMySql
+     *   |DatabasePostgreSql
+     *   |DatabaseRedis
+     *   |DatabaseOpenSearch
+     *   |DatabaseValkey
      * )|null,
      * } $values
      */

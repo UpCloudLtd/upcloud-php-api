@@ -4,6 +4,7 @@ namespace Upcloud\Types;
 
 use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
+use Upcloud\Core\Types\ArrayType;
 
 class ServerDeviceMetadata extends JsonSerializableType
 {
@@ -26,10 +27,17 @@ class ServerDeviceMetadata extends JsonSerializableType
     public int $cores;
 
     /**
+     * @var ?array<int> $partitionIds Identifiers of the hardware partitions containing the device.
+     */
+    #[JsonProperty('partition_ids'), ArrayType(['integer'])]
+    public ?array $partitionIds;
+
+    /**
      * @param array{
      *   serial: string,
      *   memory: int,
      *   cores: int,
+     *   partitionIds?: ?array<int>,
      * } $values
      */
     public function __construct(
@@ -38,6 +46,7 @@ class ServerDeviceMetadata extends JsonSerializableType
         $this->serial = $values['serial'];
         $this->memory = $values['memory'];
         $this->cores = $values['cores'];
+        $this->partitionIds = $values['partitionIds'] ?? null;
     }
 
     /**
