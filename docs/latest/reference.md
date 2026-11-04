@@ -8,6 +8,7 @@ services:
   - currency
   - device
   - events
+  - host
   - ip_address
   - network-peering
   - network
@@ -117,6 +118,64 @@ Returns the latest Network Transfer Pool usage report for the account.
 ```php
 $client->account->getCurrentNetworkUsage();
 ```
+
+</details>
+
+<details markdown="block">
+<summary markdown="0"><code>$client-&gt;account-&gt;getAccountProfile($username) -> AccountProfileResponse</code></summary>
+
+#### Description
+
+Returns profile details for the specified main account or subaccount.
+
+#### Usage
+
+```php
+$client->account->getAccountProfile(
+    'username',
+);
+```
+
+#### Parameters
+
+**$username:** `string` — Account username.
+
+</details>
+
+<details markdown="block">
+<summary markdown="0"><code>$client-&gt;account-&gt;modifyAccountProfile($username, $request)</code></summary>
+
+#### Description
+
+Updates profile details for the specified main account or subaccount. Only supplied fields are modified.
+
+#### Usage
+
+```php
+$client->account->modifyAccountProfile(
+    'username',
+    new ModifyAccountProfileRequest([
+        'account' => new AccountProfile([
+            'firstName' => 'First',
+            'lastName' => 'Last',
+            'email' => 'user@example.com',
+            'allowApi' => AccountBooleanYesno::Yes->value,
+            'labels' => [
+                new AccountLabel([
+                    'key' => 'department',
+                    'value' => 'it',
+                ]),
+            ],
+        ]),
+    ]),
+);
+```
+
+#### Parameters
+
+**$username:** `string` — Account username.
+
+**$account:** `AccountProfile`
 
 </details>
 
@@ -1158,6 +1217,81 @@ $client->events->listEvents(
 
 </details>
 
+## host
+{:#hostAnchor}
+
+<details markdown="block">
+<summary markdown="0"><code>$client-&gt;host-&gt;listHosts($request) -> Hosts</code></summary>
+
+#### Description
+
+Returns available private cloud hosts and basic statistics when available. CPU idle is the average percentage over the past 15 minutes, and free memory is the current value in gigabytes.
+
+#### Usage
+
+```php
+$client->host->listHosts(
+    new ListHostsRequest([
+        'zone' => 'fi-hel1',
+    ]),
+);
+```
+
+#### Parameters
+
+**$zone:** `?string` — Limit the list to hosts in the specified private cloud zone.
+
+</details>
+
+<details markdown="block">
+<summary markdown="0"><code>$client-&gt;host-&gt;getHost($id) -> Host</code></summary>
+
+#### Description
+
+Returns detailed information about a host. CPU idle and free memory statistics are values at the specified timestamp; free memory is in gigabytes.
+
+#### Usage
+
+```php
+$client->host->getHost(
+    7653311107,
+);
+```
+
+#### Parameters
+
+**$id:** `int` — The encoded host ID.
+
+</details>
+
+<details markdown="block">
+<summary markdown="0"><code>$client-&gt;host-&gt;modifyHost($id, $request) -> Host</code></summary>
+
+#### Description
+
+Modifies the description of a specific host.
+
+#### Usage
+
+```php
+$client->host->modifyHost(
+    7653311107,
+    new HostModify([
+        'host' => new HostModifyHost([
+            'description' => "My New Host",
+        ]),
+    ]),
+);
+```
+
+#### Parameters
+
+**$id:** `int` — The encoded host ID.
+
+**$host:** `HostModifyHost` — Host properties to modify.
+
+</details>
+
 ## ip_address
 {:#ip_addressAnchor}
 
@@ -1762,7 +1896,7 @@ $client->network->deleteNetwork(
 Returns a list of audit log rows according to the query parameters. Note that this endpoint is paginated by default and the list is limited in results.
 
 Pagination
-Upcloud-Total-Count header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.
+`Upcloud-Total-Count` header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.
 
 #### Usage
 
@@ -2561,12 +2695,9 @@ $client->server->createServer(
             'metadata' => ServerBooleanYesno::Yes->value,
             'storageDevices' => new ServerStorageDevices([
                 'storageDevice' => [
-                    new ServerStorageDevicesStorageDeviceItem([
-                        'action' => ServerStorageDevicesStorageDeviceItemAction::Clone_->value,
+                    new ServerStorageDevicesStorageDeviceItemZero([
                         'size' => 30,
                         'storage' => '01000000-0000-4000-8000-000020080100',
-                        'tier' => 'maxiops',
-                        'title' => 'Debian Trixie',
                     ]),
                 ],
             ]),
@@ -7238,23 +7369,28 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 
 #### Description
 
-Returns a list of File Storage services.
+Returns File Storage services in the customer account. Results can be paginated, sorted by creation time, and filtered by one or more labels. When multiple `label` parameters are supplied, a service must match every filter.
 
 #### Usage
 
 ```php
 $client->fileStorage->listFileStorages(
-    new ListFileStoragesRequest([]),
+    new ListFileStoragesRequest([
+        'limit' => 25,
+        'offset' => 20,
+    ]),
 );
 ```
 
 #### Parameters
 
-**$limit:** `?int` — Number of entries to receive at most.
+**$limit:** `?int` — Maximum number of services to return.
 
-**$offset:** `?int` — Offset for retrieved results.
+**$offset:** `?int` — Number of matching services to skip before returning results.
 
-**$sort:** `?string` — Order of returned results.
+**$sort:** `?string` — Creation-time order for returned services.
+
+**$label:** `?string` — Filters services by label. Use a key such as `environment` to require that label, or a key-value pair such as `environment=production` for an exact value match. Label keys are matched case-insensitively; values are case-sensitive. Repeat this parameter to require all filters.
 
 </details>
 
@@ -7263,14 +7399,14 @@ $client->fileStorage->listFileStorages(
 
 #### Description
 
-Creates a new File Storage service.
+Creates a File Storage service that exposes shares over NFS. The service name must be unique within the customer account. Creation is asynchronous: the returned service initially has the pending operational state while its resources are provisioned.
 
 #### Usage
 
 ```php
 $client->fileStorage->createFileStorage(
     new FileStorageServiceCreate([
-        'name' => 'test-name',
+        'name' => 'production-files',
         'zone' => 'fi-hel2',
         'configuredStatus' => FileStorageConfiguredStatus::Started->value,
         'sizeGib' => 250,
@@ -7278,35 +7414,19 @@ $client->fileStorage->createFileStorage(
         'networks' => [
             new FileStorageNetworkCreate([
                 'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'net',
+                'name' => 'private-net',
                 'family' => FileStorageNetworkFamily::IPv4->value,
                 'ipAddress' => '192.168.147.120',
             ]),
         ],
         'shares' => [
             new FileStorageShareCreate([
-                'name' => 'read',
-                'path' => '/public',
-                'acl' => [
-                    new FileStorageAclCreate([
-                        'name' => 'test-name',
-                        'target' => '*',
-                        'permission' => FileStoragePermission::Ro->value,
-                    ]),
-                ],
-            ]),
-            new FileStorageShareCreate([
-                'name' => 'write',
+                'name' => 'project-data',
                 'path' => '/project/data',
                 'acl' => [
                     new FileStorageAclCreate([
-                        'name' => 'test-name',
+                        'name' => 'office-write',
                         'target' => '192.168.147.0/24',
-                        'permission' => FileStoragePermission::Rw->value,
-                    ]),
-                    new FileStorageAclCreate([
-                        'name' => 'test-name',
-                        'target' => 'local.domain',
                         'permission' => FileStoragePermission::Rw->value,
                     ]),
                 ],
@@ -7326,19 +7446,19 @@ $client->fileStorage->createFileStorage(
 
 **$name:** `string`
 
-**$zone:** `string` — Indicates the zone where the service will be created.
+**$zone:** `string` — Valid UpCloud zone in which the File Storage service is created. An attached private network must be in this same zone.
 
 **$configuredStatus:** `string`
 
 **$sizeGib:** `int`
 
-**$encrypted:** `?bool` — Indicates whether encryption at rest is enabled for the service.
+**$encrypted:** `?bool` — Enables AES-256-GCM encryption at rest. Encryption is disabled by default and cannot be changed after the service is created.
 
-**$networks:** `?array`
+**$networks:** `?array` — Private network attachments to create with the service. At most one network can be attached, and it must be in the service zone.
 
-**$shares:** `?array`
+**$shares:** `?array` — NFS shares to create with the service. The API currently supports at most 50 shares per service.
 
-**$labels:** `?array` — Labels
+**$labels:** `?array` — Labels attached to the service for metadata and list filtering. Label keys must be unique within the service.
 
 </details>
 
@@ -7347,19 +7467,19 @@ $client->fileStorage->createFileStorage(
 
 #### Description
 
-Returns managed File Storage details by given {service_uuid}.
+Returns the desired configuration, lifecycle state, and latest available capacity metrics for the File Storage service identified by `{service-uuid}`.
 
 #### Usage
 
 ```php
 $client->fileStorage->getFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 </details>
 
@@ -7368,21 +7488,21 @@ $client->fileStorage->getFileStorage(
 
 #### Description
 
-Replaces existing File Storage service by given {service_uuid}.
+Replaces the mutable configuration of the File Storage service identified by `{service-uuid}`. `name`, `configured_status`, and `size_gib` are required. The `networks` and `labels` collections are replaced in full; omitting either collection clears it. The service size can be increased but not reduced. The service zone, encryption setting, and shares are not changed by this operation.
 
 #### Usage
 
 ```php
 $client->fileStorage->replaceFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new FileStorageServiceReplace([
-        'name' => 'test-name',
+        'name' => 'production-files',
         'configuredStatus' => FileStorageConfiguredStatus::Started->value,
         'sizeGib' => 250,
         'networks' => [
             new FileStorageNetworkCreate([
                 'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'net',
+                'name' => 'private-net',
                 'family' => FileStorageNetworkFamily::IPv4->value,
                 'ipAddress' => '192.168.147.120',
             ]),
@@ -7399,7 +7519,7 @@ $client->fileStorage->replaceFileStorage(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 **$name:** `string`
 
@@ -7407,9 +7527,9 @@ $client->fileStorage->replaceFileStorage(
 
 **$sizeGib:** `int`
 
-**$networks:** `?array`
+**$networks:** `?array` — Complete replacement for the service's attached private networks. Omit this property or supply an empty array to detach all networks. At most one network can be attached, and it must be in the service zone.
 
-**$labels:** `?array` — Labels
+**$labels:** `?array` — Complete replacement for the service's labels. Omit this property or supply an empty array to remove all labels.
 
 </details>
 
@@ -7418,19 +7538,19 @@ $client->fileStorage->replaceFileStorage(
 
 #### Description
 
-Deletes existing File Storage service by given {service_uuid}.
+Schedules the File Storage service identified by `{service-uuid}` for asynchronous deletion. The service enters its deletion lifecycle after this request and its storage resources are subsequently torn down.
 
 #### Usage
 
 ```php
 $client->fileStorage->deleteFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 </details>
 
@@ -7439,38 +7559,23 @@ $client->fileStorage->deleteFileStorage(
 
 #### Description
 
-Modifies existing File Storage service by given {service_uuid}.
+Partially modifies the mutable configuration of the File Storage service identified by `{service-uuid}` using JSON Merge Patch semantics. Omitted fields remain unchanged. A supplied `networks` or `labels` array replaces the complete collection; an empty array or `null` clears that collection. The service size can be increased but not reduced. The service zone, encryption setting, and shares cannot be modified by this operation.
 
 #### Usage
 
 ```php
 $client->fileStorage->modifyFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new FileStorageServiceModify([
-        'name' => 'test-name',
-        'configuredStatus' => FileStorageConfiguredStatus::Started->value,
-        'sizeGib' => 250,
-        'networks' => [
-            new FileStorageNetworkCreate([
-                'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'net',
-                'family' => FileStorageNetworkFamily::IPv4->value,
-                'ipAddress' => '192.168.147.120',
-            ]),
-        ],
-        'labels' => [
-            new FileStorageLabelCreate([
-                'key' => 'environment',
-                'value' => 'production',
-            ]),
-        ],
+        'name' => 'production-files',
+        'sizeGib' => 500,
     ]),
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 **$name:** `?string`
 
@@ -7478,9 +7583,9 @@ $client->fileStorage->modifyFileStorage(
 
 **$sizeGib:** `?int`
 
-**$networks:** `?array`
+**$networks:** `?array` — Complete replacement for the service's attached private networks. An empty array or `null` detaches all networks. At most one network can be attached, and it must be in the service zone.
 
-**$labels:** `?array`
+**$labels:** `?array` — Complete replacement for the service's labels. An empty array or `null` removes all labels.
 
 </details>
 
@@ -7489,19 +7594,19 @@ $client->fileStorage->modifyFileStorage(
 
 #### Description
 
-Returns a list of available service networks by given {service_uuid}.
+Returns the private networks attached to the File Storage service identified by `{service-uuid}`. The list contains at most one attachment.
 
 #### Usage
 
 ```php
 $client->fileStorage->listFileStorageNetworks(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 </details>
 
@@ -7510,19 +7615,19 @@ $client->fileStorage->listFileStorageNetworks(
 
 #### Description
 
-Creates a new service network by given {service_uuid}.
+Attaches a private network to the File Storage service identified by `{service-uuid}`. A service can have at most one attached network. The network must be accessible to the customer and in the same zone as the service, and its attachment name must be unique within the service. Only IPv4 is supported. When `ip_address` is omitted, a free address is allocated from the private network's IPv4 pool.
 
 #### Usage
 
 ```php
 $client->fileStorage->createFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new CreateFileStorageNetworkRequest([
         'body' => new FileStorageNetworkCreate([
             'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-            'name' => 'test-name',
+            'name' => 'private-net',
             'family' => FileStorageNetworkFamily::IPv4->value,
-            'ipAddress' => '10.20.30.40',
+            'ipAddress' => '192.168.147.120',
         ]),
     ]),
 );
@@ -7530,7 +7635,7 @@ $client->fileStorage->createFileStorageNetwork(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 **$request:** `FileStorageNetworkCreate`
 
@@ -7541,22 +7646,22 @@ $client->fileStorage->createFileStorageNetwork(
 
 #### Description
 
-Returns service network details by given {service_uuid} and {network_name}.
+Returns the private network attachment named `{network-name}` from the File Storage service identified by `{service-uuid}`. Network attachment names are scoped to a service.
 
 #### Usage
 
 ```php
 $client->fileStorage->getFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'production-files',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$networkName:** `string` — The name of the network.
+**$networkName:** `string` — Service-scoped name of the private network attachment.
 
 </details>
 
@@ -7565,22 +7670,22 @@ $client->fileStorage->getFileStorageNetwork(
 
 #### Description
 
-Deletes existing network by given {service_uuid} and {network_name}.
+Detaches the private network attachment named `{network-name}` from the File Storage service identified by `{service-uuid}`. This removes the service's network interface during reconciliation but does not delete the underlying private network.
 
 #### Usage
 
 ```php
 $client->fileStorage->deleteFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'production-files',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$networkName:** `string` — The name of the network.
+**$networkName:** `string` — Service-scoped name of the private network attachment.
 
 </details>
 
@@ -7589,28 +7694,25 @@ $client->fileStorage->deleteFileStorageNetwork(
 
 #### Description
 
-Modifies existing service network by given {service_uuid} and {network_name}.
+Partially modifies the private network attachment named `{network-name}` on the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged, including `ip_address`; `null` is not accepted. When selecting a different private network, supply an address from that network. The attachment name must remain unique within the service, the selected private network must be accessible and in the service zone, and only IPv4 is supported.
 
 #### Usage
 
 ```php
 $client->fileStorage->modifyFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'production-files',
     new FileStorageNetworkModify([
-        'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-        'name' => 'test-name',
-        'family' => FileStorageNetworkFamily::IPv4->value,
-        'ipAddress' => '10.20.30.40',
+        'ipAddress' => '192.168.147.121',
     ]),
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$networkName:** `string` — The name of the network.
+**$networkName:** `string` — Service-scoped name of the private network attachment.
 
 **$uuid:** `?string`
 
@@ -7627,19 +7729,19 @@ $client->fileStorage->modifyFileStorageNetwork(
 
 #### Description
 
-Returns a list of available service shares by given {service_uuid}.
+Returns the shares on the File Storage service identified by `{service-uuid}`, ordered by path. A share undergoing asynchronous deletion remains in the list with `deleting` set to `true` until its backing directory and stored configuration have been removed.
 
 #### Usage
 
 ```php
 $client->fileStorage->listFileStorageShares(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 </details>
 
@@ -7648,22 +7750,22 @@ $client->fileStorage->listFileStorageShares(
 
 #### Description
 
-Creates a new service share by given {service_uuid}.
+Creates an NFS share on the File Storage service identified by `{service-uuid}`. The share name and immutable absolute path must each be unique within the service, which can have at most 50 active shares. The system creates the backing directory. An empty `acl` array leaves the share without direct export access, although a nested share may remain visible through a parent export. When multiple parent or child rules match a client, the most permissive permission determines effective access.
 
 #### Usage
 
 ```php
 $client->fileStorage->createFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new CreateFileStorageShareRequest([
         'body' => new FileStorageShareCreate([
-            'name' => 'read',
-            'path' => '/public',
+            'name' => 'project-data',
+            'path' => '/project/data',
             'acl' => [
                 new FileStorageAclCreate([
-                    'name' => 'test-name',
+                    'name' => 'office-write',
                     'target' => '192.168.147.0/24',
-                    'permission' => FileStoragePermission::Ro->value,
+                    'permission' => FileStoragePermission::Rw->value,
                 ]),
             ],
         ]),
@@ -7673,7 +7775,7 @@ $client->fileStorage->createFileStorageShare(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 **$request:** `FileStorageShareCreate`
 
@@ -7684,22 +7786,22 @@ $client->fileStorage->createFileStorageShare(
 
 #### Description
 
-Returns service share details by given {service_uuid} and {share_name}.
+Returns the share named `{share-name}` from the File Storage service identified by `{service-uuid}`. Share names are unique within a service. A share undergoing asynchronous deletion remains addressable with `deleting` set to `true` until cleanup finishes.
 
 #### Usage
 
 ```php
 $client->fileStorage->getFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
 </details>
 
@@ -7708,22 +7810,22 @@ $client->fileStorage->getFileStorageShare(
 
 #### Description
 
-Deletes existing share by given {service_uuid} and {share_name}.
+Permanently deletes the share named `{share-name}` from the File Storage service identified by `{service-uuid}`, including its backing directory and all content below that path. Deletion is asynchronous: the share remains visible with `deleting` set to `true` until cleanup finishes. A share cannot be accepted for deletion while it contains another active share; delete nested shares first.
 
 #### Usage
 
 ```php
 $client->fileStorage->deleteFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
 </details>
 
@@ -7732,20 +7834,19 @@ $client->fileStorage->deleteFileStorageShare(
 
 #### Description
 
-Modifies existing service share by given {service_uuid} and {share_name}.
+Partially modifies the share named `{share-name}` on the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged and `null` is not accepted. A supplied `acl` array replaces the complete access-control collection; an empty array removes direct export access. The share path is immutable and cannot be supplied. A renamed share must remain unique within the service.
 
 #### Usage
 
 ```php
 $client->fileStorage->modifyFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
     new FileStorageShareModify([
-        'name' => 'test-name',
         'acl' => [
             new FileStorageAclCreate([
-                'name' => 'test-name',
-                'target' => '192.168.25.0/24',
+                'name' => 'office-read',
+                'target' => '192.168.147.0/24',
                 'permission' => FileStoragePermission::Ro->value,
             ]),
         ],
@@ -7755,13 +7856,13 @@ $client->fileStorage->modifyFileStorageShare(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
-**$name:** `?string` — A resource name.
+**$name:** `?string`
 
-**$acl:** `?array`
+**$acl:** `?array` — Complete replacement access-control collection for the NFS export. Omit this property to retain all current entries. An empty array removes direct export access; a nested share may still be visible through a parent export. When multiple parent or child rules match a client, the most permissive permission determines effective access.
 
 </details>
 
@@ -7770,22 +7871,22 @@ $client->fileStorage->modifyFileStorageShare(
 
 #### Description
 
-Returns a list of available ACLs by given {service_uuid} and {share_name}.
+Returns the access-control entries for the NFS export of share `{share-name}` on the File Storage service identified by `{service-uuid}`, ordered by target.
 
 #### Usage
 
 ```php
 $client->fileStorage->listFileStorageAcls(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
 </details>
 
@@ -7794,19 +7895,19 @@ $client->fileStorage->listFileStorageAcls(
 
 #### Description
 
-Creates a new share ACL by given {service_uuid} and {share_name}.
+Creates an access-control entry for the NFS export of share `{share-name}` on the File Storage service identified by `{service-uuid}`. The entry name and target must each be unique within the share. A target is an IP address, CIDR network prefix, or `*`; `ro` grants read-only access and `rw` grants read-write access. For nested shares, matching parent and child rules combine and the most permissive permission determines effective access.
 
 #### Usage
 
 ```php
 $client->fileStorage->createFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
     new CreateFileStorageAclRequest([
         'body' => new FileStorageAclCreate([
-            'name' => 'test-name',
-            'target' => '192.168.25.147',
-            'permission' => FileStoragePermission::Ro->value,
+            'name' => 'office-write',
+            'target' => '192.168.147.0/24',
+            'permission' => FileStoragePermission::Rw->value,
         ]),
     ]),
 );
@@ -7814,9 +7915,9 @@ $client->fileStorage->createFileStorageAcl(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
 **$request:** `FileStorageAclCreate`
 
@@ -7827,25 +7928,25 @@ $client->fileStorage->createFileStorageAcl(
 
 #### Description
 
-Returns ACL details by given {service_uuid}, {share_name} and {acl_name}.
+Returns the access-control entry named `{acl-name}` from share `{share-name}` on the File Storage service identified by `{service-uuid}`. ACL entry names are unique within a share.
 
 #### Usage
 
 ```php
 $client->fileStorage->getFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
+    'production-files',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
-**$aclName:** `string` — The name of the ACL.
+**$aclName:** `string` — Share-scoped name of the access-control entry.
 
 </details>
 
@@ -7854,25 +7955,25 @@ $client->fileStorage->getFileStorageAcl(
 
 #### Description
 
-Deletes existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+Removes the access-control entry named `{acl-name}` from share `{share-name}` on the File Storage service identified by `{service-uuid}`. Removing the final entry leaves the share without direct NFS export access, although a nested share may remain visible through a parent export.
 
 #### Usage
 
 ```php
 $client->fileStorage->deleteFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
+    'production-files',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
-**$aclName:** `string` — The name of the ACL.
+**$aclName:** `string` — Share-scoped name of the access-control entry.
 
 </details>
 
@@ -7881,34 +7982,32 @@ $client->fileStorage->deleteFileStorageAcl(
 
 #### Description
 
-Modifies existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+Partially modifies the access-control entry named `{acl-name}` on share `{share-name}` of the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged and `null` is not accepted. The resulting name and target must each remain unique within the share. A target is an IP address, CIDR network prefix, or `*`; permission is `ro` for read-only or `rw` for read-write access.
 
 #### Usage
 
 ```php
 $client->fileStorage->modifyFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
+    'production-files',
     new FileStorageAclModify([
-        'name' => 'test-name',
-        'target' => '192.168.25.0/24',
-        'permission' => FileStoragePermission::Rw->value,
+        'permission' => FileStoragePermission::Ro->value,
     ]),
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$shareName:** `string` — The name of the share.
+**$shareName:** `string` — Service-scoped name of the share.
 
-**$aclName:** `string` — The name of the ACL.
+**$aclName:** `string` — Share-scoped name of the access-control entry.
 
 **$name:** `?string`
 
-**$target:** `?string` — The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
+**$target:** `?string` — Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients.
 
 **$permission:** `?string`
 
@@ -7919,19 +8018,19 @@ $client->fileStorage->modifyFileStorageAcl(
 
 #### Description
 
-Returns a list of available service labels by given {service_uuid}.
+Returns the labels attached to the File Storage service identified by `{service-uuid}`. An empty service label collection is returned as an empty array.
 
 #### Usage
 
 ```php
 $client->fileStorage->listFileStorageLabels(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 </details>
 
@@ -7940,13 +8039,13 @@ $client->fileStorage->listFileStorageLabels(
 
 #### Description
 
-Creates a new label by given {service_uuid}. Labels are used for service filtering.
+Creates a label on the File Storage service identified by `{service-uuid}`. A service can have at most 255 labels, and each key must be unique within the service regardless of case. Labels can filter the service list by key existence or an exact key-value match; repeated filters must all match.
 
 #### Usage
 
 ```php
 $client->fileStorage->createFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new CreateFileStorageLabelRequest([
         'body' => new FileStorageLabelCreate([
             'key' => 'environment',
@@ -7958,7 +8057,7 @@ $client->fileStorage->createFileStorageLabel(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 **$request:** `FileStorageLabelCreate`
 
@@ -7969,22 +8068,22 @@ $client->fileStorage->createFileStorageLabel(
 
 #### Description
 
-Returns label details by given {service_uuid} and {key}.
+Returns the label identified by `{label-key}` from the File Storage service identified by `{service-uuid}`. Label keys are unique within a service and lookup is case-insensitive; the response contains the stored key casing.
 
 #### Usage
 
 ```php
 $client->fileStorage->getFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     'environment',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$labelKey:** `string` — The key of the label.
+**$labelKey:** `string` — Service-scoped key of the label. Lookup is case-insensitive.
 
 </details>
 
@@ -7993,22 +8092,22 @@ $client->fileStorage->getFileStorageLabel(
 
 #### Description
 
-Deletes existing label by given {service_uuid} and {key}.
+Removes the label identified by `{label-key}` from the File Storage service identified by `{service-uuid}`. Future service-list label filters no longer match the removed key or key-value pair. Label-key lookup is case-insensitive.
 
 #### Usage
 
 ```php
 $client->fileStorage->deleteFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     'environment',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$labelKey:** `string` — The key of the label.
+**$labelKey:** `string` — Service-scoped key of the label. Lookup is case-insensitive.
 
 </details>
 
@@ -8017,13 +8116,13 @@ $client->fileStorage->deleteFileStorageLabel(
 
 #### Description
 
-Modifies existing label by given {service_uuid} and {key}.
+Modifies the label identified by `{label-key}` on the File Storage service identified by `{service-uuid}`. Supply both `key` and `value`: the current implementation replaces an omitted field with an empty string rather than preserving it. Supplying `value` as `null` also stores an empty string and does not delete the label. The resulting key must remain unique within the service regardless of case.
 
 #### Usage
 
 ```php
 $client->fileStorage->modifyFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     'environment',
     new FileStorageLabelModify([
         'key' => 'environment',
@@ -8034,9 +8133,9 @@ $client->fileStorage->modifyFileStorageLabel(
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
-**$labelKey:** `string` — The key of the label.
+**$labelKey:** `string` — Service-scoped key of the label. Lookup is case-insensitive.
 
 **$key:** `?string`
 
@@ -8045,23 +8144,23 @@ $client->fileStorage->modifyFileStorageLabel(
 </details>
 
 <details markdown="block">
-<summary markdown="0"><code>$client-&gt;fileStorage-&gt;getFileStorageCurrentState($serviceUuid) -> FileStorageServiceDetailResponse</code></summary>
+<summary markdown="0"><code>$client-&gt;fileStorage-&gt;getFileStorageCurrentState($serviceUuid) -> FileStorageServiceCurrentStateResponse</code></summary>
 
 #### Description
 
-Returns the current state of the File Storage service by given {service_uuid}.
+Returns the latest successfully reported state of the File Storage service identified by `{service-uuid}` after configuration has been applied to the primary storage instance. Newly requested changes can appear in the regular service response before they appear here. A service without an applied-state snapshot returns `404`; this normally occurs before it has reached the `running` operational state.
 
 #### Usage
 
 ```php
 $client->fileStorage->getFileStorageCurrentState(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 
 #### Parameters
 
-**$serviceUuid:** `string` — Service UUID
+**$serviceUuid:** `string` — UUID of the File Storage service.
 
 </details>
 
@@ -8192,7 +8291,7 @@ $client->database->createDatabase(
                 'value' => 'bar',
             ]),
         ],
-        'properties' => new DatabaseServicePropertiesMysql([
+        'properties' => new DatabaseMySql([
             'automaticUtilityNetworkIpFilter' => true,
             'ipFilter' => [
                 'ip_filter',
@@ -8236,7 +8335,7 @@ $client->database->createDatabase(
 
 **$serviceIntegrations:** `?array` — Service integrations to configure on creation.
 
-**$properties:** `DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null` — Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
+**$properties:** `DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null` — Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
 
 </details>
 
@@ -8311,7 +8410,7 @@ $client->database->modifyDatabase(
                 'family' => DatabaseNetworkFamily::IPv4->value,
             ]),
         ],
-        'properties' => new DatabaseServicePropertiesMysql([
+        'properties' => new DatabaseMySql([
             'automaticUtilityNetworkIpFilter' => true,
             'ipFilter' => [
                 'ip_filter',
@@ -8353,7 +8452,7 @@ $client->database->modifyDatabase(
 
 **$labels:** `?array` — Labels used for service filtering.
 
-**$properties:** `DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null` — Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
+**$properties:** `DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null` — Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
 
 </details>
 
@@ -8396,13 +8495,13 @@ Creates a clone of a Managed Database service based on its {uuid}. It is possibl
 $client->database->cloneDatabase(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CloneDatabaseRequest([
-        'body' => new DatabaseServiceCloneMysql([
+        'body' => new DatabaseMysqlClone([
             'hostnamePrefix' => 'dev',
             'cloneTime' => new DateTime('2024-01-30T15:04:05Z'),
             'backupName' => 'daily-backup-2024-01-30',
             'zone' => 'fi-hel1',
             'terminationProtection' => false,
-            'maintenance' => new DatabaseServiceCloneMysqlMaintenance([
+            'maintenance' => new DatabaseMysqlCloneMaintenance([
                 'dow' => DatabaseMaintenanceDow::Monday->value,
                 'time' => '03:00:00',
             ]),
@@ -8415,7 +8514,7 @@ $client->database->cloneDatabase(
 
 **$uuid:** `string` — Service UUID
 
-**$request:** `DatabaseServiceCloneMysql|DatabaseServiceClonePg|DatabaseServiceCloneRedis|DatabaseServiceCloneOpensearch|DatabaseServiceCloneValkey`
+**$request:** `DatabaseMysqlClone|DatabasePostgresqlClone|DatabaseRedisClone|DatabaseOpensearchClone|DatabaseValkeyClone`
 
 </details>
 
@@ -13149,7 +13248,7 @@ Creates a new firewall ruleset.
 
 ```php
 $client->firewallRuleset->createFirewallRuleset(
-    new CreateFirewallRuleset([
+    new FirewallRulesetCreate([
         'name' => 'example_firewall_ruleset',
         'stateful' => true,
         'enabled' => false,
@@ -13232,7 +13331,7 @@ $client->firewallRuleset->modifyFirewallRuleset(
         'name' => 'modified_example_firewall_ruleset',
         'description' => 'Modified example stateless firewall ruleset',
         'labels' => [
-            new FirewallRulesetCreateLabel([
+            new FirewallRulesetLabelCreate([
                 'key' => 'dev',
                 'value' => 'dev-1',
             ]),
@@ -13327,7 +13426,7 @@ Creates a new firewall ruleset rule by the given {ruleset-uuid}.
 $client->firewallRuleset->createFirewallRulesetRule(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CreateFirewallRulesetRuleRequest([
-        'body' => new FirewallRulesetFirewallRuleCreate([
+        'body' => new FirewallRulesetRuleCreate([
             'enabled' => false,
             'action' => FirewallRulesetRuleAction::Accept->value,
             'direction' => FirewallRulesetRuleDirection::In->value,
@@ -13342,7 +13441,7 @@ $client->firewallRuleset->createFirewallRulesetRule(
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
 
-**$request:** `FirewallRulesetFirewallRuleCreate`
+**$request:** `FirewallRulesetRuleCreate`
 
 </details>
 
@@ -13358,9 +13457,9 @@ Creates multiple firewall ruleset rules by the given {ruleset-uuid}.
 ```php
 $client->firewallRuleset->createMultipleFirewallRulesetRule(
     '01234567-89ab-cdef-0123-456789abcdef',
-    new FirewallRulesetFirewallMultipleRuleCreate([
+    new FirewallRulesetMultipleRuleCreate([
         'rules' => [
-            new FirewallRulesetFirewallRuleCreate([
+            new FirewallRulesetRuleCreate([
                 'enabled' => false,
                 'action' => FirewallRulesetRuleAction::Accept->value,
                 'direction' => FirewallRulesetRuleDirection::In->value,
@@ -13441,7 +13540,7 @@ Modifies existing firewall ruleset rule by given {ruleset_uuid} and {rule-uuid}.
 $client->firewallRuleset->modifyFirewallRulesetRule(
     '01234567-89ab-cdef-0123-456789abcdef',
     '01234567-89ab-cdef-0123-456789abcdef',
-    new FirewallRulesetFirewallRuleModify([
+    new FirewallRulesetRuleModify([
         'enabled' => false,
         'action' => FirewallRulesetRuleAction::Accept->value,
         'direction' => FirewallRulesetRuleDirection::In->value,
@@ -13529,7 +13628,7 @@ Creates a new label by given {ruleset-uuid}. Labels are used for group filtering
 $client->firewallRuleset->createFirewallRulesetLabel(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CreateFirewallRulesetLabelRequest([
-        'body' => new FirewallRulesetCreateLabel([
+        'body' => new FirewallRulesetLabelCreate([
             'key' => 'dev',
             'value' => 'dev-1',
         ]),
@@ -13541,7 +13640,7 @@ $client->firewallRuleset->createFirewallRulesetLabel(
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
 
-**$request:** `FirewallRulesetCreateLabel`
+**$request:** `FirewallRulesetLabelCreate`
 
 </details>
 
