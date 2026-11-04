@@ -23,6 +23,30 @@ class LoadBalancerBackendPropertiesCreate extends JsonSerializableType
     public ?int $timeoutTunnel;
 
     /**
+     * @var ?int $timeoutConnect Timeout in seconds for establishing a connection to a member. Default 5
+     */
+    #[JsonProperty('timeout_connect')]
+    public ?int $timeoutConnect;
+
+    /**
+     * @var ?int $timeoutQueue Maximum time in seconds a request waits in the queue for a free member connection slot (see member max_sessions) before the load balancer returns 503. Default 5
+     */
+    #[JsonProperty('timeout_queue')]
+    public ?int $timeoutQueue;
+
+    /**
+     * @var ?int $retries Number of retries after a failed connection to a member. Minimum 1, default 3
+     */
+    #[JsonProperty('retries')]
+    public ?int $retries;
+
+    /**
+     * @var ?bool $redispatch Allow the last retry to be sent to a different member instead of the same one
+     */
+    #[JsonProperty('redispatch')]
+    public ?bool $redispatch;
+
+    /**
      * @var ?value-of<LoadBalancerProxyProtocolVersionOrDisabled> $outboundProxyProtocol
      */
     #[JsonProperty('outbound_proxy_protocol')]
@@ -116,6 +140,10 @@ class LoadBalancerBackendPropertiesCreate extends JsonSerializableType
      * @param array{
      *   timeoutServer?: ?int,
      *   timeoutTunnel?: ?int,
+     *   timeoutConnect?: ?int,
+     *   timeoutQueue?: ?int,
+     *   retries?: ?int,
+     *   redispatch?: ?bool,
      *   outboundProxyProtocol?: ?value-of<LoadBalancerProxyProtocolVersionOrDisabled>,
      *   healthCheckType?: ?value-of<LoadBalancerHealthCheckType>,
      *   healthCheckInterval?: ?int,
@@ -138,6 +166,10 @@ class LoadBalancerBackendPropertiesCreate extends JsonSerializableType
     ) {
         $this->timeoutServer = $values['timeoutServer'] ?? null;
         $this->timeoutTunnel = $values['timeoutTunnel'] ?? null;
+        $this->timeoutConnect = $values['timeoutConnect'] ?? null;
+        $this->timeoutQueue = $values['timeoutQueue'] ?? null;
+        $this->retries = $values['retries'] ?? null;
+        $this->redispatch = $values['redispatch'] ?? null;
         $this->outboundProxyProtocol = $values['outboundProxyProtocol'] ?? null;
         $this->healthCheckType = $values['healthCheckType'] ?? null;
         $this->healthCheckInterval = $values['healthCheckInterval'] ?? null;

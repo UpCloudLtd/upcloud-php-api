@@ -9,121 +9,121 @@ use DateTime;
 use Upcloud\Core\Types\Date;
 
 /**
- * Schema for the detailed response of a service.
+ * Desired configuration, current lifecycle information, and latest available capacity metrics for a File Storage service. The effective configuration currently applied to storage is available from the current-state endpoint.
  */
 class FileStorageServiceDetailResponse extends JsonSerializableType
 {
     /**
-     * @var ?string $uuid
+     * @var string $uuid
      */
     #[JsonProperty('uuid')]
-    public ?string $uuid;
+    public string $uuid;
 
     /**
-     * @var ?string $name
+     * @var string $name
      */
     #[JsonProperty('name')]
-    public ?string $name;
+    public string $name;
 
     /**
-     * @var ?string $zone
+     * @var string $zone UpCloud zone in which the service is hosted.
      */
     #[JsonProperty('zone')]
-    public ?string $zone;
+    public string $zone;
 
     /**
-     * @var ?string $configuredStatus
+     * @var value-of<FileStorageConfiguredStatus> $configuredStatus
      */
     #[JsonProperty('configured_status')]
-    public ?string $configuredStatus;
+    public string $configuredStatus;
 
     /**
-     * @var ?string $operationalState
+     * @var value-of<FileStorageOperationalState> $operationalState
      */
     #[JsonProperty('operational_state')]
-    public ?string $operationalState;
+    public string $operationalState;
 
     /**
-     * @var ?int $sizeGib
+     * @var int $sizeGib
      */
     #[JsonProperty('size_gib')]
-    public ?int $sizeGib;
+    public int $sizeGib;
 
     /**
-     * @var ?bool $encrypted
+     * @var bool $encrypted Whether immutable AES-256-GCM encryption at rest is enabled.
      */
     #[JsonProperty('encrypted')]
-    public ?bool $encrypted;
+    public bool $encrypted;
 
     /**
-     * @var ?array<FileStorageNetworkDetailResponse> $networks
+     * @var array<FileStorageNetworkDetailResponse> $networks Private networks attached to the service.
      */
     #[JsonProperty('networks'), ArrayType([FileStorageNetworkDetailResponse::class])]
-    public ?array $networks;
+    public array $networks;
 
     /**
-     * @var ?array<FileStorageShareDetailResponse> $shares
+     * @var array<FileStorageShareDetailResponse> $shares NFS shares configured for the service.
      */
     #[JsonProperty('shares'), ArrayType([FileStorageShareDetailResponse::class])]
-    public ?array $shares;
+    public array $shares;
 
     /**
-     * @var ?array<FileStorageLabelDetails> $labels
+     * @var array<FileStorageLabelDetails> $labels Labels attached to the service.
      */
     #[JsonProperty('labels'), ArrayType([FileStorageLabelDetails::class])]
-    public ?array $labels;
+    public array $labels;
 
     /**
-     * @var ?array<FileStorageServiceDetailResponseStateMessagesItem> $stateMessages
+     * @var FileStorageMetricsDetailResponse $metrics
      */
-    #[JsonProperty('state_messages'), ArrayType([FileStorageServiceDetailResponseStateMessagesItem::class])]
-    public ?array $stateMessages;
+    #[JsonProperty('metrics')]
+    public FileStorageMetricsDetailResponse $metrics;
 
     /**
-     * @var ?DateTime $createdAt
+     * @var DateTime $createdAt Time at which the service was created.
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
-    public ?DateTime $createdAt;
+    public DateTime $createdAt;
 
     /**
-     * @var ?DateTime $updatedAt
+     * @var DateTime $updatedAt Time at which the service was last updated.
      */
     #[JsonProperty('updated_at'), Date(Date::TYPE_DATETIME)]
-    public ?DateTime $updatedAt;
+    public DateTime $updatedAt;
 
     /**
      * @param array{
-     *   uuid?: ?string,
-     *   name?: ?string,
-     *   zone?: ?string,
-     *   configuredStatus?: ?string,
-     *   operationalState?: ?string,
-     *   sizeGib?: ?int,
-     *   encrypted?: ?bool,
-     *   networks?: ?array<FileStorageNetworkDetailResponse>,
-     *   shares?: ?array<FileStorageShareDetailResponse>,
-     *   labels?: ?array<FileStorageLabelDetails>,
-     *   stateMessages?: ?array<FileStorageServiceDetailResponseStateMessagesItem>,
-     *   createdAt?: ?DateTime,
-     *   updatedAt?: ?DateTime,
+     *   uuid: string,
+     *   name: string,
+     *   zone: string,
+     *   configuredStatus: value-of<FileStorageConfiguredStatus>,
+     *   operationalState: value-of<FileStorageOperationalState>,
+     *   sizeGib: int,
+     *   encrypted: bool,
+     *   networks: array<FileStorageNetworkDetailResponse>,
+     *   shares: array<FileStorageShareDetailResponse>,
+     *   labels: array<FileStorageLabelDetails>,
+     *   metrics: FileStorageMetricsDetailResponse,
+     *   createdAt: DateTime,
+     *   updatedAt: DateTime,
      * } $values
      */
     public function __construct(
-        array $values = [],
+        array $values,
     ) {
-        $this->uuid = $values['uuid'] ?? null;
-        $this->name = $values['name'] ?? null;
-        $this->zone = $values['zone'] ?? null;
-        $this->configuredStatus = $values['configuredStatus'] ?? null;
-        $this->operationalState = $values['operationalState'] ?? null;
-        $this->sizeGib = $values['sizeGib'] ?? null;
-        $this->encrypted = $values['encrypted'] ?? null;
-        $this->networks = $values['networks'] ?? null;
-        $this->shares = $values['shares'] ?? null;
-        $this->labels = $values['labels'] ?? null;
-        $this->stateMessages = $values['stateMessages'] ?? null;
-        $this->createdAt = $values['createdAt'] ?? null;
-        $this->updatedAt = $values['updatedAt'] ?? null;
+        $this->uuid = $values['uuid'];
+        $this->name = $values['name'];
+        $this->zone = $values['zone'];
+        $this->configuredStatus = $values['configuredStatus'];
+        $this->operationalState = $values['operationalState'];
+        $this->sizeGib = $values['sizeGib'];
+        $this->encrypted = $values['encrypted'];
+        $this->networks = $values['networks'];
+        $this->shares = $values['shares'];
+        $this->labels = $values['labels'];
+        $this->metrics = $values['metrics'];
+        $this->createdAt = $values['createdAt'];
+        $this->updatedAt = $values['updatedAt'];
     }
 
     /**

@@ -13,14 +13,14 @@ use Upcloud\Types\DatabaseNetworkCreate;
 use Upcloud\Types\DatabaseNetworkType;
 use Upcloud\Types\DatabaseNetworkFamily;
 use Upcloud\Types\DatabaseLabelCreate;
-use Upcloud\Types\DatabaseServicePropertiesMysql;
+use Upcloud\Types\DatabaseMySql;
 use Upcloud\Database\Requests\DatabaseServiceModifyOpenApi;
 use Upcloud\Database\Types\DatabaseServiceModifyOpenApiMaintenance;
 use Upcloud\Database\Requests\DatabaseServiceTypeModify;
 use Upcloud\Database\Requests\CloneDatabaseRequest;
-use Upcloud\Types\DatabaseServiceCloneMysql;
+use Upcloud\Types\DatabaseMysqlClone;
 use DateTime;
-use Upcloud\Types\DatabaseServiceCloneMysqlMaintenance;
+use Upcloud\Types\DatabaseMysqlCloneMaintenance;
 use Upcloud\Database\Requests\CreateDatabaseNetworkRequest;
 use Upcloud\Database\Requests\DatabaseServiceUpgrade;
 use Upcloud\Database\Requests\CreateDatabaseLabelRequest;
@@ -186,7 +186,7 @@ class DatabaseWireTest extends WireMockTestCase
                         'value' => 'bar',
                     ]),
                 ],
-                'properties' => new DatabaseServicePropertiesMysql([
+                'properties' => new DatabaseMySql([
                     'automaticUtilityNetworkIpFilter' => true,
                     'ipFilter' => [
                         'ip_filter',
@@ -273,7 +273,7 @@ class DatabaseWireTest extends WireMockTestCase
                         'family' => DatabaseNetworkFamily::IPv4->value,
                     ]),
                 ],
-                'properties' => new DatabaseServicePropertiesMysql([
+                'properties' => new DatabaseMySql([
                     'automaticUtilityNetworkIpFilter' => true,
                     'ipFilter' => [
                         'ip_filter',
@@ -326,13 +326,13 @@ class DatabaseWireTest extends WireMockTestCase
         $this->client->database->cloneDatabase(
             '01234567-89ab-cdef-0123-456789abcdef',
             new CloneDatabaseRequest([
-                'body' => new DatabaseServiceCloneMysql([
+                'body' => new DatabaseMysqlClone([
                     'hostnamePrefix' => 'dev',
                     'cloneTime' => new DateTime('2024-01-30T15:04:05Z'),
                     'backupName' => 'daily-backup-2024-01-30',
                     'zone' => 'fi-hel1',
                     'terminationProtection' => false,
-                    'maintenance' => new DatabaseServiceCloneMysqlMaintenance([
+                    'maintenance' => new DatabaseMysqlCloneMaintenance([
                         'dow' => DatabaseMaintenanceDow::Monday->value,
                         'time' => '03:00:00',
                     ]),

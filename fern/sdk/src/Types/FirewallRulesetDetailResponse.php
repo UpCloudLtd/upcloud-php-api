@@ -56,9 +56,9 @@ class FirewallRulesetDetailResponse extends JsonSerializableType
     public ?bool $defaultDnsRulesEnabled;
 
     /**
-     * @var ?array<FirewallRulesetCreateLabel> $labels Labels
+     * @var ?array<FirewallRulesetLabelCreate> $labels Labels
      */
-    #[JsonProperty('labels'), ArrayType([FirewallRulesetCreateLabel::class])]
+    #[JsonProperty('labels'), ArrayType([FirewallRulesetLabelCreate::class])]
     public ?array $labels;
 
     /**
@@ -88,7 +88,7 @@ class FirewallRulesetDetailResponse extends JsonSerializableType
      *   version?: ?int,
      *   enabled?: ?bool,
      *   defaultDnsRulesEnabled?: ?bool,
-     *   labels?: ?array<FirewallRulesetCreateLabel>,
+     *   labels?: ?array<FirewallRulesetLabelCreate>,
      *   serverUuid?: ?string,
      *   createdAt?: ?DateTime,
      *   updatedAt?: ?DateTime,

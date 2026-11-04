@@ -19,7 +19,7 @@ class FileStorageServiceCreate extends JsonSerializableType
     public string $name;
 
     /**
-     * @var string $zone Indicates the zone where the service will be created.
+     * @var string $zone Valid UpCloud zone in which the File Storage service is created. An attached private network must be in this same zone.
      */
     #[JsonProperty('zone')]
     public string $zone;
@@ -37,25 +37,25 @@ class FileStorageServiceCreate extends JsonSerializableType
     public int $sizeGib;
 
     /**
-     * @var ?bool $encrypted Indicates whether encryption at rest is enabled for the service.
+     * @var ?bool $encrypted Enables AES-256-GCM encryption at rest. Encryption is disabled by default and cannot be changed after the service is created.
      */
     #[JsonProperty('encrypted')]
     public ?bool $encrypted;
 
     /**
-     * @var ?array<FileStorageNetworkCreate> $networks
+     * @var ?array<FileStorageNetworkCreate> $networks Private network attachments to create with the service. At most one network can be attached, and it must be in the service zone.
      */
     #[JsonProperty('networks'), ArrayType([FileStorageNetworkCreate::class])]
     public ?array $networks;
 
     /**
-     * @var ?array<FileStorageShareCreate> $shares
+     * @var ?array<FileStorageShareCreate> $shares NFS shares to create with the service. The API currently supports at most 50 shares per service.
      */
     #[JsonProperty('shares'), ArrayType([FileStorageShareCreate::class])]
     public ?array $shares;
 
     /**
-     * @var ?array<FileStorageLabelCreate> $labels Labels
+     * @var ?array<FileStorageLabelCreate> $labels Labels attached to the service for metadata and list filtering. Label keys must be unique within the service.
      */
     #[JsonProperty('labels'), ArrayType([FileStorageLabelCreate::class])]
     public ?array $labels;

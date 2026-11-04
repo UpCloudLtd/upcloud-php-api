@@ -17,6 +17,8 @@ use Upcloud\Account\Requests\GetMonthlyDetailedBillingSummaryRequest;
 use Upcloud\Types\AccountBillingSummary;
 use Upcloud\Types\AccountBillingSummaryResponse;
 use Upcloud\Types\AccountCurrentNetworkUsage;
+use Upcloud\Types\AccountProfileResponse;
+use Upcloud\Account\Requests\ModifyAccountProfileRequest;
 use Upcloud\Account\Requests\ListAccountsRequest;
 use Upcloud\Types\Accounts;
 use Upcloud\Types\AccountCreateMsLmaSigningLinkResponse;
@@ -275,6 +277,114 @@ class AccountClient
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new UpcloudException(message: $e->getMessage(), previous: $e);
+            }
+            throw new UpcloudApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new UpcloudException(message: $e->getMessage(), previous: $e);
+        }
+        throw new UpcloudApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Returns profile details for the specified main account or subaccount.
+     *
+     * @param string $username Account username.
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return AccountProfileResponse
+     * @throws UpcloudException
+     * @throws UpcloudApiException
+     */
+    public function getAccountProfile(string $username, ?array $options = null): AccountProfileResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "1.3/account/details/{$username}",
+                    method: HttpMethod::GET,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return AccountProfileResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new UpcloudException(message: $e->getMessage(), previous: $e);
+            }
+            throw new UpcloudApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new UpcloudException(message: $e->getMessage(), previous: $e);
+        }
+        throw new UpcloudApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Updates profile details for the specified main account or subaccount. Only supplied fields are modified.
+     *
+     * @param string $username Account username.
+     * @param ModifyAccountProfileRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws UpcloudException
+     * @throws UpcloudApiException
+     */
+    public function modifyAccountProfile(string $username, ModifyAccountProfileRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "1.3/account/details/{$username}",
+                    method: HttpMethod::PUT,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if ($response === null) {

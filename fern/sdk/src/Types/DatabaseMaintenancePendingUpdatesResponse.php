@@ -3,9 +3,7 @@
 namespace Upcloud\Types;
 
 use Upcloud\Core\Json\JsonSerializableType;
-use DateTime;
 use Upcloud\Core\Json\JsonProperty;
-use Upcloud\Core\Types\Date;
 
 /**
  * Response schema for pending maintenance updates.
@@ -13,10 +11,10 @@ use Upcloud\Core\Types\Date;
 class DatabaseMaintenancePendingUpdatesResponse extends JsonSerializableType
 {
     /**
-     * @var ?DateTime $deadline The deadline by which the update must be applied
+     * @var ?string $deadline The deadline by which the update must be applied as an RFC 3339 timestamp. Empty when no deadline is set.
      */
-    #[JsonProperty('deadline'), Date(Date::TYPE_DATETIME)]
-    public ?DateTime $deadline;
+    #[JsonProperty('deadline')]
+    public ?string $deadline;
 
     /**
      * @var ?string $description A description of the pending update
@@ -25,23 +23,23 @@ class DatabaseMaintenancePendingUpdatesResponse extends JsonSerializableType
     public ?string $description;
 
     /**
-     * @var ?DateTime $startAfter The earliest time after which the update can start
+     * @var ?string $startAfter The earliest time after which the update can start as an RFC 3339 timestamp. Empty when no lower bound is set.
      */
-    #[JsonProperty('start_after'), Date(Date::TYPE_DATETIME)]
-    public ?DateTime $startAfter;
+    #[JsonProperty('start_after')]
+    public ?string $startAfter;
 
     /**
-     * @var ?DateTime $startAt The exact scheduled start time for the update
+     * @var ?string $startAt The exact scheduled start time for the update as an RFC 3339 timestamp. Empty when the update has not been scheduled.
      */
-    #[JsonProperty('start_at'), Date(Date::TYPE_DATETIME)]
-    public ?DateTime $startAt;
+    #[JsonProperty('start_at')]
+    public ?string $startAt;
 
     /**
      * @param array{
-     *   deadline?: ?DateTime,
+     *   deadline?: ?string,
      *   description?: ?string,
-     *   startAfter?: ?DateTime,
-     *   startAt?: ?DateTime,
+     *   startAfter?: ?string,
+     *   startAt?: ?string,
      * } $values
      */
     public function __construct(
