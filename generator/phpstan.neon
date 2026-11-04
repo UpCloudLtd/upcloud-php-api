@@ -1,0 +1,10 @@
+includes:
+    - ../fern/sdk/phpstan.neon
+
+parameters:
+    ignoreErrors:
+        # Same Fern union-selection bug as the excluded create-server wire test.
+        - message: '#^Parameter \#1 \$values of class Upcloud\\Types\\ServerStorageDevicesStorageDeviceItemZero constructor expects array\{action: .* given\.$#'
+          path: ../fern/sdk/tests/Wire/ServerWireTest.php
+          count: 1
+          reportUnmatched: true

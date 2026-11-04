@@ -89,4 +89,4 @@ jobs:
           composer test --working-dir fern/sdk -- --filter '/^(?!Upcloud\\Tests\\ServerWireTest::testCreateServer$).*$/'
 
       - name: Run PHPStan
-        run: composer analyze --working-dir fern/sdk
+        run: composer analyze --working-dir fern/sdk -- --configuration ../../generator/phpstan.neon
