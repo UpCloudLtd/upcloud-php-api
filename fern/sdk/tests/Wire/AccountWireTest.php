@@ -5,6 +5,10 @@ namespace Upcloud\Tests;
 use Upcloud\Tests\Wire\WireMockTestCase;
 use Upcloud\UpcloudClient;
 use Upcloud\Account\Requests\GetMonthlyDetailedBillingSummaryRequest;
+use Upcloud\Account\Requests\ModifyAccountProfileRequest;
+use Upcloud\Types\AccountProfile;
+use Upcloud\Types\AccountBooleanYesno;
+use Upcloud\Types\AccountLabel;
 use Upcloud\Account\Requests\ListAccountsRequest;
 use Upcloud\Account\Requests\GetAccountNetworkTopUsageRequest;
 use DateTime;
@@ -12,9 +16,7 @@ use Upcloud\Account\Requests\GetAccountNetworkUsageRequest;
 use Upcloud\Account\Requests\GetAccountResourceNetworkUsageRequest;
 use Upcloud\Account\Requests\CreateSubaccountRequest;
 use Upcloud\Account\Types\CreateSubaccountRequestSubAccount;
-use Upcloud\Types\AccountBooleanYesno;
 use Upcloud\Account\Types\CreateSubaccountRequestSubAccountRoles;
-use Upcloud\Types\AccountLabel;
 use Upcloud\Account\Types\CreateSubaccountRequestSubAccountIpFilters;
 
 class AccountWireTest extends WireMockTestCase
@@ -104,6 +106,62 @@ class AccountWireTest extends WireMockTestCase
             $testId,
             "GET",
             "/1.3/account/current_network_usage",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testGetAccountProfile(): void {
+        $testId = 'account.get_account_profile.0';
+        $this->client->account->getAccountProfile(
+            'username',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'account.get_account_profile.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "GET",
+            "/1.3/account/details/username",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testModifyAccountProfile(): void {
+        $testId = 'account.modify_account_profile.0';
+        $this->client->account->modifyAccountProfile(
+            'username',
+            new ModifyAccountProfileRequest([
+                'account' => new AccountProfile([
+                    'firstName' => 'First',
+                    'lastName' => 'Last',
+                    'email' => 'user@example.com',
+                    'allowApi' => AccountBooleanYesno::Yes->value,
+                    'labels' => [
+                        new AccountLabel([
+                            'key' => 'department',
+                            'value' => 'it',
+                        ]),
+                    ],
+                ]),
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'account.modify_account_profile.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "PUT",
+            "/1.3/account/details/username",
             null,
             1
         );

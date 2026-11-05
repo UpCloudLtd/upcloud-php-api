@@ -10,13 +10,13 @@ use Upcloud\Core\Types\ArrayType;
 class FileStorageShareModify extends JsonSerializableType
 {
     /**
-     * @var ?string $name A resource name.
+     * @var ?string $name
      */
     #[JsonProperty('name')]
     public ?string $name;
 
     /**
-     * @var ?array<FileStorageAclCreate> $acl
+     * @var ?array<FileStorageAclCreate> $acl Complete replacement access-control collection for the NFS export. Omit this property to retain all current entries. An empty array removes direct export access; a nested share may still be visible through a parent export. When multiple parent or child rules match a client, the most permissive permission determines effective access.
      */
     #[JsonProperty('acl'), ArrayType([FileStorageAclCreate::class])]
     public ?array $acl;

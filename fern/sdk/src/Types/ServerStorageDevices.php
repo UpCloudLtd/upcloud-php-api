@@ -5,6 +5,7 @@ namespace Upcloud\Types;
 use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 use Upcloud\Core\Types\ArrayType;
+use Upcloud\Core\Types\Union;
 
 /**
  * Storage devices to create or attach to the Cloud Server
@@ -12,14 +13,24 @@ use Upcloud\Core\Types\ArrayType;
 class ServerStorageDevices extends JsonSerializableType
 {
     /**
-     * @var array<ServerStorageDevicesStorageDeviceItem> $storageDevice
+     * @var array<(
+     *    ServerStorageDevicesStorageDeviceItemZero
+     *   |ServerStorageDevicesStorageDeviceItemOne
+     *   |ServerStorageDevicesStorageDeviceItemActionType
+     *   |ServerStorageDevicesStorageDeviceItemActionStorage
+     * )> $storageDevice
      */
-    #[JsonProperty('storage_device'), ArrayType([ServerStorageDevicesStorageDeviceItem::class])]
+    #[JsonProperty('storage_device'), ArrayType([new Union(ServerStorageDevicesStorageDeviceItemZero::class, ServerStorageDevicesStorageDeviceItemOne::class, ServerStorageDevicesStorageDeviceItemActionType::class, ServerStorageDevicesStorageDeviceItemActionStorage::class)])]
     public array $storageDevice;
 
     /**
      * @param array{
-     *   storageDevice: array<ServerStorageDevicesStorageDeviceItem>,
+     *   storageDevice: array<(
+     *    ServerStorageDevicesStorageDeviceItemZero
+     *   |ServerStorageDevicesStorageDeviceItemOne
+     *   |ServerStorageDevicesStorageDeviceItemActionType
+     *   |ServerStorageDevicesStorageDeviceItemActionStorage
+     * )>,
      * } $values
      */
     public function __construct(

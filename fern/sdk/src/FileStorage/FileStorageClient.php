@@ -30,6 +30,7 @@ use Upcloud\FileStorage\Requests\FileStorageAclModify;
 use Upcloud\Types\FileStorageLabelDetails;
 use Upcloud\FileStorage\Requests\CreateFileStorageLabelRequest;
 use Upcloud\FileStorage\Requests\FileStorageLabelModify;
+use Upcloud\Types\FileStorageServiceCurrentStateResponse;
 
 class FileStorageClient
 {
@@ -68,7 +69,7 @@ class FileStorageClient
     }
 
     /**
-     * Returns a list of File Storage services.
+     * Returns File Storage services in the customer account. Results can be paginated, sorted by creation time, and filtered by one or more labels. When multiple `label` parameters are supplied, a service must match every filter.
      *
      * @param ListFileStoragesRequest $request
      * @param ?array{
@@ -95,6 +96,9 @@ class FileStorageClient
         }
         if ($request->sort !== null) {
             $query['sort'] = $request->sort;
+        }
+        if ($request->label !== null) {
+            $query['label'] = $request->label;
         }
         try {
             $response = $this->client->sendRequest(
@@ -134,7 +138,7 @@ class FileStorageClient
     }
 
     /**
-     * Creates a new File Storage service.
+     * Creates a File Storage service that exposes shares over NFS. The service name must be unique within the customer account. Creation is asynchronous: the returned service initially has the pending operational state while its resources are provisioned.
      *
      * @param FileStorageServiceCreate $request
      * @param ?array{
@@ -190,9 +194,9 @@ class FileStorageClient
     }
 
     /**
-     * Returns managed File Storage details by given {service_uuid}.
+     * Returns the desired configuration, lifecycle state, and latest available capacity metrics for the File Storage service identified by `{service-uuid}`.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -245,9 +249,9 @@ class FileStorageClient
     }
 
     /**
-     * Replaces existing File Storage service by given {service_uuid}.
+     * Replaces the mutable configuration of the File Storage service identified by `{service-uuid}`. `name`, `configured_status`, and `size_gib` are required. The `networks` and `labels` collections are replaced in full; omitting either collection clears it. The service size can be increased but not reduced. The service zone, encryption setting, and shares are not changed by this operation.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param FileStorageServiceReplace $request
      * @param ?array{
      *   baseUrl?: string,
@@ -302,9 +306,9 @@ class FileStorageClient
     }
 
     /**
-     * Deletes existing File Storage service by given {service_uuid}.
+     * Schedules the File Storage service identified by `{service-uuid}` for asynchronous deletion. The service enters its deletion lifecycle after this request and its storage resources are subsequently torn down.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -353,9 +357,9 @@ class FileStorageClient
     }
 
     /**
-     * Modifies existing File Storage service by given {service_uuid}.
+     * Partially modifies the mutable configuration of the File Storage service identified by `{service-uuid}` using JSON Merge Patch semantics. Omitted fields remain unchanged. A supplied `networks` or `labels` array replaces the complete collection; an empty array or `null` clears that collection. The service size can be increased but not reduced. The service zone, encryption setting, and shares cannot be modified by this operation.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param FileStorageServiceModify $request
      * @param ?array{
      *   baseUrl?: string,
@@ -410,9 +414,9 @@ class FileStorageClient
     }
 
     /**
-     * Returns a list of available service networks by given {service_uuid}.
+     * Returns the private networks attached to the File Storage service identified by `{service-uuid}`. The list contains at most one attachment.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -465,9 +469,9 @@ class FileStorageClient
     }
 
     /**
-     * Creates a new service network by given {service_uuid}.
+     * Attaches a private network to the File Storage service identified by `{service-uuid}`. A service can have at most one attached network. The network must be accessible to the customer and in the same zone as the service, and its attachment name must be unique within the service. Only IPv4 is supported. When `ip_address` is omitted, a free address is allocated from the private network's IPv4 pool.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param CreateFileStorageNetworkRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -522,10 +526,10 @@ class FileStorageClient
     }
 
     /**
-     * Returns service network details by given {service_uuid} and {network_name}.
+     * Returns the private network attachment named `{network-name}` from the File Storage service identified by `{service-uuid}`. Network attachment names are scoped to a service.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $networkName The name of the network.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $networkName Service-scoped name of the private network attachment.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -578,10 +582,10 @@ class FileStorageClient
     }
 
     /**
-     * Deletes existing network by given {service_uuid} and {network_name}.
+     * Detaches the private network attachment named `{network-name}` from the File Storage service identified by `{service-uuid}`. This removes the service's network interface during reconciliation but does not delete the underlying private network.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $networkName The name of the network.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $networkName Service-scoped name of the private network attachment.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -630,10 +634,10 @@ class FileStorageClient
     }
 
     /**
-     * Modifies existing service network by given {service_uuid} and {network_name}.
+     * Partially modifies the private network attachment named `{network-name}` on the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged, including `ip_address`; `null` is not accepted. When selecting a different private network, supply an address from that network. The attachment name must remain unique within the service, the selected private network must be accessible and in the service zone, and only IPv4 is supported.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $networkName The name of the network.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $networkName Service-scoped name of the private network attachment.
      * @param FileStorageNetworkModify $request
      * @param ?array{
      *   baseUrl?: string,
@@ -688,9 +692,9 @@ class FileStorageClient
     }
 
     /**
-     * Returns a list of available service shares by given {service_uuid}.
+     * Returns the shares on the File Storage service identified by `{service-uuid}`, ordered by path. A share undergoing asynchronous deletion remains in the list with `deleting` set to `true` until its backing directory and stored configuration have been removed.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -743,9 +747,9 @@ class FileStorageClient
     }
 
     /**
-     * Creates a new service share by given {service_uuid}.
+     * Creates an NFS share on the File Storage service identified by `{service-uuid}`. The share name and immutable absolute path must each be unique within the service, which can have at most 50 active shares. The system creates the backing directory. An empty `acl` array leaves the share without direct export access, although a nested share may remain visible through a parent export. When multiple parent or child rules match a client, the most permissive permission determines effective access.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param CreateFileStorageShareRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -800,10 +804,10 @@ class FileStorageClient
     }
 
     /**
-     * Returns service share details by given {service_uuid} and {share_name}.
+     * Returns the share named `{share-name}` from the File Storage service identified by `{service-uuid}`. Share names are unique within a service. A share undergoing asynchronous deletion remains addressable with `deleting` set to `true` until cleanup finishes.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -856,10 +860,10 @@ class FileStorageClient
     }
 
     /**
-     * Deletes existing share by given {service_uuid} and {share_name}.
+     * Permanently deletes the share named `{share-name}` from the File Storage service identified by `{service-uuid}`, including its backing directory and all content below that path. Deletion is asynchronous: the share remains visible with `deleting` set to `true` until cleanup finishes. A share cannot be accepted for deletion while it contains another active share; delete nested shares first.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -908,10 +912,10 @@ class FileStorageClient
     }
 
     /**
-     * Modifies existing service share by given {service_uuid} and {share_name}.
+     * Partially modifies the share named `{share-name}` on the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged and `null` is not accepted. A supplied `acl` array replaces the complete access-control collection; an empty array removes direct export access. The share path is immutable and cannot be supplied. A renamed share must remain unique within the service.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
      * @param FileStorageShareModify $request
      * @param ?array{
      *   baseUrl?: string,
@@ -966,10 +970,10 @@ class FileStorageClient
     }
 
     /**
-     * Returns a list of available ACLs by given {service_uuid} and {share_name}.
+     * Returns the access-control entries for the NFS export of share `{share-name}` on the File Storage service identified by `{service-uuid}`, ordered by target.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1022,10 +1026,10 @@ class FileStorageClient
     }
 
     /**
-     * Creates a new share ACL by given {service_uuid} and {share_name}.
+     * Creates an access-control entry for the NFS export of share `{share-name}` on the File Storage service identified by `{service-uuid}`. The entry name and target must each be unique within the share. A target is an IP address, CIDR network prefix, or `*`; `ro` grants read-only access and `rw` grants read-write access. For nested shares, matching parent and child rules combine and the most permissive permission determines effective access.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
      * @param CreateFileStorageAclRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -1080,11 +1084,11 @@ class FileStorageClient
     }
 
     /**
-     * Returns ACL details by given {service_uuid}, {share_name} and {acl_name}.
+     * Returns the access-control entry named `{acl-name}` from share `{share-name}` on the File Storage service identified by `{service-uuid}`. ACL entry names are unique within a share.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
-     * @param string $aclName The name of the ACL.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
+     * @param string $aclName Share-scoped name of the access-control entry.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1137,11 +1141,11 @@ class FileStorageClient
     }
 
     /**
-     * Deletes existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+     * Removes the access-control entry named `{acl-name}` from share `{share-name}` on the File Storage service identified by `{service-uuid}`. Removing the final entry leaves the share without direct NFS export access, although a nested share may remain visible through a parent export.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
-     * @param string $aclName The name of the ACL.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
+     * @param string $aclName Share-scoped name of the access-control entry.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1190,11 +1194,11 @@ class FileStorageClient
     }
 
     /**
-     * Modifies existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+     * Partially modifies the access-control entry named `{acl-name}` on share `{share-name}` of the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged and `null` is not accepted. The resulting name and target must each remain unique within the share. A target is an IP address, CIDR network prefix, or `*`; permission is `ro` for read-only or `rw` for read-write access.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $shareName The name of the share.
-     * @param string $aclName The name of the ACL.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $shareName Service-scoped name of the share.
+     * @param string $aclName Share-scoped name of the access-control entry.
      * @param FileStorageAclModify $request
      * @param ?array{
      *   baseUrl?: string,
@@ -1249,9 +1253,9 @@ class FileStorageClient
     }
 
     /**
-     * Returns a list of available service labels by given {service_uuid}.
+     * Returns the labels attached to the File Storage service identified by `{service-uuid}`. An empty service label collection is returned as an empty array.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1304,9 +1308,9 @@ class FileStorageClient
     }
 
     /**
-     * Creates a new label by given {service_uuid}. Labels are used for service filtering.
+     * Creates a label on the File Storage service identified by `{service-uuid}`. A service can have at most 255 labels, and each key must be unique within the service regardless of case. Labels can filter the service list by key existence or an exact key-value match; repeated filters must all match.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param CreateFileStorageLabelRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -1361,10 +1365,10 @@ class FileStorageClient
     }
 
     /**
-     * Returns label details by given {service_uuid} and {key}.
+     * Returns the label identified by `{label-key}` from the File Storage service identified by `{service-uuid}`. Label keys are unique within a service and lookup is case-insensitive; the response contains the stored key casing.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $labelKey The key of the label.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $labelKey Service-scoped key of the label. Lookup is case-insensitive.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1417,10 +1421,10 @@ class FileStorageClient
     }
 
     /**
-     * Deletes existing label by given {service_uuid} and {key}.
+     * Removes the label identified by `{label-key}` from the File Storage service identified by `{service-uuid}`. Future service-list label filters no longer match the removed key or key-value pair. Label-key lookup is case-insensitive.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $labelKey The key of the label.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $labelKey Service-scoped key of the label. Lookup is case-insensitive.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1469,10 +1473,10 @@ class FileStorageClient
     }
 
     /**
-     * Modifies existing label by given {service_uuid} and {key}.
+     * Modifies the label identified by `{label-key}` on the File Storage service identified by `{service-uuid}`. Supply both `key` and `value`: the current implementation replaces an omitted field with an empty string rather than preserving it. Supplying `value` as `null` also stores an empty string and does not delete the label. The resulting key must remain unique within the service regardless of case.
      *
-     * @param string $serviceUuid Service UUID
-     * @param string $labelKey The key of the label.
+     * @param string $serviceUuid UUID of the File Storage service.
+     * @param string $labelKey Service-scoped key of the label. Lookup is case-insensitive.
      * @param FileStorageLabelModify $request
      * @param ?array{
      *   baseUrl?: string,
@@ -1527,9 +1531,9 @@ class FileStorageClient
     }
 
     /**
-     * Returns the current state of the File Storage service by given {service_uuid}.
+     * Returns the latest successfully reported state of the File Storage service identified by `{service-uuid}` after configuration has been applied to the primary storage instance. Newly requested changes can appear in the regular service response before they appear here. A service without an applied-state snapshot returns `404`; this normally occurs before it has reached the `running` operational state.
      *
-     * @param string $serviceUuid Service UUID
+     * @param string $serviceUuid UUID of the File Storage service.
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -1538,11 +1542,11 @@ class FileStorageClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FileStorageServiceDetailResponse
+     * @return FileStorageServiceCurrentStateResponse
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function getFileStorageCurrentState(string $serviceUuid, ?array $options = null): FileStorageServiceDetailResponse
+    public function getFileStorageCurrentState(string $serviceUuid, ?array $options = null): FileStorageServiceCurrentStateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -1557,7 +1561,7 @@ class FileStorageClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return FileStorageServiceDetailResponse::fromJson($json);
+                return FileStorageServiceCurrentStateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

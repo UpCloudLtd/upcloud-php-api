@@ -18,8 +18,7 @@ use Upcloud\Types\ServerIpFamily;
 use Upcloud\Types\ServerNetworkType;
 use Upcloud\Types\ServerBooleanYesno;
 use Upcloud\Types\ServerStorageDevices;
-use Upcloud\Types\ServerStorageDevicesStorageDeviceItem;
-use Upcloud\Types\ServerStorageDevicesStorageDeviceItemAction;
+use Upcloud\Types\ServerStorageDevicesStorageDeviceItemZero;
 use Upcloud\Server\Requests\ModifyServer;
 use Upcloud\Server\Types\ModifyServerServer;
 use Upcloud\Server\Requests\DeleteServerRequest;
@@ -166,12 +165,9 @@ class ServerWireTest extends WireMockTestCase
                     'metadata' => ServerBooleanYesno::Yes->value,
                     'storageDevices' => new ServerStorageDevices([
                         'storageDevice' => [
-                            new ServerStorageDevicesStorageDeviceItem([
-                                'action' => ServerStorageDevicesStorageDeviceItemAction::Clone_->value,
+                            new ServerStorageDevicesStorageDeviceItemZero([
                                 'size' => 30,
                                 'storage' => '01000000-0000-4000-8000-000020080100',
-                                'tier' => 'maxiops',
-                                'title' => 'Debian Trixie',
                             ]),
                         ],
                     ]),

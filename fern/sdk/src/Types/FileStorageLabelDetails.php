@@ -6,7 +6,7 @@ use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
 /**
- * Schema for label details including key-value pairs.
+ * Service label used as metadata and for filtering File Storage service list results. Both fields are always returned; an empty value is represented as an empty string.
  */
 class FileStorageLabelDetails extends JsonSerializableType
 {

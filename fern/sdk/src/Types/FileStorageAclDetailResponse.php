@@ -6,41 +6,41 @@ use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
 /**
- * Schema for the detailed response of an ACL.
+ * Access-control entry applied to a share's NFS export. For nested shares, matching parent and child entries combine and the most permissive permission determines effective access.
  */
 class FileStorageAclDetailResponse extends JsonSerializableType
 {
     /**
-     * @var ?string $name
+     * @var string $name
      */
     #[JsonProperty('name')]
-    public ?string $name;
+    public string $name;
 
     /**
-     * @var ?string $target
+     * @var string $target Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients.
      */
     #[JsonProperty('target')]
-    public ?string $target;
+    public string $target;
 
     /**
-     * @var ?string $permission
+     * @var value-of<FileStoragePermission> $permission
      */
     #[JsonProperty('permission')]
-    public ?string $permission;
+    public string $permission;
 
     /**
      * @param array{
-     *   name?: ?string,
-     *   target?: ?string,
-     *   permission?: ?string,
+     *   name: string,
+     *   target: string,
+     *   permission: value-of<FileStoragePermission>,
      * } $values
      */
     public function __construct(
-        array $values = [],
+        array $values,
     ) {
-        $this->name = $values['name'] ?? null;
-        $this->target = $values['target'] ?? null;
-        $this->permission = $values['permission'] ?? null;
+        $this->name = $values['name'];
+        $this->target = $values['target'];
+        $this->permission = $values['permission'];
     }
 
     /**

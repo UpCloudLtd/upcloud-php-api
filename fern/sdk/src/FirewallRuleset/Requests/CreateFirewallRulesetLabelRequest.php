@@ -3,18 +3,18 @@
 namespace Upcloud\FirewallRuleset\Requests;
 
 use Upcloud\Core\Json\JsonSerializableType;
-use Upcloud\Types\FirewallRulesetCreateLabel;
+use Upcloud\Types\FirewallRulesetLabelCreate;
 
 class CreateFirewallRulesetLabelRequest extends JsonSerializableType
 {
     /**
-     * @var FirewallRulesetCreateLabel $body
+     * @var FirewallRulesetLabelCreate $body
      */
-    public FirewallRulesetCreateLabel $body;
+    public FirewallRulesetLabelCreate $body;
 
     /**
      * @param array{
-     *   body: FirewallRulesetCreateLabel,
+     *   body: FirewallRulesetLabelCreate,
      * } $values
      */
     public function __construct(

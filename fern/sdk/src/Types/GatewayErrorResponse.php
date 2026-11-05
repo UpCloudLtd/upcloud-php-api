@@ -36,9 +36,9 @@ class GatewayErrorResponse extends JsonSerializableType
     public int $status;
 
     /**
-     * @var ?array<mixed> $invalidParams List of invalid parameters in the request.
+     * @var ?array<GatewayErrorResponseInvalidParamsItem> $invalidParams List of invalid parameters in the request.
      */
-    #[JsonProperty('invalid_params'), ArrayType(['mixed'])]
+    #[JsonProperty('invalid_params'), ArrayType([GatewayErrorResponseInvalidParamsItem::class])]
     public ?array $invalidParams;
 
     /**
@@ -47,7 +47,7 @@ class GatewayErrorResponse extends JsonSerializableType
      *   title: string,
      *   correlationId: string,
      *   status: int,
-     *   invalidParams?: ?array<mixed>,
+     *   invalidParams?: ?array<GatewayErrorResponseInvalidParamsItem>,
      * } $values
      */
     public function __construct(

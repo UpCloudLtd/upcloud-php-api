@@ -8,7 +8,7 @@ use Upcloud\Core\Json\JsonProperty;
 class FileStorageErrorResponseInvalidParamsItem extends JsonSerializableType
 {
     /**
-     * @var string $name Path to the field with invalid parameter.
+     * @var string $name Dot-separated path to the invalid request field.
      */
     #[JsonProperty('name')]
     public string $name;

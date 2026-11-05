@@ -30,13 +30,13 @@ class FileStorageServiceModify extends JsonSerializableType
     public ?int $sizeGib;
 
     /**
-     * @var ?array<FileStorageNetworkCreate> $networks
+     * @var ?array<FileStorageNetworkCreate> $networks Complete replacement for the service's attached private networks. An empty array or `null` detaches all networks. At most one network can be attached, and it must be in the service zone.
      */
     #[JsonProperty('networks'), ArrayType([FileStorageNetworkCreate::class])]
     public ?array $networks;
 
     /**
-     * @var ?array<FileStorageLabelCreate> $labels
+     * @var ?array<FileStorageLabelCreate> $labels Complete replacement for the service's labels. An empty array or `null` removes all labels.
      */
     #[JsonProperty('labels'), ArrayType([FileStorageLabelCreate::class])]
     public ?array $labels;

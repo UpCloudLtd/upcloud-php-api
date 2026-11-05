@@ -6,7 +6,7 @@ use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
 /**
- * Schema for creating an ACL entry.
+ * Access-control entry for a share's NFS export. Names and targets must each be unique within the share. For nested shares, matching parent and child entries combine and the most permissive permission determines effective access.
  */
 class FileStorageAclCreate extends JsonSerializableType
 {
@@ -17,7 +17,7 @@ class FileStorageAclCreate extends JsonSerializableType
     public string $name;
 
     /**
-     * @var string $target The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
+     * @var string $target Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients.
      */
     #[JsonProperty('target')]
     public string $target;

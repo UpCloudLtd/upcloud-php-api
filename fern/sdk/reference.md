@@ -86,7 +86,7 @@ $client->account->getMonthlyDetailedBillingSummary(
 <dd>
 
 **$year:** `string` — Billing year.
-
+    
 </dd>
 </dl>
 
@@ -94,7 +94,7 @@ $client->account->getMonthlyDetailedBillingSummary(
 <dd>
 
 **$month:** `string` — Billing month.
-
+    
 </dd>
 </dl>
 
@@ -102,7 +102,7 @@ $client->account->getMonthlyDetailedBillingSummary(
 <dd>
 
 **$username:** `?string` — Return the billing summary for this account instead of the calling account. Requires Partner API access and an existing association with the account.
-
+    
 </dd>
 </dl>
 
@@ -110,7 +110,7 @@ $client->account->getMonthlyDetailedBillingSummary(
 <dd>
 
 **$resourceId:** `?string` — Return details only for this resource UUID or IP address.
-
+    
 </dd>
 </dl>
 </dd>
@@ -167,7 +167,7 @@ $client->account->getMonthlyBillingSummary(
 <dd>
 
 **$year:** `string` — Billing year.
-
+    
 </dd>
 </dl>
 
@@ -175,7 +175,7 @@ $client->account->getMonthlyBillingSummary(
 <dd>
 
 **$month:** `string` — Billing month.
-
+    
 </dd>
 </dl>
 </dd>
@@ -215,6 +215,140 @@ Returns the latest Network Transfer Pool usage report for the account.
 ```php
 $client->account->getCurrentNetworkUsage();
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;account-&gt;getAccountProfile($username) -> AccountProfileResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns profile details for the specified main account or subaccount.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->account->getAccountProfile(
+    'username',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$username:** `string` — Account username.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;account-&gt;modifyAccountProfile($username, $request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates profile details for the specified main account or subaccount. Only supplied fields are modified.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->account->modifyAccountProfile(
+    'username',
+    new ModifyAccountProfileRequest([
+        'account' => new AccountProfile([
+            'firstName' => 'First',
+            'lastName' => 'Last',
+            'email' => 'user@example.com',
+            'allowApi' => AccountBooleanYesno::Yes->value,
+            'labels' => [
+                new AccountLabel([
+                    'key' => 'department',
+                    'value' => 'it',
+                ]),
+            ],
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$username:** `string` — Account username.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$account:** `AccountProfile` 
+    
 </dd>
 </dl>
 </dd>
@@ -270,7 +404,7 @@ $client->account->listAccounts(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require all labels. Label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 </dd>
@@ -369,7 +503,7 @@ $client->account->getAccountNetworkTopUsage(
 <dd>
 
 **$from:** `DateTime` — Start of the usage period.
-
+    
 </dd>
 </dl>
 
@@ -377,7 +511,7 @@ $client->account->getAccountNetworkTopUsage(
 <dd>
 
 **$to:** `DateTime` — End of the usage period.
-
+    
 </dd>
 </dl>
 
@@ -385,7 +519,7 @@ $client->account->getAccountNetworkTopUsage(
 <dd>
 
 **$service:** `?string` — Filter by service type. Repeat the parameter to include multiple service types.
-
+    
 </dd>
 </dl>
 
@@ -393,7 +527,7 @@ $client->account->getAccountNetworkTopUsage(
 <dd>
 
 **$zone:** `?string` — Filter by zone. Repeat the parameter to include multiple zones.
-
+    
 </dd>
 </dl>
 
@@ -401,7 +535,7 @@ $client->account->getAccountNetworkTopUsage(
 <dd>
 
 **$accumulate:** `?string` — Accumulation period for the usage statistics.
-
+    
 </dd>
 </dl>
 </dd>
@@ -460,7 +594,7 @@ $client->account->getAccountNetworkUsage(
 <dd>
 
 **$from:** `DateTime` — First measurement timestamp in RFC 3339 format.
-
+    
 </dd>
 </dl>
 
@@ -468,7 +602,7 @@ $client->account->getAccountNetworkUsage(
 <dd>
 
 **$to:** `DateTime` — Last measurement timestamp in RFC 3339 format.
-
+    
 </dd>
 </dl>
 
@@ -476,7 +610,7 @@ $client->account->getAccountNetworkUsage(
 <dd>
 
 **$accumulate:** `?string` — Accumulate the transfer statistics by hour or day.
-
+    
 </dd>
 </dl>
 </dd>
@@ -573,7 +707,7 @@ $client->account->getMonthlyResourceBillingSummary(
 <dd>
 
 **$resourceId:** `string` — Server UUID, storage UUID, or IP address.
-
+    
 </dd>
 </dl>
 
@@ -581,7 +715,7 @@ $client->account->getMonthlyResourceBillingSummary(
 <dd>
 
 **$year:** `string` — Billing year.
-
+    
 </dd>
 </dl>
 
@@ -589,7 +723,7 @@ $client->account->getMonthlyResourceBillingSummary(
 <dd>
 
 **$month:** `string` — Billing month.
-
+    
 </dd>
 </dl>
 </dd>
@@ -650,7 +784,7 @@ $client->account->getAccountResourceNetworkUsage(
 <dd>
 
 **$from:** `DateTime` — Data start timestamp in RFC 3339 format.
-
+    
 </dd>
 </dl>
 
@@ -658,7 +792,7 @@ $client->account->getAccountResourceNetworkUsage(
 <dd>
 
 **$to:** `DateTime` — Data end timestamp in RFC 3339 format.
-
+    
 </dd>
 </dl>
 
@@ -666,7 +800,7 @@ $client->account->getAccountResourceNetworkUsage(
 <dd>
 
 **$service:** `?string` — Limit results to a service type. Repeat the parameter to include multiple service types.
-
+    
 </dd>
 </dl>
 
@@ -674,7 +808,7 @@ $client->account->getAccountResourceNetworkUsage(
 <dd>
 
 **$resourceId:** `?string` — Limit results to this resource UUID.
-
+    
 </dd>
 </dl>
 
@@ -682,7 +816,7 @@ $client->account->getAccountResourceNetworkUsage(
 <dd>
 
 **$zone:** `?string` — Limit results to a zone. Repeat the parameter to include multiple zones.
-
+    
 </dd>
 </dl>
 
@@ -690,7 +824,7 @@ $client->account->getAccountResourceNetworkUsage(
 <dd>
 
 **$accumulate:** `?string` — Accumulate the transfer statistics by hour or day.
-
+    
 </dd>
 </dl>
 </dd>
@@ -784,8 +918,8 @@ $client->account->createSubaccount(
 <dl>
 <dd>
 
-**$subAccount:** `CreateSubaccountRequestSubAccount`
-
+**$subAccount:** `CreateSubaccountRequestSubAccount` 
+    
 </dd>
 </dl>
 </dd>
@@ -841,7 +975,7 @@ $client->account->deleteSubaccount(
 <dd>
 
 **$username:** `string` — Subaccount username.
-
+    
 </dd>
 </dl>
 </dd>
@@ -1022,8 +1156,8 @@ $client->kubernetes->createKubernetesCluster(
 <dl>
 <dd>
 
-**$request:** `KubernetesCluster`
-
+**$request:** `KubernetesCluster` 
+    
 </dd>
 </dl>
 </dd>
@@ -1079,7 +1213,7 @@ $client->kubernetes->getKubernetesCluster(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -1135,7 +1269,7 @@ $client->kubernetes->deleteKubernetesCluster(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -1207,31 +1341,31 @@ $client->kubernetes->modifyKubernetesCluster(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$controlPlaneIpFilter:** `?array`
-
+**$controlPlaneIpFilter:** `?array` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labels:** `mixed`
-
+**$labels:** `mixed` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$plan:** `?string`
-
+**$plan:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -1287,7 +1421,7 @@ $client->kubernetes->getKubernetesClusterKubeconfig(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -1343,7 +1477,7 @@ $client->kubernetes->getKubernetesClusterAvailableUpgrades(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -1404,15 +1538,15 @@ $client->kubernetes->upgradeKubernetesCluster(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `KubernetesClusterAvailableUpgradesPost`
-
+**$request:** `KubernetesClusterAvailableUpgradesPost` 
+    
 </dd>
 </dl>
 </dd>
@@ -1470,7 +1604,7 @@ $client->kubernetes->listKubernetesClusterNodeGroups(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -1560,15 +1694,15 @@ $client->kubernetes->createKubernetesClusterNodeGroup(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `KubernetesNodeGroup`
-
+**$request:** `KubernetesNodeGroup` 
+    
 </dd>
 </dl>
 </dd>
@@ -1625,7 +1759,7 @@ $client->kubernetes->getKubernetesClusterNodeGroup(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -1633,7 +1767,7 @@ $client->kubernetes->getKubernetesClusterNodeGroup(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -1690,7 +1824,7 @@ $client->kubernetes->deleteKubernetesClusterNodeGroup(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -1698,7 +1832,7 @@ $client->kubernetes->deleteKubernetesClusterNodeGroup(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -1758,7 +1892,7 @@ $client->kubernetes->modifyKubernetesClusterNodeGroup(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -1766,15 +1900,15 @@ $client->kubernetes->modifyKubernetesClusterNodeGroup(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$count:** `int`
-
+**$count:** `int` 
+    
 </dd>
 </dl>
 </dd>
@@ -1832,7 +1966,7 @@ $client->kubernetes->deleteKubernetesClusterNodeGroupNode(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -1840,7 +1974,7 @@ $client->kubernetes->deleteKubernetesClusterNodeGroupNode(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 
@@ -1848,7 +1982,7 @@ $client->kubernetes->deleteKubernetesClusterNodeGroupNode(
 <dd>
 
 **$nodeName:** `string` — Node name
-
+    
 </dd>
 </dl>
 </dd>
@@ -1982,7 +2116,7 @@ $client->kubernetes->listClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -2047,15 +2181,15 @@ $client->kubernetes->createClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `KubernetesAuthenticationIssuerConfig`
-
+**$request:** `KubernetesAuthenticationIssuerConfig` 
+    
 </dd>
 </dl>
 </dd>
@@ -2122,15 +2256,15 @@ $client->kubernetes->setClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `array`
-
+**$request:** `array` 
+    
 </dd>
 </dl>
 </dd>
@@ -2186,7 +2320,7 @@ $client->kubernetes->importClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -2229,7 +2363,7 @@ $client->kubernetes->getClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -2237,7 +2371,7 @@ $client->kubernetes->getClusterAuthentication(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -2303,7 +2437,7 @@ $client->kubernetes->updateClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -2311,15 +2445,15 @@ $client->kubernetes->updateClusterAuthentication(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `KubernetesAuthenticationIssuerConfig`
-
+**$request:** `KubernetesAuthenticationIssuerConfig` 
+    
 </dd>
 </dl>
 </dd>
@@ -2376,7 +2510,7 @@ $client->kubernetes->deleteClusterAuthentication(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -2384,7 +2518,7 @@ $client->kubernetes->deleteClusterAuthentication(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -2442,7 +2576,7 @@ $client->kubernetes->getKubernetesClusterOidcKubeconfig(
 <dd>
 
 **$uuid:** `string` — UUID
-
+    
 </dd>
 </dl>
 
@@ -2450,7 +2584,7 @@ $client->kubernetes->getKubernetesClusterOidcKubeconfig(
 <dd>
 
 **$name:** `string` — Name
-
+    
 </dd>
 </dl>
 
@@ -2458,7 +2592,7 @@ $client->kubernetes->getKubernetesClusterOidcKubeconfig(
 <dd>
 
 **$audience:** `?string` — Which of the issuer's configured audiences to use as the OIDC client id in the generated kubeconfig. When omitted, the issuer's first audience is used. Must match one of the issuer's audiences.
-
+    
 </dd>
 </dl>
 </dd>
@@ -2555,7 +2689,7 @@ $client->device->getAvailablePassthroughDevices(
 <dd>
 
 **$zone:** `?string` — Filter results to a specific zone.
-
+    
 </dd>
 </dl>
 
@@ -2563,7 +2697,7 @@ $client->device->getAvailablePassthroughDevices(
 <dd>
 
 **$type:** `?string` — Filter results to a specific device type. The only valid type is "gpu" for now.
-
+    
 </dd>
 </dl>
 </dd>
@@ -2622,7 +2756,7 @@ $client->events->listEvents(
 <dd>
 
 **$serverUuid:** `string` — Filter results to a specific server.
-
+    
 </dd>
 </dl>
 
@@ -2630,7 +2764,7 @@ $client->events->listEvents(
 <dd>
 
 **$offset:** `int` — The number of items to skip before starting to collect the result set. Default is 0.
-
+    
 </dd>
 </dl>
 
@@ -2638,7 +2772,191 @@ $client->events->listEvents(
 <dd>
 
 **$count:** `int` — The numbers of items to return.
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
+
+</dd>
+</dl>
+</details>
+
+## host
+<details><summary><code>$client-&gt;host-&gt;listHosts($request) -> Hosts</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns available private cloud hosts and basic statistics when available. CPU idle is the average percentage over the past 15 minutes, and free memory is the current value in gigabytes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->host->listHosts(
+    new ListHostsRequest([
+        'zone' => 'fi-hel1',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$zone:** `?string` — Limit the list to hosts in the specified private cloud zone.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;host-&gt;getHost($id) -> Host</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns detailed information about a host. CPU idle and free memory statistics are values at the specified timestamp; free memory is in gigabytes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->host->getHost(
+    7653311107,
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `int` — The encoded host ID.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;host-&gt;modifyHost($id, $request) -> Host</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modifies the description of a specific host.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->host->modifyHost(
+    7653311107,
+    new HostModify([
+        'host' => new HostModifyHost([
+            'description' => "My New Host",
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `int` — The encoded host ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$host:** `HostModifyHost` — Host properties to modify.
+    
 </dd>
 </dl>
 </dd>
@@ -2738,8 +3056,8 @@ $client->ipAddress->addIpAddress(
 <dl>
 <dd>
 
-**$ipAddress:** `AddIpAddressRequestIpAddress`
-
+**$ipAddress:** `AddIpAddressRequestIpAddress` 
+    
 </dd>
 </dl>
 </dd>
@@ -2803,8 +3121,8 @@ $client->ipAddress->bulkModifyIpAddresses(
 <dl>
 <dd>
 
-**$ipAddresses:** `array`
-
+**$ipAddresses:** `array` 
+    
 </dd>
 </dl>
 </dd>
@@ -2860,7 +3178,7 @@ $client->ipAddress->getIpAddressDetails(
 <dd>
 
 **$address:** `string` — The IP address to retrieve details for.
-
+    
 </dd>
 </dl>
 </dd>
@@ -2921,15 +3239,15 @@ $client->ipAddress->modifyIpAddress(
 <dd>
 
 **$address:** `string` — The IP address to modify.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$ipAddress:** `ModifyIpAddressRequestV10IpAddress`
-
+**$ipAddress:** `ModifyIpAddressRequestV10IpAddress` 
+    
 </dd>
 </dl>
 </dd>
@@ -2985,7 +3303,7 @@ $client->ipAddress->deleteIpAddress(
 <dd>
 
 **$address:** `string` — The IP address to delete.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3044,15 +3362,15 @@ $client->ipAddress->patchModifyIpAddress(
 <dd>
 
 **$address:** `string` — The IP address to modify.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$ipAddress:** `PatchIpAddressRequestV13IpAddress`
-
+**$ipAddress:** `PatchIpAddressRequestV13IpAddress` 
+    
 </dd>
 </dl>
 </dd>
@@ -3120,7 +3438,7 @@ $client->networkPeering->listNetworkPeerings(
 <dd>
 
 **$uuid:** `?string` — Filter by network peering UUID.
-
+    
 </dd>
 </dl>
 
@@ -3128,7 +3446,7 @@ $client->networkPeering->listNetworkPeerings(
 <dd>
 
 **$networkUuidLocal:** `?string` — Filter by local network uuid.
-
+    
 </dd>
 </dl>
 
@@ -3136,7 +3454,7 @@ $client->networkPeering->listNetworkPeerings(
 <dd>
 
 **$networkUuidPeer:** `?string` — Filter by peer network uuid.
-
+    
 </dd>
 </dl>
 
@@ -3144,7 +3462,7 @@ $client->networkPeering->listNetworkPeerings(
 <dd>
 
 **$label:** `?string` — Label filter in the form key=value. Can be specified multiple times to filter by multiple labels.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3215,16 +3533,16 @@ $client->networkPeering->createNetworkPeering(
 <dl>
 <dd>
 
-**$configuredStatus:** `?string`
-
+**$configuredStatus:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `string`
-
+**$name:** `string` 
+    
 </dd>
 </dl>
 
@@ -3232,7 +3550,7 @@ $client->networkPeering->createNetworkPeering(
 <dd>
 
 **$network:** `NetworkPeeringCreateNetwork` — Describes the local side of the peering
-
+    
 </dd>
 </dl>
 
@@ -3240,7 +3558,7 @@ $client->networkPeering->createNetworkPeering(
 <dd>
 
 **$peerNetwork:** `NetworkPeeringCreatePeerNetwork` — Describes the peer side of the peering
-
+    
 </dd>
 </dl>
 </dd>
@@ -3298,7 +3616,7 @@ $client->networkPeering->getNetworkPeering(
 <dd>
 
 **$peeringUuid:** `string` — The network peering identifier.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3354,7 +3672,7 @@ $client->networkPeering->deleteNetworkPeering(
 <dd>
 
 **$peeringUuid:** `string` — The network peering identifier.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3414,23 +3732,23 @@ $client->networkPeering->modifyNetworkPeering(
 <dd>
 
 **$peeringUuid:** `string` — The network peering identifier.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `?string`
-
+**$configuredStatus:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `?string`
-
+**$name:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -3493,7 +3811,7 @@ $client->network->listNetworks(
 <dd>
 
 **$label:** `?NetworkLabel` — Filter networks by labels.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3563,8 +3881,8 @@ $client->network->createNetwork(
 <dl>
 <dd>
 
-**$network:** `CreateNetworkRequestNetwork`
-
+**$network:** `CreateNetworkRequestNetwork` 
+    
 </dd>
 </dl>
 </dd>
@@ -3666,16 +3984,16 @@ $client->network->createNetworkInterface(
 <dl>
 <dd>
 
-**$mainAccountId:** `?int`
-
+**$mainAccountId:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$interface_:** `?NetworkCreateInterfaceRequestInterface`
-
+**$interface_:** `?NetworkCreateInterfaceRequestInterface` 
+    
 </dd>
 </dl>
 </dd>
@@ -3731,7 +4049,7 @@ $client->network->getNetworkInterfaceDetails(
 <dd>
 
 **$uuid:** `string` — UUID of the network interface.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3787,7 +4105,7 @@ $client->network->deleteNetworkInterface(
 <dd>
 
 **$uuid:** `string` — UUID of the network.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3843,7 +4161,7 @@ $client->network->getNetworkDetails(
 <dd>
 
 **$uuid:** `string` — UUID of the network.
-
+    
 </dd>
 </dl>
 </dd>
@@ -3946,15 +4264,15 @@ $client->network->modifyNetwork(
 <dd>
 
 **$uuid:** `string` — UUID of the network.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$network:** `ModifyNetworkRequestNetwork`
-
+**$network:** `ModifyNetworkRequestNetwork` 
+    
 </dd>
 </dl>
 </dd>
@@ -4010,7 +4328,7 @@ $client->network->deleteNetwork(
 <dd>
 
 **$uuid:** `string` — UUID of the network.
-
+    
 </dd>
 </dl>
 </dd>
@@ -4037,7 +4355,7 @@ $client->network->deleteNetwork(
 Returns a list of audit log rows according to the query parameters. Note that this endpoint is paginated by default and the list is limited in results.
 
 Pagination
-Upcloud-Total-Count header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.
+`Upcloud-Total-Count` header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.
 </dd>
 </dl>
 </dd>
@@ -4076,7 +4394,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$q:** `?string` — Filter audit logs using a keyword such as account username, resource ID or IP address.
-
+    
 </dd>
 </dl>
 
@@ -4084,7 +4402,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$limit:** `?int` — Number of results to return (max 100, default 50)
-
+    
 </dd>
 </dl>
 
@@ -4092,7 +4410,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results. (default 0)
-
+    
 </dd>
 </dl>
 
@@ -4100,7 +4418,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$actions:** `?string` — List of actions to filter by
-
+    
 </dd>
 </dl>
 
@@ -4108,7 +4426,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$origins:** `?string` — List of origins to filter by
-
+    
 </dd>
 </dl>
 
@@ -4116,7 +4434,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$resourceTypes:** `?string` — List of resource types to filter by
-
+    
 </dd>
 </dl>
 
@@ -4124,7 +4442,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$createdAfter:** `?DateTime` — List audit logs created after the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
-
+    
 </dd>
 </dl>
 
@@ -4132,7 +4450,7 @@ $client->auditLogs->listAuditLogs(
 <dd>
 
 **$createdBefore:** `?DateTime` — List audit logs created before the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
-
+    
 </dd>
 </dl>
 </dd>
@@ -4188,7 +4506,7 @@ $client->auditLogs->exportAuditLogs(
 <dd>
 
 **$format:** `?string` — Export format: 'csv' or 'json' (default: csv)
-
+    
 </dd>
 </dl>
 </dd>
@@ -4244,7 +4562,7 @@ $client->auditLogs->getAuditLog(
 <dd>
 
 **$cloudEventId:** `string` — Cloud event ID (ULID format)
-
+    
 </dd>
 </dl>
 </dd>
@@ -4381,24 +4699,24 @@ $client->partner->createPartnerAccount(
 <dl>
 <dd>
 
-**$username:** `string`
-
+**$username:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$password:** `string`
-
+**$password:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$contactDetails:** `?PartnerCreateAccountContactDetails`
-
+**$contactDetails:** `?PartnerCreateAccountContactDetails` 
+    
 </dd>
 </dl>
 </dd>
@@ -4493,8 +4811,8 @@ $client->permission->replacePermissions(
 <dl>
 <dd>
 
-**$request:** `Permission`
-
+**$request:** `Permission` 
+    
 </dd>
 </dl>
 </dd>
@@ -4552,15 +4870,15 @@ $client->permission->grantPermission(
 <dd>
 
 **$skipTargetCheck:** `?bool` — If true, skips the check whether the target resource exists. Default is false.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `Permission`
-
+**$request:** `Permission` 
+    
 </dd>
 </dl>
 </dd>
@@ -4615,8 +4933,8 @@ $client->permission->revokePermission(
 <dl>
 <dd>
 
-**$request:** `Permission`
-
+**$request:** `Permission` 
+    
 </dd>
 </dl>
 </dd>
@@ -4674,7 +4992,7 @@ $client->permission->revokeAllPermissionsByTarget(
 <dd>
 
 **$targetType:** `string` — The type of the target resource (e.g., "server", "storage").
-
+    
 </dd>
 </dl>
 
@@ -4682,7 +5000,7 @@ $client->permission->revokeAllPermissionsByTarget(
 <dd>
 
 **$targetIdentifier:** `string` — The identifier of the target resource.
-
+    
 </dd>
 </dl>
 
@@ -4690,7 +5008,7 @@ $client->permission->revokeAllPermissionsByTarget(
 <dd>
 
 **$mainAccountId:** `?int` — If specified, revokes permissions for resources owned by the specified main account ID. Default is the current main account.
-
+    
 </dd>
 </dl>
 </dd>
@@ -4746,7 +5064,7 @@ $client->permission->revokeAllPermissionsByUser(
 <dd>
 
 **$user:** `string` — The username of the sub-account.
-
+    
 </dd>
 </dl>
 </dd>
@@ -4845,7 +5163,7 @@ $client->price->getPrice(
 <dd>
 
 **$zone:** `?string` — Filter results to a specific zone. Can be specified multiple times.
-
+    
 </dd>
 </dl>
 </dd>
@@ -4908,7 +5226,7 @@ $client->router->listRouters(
 <dd>
 
 **$label:** `?RouterLabel` — A label filter. Can be specified multiple times to create an AND condition. Format: label=key:value
-
+    
 </dd>
 </dl>
 </dd>
@@ -4976,8 +5294,8 @@ $client->router->createRouter(
 <dl>
 <dd>
 
-**$router:** `RouterCreateRouter`
-
+**$router:** `RouterCreateRouter` 
+    
 </dd>
 </dl>
 </dd>
@@ -5033,7 +5351,7 @@ $client->router->getRouter(
 <dd>
 
 **$router:** `string` — The router identifier.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5089,7 +5407,7 @@ $client->router->deleteRouter(
 <dd>
 
 **$router:** `string` — The router identifier.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5164,15 +5482,15 @@ $client->router->modifyRouter(
 <dd>
 
 **$router:** `string` — The router identifier.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$routerModifyRouter:** `RouterModifyRouter`
-
+**$routerModifyRouter:** `RouterModifyRouter` 
+    
 </dd>
 </dl>
 </dd>
@@ -5229,7 +5547,7 @@ $client->serverGroup->listServerGroups(
 <dd>
 
 **$label:** `?ServerGroupLabel` — A label filter to apply. Format: key:value. Multiple labels can be specified by repeating the parameter.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5302,8 +5620,8 @@ $client->serverGroup->createServerGroup(
 <dl>
 <dd>
 
-**$request:** `ServerGroupModify`
-
+**$request:** `ServerGroupModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -5359,7 +5677,7 @@ $client->serverGroup->getServerGroup(
 <dd>
 
 **$uuid:** `string` — The UUID of the server group to retrieve.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5415,7 +5733,7 @@ $client->serverGroup->deleteServerGroup(
 <dd>
 
 **$uuid:** `string` — The UUID of the server group to delete.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5492,15 +5810,15 @@ $client->serverGroup->modifyServerGroup(
 <dd>
 
 **$uuid:** `string` — The UUID of the server group to modify.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ServerGroupModify`
-
+**$request:** `ServerGroupModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -5556,7 +5874,7 @@ $client->serverGroup->listServerGroupMembers(
 <dd>
 
 **$uuid:** `string` — The UUID of the server group whose members are to be listed.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5617,15 +5935,15 @@ $client->serverGroup->addServerToGroup(
 <dd>
 
 **$uuid:** `string` — The UUID of the server group to which the server will be added.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$server:** `ServerGroupServerAddServer`
-
+**$server:** `ServerGroupServerAddServer` 
+    
 </dd>
 </dl>
 </dd>
@@ -5682,7 +6000,7 @@ $client->serverGroup->removeServerFromGroup(
 <dd>
 
 **$uuid:** `string` — The UUID of the server group from which the server will be removed.
-
+    
 </dd>
 </dl>
 
@@ -5690,7 +6008,7 @@ $client->serverGroup->removeServerFromGroup(
 <dd>
 
 **$serverUuid:** `string` — The UUID of the server to remove from the group.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5753,7 +6071,7 @@ $client->server->listServers(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair using "key" or "key=value". Repeat the parameter to require all labels.
-
+    
 </dd>
 </dl>
 
@@ -5761,7 +6079,7 @@ $client->server->listServers(
 <dd>
 
 **$uuid:** `?string` — Filter by Cloud Server UUID. Repeat the parameter to match any of up to five UUIDs.
-
+    
 </dd>
 </dl>
 
@@ -5769,7 +6087,7 @@ $client->server->listServers(
 <dd>
 
 **$host:** `?int` — Filter by Private Cloud host ID. Repeat the parameter to match any of up to five hosts.
-
+    
 </dd>
 </dl>
 
@@ -5777,7 +6095,7 @@ $client->server->listServers(
 <dd>
 
 **$device:** `?string` — Filter by attached device using "type=gpu" or "type!=gpu". Repeat the parameter for up to five filters.
-
+    
 </dd>
 </dl>
 
@@ -5785,7 +6103,7 @@ $client->server->listServers(
 <dd>
 
 **$state:** `?string` — Filter by the current Cloud Server state.
-
+    
 </dd>
 </dl>
 
@@ -5793,7 +6111,7 @@ $client->server->listServers(
 <dd>
 
 **$tag:** `?string` — Filter by tag name. Separate names with commas to match any tag or colons to require all tags.
-
+    
 </dd>
 </dl>
 
@@ -5801,7 +6119,7 @@ $client->server->listServers(
 <dd>
 
 **$search:** `?string` — Search UUIDs, titles, hostnames, zones, zone descriptions, IP addresses, tags, and template names.
-
+    
 </dd>
 </dl>
 
@@ -5809,7 +6127,7 @@ $client->server->listServers(
 <dd>
 
 **$sortBy:** `?string` — Field to sort by.
-
+    
 </dd>
 </dl>
 
@@ -5817,7 +6135,7 @@ $client->server->listServers(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Only applied when sort_by is specified.
-
+    
 </dd>
 </dl>
 
@@ -5825,7 +6143,7 @@ $client->server->listServers(
 <dd>
 
 **$limit:** `?int` — Maximum number of Cloud Servers to return.
-
+    
 </dd>
 </dl>
 
@@ -5833,7 +6151,7 @@ $client->server->listServers(
 <dd>
 
 **$offset:** `?int` — Number of Cloud Servers to skip.
-
+    
 </dd>
 </dl>
 </dd>
@@ -5924,12 +6242,9 @@ $client->server->createServer(
             'metadata' => ServerBooleanYesno::Yes->value,
             'storageDevices' => new ServerStorageDevices([
                 'storageDevice' => [
-                    new ServerStorageDevicesStorageDeviceItem([
-                        'action' => ServerStorageDevicesStorageDeviceItemAction::Clone_->value,
+                    new ServerStorageDevicesStorageDeviceItemZero([
                         'size' => 30,
                         'storage' => '01000000-0000-4000-8000-000020080100',
-                        'tier' => 'maxiops',
-                        'title' => 'Debian Trixie',
                     ]),
                 ],
             ]),
@@ -5952,8 +6267,8 @@ $client->server->createServer(
 <dl>
 <dd>
 
-**$server:** `CreateServerServer`
-
+**$server:** `CreateServerServer` 
+    
 </dd>
 </dl>
 </dd>
@@ -6009,7 +6324,7 @@ $client->server->listFirewallRulesetRelationships(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -6104,7 +6419,7 @@ $client->server->getServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -6167,15 +6482,15 @@ $client->server->modifyServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$server:** `ModifyServerServer`
-
+**$server:** `ModifyServerServer` 
+    
 </dd>
 </dl>
 </dd>
@@ -6232,7 +6547,7 @@ $client->server->deleteServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -6240,7 +6555,7 @@ $client->server->deleteServer(
 <dd>
 
 **$storages:** `?string` — Whether to delete attached storage devices.
-
+    
 </dd>
 </dl>
 
@@ -6248,7 +6563,7 @@ $client->server->deleteServer(
 <dd>
 
 **$backups:** `?string` — How to handle backups when deleting storage devices. The delete value is valid only when storages is set to a truthy value.
-
+    
 </dd>
 </dl>
 </dd>
@@ -6309,7 +6624,7 @@ $client->server->attachPrivateFirewallRuleset(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -6317,7 +6632,7 @@ $client->server->attachPrivateFirewallRuleset(
 <dd>
 
 **$firewallRuleset:** `ServerAttachPrivateFirewallRulesetFirewallRuleset` — Private firewall ruleset to attach.
-
+    
 </dd>
 </dl>
 </dd>
@@ -6373,7 +6688,7 @@ $client->server->cancelServerOperation(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -6429,7 +6744,7 @@ $client->server->ejectCdrom(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -6490,7 +6805,7 @@ $client->server->loadCdrom(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -6498,7 +6813,7 @@ $client->server->loadCdrom(
 <dd>
 
 **$storageDevice:** `ServerLoadCdromStorageDevice` — Storage to load into the attached CD-ROM device.
-
+    
 </dd>
 </dl>
 </dd>
@@ -6559,7 +6874,7 @@ $client->server->detachPrivateFirewallRuleset(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -6567,7 +6882,7 @@ $client->server->detachPrivateFirewallRuleset(
 <dd>
 
 **$firewallRuleset:** `ServerDetachPrivateFirewallRulesetFirewallRuleset` — Private firewall ruleset to detach.
-
+    
 </dd>
 </dl>
 </dd>
@@ -6623,7 +6938,7 @@ $client->server->listFirewallRules(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -6693,15 +7008,15 @@ $client->server->createFirewallRule(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$firewallRule:** `ServerCreateFirewallRuleFirewallRule`
-
+**$firewallRule:** `ServerCreateFirewallRuleFirewallRule` 
+    
 </dd>
 </dl>
 </dd>
@@ -6776,15 +7091,15 @@ $client->server->updateFirewallRules(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$firewallRules:** `ServerUpdateFirewallRulesFirewallRules`
-
+**$firewallRules:** `ServerUpdateFirewallRulesFirewallRules` 
+    
 </dd>
 </dl>
 </dd>
@@ -6841,7 +7156,7 @@ $client->server->getFirewallRule(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -6849,7 +7164,7 @@ $client->server->getFirewallRule(
 <dd>
 
 **$position:** `int` — Firewall rule position
-
+    
 </dd>
 </dl>
 </dd>
@@ -6906,7 +7221,7 @@ $client->server->deleteFirewallRule(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -6914,7 +7229,7 @@ $client->server->deleteFirewallRule(
 <dd>
 
 **$position:** `int` — Firewall rule position
-
+    
 </dd>
 </dl>
 </dd>
@@ -6970,7 +7285,7 @@ $client->server->listPrivateFirewallRulesetRelationships(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -7026,7 +7341,7 @@ $client->server->listServerGpUs(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -7082,7 +7397,7 @@ $client->server->getServerNetworking(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -7154,15 +7469,15 @@ $client->server->addServerInterface(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$interface_:** `ServerAddInterfaceInterface`
-
+**$interface_:** `ServerAddInterfaceInterface` 
+    
 </dd>
 </dl>
 </dd>
@@ -7226,7 +7541,7 @@ $client->server->modifyServerInterface(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -7234,15 +7549,15 @@ $client->server->modifyServerInterface(
 <dd>
 
 **$index:** `int` — Network interface index
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$interface_:** `ServerModifyInterfaceInterface`
-
+**$interface_:** `ServerModifyInterfaceInterface` 
+    
 </dd>
 </dl>
 </dd>
@@ -7299,7 +7614,7 @@ $client->server->deleteServerInterface(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -7307,7 +7622,7 @@ $client->server->deleteServerInterface(
 <dd>
 
 **$index:** `int` — Network interface index
-
+    
 </dd>
 </dl>
 </dd>
@@ -7370,7 +7685,7 @@ $client->server->addServerInterfaceIpAddress(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -7378,7 +7693,7 @@ $client->server->addServerInterfaceIpAddress(
 <dd>
 
 **$index:** `int` — Network interface index
-
+    
 </dd>
 </dl>
 
@@ -7386,15 +7701,15 @@ $client->server->addServerInterfaceIpAddress(
 <dd>
 
 **$force:** `?string` — Move the address from another interface when that interface can retain its required minimum number of addresses
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$ipAddress:** `ServerAddIpAddressIpAddress`
-
+**$ipAddress:** `ServerAddIpAddressIpAddress` 
+    
 </dd>
 </dl>
 </dd>
@@ -7452,7 +7767,7 @@ $client->server->deleteServerInterfaceIpAddress(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -7460,7 +7775,7 @@ $client->server->deleteServerInterfaceIpAddress(
 <dd>
 
 **$index:** `int` — Network interface index
-
+    
 </dd>
 </dl>
 
@@ -7468,7 +7783,7 @@ $client->server->deleteServerInterfaceIpAddress(
 <dd>
 
 **$ip:** `string` — IP address to delete
-
+    
 </dd>
 </dl>
 </dd>
@@ -7543,15 +7858,15 @@ $client->server->rebuildServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$serverRebuild:** `ServerRebuildServerRebuild`
-
+**$serverRebuild:** `ServerRebuildServerRebuild` 
+    
 </dd>
 </dl>
 </dd>
@@ -7610,15 +7925,15 @@ $client->server->relocateServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$zone:** `string`
-
+**$zone:** `string` 
+    
 </dd>
 </dl>
 </dd>
@@ -7674,7 +7989,7 @@ $client->server->getRemoteAccessDetails(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -7735,15 +8050,15 @@ $client->server->restartServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$restartServer:** `mixed`
-
+**$restartServer:** `mixed` 
+    
 </dd>
 </dl>
 </dd>
@@ -7805,15 +8120,15 @@ $client->server->startServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$server:** `StartServerServer`
-
+**$server:** `StartServerServer` 
+    
 </dd>
 </dl>
 </dd>
@@ -7869,7 +8184,7 @@ $client->server->getCpuStats(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -7926,7 +8241,7 @@ $client->server->getCpuStatsByPeriod(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -7934,7 +8249,7 @@ $client->server->getCpuStatsByPeriod(
 <dd>
 
 **$period:** `string` — Statistics period.
-
+    
 </dd>
 </dl>
 </dd>
@@ -7991,7 +8306,7 @@ $client->server->getDiskStats(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -7999,7 +8314,7 @@ $client->server->getDiskStats(
 <dd>
 
 **$type:** `string` — Measure disk activity as transferred bytes or I/O requests.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8057,7 +8372,7 @@ $client->server->getDiskStatsByPeriod(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -8065,7 +8380,7 @@ $client->server->getDiskStatsByPeriod(
 <dd>
 
 **$type:** `string` — Measure disk activity as transferred bytes or I/O requests.
-
+    
 </dd>
 </dl>
 
@@ -8073,7 +8388,7 @@ $client->server->getDiskStatsByPeriod(
 <dd>
 
 **$period:** `string` — Statistics period.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8130,7 +8445,7 @@ $client->server->getNetworkStats(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -8138,7 +8453,7 @@ $client->server->getNetworkStats(
 <dd>
 
 **$type:** `string` — Measure network activity as transferred bytes or packets.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8196,7 +8511,7 @@ $client->server->getNetworkStatsByNetwork(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -8204,7 +8519,7 @@ $client->server->getNetworkStatsByNetwork(
 <dd>
 
 **$type:** `string` — Measure network activity as transferred bytes or packets.
-
+    
 </dd>
 </dl>
 
@@ -8212,7 +8527,7 @@ $client->server->getNetworkStatsByNetwork(
 <dd>
 
 **$network:** `string` — Network access type to aggregate.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8271,7 +8586,7 @@ $client->server->getNetworkStatsByNetworkAndPeriod(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -8279,7 +8594,7 @@ $client->server->getNetworkStatsByNetworkAndPeriod(
 <dd>
 
 **$type:** `string` — Measure network activity as transferred bytes or packets.
-
+    
 </dd>
 </dl>
 
@@ -8287,7 +8602,7 @@ $client->server->getNetworkStatsByNetworkAndPeriod(
 <dd>
 
 **$network:** `string` — Network access type to aggregate.
-
+    
 </dd>
 </dl>
 
@@ -8295,7 +8610,7 @@ $client->server->getNetworkStatsByNetworkAndPeriod(
 <dd>
 
 **$period:** `string` — Statistics period.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8357,15 +8672,15 @@ $client->server->stopServer(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$stopServer:** `StopServerStopServer`
-
+**$stopServer:** `StopServerStopServer` 
+    
 </dd>
 </dl>
 </dd>
@@ -8429,7 +8744,7 @@ $client->server->attachStorageDevice(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
@@ -8437,7 +8752,7 @@ $client->server->attachStorageDevice(
 <dd>
 
 **$storageDevice:** `ServerAttachStorageStorageDevice` — Storage device to attach.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8498,15 +8813,15 @@ $client->server->detachStorageDevice(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$storageDevice:** `mixed`
-
+**$storageDevice:** `mixed` 
+    
 </dd>
 </dl>
 </dd>
@@ -8562,7 +8877,7 @@ $client->server->getVncDetails(
 <dd>
 
 **$uuid:** `string` — Cloud Server UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -8703,7 +9018,7 @@ $client->storage->getStorageList(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -8711,7 +9026,7 @@ $client->storage->getStorageList(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -8719,7 +9034,7 @@ $client->storage->getStorageList(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -8727,7 +9042,7 @@ $client->storage->getStorageList(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -8735,7 +9050,7 @@ $client->storage->getStorageList(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -8743,7 +9058,7 @@ $client->storage->getStorageList(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8818,7 +9133,7 @@ $client->storage->createStorage(
 <dd>
 
 **$storage:** `CreateStorageRequestStorage` — Block storage creation parameters.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8879,7 +9194,7 @@ $client->storage->getStorageListByBackup(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -8887,7 +9202,7 @@ $client->storage->getStorageListByBackup(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -8895,7 +9210,7 @@ $client->storage->getStorageListByBackup(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -8903,7 +9218,7 @@ $client->storage->getStorageListByBackup(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -8911,7 +9226,7 @@ $client->storage->getStorageListByBackup(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -8919,7 +9234,7 @@ $client->storage->getStorageListByBackup(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -8980,7 +9295,7 @@ $client->storage->getStorageListByCdrom(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -8988,7 +9303,7 @@ $client->storage->getStorageListByCdrom(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -8996,7 +9311,7 @@ $client->storage->getStorageListByCdrom(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -9004,7 +9319,7 @@ $client->storage->getStorageListByCdrom(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -9012,7 +9327,7 @@ $client->storage->getStorageListByCdrom(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -9020,7 +9335,7 @@ $client->storage->getStorageListByCdrom(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9120,7 +9435,7 @@ $client->storage->getStorageListByNormal(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -9128,7 +9443,7 @@ $client->storage->getStorageListByNormal(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -9136,7 +9451,7 @@ $client->storage->getStorageListByNormal(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -9144,7 +9459,7 @@ $client->storage->getStorageListByNormal(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -9152,7 +9467,7 @@ $client->storage->getStorageListByNormal(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -9160,7 +9475,7 @@ $client->storage->getStorageListByNormal(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9221,7 +9536,7 @@ $client->storage->getStorageListByPrivateAccess(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -9229,7 +9544,7 @@ $client->storage->getStorageListByPrivateAccess(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -9237,7 +9552,7 @@ $client->storage->getStorageListByPrivateAccess(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -9245,7 +9560,7 @@ $client->storage->getStorageListByPrivateAccess(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -9253,7 +9568,7 @@ $client->storage->getStorageListByPrivateAccess(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -9261,7 +9576,7 @@ $client->storage->getStorageListByPrivateAccess(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9322,7 +9637,7 @@ $client->storage->getStorageListByPublicAccess(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -9330,7 +9645,7 @@ $client->storage->getStorageListByPublicAccess(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -9338,7 +9653,7 @@ $client->storage->getStorageListByPublicAccess(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -9346,7 +9661,7 @@ $client->storage->getStorageListByPublicAccess(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -9354,7 +9669,7 @@ $client->storage->getStorageListByPublicAccess(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -9362,7 +9677,7 @@ $client->storage->getStorageListByPublicAccess(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9423,7 +9738,7 @@ $client->storage->getStorageListByTemplate(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -9431,7 +9746,7 @@ $client->storage->getStorageListByTemplate(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -9439,7 +9754,7 @@ $client->storage->getStorageListByTemplate(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -9447,7 +9762,7 @@ $client->storage->getStorageListByTemplate(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -9455,7 +9770,7 @@ $client->storage->getStorageListByTemplate(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -9463,7 +9778,7 @@ $client->storage->getStorageListByTemplate(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9526,7 +9841,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$type:** `string` — Storage resource type to return.
-
+    
 </dd>
 </dl>
 
@@ -9534,7 +9849,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$access:** `string` — Storage resource access type to return.
-
+    
 </dd>
 </dl>
 
@@ -9542,7 +9857,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$label:** `?string` — Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
-
+    
 </dd>
 </dl>
 
@@ -9550,7 +9865,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$search:** `?string` — Search storage resource titles and UUIDs by partial match.
-
+    
 </dd>
 </dl>
 
@@ -9558,7 +9873,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$sortBy:** `?string` — Field by which to sort the results.
-
+    
 </dd>
 </dl>
 
@@ -9566,7 +9881,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$orderBy:** `?string` — Sort direction. Used only when `sort_by` is specified.
-
+    
 </dd>
 </dl>
 
@@ -9574,7 +9889,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$limit:** `?int` — Maximum number of storage resources to return.
-
+    
 </dd>
 </dl>
 
@@ -9582,7 +9897,7 @@ $client->storage->getStorageListByTypeAndAccess(
 <dd>
 
 **$offset:** `?int` — Number of storage resources to skip before returning results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9638,7 +9953,7 @@ $client->storage->getStorageInfo(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -9700,7 +10015,7 @@ $client->storage->modifyStorage(
 <dd>
 
 **$uuid:** `string` — Block storage UUID
-
+    
 </dd>
 </dl>
 
@@ -9708,7 +10023,7 @@ $client->storage->modifyStorage(
 <dd>
 
 **$storage:** `ModifyStorageBodyStorage` — Block storage properties to modify.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9765,7 +10080,7 @@ $client->storage->deleteStorage(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 
@@ -9773,7 +10088,7 @@ $client->storage->deleteStorage(
 <dd>
 
 **$backups:** `?string` — Policy for handling backups when deleting a storage resource. Defaults to `keep`. Allowed values: keep, delete, keep_latest
-
+    
 </dd>
 </dl>
 </dd>
@@ -9835,7 +10150,7 @@ $client->storage->attachStorageToServer(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 
@@ -9843,7 +10158,7 @@ $client->storage->attachStorageToServer(
 <dd>
 
 **$storageDevice:** `AttachStorageRequestStorageDevice` — Parameters for attaching this storage resource to a Cloud Server in the same zone.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9904,7 +10219,7 @@ $client->storage->createOnDemandBackup(
 <dd>
 
 **$uuid:** `string` — Block storage UUID
-
+    
 </dd>
 </dl>
 
@@ -9912,7 +10227,7 @@ $client->storage->createOnDemandBackup(
 <dd>
 
 **$storage:** `CreateStorageBackupRequestStorage` — Parameters for the point-in-time backup.
-
+    
 </dd>
 </dl>
 </dd>
@@ -9968,7 +10283,7 @@ $client->storage->cancelStorageOperation(
 <dd>
 
 **$uuid:** `string` — Block storage UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10032,7 +10347,7 @@ $client->storage->cloneStorage(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 
@@ -10040,7 +10355,7 @@ $client->storage->cloneStorage(
 <dd>
 
 **$storage:** `CloneStorageRequestStorage` — Parameters for the cloned block storage.
-
+    
 </dd>
 </dl>
 </dd>
@@ -10096,7 +10411,7 @@ $client->storage->detachStorageFromServer(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10152,7 +10467,7 @@ $client->storage->addStorageToFavorites(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10208,7 +10523,7 @@ $client->storage->removeStorageFromFavorites(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10264,7 +10579,7 @@ $client->storage->getStorageImportDetails(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10326,7 +10641,7 @@ $client->storage->createStorageImport(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 
@@ -10334,7 +10649,7 @@ $client->storage->createStorageImport(
 <dd>
 
 **$storageImport:** `CreateStorageImportRequestStorageImport` — Storage import parameters.
-
+    
 </dd>
 </dl>
 </dd>
@@ -10390,7 +10705,7 @@ $client->storage->cancelStorageImport(
 <dd>
 
 **$uuid:** `string` — Storage resource UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10446,7 +10761,7 @@ $client->storage->resizeStorage(
 <dd>
 
 **$uuid:** `string` — Block storage UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10502,7 +10817,7 @@ $client->storage->restoreStorageFromBackup(
 <dd>
 
 **$uuid:** `string` — Backup UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -10563,7 +10878,7 @@ $client->storage->createTemplateFromStorage(
 <dd>
 
 **$uuid:** `string` — Block storage UUID
-
+    
 </dd>
 </dl>
 
@@ -10571,7 +10886,7 @@ $client->storage->createTemplateFromStorage(
 <dd>
 
 **$storage:** `CreateStorageTemplateRequestStorage` — Parameters for creating a template from the block storage.
-
+    
 </dd>
 </dl>
 </dd>
@@ -10676,8 +10991,8 @@ $client->tag->createTag(
 <dl>
 <dd>
 
-**$request:** `Tag`
-
+**$request:** `Tag` 
+    
 </dd>
 </dl>
 </dd>
@@ -10733,7 +11048,7 @@ $client->tag->getTag(
 <dd>
 
 **$name:** `string` — Tag name
-
+    
 </dd>
 </dl>
 </dd>
@@ -10802,15 +11117,15 @@ $client->tag->modifyTag(
 <dd>
 
 **$name:** `string` — Tag name
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `Tag`
-
+**$request:** `Tag` 
+    
 </dd>
 </dl>
 </dd>
@@ -10866,7 +11181,7 @@ $client->tag->deleteTag(
 <dd>
 
 **$name:** `string` — Tag name
-
+    
 </dd>
 </dl>
 </dd>
@@ -10968,7 +11283,7 @@ $client->accountTokens->listTokens(
 <dd>
 
 **$limit:** `?int` — How many tokens to return at per page
-
+    
 </dd>
 </dl>
 
@@ -10976,7 +11291,7 @@ $client->accountTokens->listTokens(
 <dd>
 
 **$offset:** `?int` — Offset to start listing the tokens from
-
+    
 </dd>
 </dl>
 
@@ -10984,7 +11299,7 @@ $client->accountTokens->listTokens(
 <dd>
 
 **$gui:** `?bool` — Filter tokens based on GUI flag (true or false). Default is no value, i.e. no filtering and all tokens are returned.
-
+    
 </dd>
 </dl>
 
@@ -10992,7 +11307,7 @@ $client->accountTokens->listTokens(
 <dd>
 
 **$sort:** `?string` — Comma-separated list of fields to sort by. Prefix with '+' for ascending or '-' for descending order. Supported fields: created_at, expires_at, last_used_at, name. Example: sort=+name,-created_at. If no prefix is given, descending is assumed. Follows OpenAPI collectionFormat 'csv'.
-
+    
 </dd>
 </dl>
 </dd>
@@ -11049,8 +11364,8 @@ $client->accountTokens->createToken(
 <dl>
 <dd>
 
-**$request:** `AccountTokensCreateTokenRequestExpiresIn|AccountTokensCreateTokenRequestExpiresAt`
-
+**$request:** `AccountTokensCreateTokenRequestExpiresIn|AccountTokensCreateTokenRequestExpiresAt` 
+    
 </dd>
 </dl>
 </dd>
@@ -11106,7 +11421,7 @@ $client->accountTokens->getToken(
 <dd>
 
 **$tokenUuid:** `string` — The uuid of the token to get
-
+    
 </dd>
 </dl>
 </dd>
@@ -11162,7 +11477,7 @@ $client->accountTokens->revokeToken(
 <dd>
 
 **$tokenUuid:** `string` — The uuid of the token to delete
-
+    
 </dd>
 </dl>
 </dd>
@@ -11222,7 +11537,7 @@ $client->objectStorage2->listObjectStorages(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -11230,7 +11545,7 @@ $client->objectStorage2->listObjectStorages(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -11238,7 +11553,7 @@ $client->objectStorage2->listObjectStorages(
 <dd>
 
 **$sort:** `?string` — Order of returned results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -11310,24 +11625,24 @@ $client->objectStorage2->createObjectStorage(
 <dl>
 <dd>
 
-**$name:** `string`
-
+**$name:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$region:** `string`
-
+**$region:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
@@ -11335,7 +11650,7 @@ $client->objectStorage2->createObjectStorage(
 <dd>
 
 **$networks:** `?array` — Networks to attach to the service. Private networks must reside in the same region as the object storage.
-
+    
 </dd>
 </dl>
 
@@ -11343,7 +11658,7 @@ $client->objectStorage2->createObjectStorage(
 <dd>
 
 **$customDomains:** `?array` — Custom domains to attach to the service.
-
+    
 </dd>
 </dl>
 
@@ -11351,15 +11666,15 @@ $client->objectStorage2->createObjectStorage(
 <dd>
 
 **$labels:** `?array` — Labels for classifying the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?ObjectStorage2PropertiesCreate`
-
+**$properties:** `?ObjectStorage2PropertiesCreate` 
+    
 </dd>
 </dl>
 
@@ -11367,7 +11682,7 @@ $client->objectStorage2->createObjectStorage(
 <dd>
 
 **$terminationProtection:** `?bool` — Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
-
+    
 </dd>
 </dl>
 </dd>
@@ -11423,7 +11738,7 @@ $client->objectStorage2->getObjectStorage(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -11502,7 +11817,7 @@ $client->objectStorage2->replaceObjectStorage(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -11510,15 +11825,15 @@ $client->objectStorage2->replaceObjectStorage(
 <dd>
 
 **$name:** `string` — The name of the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
@@ -11526,23 +11841,23 @@ $client->objectStorage2->replaceObjectStorage(
 <dd>
 
 **$terminationProtection:** `?bool` — Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networks:** `?array`
-
+**$networks:** `?array` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$customDomains:** `?array`
-
+**$customDomains:** `?array` 
+    
 </dd>
 </dl>
 
@@ -11550,23 +11865,23 @@ $client->objectStorage2->replaceObjectStorage(
 <dd>
 
 **$staticWebsites:** `?array` — Static website configurations for this service. Array replaces all existing configurations.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labels:** `?array`
-
+**$labels:** `?array` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?ObjectStorage2PropertiesCreate`
-
+**$properties:** `?ObjectStorage2PropertiesCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -11625,7 +11940,7 @@ $client->objectStorage2->deleteObjectStorage(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -11633,7 +11948,7 @@ $client->objectStorage2->deleteObjectStorage(
 <dd>
 
 **$force:** `?bool` — If the parameter is provided, the deletion process starts even if the service is not empty.
-
+    
 </dd>
 </dl>
 </dd>
@@ -11701,39 +12016,39 @@ $client->objectStorage2->modifyObjectStorage(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `?string`
-
+**$name:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `?string`
-
+**$configuredStatus:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networks:** `?array`
-
+**$networks:** `?array` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$customDomains:** `?array`
-
+**$customDomains:** `?array` 
+    
 </dd>
 </dl>
 
@@ -11741,23 +12056,23 @@ $client->objectStorage2->modifyObjectStorage(
 <dd>
 
 **$staticWebsites:** `?array` — Static website configurations for this service. Array replaces all existing configurations.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labels:** `?array`
-
+**$labels:** `?array` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?ObjectStorage2PropertiesCreate`
-
+**$properties:** `?ObjectStorage2PropertiesCreate` 
+    
 </dd>
 </dl>
 
@@ -11765,7 +12080,7 @@ $client->objectStorage2->modifyObjectStorage(
 <dd>
 
 **$terminationProtection:** `?bool` — Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
-
+    
 </dd>
 </dl>
 </dd>
@@ -11821,7 +12136,7 @@ $client->objectStorage2->listObjectStorageNetworks(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -11884,15 +12199,15 @@ $client->objectStorage2->createObjectStorageNetwork(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2NetworkCreate`
-
+**$request:** `ObjectStorage2NetworkCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -11949,7 +12264,7 @@ $client->objectStorage2->getObjectStorageNetwork(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -11957,7 +12272,7 @@ $client->objectStorage2->getObjectStorageNetwork(
 <dd>
 
 **$networkName:** `string` — The name of the network.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12014,7 +12329,7 @@ $client->objectStorage2->deleteObjectStorageNetwork(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12022,7 +12337,7 @@ $client->objectStorage2->deleteObjectStorageNetwork(
 <dd>
 
 **$networkName:** `string` — The name of the network.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12078,7 +12393,7 @@ $client->objectStorage2->listObjectStorageCustomDomains(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -12140,15 +12455,15 @@ $client->objectStorage2->attachObjectStorageCustomDomain(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2CustomDomainCreate`
-
+**$request:** `ObjectStorage2CustomDomainCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -12205,7 +12520,7 @@ $client->objectStorage2->getObjectStorageCustomDomain(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12213,7 +12528,7 @@ $client->objectStorage2->getObjectStorageCustomDomain(
 <dd>
 
 **$customDomainName:** `string` — The domain name.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12270,7 +12585,7 @@ $client->objectStorage2->deleteObjectStorageCustomDomain(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12278,7 +12593,7 @@ $client->objectStorage2->deleteObjectStorageCustomDomain(
 <dd>
 
 **$customDomainName:** `string` — The domain name.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12339,7 +12654,7 @@ $client->objectStorage2->modifyObjectStorageCustomDomain(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12347,7 +12662,7 @@ $client->objectStorage2->modifyObjectStorageCustomDomain(
 <dd>
 
 **$customDomainName:** `string` — The domain name.
-
+    
 </dd>
 </dl>
 
@@ -12355,7 +12670,7 @@ $client->objectStorage2->modifyObjectStorageCustomDomain(
 <dd>
 
 **$type:** `?string` — Type of the custom domain.
-
+    
 </dd>
 </dl>
 
@@ -12363,7 +12678,7 @@ $client->objectStorage2->modifyObjectStorageCustomDomain(
 <dd>
 
 **$domainName:** `?string` — New modified custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-
+    
 </dd>
 </dl>
 </dd>
@@ -12458,7 +12773,7 @@ $client->objectStorage2->getObjectStorageRegion(
 <dd>
 
 **$regionName:** `string` — The name of the region.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12514,7 +12829,7 @@ $client->objectStorage2->getObjectStorageMetrics(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -12574,7 +12889,7 @@ $client->objectStorage2->listObjectStorageBucketMetrics(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12582,7 +12897,7 @@ $client->objectStorage2->listObjectStorageBucketMetrics(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -12590,7 +12905,7 @@ $client->objectStorage2->listObjectStorageBucketMetrics(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12649,7 +12964,7 @@ $client->objectStorage2->createObjectStorageBucket(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12657,7 +12972,7 @@ $client->objectStorage2->createObjectStorageBucket(
 <dd>
 
 **$name:** `string` — Must be unique within the service, and should contain only alphanumeric, .,- and _.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12714,7 +13029,7 @@ $client->objectStorage2->deleteObjectStorageBucket(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12722,7 +13037,7 @@ $client->objectStorage2->deleteObjectStorageBucket(
 <dd>
 
 **$bucketName:** `string` — The name of the bucket.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12785,7 +13100,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -12793,7 +13108,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$from:** `?DateTime` — Beginning of the time range for which to return metrics.
-
+    
 </dd>
 </dl>
 
@@ -12801,7 +13116,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$to:** `?DateTime` — End of the time range for which to return metrics.
-
+    
 </dd>
 </dl>
 
@@ -12809,7 +13124,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$interval:** `?string` — Metrics aggregation interval.
-
+    
 </dd>
 </dl>
 
@@ -12817,7 +13132,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Order of returned results.
-
+    
 </dd>
 </dl>
 
@@ -12825,7 +13140,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -12833,7 +13148,7 @@ $client->objectStorage2->listObjectStorageMetricsSeries(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -12889,7 +13204,7 @@ $client->objectStorage2->listObjectStorageLabels(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -12951,15 +13266,15 @@ $client->objectStorage2->createObjectStorageLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2LabelCreate`
-
+**$request:** `ObjectStorage2LabelCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -13016,7 +13331,7 @@ $client->objectStorage2->getObjectStorageLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13024,7 +13339,7 @@ $client->objectStorage2->getObjectStorageLabel(
 <dd>
 
 **$labelKey:** `string` — The key of the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13081,7 +13396,7 @@ $client->objectStorage2->deleteObjectStorageLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13089,7 +13404,7 @@ $client->objectStorage2->deleteObjectStorageLabel(
 <dd>
 
 **$labelKey:** `string` — The key of the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13150,7 +13465,7 @@ $client->objectStorage2->modifyObjectStorageLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13158,23 +13473,23 @@ $client->objectStorage2->modifyObjectStorageLabel(
 <dd>
 
 **$labelKey:** `string` — The key of the label.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$key:** `?string`
-
+**$key:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$value:** `?string`
-
+**$value:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -13230,7 +13545,7 @@ $client->objectStorage2->listObjectStorageStaticWebsites(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -13291,15 +13606,15 @@ $client->objectStorage2->createObjectStorageStaticWebsite(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2StaticWebsiteConfigCreate`
-
+**$request:** `ObjectStorage2StaticWebsiteConfigCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -13356,7 +13671,7 @@ $client->objectStorage2->getObjectStorageStaticWebsite(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13364,7 +13679,7 @@ $client->objectStorage2->getObjectStorageStaticWebsite(
 <dd>
 
 **$customDomainName:** `string` — The domain name.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13421,7 +13736,7 @@ $client->objectStorage2->deleteObjectStorageStaticWebsite(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13429,7 +13744,7 @@ $client->objectStorage2->deleteObjectStorageStaticWebsite(
 <dd>
 
 **$customDomainName:** `string` — The domain name.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13487,7 +13802,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13495,7 +13810,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$customDomainName:** `string` — The domain name.
-
+    
 </dd>
 </dl>
 
@@ -13503,7 +13818,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$bucketName:** `?string` — Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
-
+    
 </dd>
 </dl>
 
@@ -13511,7 +13826,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$bucketPrefix:** `?string` — Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-
+    
 </dd>
 </dl>
 
@@ -13519,7 +13834,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$indexDocument:** `?string` — Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-
+    
 </dd>
 </dl>
 
@@ -13527,7 +13842,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$spaMode:** `?bool` — Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
-
+    
 </dd>
 </dl>
 
@@ -13535,7 +13850,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$enabled:** `?bool` — Whether the static website configuration should be active
-
+    
 </dd>
 </dl>
 
@@ -13543,7 +13858,7 @@ $client->objectStorage2->modifyObjectStorageStaticWebsite(
 <dd>
 
 **$errorPages:** `?array` — Custom error page configurations for specific HTTP status codes or ranges. Replaces the entire set when provided.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13599,7 +13914,7 @@ $client->objectStorage2->listObjectStorageDomains(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -13655,7 +13970,7 @@ $client->objectStorage2->listObjectStorageUsers(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -13714,7 +14029,7 @@ $client->objectStorage2->createObjectStorageUser(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13722,7 +14037,7 @@ $client->objectStorage2->createObjectStorageUser(
 <dd>
 
 **$username:** `string` — The name of the user to create.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13779,7 +14094,7 @@ $client->objectStorage2->getObjectStorageUser(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13787,7 +14102,7 @@ $client->objectStorage2->getObjectStorageUser(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13844,7 +14159,7 @@ $client->objectStorage2->deleteObjectStorageUser(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13852,7 +14167,7 @@ $client->objectStorage2->deleteObjectStorageUser(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13909,7 +14224,7 @@ $client->objectStorage2->listObjectStorageAccessKeys(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13917,7 +14232,7 @@ $client->objectStorage2->listObjectStorageAccessKeys(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -13974,7 +14289,7 @@ $client->objectStorage2->createObjectStorageAccessKey(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -13982,7 +14297,7 @@ $client->objectStorage2->createObjectStorageAccessKey(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14040,7 +14355,7 @@ $client->objectStorage2->getObjectStorageAccessKeyDetails(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14048,7 +14363,7 @@ $client->objectStorage2->getObjectStorageAccessKeyDetails(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14056,7 +14371,7 @@ $client->objectStorage2->getObjectStorageAccessKeyDetails(
 <dd>
 
 **$accessKeyId:** `string` — The ID of the access key.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14114,7 +14429,7 @@ $client->objectStorage2->deleteObjectStorageAccessKey(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14122,7 +14437,7 @@ $client->objectStorage2->deleteObjectStorageAccessKey(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14130,7 +14445,7 @@ $client->objectStorage2->deleteObjectStorageAccessKey(
 <dd>
 
 **$accessKeyId:** `string` — The ID of the access key.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14191,7 +14506,7 @@ $client->objectStorage2->modifyObjectStorageAccessKeyDetails(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14199,7 +14514,7 @@ $client->objectStorage2->modifyObjectStorageAccessKeyDetails(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14207,7 +14522,7 @@ $client->objectStorage2->modifyObjectStorageAccessKeyDetails(
 <dd>
 
 **$accessKeyId:** `string` — The ID of the access key.
-
+    
 </dd>
 </dl>
 
@@ -14215,7 +14530,7 @@ $client->objectStorage2->modifyObjectStorageAccessKeyDetails(
 <dd>
 
 **$status:** `?string` — Indicates if the key is active or inactive.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14272,7 +14587,7 @@ $client->objectStorage2->listObjectStorageAttachedUserPolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14280,7 +14595,7 @@ $client->objectStorage2->listObjectStorageAttachedUserPolicies(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14342,7 +14657,7 @@ $client->objectStorage2->attachObjectStorageUserPolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14350,15 +14665,15 @@ $client->objectStorage2->attachObjectStorageUserPolicy(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2PolicyAttachmentCreate`
-
+**$request:** `ObjectStorage2PolicyAttachmentCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -14416,7 +14731,7 @@ $client->objectStorage2->detachObjectStorageUserPolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14424,7 +14739,7 @@ $client->objectStorage2->detachObjectStorageUserPolicy(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14432,7 +14747,7 @@ $client->objectStorage2->detachObjectStorageUserPolicy(
 <dd>
 
 **$nestedName:** `string` — The name of the policy to detach.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14490,7 +14805,7 @@ $client->objectStorage2->getObjectStorageUserInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14498,7 +14813,7 @@ $client->objectStorage2->getObjectStorageUserInlinePolicy(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14506,7 +14821,7 @@ $client->objectStorage2->getObjectStorageUserInlinePolicy(
 <dd>
 
 **$userPolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14564,7 +14879,7 @@ $client->objectStorage2->deleteObjectStorageUserInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14572,7 +14887,7 @@ $client->objectStorage2->deleteObjectStorageUserInlinePolicy(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14580,7 +14895,7 @@ $client->objectStorage2->deleteObjectStorageUserInlinePolicy(
 <dd>
 
 **$userPolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14637,7 +14952,7 @@ $client->objectStorage2->listObjectStorageUserInlinePolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14645,7 +14960,7 @@ $client->objectStorage2->listObjectStorageUserInlinePolicies(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14708,7 +15023,7 @@ $client->objectStorage2->createObjectStorageUserInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14716,15 +15031,15 @@ $client->objectStorage2->createObjectStorageUserInlinePolicy(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2InlinePolicyCreate`
-
+**$request:** `ObjectStorage2InlinePolicyCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -14781,7 +15096,7 @@ $client->objectStorage2->getObjectStorageUserTags(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14789,7 +15104,7 @@ $client->objectStorage2->getObjectStorageUserTags(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -14858,7 +15173,7 @@ $client->objectStorage2->replaceObjectStorageUserTags(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14866,15 +15181,15 @@ $client->objectStorage2->replaceObjectStorageUserTags(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `array`
-
+**$request:** `array` 
+    
 </dd>
 </dl>
 </dd>
@@ -14932,7 +15247,7 @@ $client->objectStorage2->deleteObjectStorageUserTag(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -14940,7 +15255,7 @@ $client->objectStorage2->deleteObjectStorageUserTag(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
@@ -14948,7 +15263,7 @@ $client->objectStorage2->deleteObjectStorageUserTag(
 <dd>
 
 **$userTagKey:** `string` — The key of the user tag.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15010,7 +15325,7 @@ $client->objectStorage2->createObjectStorageUserPermissionsBoundary(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15018,15 +15333,15 @@ $client->objectStorage2->createObjectStorageUserPermissionsBoundary(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2PermissionsBoundaryCreate`
-
+**$request:** `ObjectStorage2PermissionsBoundaryCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -15083,7 +15398,7 @@ $client->objectStorage2->deleteObjectStorageUserPermissionsBoundary(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15091,7 +15406,7 @@ $client->objectStorage2->deleteObjectStorageUserPermissionsBoundary(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15148,7 +15463,7 @@ $client->objectStorage2->listObjectStoragePolicyVersions(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15156,7 +15471,7 @@ $client->objectStorage2->listObjectStoragePolicyVersions(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15217,7 +15532,7 @@ $client->objectStorage2->createObjectStoragePolicyVersion(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15225,7 +15540,7 @@ $client->objectStorage2->createObjectStoragePolicyVersion(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 
@@ -15233,7 +15548,7 @@ $client->objectStorage2->createObjectStoragePolicyVersion(
 <dd>
 
 **$document:** `string` — A valid, URL-encoded policy document.
-
+    
 </dd>
 </dl>
 
@@ -15241,7 +15556,7 @@ $client->objectStorage2->createObjectStoragePolicyVersion(
 <dd>
 
 **$isDefault:** `bool` — Set this version as the default.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15299,7 +15614,7 @@ $client->objectStorage2->getObjectStoragePolicyVersion(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15307,7 +15622,7 @@ $client->objectStorage2->getObjectStoragePolicyVersion(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 
@@ -15315,7 +15630,7 @@ $client->objectStorage2->getObjectStoragePolicyVersion(
 <dd>
 
 **$policyVersion:** `string` — The version identifier of the policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15373,7 +15688,7 @@ $client->objectStorage2->deleteObjectStoragePolicyVersion(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15381,7 +15696,7 @@ $client->objectStorage2->deleteObjectStoragePolicyVersion(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 
@@ -15389,7 +15704,7 @@ $client->objectStorage2->deleteObjectStoragePolicyVersion(
 <dd>
 
 **$policyVersion:** `string` — The version identifier of the policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15446,7 +15761,7 @@ $client->objectStorage2->getObjectStoragePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15454,7 +15769,7 @@ $client->objectStorage2->getObjectStoragePolicy(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15511,7 +15826,7 @@ $client->objectStorage2->deleteObjectStoragePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15519,7 +15834,7 @@ $client->objectStorage2->deleteObjectStoragePolicy(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15579,7 +15894,7 @@ $client->objectStorage2->setObjectStorageDefaultPolicyVersion(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15587,7 +15902,7 @@ $client->objectStorage2->setObjectStorageDefaultPolicyVersion(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 
@@ -15595,7 +15910,7 @@ $client->objectStorage2->setObjectStorageDefaultPolicyVersion(
 <dd>
 
 **$versionId:** `string` — The policy version ID to set as default.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15651,7 +15966,7 @@ $client->objectStorage2->listObjectStoragePolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -15712,7 +16027,7 @@ $client->objectStorage2->createObjectStoragePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15720,7 +16035,7 @@ $client->objectStorage2->createObjectStoragePolicy(
 <dd>
 
 **$name:** `string` — Unique name of the policy.
-
+    
 </dd>
 </dl>
 
@@ -15728,7 +16043,7 @@ $client->objectStorage2->createObjectStoragePolicy(
 <dd>
 
 **$description:** `?string` — The policy description.
-
+    
 </dd>
 </dl>
 
@@ -15736,7 +16051,7 @@ $client->objectStorage2->createObjectStoragePolicy(
 <dd>
 
 **$document:** `string` — A valid, URL-encoded policy document.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15793,7 +16108,7 @@ $client->objectStorage2->listObjectStorageIamGroupPolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15801,7 +16116,7 @@ $client->objectStorage2->listObjectStorageIamGroupPolicies(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 </dd>
@@ -15863,7 +16178,7 @@ $client->objectStorage2->attachObjectStorageIamGroupPolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15871,15 +16186,15 @@ $client->objectStorage2->attachObjectStorageIamGroupPolicy(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2PolicyAttachmentCreate`
-
+**$request:** `ObjectStorage2PolicyAttachmentCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -15937,7 +16252,7 @@ $client->objectStorage2->detachObjectStorageIamGroupPolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -15945,7 +16260,7 @@ $client->objectStorage2->detachObjectStorageIamGroupPolicy(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
@@ -15953,7 +16268,7 @@ $client->objectStorage2->detachObjectStorageIamGroupPolicy(
 <dd>
 
 **$policyName:** `string` — The name of the policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16009,7 +16324,7 @@ $client->objectStorage2->listObjectStorageGroups(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -16068,7 +16383,7 @@ $client->objectStorage2->createObjectStorageGroup(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16076,7 +16391,7 @@ $client->objectStorage2->createObjectStorageGroup(
 <dd>
 
 **$name:** `string` — A valid string to represent the name of the IAM group.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16133,7 +16448,7 @@ $client->objectStorage2->getObjectStorageGroup(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16141,7 +16456,7 @@ $client->objectStorage2->getObjectStorageGroup(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16198,7 +16513,7 @@ $client->objectStorage2->deleteObjectStorageGroup(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16206,7 +16521,7 @@ $client->objectStorage2->deleteObjectStorageGroup(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16264,7 +16579,7 @@ $client->objectStorage2->attachObjectStorageUserToGroup(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16272,7 +16587,7 @@ $client->objectStorage2->attachObjectStorageUserToGroup(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
@@ -16280,7 +16595,7 @@ $client->objectStorage2->attachObjectStorageUserToGroup(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16338,7 +16653,7 @@ $client->objectStorage2->removeObjectStorageUserFromGroup(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16346,7 +16661,7 @@ $client->objectStorage2->removeObjectStorageUserFromGroup(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
@@ -16354,7 +16669,7 @@ $client->objectStorage2->removeObjectStorageUserFromGroup(
 <dd>
 
 **$username:** `string` — The name of the user.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16411,7 +16726,7 @@ $client->objectStorage2->listObjectStorageGroupInlinePolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16419,7 +16734,7 @@ $client->objectStorage2->listObjectStorageGroupInlinePolicies(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16482,7 +16797,7 @@ $client->objectStorage2->createObjectStorageGroupInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16490,15 +16805,15 @@ $client->objectStorage2->createObjectStorageGroupInlinePolicy(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2InlinePolicyCreate`
-
+**$request:** `ObjectStorage2InlinePolicyCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -16556,7 +16871,7 @@ $client->objectStorage2->getObjectStorageGroupInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16564,7 +16879,7 @@ $client->objectStorage2->getObjectStorageGroupInlinePolicy(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
@@ -16572,7 +16887,7 @@ $client->objectStorage2->getObjectStorageGroupInlinePolicy(
 <dd>
 
 **$groupPolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16630,7 +16945,7 @@ $client->objectStorage2->deleteObjectStorageGroupInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16638,7 +16953,7 @@ $client->objectStorage2->deleteObjectStorageGroupInlinePolicy(
 <dd>
 
 **$groupName:** `string` — The name of the group.
-
+    
 </dd>
 </dl>
 
@@ -16646,7 +16961,7 @@ $client->objectStorage2->deleteObjectStorageGroupInlinePolicy(
 <dd>
 
 **$groupPolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16702,7 +17017,7 @@ $client->objectStorage2->listObjectStorageRoles(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -16775,15 +17090,15 @@ $client->objectStorage2->createObjectStorageRole(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `string`
-
+**$name:** `string` 
+    
 </dd>
 </dl>
 
@@ -16791,7 +17106,7 @@ $client->objectStorage2->createObjectStorageRole(
 <dd>
 
 **$assumeRolePolicyDocument:** `string` — The policy document that grants an entity permission to assume the role.
-
+    
 </dd>
 </dl>
 
@@ -16799,7 +17114,7 @@ $client->objectStorage2->createObjectStorageRole(
 <dd>
 
 **$description:** `?string` — Description of the role.
-
+    
 </dd>
 </dl>
 
@@ -16807,7 +17122,7 @@ $client->objectStorage2->createObjectStorageRole(
 <dd>
 
 **$maxSessionDuration:** `?int` — Maximum session duration in seconds.
-
+    
 </dd>
 </dl>
 
@@ -16815,7 +17130,7 @@ $client->objectStorage2->createObjectStorageRole(
 <dd>
 
 **$permissionsBoundary:** `?string` — Policy name to set as the permissions boundary.
-
+    
 </dd>
 </dl>
 
@@ -16823,7 +17138,7 @@ $client->objectStorage2->createObjectStorageRole(
 <dd>
 
 **$tags:** `?array` — Tags to attach to the role (max 50).
-
+    
 </dd>
 </dl>
 </dd>
@@ -16880,7 +17195,7 @@ $client->objectStorage2->getObjectStorageRole(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16888,7 +17203,7 @@ $client->objectStorage2->getObjectStorageRole(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -16945,7 +17260,7 @@ $client->objectStorage2->deleteObjectStorageRole(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -16953,7 +17268,7 @@ $client->objectStorage2->deleteObjectStorageRole(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17014,7 +17329,7 @@ $client->objectStorage2->updateObjectStorageRole(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17022,7 +17337,7 @@ $client->objectStorage2->updateObjectStorageRole(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
@@ -17030,7 +17345,7 @@ $client->objectStorage2->updateObjectStorageRole(
 <dd>
 
 **$description:** `?string` — New description for the role.
-
+    
 </dd>
 </dl>
 
@@ -17038,7 +17353,7 @@ $client->objectStorage2->updateObjectStorageRole(
 <dd>
 
 **$maxSessionDuration:** `?int` — New maximum session duration in seconds.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17095,7 +17410,7 @@ $client->objectStorage2->listObjectStorageRoleInlinePolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17103,7 +17418,7 @@ $client->objectStorage2->listObjectStorageRoleInlinePolicies(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17166,7 +17481,7 @@ $client->objectStorage2->createObjectStorageRoleInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17174,15 +17489,15 @@ $client->objectStorage2->createObjectStorageRoleInlinePolicy(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2InlinePolicyCreate`
-
+**$request:** `ObjectStorage2InlinePolicyCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -17240,7 +17555,7 @@ $client->objectStorage2->getObjectStorageRoleInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17248,7 +17563,7 @@ $client->objectStorage2->getObjectStorageRoleInlinePolicy(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
@@ -17256,7 +17571,7 @@ $client->objectStorage2->getObjectStorageRoleInlinePolicy(
 <dd>
 
 **$rolePolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17314,7 +17629,7 @@ $client->objectStorage2->deleteObjectStorageRoleInlinePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17322,7 +17637,7 @@ $client->objectStorage2->deleteObjectStorageRoleInlinePolicy(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
@@ -17330,7 +17645,7 @@ $client->objectStorage2->deleteObjectStorageRoleInlinePolicy(
 <dd>
 
 **$rolePolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17392,7 +17707,7 @@ $client->objectStorage2->createObjectStorageRolePermissionsBoundary(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17400,15 +17715,15 @@ $client->objectStorage2->createObjectStorageRolePermissionsBoundary(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2PermissionsBoundaryCreate`
-
+**$request:** `ObjectStorage2PermissionsBoundaryCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -17465,7 +17780,7 @@ $client->objectStorage2->deleteObjectStorageRolePermissionsBoundary(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17473,7 +17788,7 @@ $client->objectStorage2->deleteObjectStorageRolePermissionsBoundary(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17533,7 +17848,7 @@ $client->objectStorage2->assumeObjectStorageRolePolicy(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17541,7 +17856,7 @@ $client->objectStorage2->assumeObjectStorageRolePolicy(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
@@ -17549,7 +17864,7 @@ $client->objectStorage2->assumeObjectStorageRolePolicy(
 <dd>
 
 **$document:** `string` — The assume role policy document that grants an entity permission to assume the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17606,7 +17921,7 @@ $client->objectStorage2->listObjectStorageAttachedRolePolicies(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17614,7 +17929,7 @@ $client->objectStorage2->listObjectStorageAttachedRolePolicies(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17676,7 +17991,7 @@ $client->objectStorage2->attachObjectStoragePolicyToRole(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17684,15 +17999,15 @@ $client->objectStorage2->attachObjectStoragePolicyToRole(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `ObjectStorage2PolicyAttachmentCreate`
-
+**$request:** `ObjectStorage2PolicyAttachmentCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -17750,7 +18065,7 @@ $client->objectStorage2->detachObjectStoragePolicyFromRole(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17758,7 +18073,7 @@ $client->objectStorage2->detachObjectStoragePolicyFromRole(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
@@ -17766,7 +18081,7 @@ $client->objectStorage2->detachObjectStoragePolicyFromRole(
 <dd>
 
 **$rolePolicyName:** `string` — The name of the inline policy.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17823,7 +18138,7 @@ $client->objectStorage2->getObjectStorageRoleTags(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17831,7 +18146,7 @@ $client->objectStorage2->getObjectStorageRoleTags(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 </dd>
@@ -17900,7 +18215,7 @@ $client->objectStorage2->replaceObjectStorageRoleTags(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17908,15 +18223,15 @@ $client->objectStorage2->replaceObjectStorageRoleTags(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `array`
-
+**$request:** `array` 
+    
 </dd>
 </dl>
 </dd>
@@ -17974,7 +18289,7 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -17982,7 +18297,7 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 <dd>
 
 **$roleName:** `string` — The name of the role.
-
+    
 </dd>
 </dl>
 
@@ -17990,7 +18305,7 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 <dd>
 
 **$roleTagKey:** `string` — The key of the role tag.
-
+    
 </dd>
 </dl>
 </dd>
@@ -18014,7 +18329,7 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 <dl>
 <dd>
 
-Returns a list of File Storage services.
+Returns File Storage services in the customer account. Results can be paginated, sorted by creation time, and filtered by one or more labels. When multiple `label` parameters are supplied, a service must match every filter.
 </dd>
 </dl>
 </dd>
@@ -18030,7 +18345,10 @@ Returns a list of File Storage services.
 
 ```php
 $client->fileStorage->listFileStorages(
-    new ListFileStoragesRequest([]),
+    new ListFileStoragesRequest([
+        'limit' => 25,
+        'offset' => 20,
+    ]),
 );
 ```
 </dd>
@@ -18046,24 +18364,32 @@ $client->fileStorage->listFileStorages(
 <dl>
 <dd>
 
-**$limit:** `?int` — Number of entries to receive at most.
-
+**$limit:** `?int` — Maximum number of services to return.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$offset:** `?int` — Offset for retrieved results.
-
+**$offset:** `?int` — Number of matching services to skip before returning results.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sort:** `?string` — Order of returned results.
+**$sort:** `?string` — Creation-time order for returned services.
+    
+</dd>
+</dl>
 
+<dl>
+<dd>
+
+**$label:** `?string` — Filters services by label. Use a key such as `environment` to require that label, or a key-value pair such as `environment=production` for an exact value match. Label keys are matched case-insensitively; values are case-sensitive. Repeat this parameter to require all filters.
+    
 </dd>
 </dl>
 </dd>
@@ -18086,7 +18412,7 @@ $client->fileStorage->listFileStorages(
 <dl>
 <dd>
 
-Creates a new File Storage service.
+Creates a File Storage service that exposes shares over NFS. The service name must be unique within the customer account. Creation is asynchronous: the returned service initially has the pending operational state while its resources are provisioned.
 </dd>
 </dl>
 </dd>
@@ -18103,7 +18429,7 @@ Creates a new File Storage service.
 ```php
 $client->fileStorage->createFileStorage(
     new FileStorageServiceCreate([
-        'name' => 'test-name',
+        'name' => 'production-files',
         'zone' => 'fi-hel2',
         'configuredStatus' => FileStorageConfiguredStatus::Started->value,
         'sizeGib' => 250,
@@ -18111,35 +18437,19 @@ $client->fileStorage->createFileStorage(
         'networks' => [
             new FileStorageNetworkCreate([
                 'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'net',
+                'name' => 'private-net',
                 'family' => FileStorageNetworkFamily::IPv4->value,
                 'ipAddress' => '192.168.147.120',
             ]),
         ],
         'shares' => [
             new FileStorageShareCreate([
-                'name' => 'read',
-                'path' => '/public',
-                'acl' => [
-                    new FileStorageAclCreate([
-                        'name' => 'test-name',
-                        'target' => '*',
-                        'permission' => FileStoragePermission::Ro->value,
-                    ]),
-                ],
-            ]),
-            new FileStorageShareCreate([
-                'name' => 'write',
+                'name' => 'project-data',
                 'path' => '/project/data',
                 'acl' => [
                     new FileStorageAclCreate([
-                        'name' => 'test-name',
+                        'name' => 'office-write',
                         'target' => '192.168.147.0/24',
-                        'permission' => FileStoragePermission::Rw->value,
-                    ]),
-                    new FileStorageAclCreate([
-                        'name' => 'test-name',
-                        'target' => 'local.domain',
                         'permission' => FileStoragePermission::Rw->value,
                     ]),
                 ],
@@ -18167,64 +18477,64 @@ $client->fileStorage->createFileStorage(
 <dl>
 <dd>
 
-**$name:** `string`
-
+**$name:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$zone:** `string` — Indicates the zone where the service will be created.
-
+**$zone:** `string` — Valid UpCloud zone in which the File Storage service is created. An attached private network must be in this same zone.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sizeGib:** `int`
-
+**$sizeGib:** `int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$encrypted:** `?bool` — Indicates whether encryption at rest is enabled for the service.
-
+**$encrypted:** `?bool` — Enables AES-256-GCM encryption at rest. Encryption is disabled by default and cannot be changed after the service is created.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networks:** `?array`
-
+**$networks:** `?array` — Private network attachments to create with the service. At most one network can be attached, and it must be in the service zone.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shares:** `?array`
-
+**$shares:** `?array` — NFS shares to create with the service. The API currently supports at most 50 shares per service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labels:** `?array` — Labels
-
+**$labels:** `?array` — Labels attached to the service for metadata and list filtering. Label keys must be unique within the service.
+    
 </dd>
 </dl>
 </dd>
@@ -18247,7 +18557,7 @@ $client->fileStorage->createFileStorage(
 <dl>
 <dd>
 
-Returns managed File Storage details by given {service_uuid}.
+Returns the desired configuration, lifecycle state, and latest available capacity metrics for the File Storage service identified by `{service-uuid}`.
 </dd>
 </dl>
 </dd>
@@ -18263,7 +18573,7 @@ Returns managed File Storage details by given {service_uuid}.
 
 ```php
 $client->fileStorage->getFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 </dd>
@@ -18279,8 +18589,8 @@ $client->fileStorage->getFileStorage(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 </dd>
@@ -18303,7 +18613,7 @@ $client->fileStorage->getFileStorage(
 <dl>
 <dd>
 
-Replaces existing File Storage service by given {service_uuid}.
+Replaces the mutable configuration of the File Storage service identified by `{service-uuid}`. `name`, `configured_status`, and `size_gib` are required. The `networks` and `labels` collections are replaced in full; omitting either collection clears it. The service size can be increased but not reduced. The service zone, encryption setting, and shares are not changed by this operation.
 </dd>
 </dl>
 </dd>
@@ -18319,15 +18629,15 @@ Replaces existing File Storage service by given {service_uuid}.
 
 ```php
 $client->fileStorage->replaceFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new FileStorageServiceReplace([
-        'name' => 'test-name',
+        'name' => 'production-files',
         'configuredStatus' => FileStorageConfiguredStatus::Started->value,
         'sizeGib' => 250,
         'networks' => [
             new FileStorageNetworkCreate([
                 'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'net',
+                'name' => 'private-net',
                 'family' => FileStorageNetworkFamily::IPv4->value,
                 'ipAddress' => '192.168.147.120',
             ]),
@@ -18354,48 +18664,48 @@ $client->fileStorage->replaceFileStorage(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `string`
-
+**$name:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sizeGib:** `int`
-
+**$sizeGib:** `int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networks:** `?array`
-
+**$networks:** `?array` — Complete replacement for the service's attached private networks. Omit this property or supply an empty array to detach all networks. At most one network can be attached, and it must be in the service zone.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labels:** `?array` — Labels
-
+**$labels:** `?array` — Complete replacement for the service's labels. Omit this property or supply an empty array to remove all labels.
+    
 </dd>
 </dl>
 </dd>
@@ -18418,7 +18728,7 @@ $client->fileStorage->replaceFileStorage(
 <dl>
 <dd>
 
-Deletes existing File Storage service by given {service_uuid}.
+Schedules the File Storage service identified by `{service-uuid}` for asynchronous deletion. The service enters its deletion lifecycle after this request and its storage resources are subsequently torn down.
 </dd>
 </dl>
 </dd>
@@ -18434,7 +18744,7 @@ Deletes existing File Storage service by given {service_uuid}.
 
 ```php
 $client->fileStorage->deleteFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 </dd>
@@ -18450,8 +18760,8 @@ $client->fileStorage->deleteFileStorage(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 </dd>
@@ -18474,7 +18784,7 @@ $client->fileStorage->deleteFileStorage(
 <dl>
 <dd>
 
-Modifies existing File Storage service by given {service_uuid}.
+Partially modifies the mutable configuration of the File Storage service identified by `{service-uuid}` using JSON Merge Patch semantics. Omitted fields remain unchanged. A supplied `networks` or `labels` array replaces the complete collection; an empty array or `null` clears that collection. The service size can be increased but not reduced. The service zone, encryption setting, and shares cannot be modified by this operation.
 </dd>
 </dl>
 </dd>
@@ -18490,25 +18800,10 @@ Modifies existing File Storage service by given {service_uuid}.
 
 ```php
 $client->fileStorage->modifyFileStorage(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new FileStorageServiceModify([
-        'name' => 'test-name',
-        'configuredStatus' => FileStorageConfiguredStatus::Started->value,
-        'sizeGib' => 250,
-        'networks' => [
-            new FileStorageNetworkCreate([
-                'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'net',
-                'family' => FileStorageNetworkFamily::IPv4->value,
-                'ipAddress' => '192.168.147.120',
-            ]),
-        ],
-        'labels' => [
-            new FileStorageLabelCreate([
-                'key' => 'environment',
-                'value' => 'production',
-            ]),
-        ],
+        'name' => 'production-files',
+        'sizeGib' => 500,
     ]),
 );
 ```
@@ -18525,48 +18820,48 @@ $client->fileStorage->modifyFileStorage(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `?string`
-
+**$name:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `?string`
-
+**$configuredStatus:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sizeGib:** `?int`
-
+**$sizeGib:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networks:** `?array`
-
+**$networks:** `?array` — Complete replacement for the service's attached private networks. An empty array or `null` detaches all networks. At most one network can be attached, and it must be in the service zone.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labels:** `?array`
-
+**$labels:** `?array` — Complete replacement for the service's labels. An empty array or `null` removes all labels.
+    
 </dd>
 </dl>
 </dd>
@@ -18589,7 +18884,7 @@ $client->fileStorage->modifyFileStorage(
 <dl>
 <dd>
 
-Returns a list of available service networks by given {service_uuid}.
+Returns the private networks attached to the File Storage service identified by `{service-uuid}`. The list contains at most one attachment.
 </dd>
 </dl>
 </dd>
@@ -18605,7 +18900,7 @@ Returns a list of available service networks by given {service_uuid}.
 
 ```php
 $client->fileStorage->listFileStorageNetworks(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 </dd>
@@ -18621,8 +18916,8 @@ $client->fileStorage->listFileStorageNetworks(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 </dd>
@@ -18645,7 +18940,7 @@ $client->fileStorage->listFileStorageNetworks(
 <dl>
 <dd>
 
-Creates a new service network by given {service_uuid}.
+Attaches a private network to the File Storage service identified by `{service-uuid}`. A service can have at most one attached network. The network must be accessible to the customer and in the same zone as the service, and its attachment name must be unique within the service. Only IPv4 is supported. When `ip_address` is omitted, a free address is allocated from the private network's IPv4 pool.
 </dd>
 </dl>
 </dd>
@@ -18661,13 +18956,13 @@ Creates a new service network by given {service_uuid}.
 
 ```php
 $client->fileStorage->createFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new CreateFileStorageNetworkRequest([
         'body' => new FileStorageNetworkCreate([
             'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-            'name' => 'test-name',
+            'name' => 'private-net',
             'family' => FileStorageNetworkFamily::IPv4->value,
-            'ipAddress' => '10.20.30.40',
+            'ipAddress' => '192.168.147.120',
         ]),
     ]),
 );
@@ -18685,16 +18980,16 @@ $client->fileStorage->createFileStorageNetwork(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `FileStorageNetworkCreate`
-
+**$request:** `FileStorageNetworkCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -18717,7 +19012,7 @@ $client->fileStorage->createFileStorageNetwork(
 <dl>
 <dd>
 
-Returns service network details by given {service_uuid} and {network_name}.
+Returns the private network attachment named `{network-name}` from the File Storage service identified by `{service-uuid}`. Network attachment names are scoped to a service.
 </dd>
 </dl>
 </dd>
@@ -18733,8 +19028,8 @@ Returns service network details by given {service_uuid} and {network_name}.
 
 ```php
 $client->fileStorage->getFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'production-files',
 );
 ```
 </dd>
@@ -18750,16 +19045,16 @@ $client->fileStorage->getFileStorageNetwork(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networkName:** `string` — The name of the network.
-
+**$networkName:** `string` — Service-scoped name of the private network attachment.
+    
 </dd>
 </dl>
 </dd>
@@ -18782,7 +19077,7 @@ $client->fileStorage->getFileStorageNetwork(
 <dl>
 <dd>
 
-Deletes existing network by given {service_uuid} and {network_name}.
+Detaches the private network attachment named `{network-name}` from the File Storage service identified by `{service-uuid}`. This removes the service's network interface during reconciliation but does not delete the underlying private network.
 </dd>
 </dl>
 </dd>
@@ -18798,8 +19093,8 @@ Deletes existing network by given {service_uuid} and {network_name}.
 
 ```php
 $client->fileStorage->deleteFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'production-files',
 );
 ```
 </dd>
@@ -18815,16 +19110,16 @@ $client->fileStorage->deleteFileStorageNetwork(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networkName:** `string` — The name of the network.
-
+**$networkName:** `string` — Service-scoped name of the private network attachment.
+    
 </dd>
 </dl>
 </dd>
@@ -18847,7 +19142,7 @@ $client->fileStorage->deleteFileStorageNetwork(
 <dl>
 <dd>
 
-Modifies existing service network by given {service_uuid} and {network_name}.
+Partially modifies the private network attachment named `{network-name}` on the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged, including `ip_address`; `null` is not accepted. When selecting a different private network, supply an address from that network. The attachment name must remain unique within the service, the selected private network must be accessible and in the service zone, and only IPv4 is supported.
 </dd>
 </dl>
 </dd>
@@ -18863,13 +19158,10 @@ Modifies existing service network by given {service_uuid} and {network_name}.
 
 ```php
 $client->fileStorage->modifyFileStorageNetwork(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'production-files',
     new FileStorageNetworkModify([
-        'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-        'name' => 'test-name',
-        'family' => FileStorageNetworkFamily::IPv4->value,
-        'ipAddress' => '10.20.30.40',
+        'ipAddress' => '192.168.147.121',
     ]),
 );
 ```
@@ -18886,48 +19178,48 @@ $client->fileStorage->modifyFileStorageNetwork(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$networkName:** `string` — The name of the network.
-
+**$networkName:** `string` — Service-scoped name of the private network attachment.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$uuid:** `?string`
-
+**$uuid:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `?string`
-
+**$name:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$family:** `?string`
-
+**$family:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$ipAddress:** `?string`
-
+**$ipAddress:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -18950,7 +19242,7 @@ $client->fileStorage->modifyFileStorageNetwork(
 <dl>
 <dd>
 
-Returns a list of available service shares by given {service_uuid}.
+Returns the shares on the File Storage service identified by `{service-uuid}`, ordered by path. A share undergoing asynchronous deletion remains in the list with `deleting` set to `true` until its backing directory and stored configuration have been removed.
 </dd>
 </dl>
 </dd>
@@ -18966,7 +19258,7 @@ Returns a list of available service shares by given {service_uuid}.
 
 ```php
 $client->fileStorage->listFileStorageShares(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 </dd>
@@ -18982,8 +19274,8 @@ $client->fileStorage->listFileStorageShares(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 </dd>
@@ -19006,7 +19298,7 @@ $client->fileStorage->listFileStorageShares(
 <dl>
 <dd>
 
-Creates a new service share by given {service_uuid}.
+Creates an NFS share on the File Storage service identified by `{service-uuid}`. The share name and immutable absolute path must each be unique within the service, which can have at most 50 active shares. The system creates the backing directory. An empty `acl` array leaves the share without direct export access, although a nested share may remain visible through a parent export. When multiple parent or child rules match a client, the most permissive permission determines effective access.
 </dd>
 </dl>
 </dd>
@@ -19022,16 +19314,16 @@ Creates a new service share by given {service_uuid}.
 
 ```php
 $client->fileStorage->createFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new CreateFileStorageShareRequest([
         'body' => new FileStorageShareCreate([
-            'name' => 'read',
-            'path' => '/public',
+            'name' => 'project-data',
+            'path' => '/project/data',
             'acl' => [
                 new FileStorageAclCreate([
-                    'name' => 'test-name',
+                    'name' => 'office-write',
                     'target' => '192.168.147.0/24',
-                    'permission' => FileStoragePermission::Ro->value,
+                    'permission' => FileStoragePermission::Rw->value,
                 ]),
             ],
         ]),
@@ -19051,16 +19343,16 @@ $client->fileStorage->createFileStorageShare(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `FileStorageShareCreate`
-
+**$request:** `FileStorageShareCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -19083,7 +19375,7 @@ $client->fileStorage->createFileStorageShare(
 <dl>
 <dd>
 
-Returns service share details by given {service_uuid} and {share_name}.
+Returns the share named `{share-name}` from the File Storage service identified by `{service-uuid}`. Share names are unique within a service. A share undergoing asynchronous deletion remains addressable with `deleting` set to `true` until cleanup finishes.
 </dd>
 </dl>
 </dd>
@@ -19099,8 +19391,8 @@ Returns service share details by given {service_uuid} and {share_name}.
 
 ```php
 $client->fileStorage->getFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
 );
 ```
 </dd>
@@ -19116,16 +19408,16 @@ $client->fileStorage->getFileStorageShare(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 </dd>
@@ -19148,7 +19440,7 @@ $client->fileStorage->getFileStorageShare(
 <dl>
 <dd>
 
-Deletes existing share by given {service_uuid} and {share_name}.
+Permanently deletes the share named `{share-name}` from the File Storage service identified by `{service-uuid}`, including its backing directory and all content below that path. Deletion is asynchronous: the share remains visible with `deleting` set to `true` until cleanup finishes. A share cannot be accepted for deletion while it contains another active share; delete nested shares first.
 </dd>
 </dl>
 </dd>
@@ -19164,8 +19456,8 @@ Deletes existing share by given {service_uuid} and {share_name}.
 
 ```php
 $client->fileStorage->deleteFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
 );
 ```
 </dd>
@@ -19181,16 +19473,16 @@ $client->fileStorage->deleteFileStorageShare(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 </dd>
@@ -19213,7 +19505,7 @@ $client->fileStorage->deleteFileStorageShare(
 <dl>
 <dd>
 
-Modifies existing service share by given {service_uuid} and {share_name}.
+Partially modifies the share named `{share-name}` on the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged and `null` is not accepted. A supplied `acl` array replaces the complete access-control collection; an empty array removes direct export access. The share path is immutable and cannot be supplied. A renamed share must remain unique within the service.
 </dd>
 </dl>
 </dd>
@@ -19229,14 +19521,13 @@ Modifies existing service share by given {service_uuid} and {share_name}.
 
 ```php
 $client->fileStorage->modifyFileStorageShare(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
     new FileStorageShareModify([
-        'name' => 'test-name',
         'acl' => [
             new FileStorageAclCreate([
-                'name' => 'test-name',
-                'target' => '192.168.25.0/24',
+                'name' => 'office-read',
+                'target' => '192.168.147.0/24',
                 'permission' => FileStoragePermission::Ro->value,
             ]),
         ],
@@ -19256,32 +19547,32 @@ $client->fileStorage->modifyFileStorageShare(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `?string` — A resource name.
-
+**$name:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$acl:** `?array`
-
+**$acl:** `?array` — Complete replacement access-control collection for the NFS export. Omit this property to retain all current entries. An empty array removes direct export access; a nested share may still be visible through a parent export. When multiple parent or child rules match a client, the most permissive permission determines effective access.
+    
 </dd>
 </dl>
 </dd>
@@ -19304,7 +19595,7 @@ $client->fileStorage->modifyFileStorageShare(
 <dl>
 <dd>
 
-Returns a list of available ACLs by given {service_uuid} and {share_name}.
+Returns the access-control entries for the NFS export of share `{share-name}` on the File Storage service identified by `{service-uuid}`, ordered by target.
 </dd>
 </dl>
 </dd>
@@ -19320,8 +19611,8 @@ Returns a list of available ACLs by given {service_uuid} and {share_name}.
 
 ```php
 $client->fileStorage->listFileStorageAcls(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
 );
 ```
 </dd>
@@ -19337,16 +19628,16 @@ $client->fileStorage->listFileStorageAcls(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 </dd>
@@ -19369,7 +19660,7 @@ $client->fileStorage->listFileStorageAcls(
 <dl>
 <dd>
 
-Creates a new share ACL by given {service_uuid} and {share_name}.
+Creates an access-control entry for the NFS export of share `{share-name}` on the File Storage service identified by `{service-uuid}`. The entry name and target must each be unique within the share. A target is an IP address, CIDR network prefix, or `*`; `ro` grants read-only access and `rw` grants read-write access. For nested shares, matching parent and child rules combine and the most permissive permission determines effective access.
 </dd>
 </dl>
 </dd>
@@ -19385,13 +19676,13 @@ Creates a new share ACL by given {service_uuid} and {share_name}.
 
 ```php
 $client->fileStorage->createFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
     new CreateFileStorageAclRequest([
         'body' => new FileStorageAclCreate([
-            'name' => 'test-name',
-            'target' => '192.168.25.147',
-            'permission' => FileStoragePermission::Ro->value,
+            'name' => 'office-write',
+            'target' => '192.168.147.0/24',
+            'permission' => FileStoragePermission::Rw->value,
         ]),
     ]),
 );
@@ -19409,24 +19700,24 @@ $client->fileStorage->createFileStorageAcl(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `FileStorageAclCreate`
-
+**$request:** `FileStorageAclCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -19449,7 +19740,7 @@ $client->fileStorage->createFileStorageAcl(
 <dl>
 <dd>
 
-Returns ACL details by given {service_uuid}, {share_name} and {acl_name}.
+Returns the access-control entry named `{acl-name}` from share `{share-name}` on the File Storage service identified by `{service-uuid}`. ACL entry names are unique within a share.
 </dd>
 </dl>
 </dd>
@@ -19465,9 +19756,9 @@ Returns ACL details by given {service_uuid}, {share_name} and {acl_name}.
 
 ```php
 $client->fileStorage->getFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
+    'production-files',
 );
 ```
 </dd>
@@ -19483,24 +19774,24 @@ $client->fileStorage->getFileStorageAcl(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$aclName:** `string` — The name of the ACL.
-
+**$aclName:** `string` — Share-scoped name of the access-control entry.
+    
 </dd>
 </dl>
 </dd>
@@ -19523,7 +19814,7 @@ $client->fileStorage->getFileStorageAcl(
 <dl>
 <dd>
 
-Deletes existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+Removes the access-control entry named `{acl-name}` from share `{share-name}` on the File Storage service identified by `{service-uuid}`. Removing the final entry leaves the share without direct NFS export access, although a nested share may remain visible through a parent export.
 </dd>
 </dl>
 </dd>
@@ -19539,9 +19830,9 @@ Deletes existing ACL by given {service_uuid}, {share_name} and {acl_name}.
 
 ```php
 $client->fileStorage->deleteFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
+    'production-files',
 );
 ```
 </dd>
@@ -19557,24 +19848,24 @@ $client->fileStorage->deleteFileStorageAcl(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$aclName:** `string` — The name of the ACL.
-
+**$aclName:** `string` — Share-scoped name of the access-control entry.
+    
 </dd>
 </dl>
 </dd>
@@ -19597,7 +19888,7 @@ $client->fileStorage->deleteFileStorageAcl(
 <dl>
 <dd>
 
-Modifies existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+Partially modifies the access-control entry named `{acl-name}` on share `{share-name}` of the File Storage service identified by `{service-uuid}`. Omitted fields remain unchanged and `null` is not accepted. The resulting name and target must each remain unique within the share. A target is an IP address, CIDR network prefix, or `*`; permission is `ro` for read-only or `rw` for read-write access.
 </dd>
 </dl>
 </dd>
@@ -19613,13 +19904,11 @@ Modifies existing ACL by given {service_uuid}, {share_name} and {acl_name}.
 
 ```php
 $client->fileStorage->modifyFileStorageAcl(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
-    'test-name',
-    'test-name',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
+    'project-data',
+    'production-files',
     new FileStorageAclModify([
-        'name' => 'test-name',
-        'target' => '192.168.25.0/24',
-        'permission' => FileStoragePermission::Rw->value,
+        'permission' => FileStoragePermission::Ro->value,
     ]),
 );
 ```
@@ -19636,48 +19925,48 @@ $client->fileStorage->modifyFileStorageAcl(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$shareName:** `string` — The name of the share.
-
+**$shareName:** `string` — Service-scoped name of the share.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$aclName:** `string` — The name of the ACL.
-
+**$aclName:** `string` — Share-scoped name of the access-control entry.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$name:** `?string`
-
+**$name:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$target:** `?string` — The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
-
+**$target:** `?string` — Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$permission:** `?string`
-
+**$permission:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -19700,7 +19989,7 @@ $client->fileStorage->modifyFileStorageAcl(
 <dl>
 <dd>
 
-Returns a list of available service labels by given {service_uuid}.
+Returns the labels attached to the File Storage service identified by `{service-uuid}`. An empty service label collection is returned as an empty array.
 </dd>
 </dl>
 </dd>
@@ -19716,7 +20005,7 @@ Returns a list of available service labels by given {service_uuid}.
 
 ```php
 $client->fileStorage->listFileStorageLabels(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 </dd>
@@ -19732,8 +20021,8 @@ $client->fileStorage->listFileStorageLabels(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 </dd>
@@ -19756,7 +20045,7 @@ $client->fileStorage->listFileStorageLabels(
 <dl>
 <dd>
 
-Creates a new label by given {service_uuid}. Labels are used for service filtering.
+Creates a label on the File Storage service identified by `{service-uuid}`. A service can have at most 255 labels, and each key must be unique within the service regardless of case. Labels can filter the service list by key existence or an exact key-value match; repeated filters must all match.
 </dd>
 </dl>
 </dd>
@@ -19772,7 +20061,7 @@ Creates a new label by given {service_uuid}. Labels are used for service filteri
 
 ```php
 $client->fileStorage->createFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     new CreateFileStorageLabelRequest([
         'body' => new FileStorageLabelCreate([
             'key' => 'environment',
@@ -19794,16 +20083,16 @@ $client->fileStorage->createFileStorageLabel(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `FileStorageLabelCreate`
-
+**$request:** `FileStorageLabelCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -19826,7 +20115,7 @@ $client->fileStorage->createFileStorageLabel(
 <dl>
 <dd>
 
-Returns label details by given {service_uuid} and {key}.
+Returns the label identified by `{label-key}` from the File Storage service identified by `{service-uuid}`. Label keys are unique within a service and lookup is case-insensitive; the response contains the stored key casing.
 </dd>
 </dl>
 </dd>
@@ -19842,7 +20131,7 @@ Returns label details by given {service_uuid} and {key}.
 
 ```php
 $client->fileStorage->getFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     'environment',
 );
 ```
@@ -19859,16 +20148,16 @@ $client->fileStorage->getFileStorageLabel(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labelKey:** `string` — The key of the label.
-
+**$labelKey:** `string` — Service-scoped key of the label. Lookup is case-insensitive.
+    
 </dd>
 </dl>
 </dd>
@@ -19891,7 +20180,7 @@ $client->fileStorage->getFileStorageLabel(
 <dl>
 <dd>
 
-Deletes existing label by given {service_uuid} and {key}.
+Removes the label identified by `{label-key}` from the File Storage service identified by `{service-uuid}`. Future service-list label filters no longer match the removed key or key-value pair. Label-key lookup is case-insensitive.
 </dd>
 </dl>
 </dd>
@@ -19907,7 +20196,7 @@ Deletes existing label by given {service_uuid} and {key}.
 
 ```php
 $client->fileStorage->deleteFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     'environment',
 );
 ```
@@ -19924,16 +20213,16 @@ $client->fileStorage->deleteFileStorageLabel(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labelKey:** `string` — The key of the label.
-
+**$labelKey:** `string` — Service-scoped key of the label. Lookup is case-insensitive.
+    
 </dd>
 </dl>
 </dd>
@@ -19956,7 +20245,7 @@ $client->fileStorage->deleteFileStorageLabel(
 <dl>
 <dd>
 
-Modifies existing label by given {service_uuid} and {key}.
+Modifies the label identified by `{label-key}` on the File Storage service identified by `{service-uuid}`. Supply both `key` and `value`: the current implementation replaces an omitted field with an empty string rather than preserving it. Supplying `value` as `null` also stores an empty string and does not delete the label. The resulting key must remain unique within the service regardless of case.
 </dd>
 </dl>
 </dd>
@@ -19972,7 +20261,7 @@ Modifies existing label by given {service_uuid} and {key}.
 
 ```php
 $client->fileStorage->modifyFileStorageLabel(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
     'environment',
     new FileStorageLabelModify([
         'key' => 'environment',
@@ -19993,32 +20282,32 @@ $client->fileStorage->modifyFileStorageLabel(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$labelKey:** `string` — The key of the label.
-
+**$labelKey:** `string` — Service-scoped key of the label. Lookup is case-insensitive.
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$key:** `?string`
-
+**$key:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$value:** `?string`
-
+**$value:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -20029,7 +20318,7 @@ $client->fileStorage->modifyFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageCurrentState($serviceUuid) -> FileStorageServiceDetailResponse</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageCurrentState($serviceUuid) -> FileStorageServiceCurrentStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -20041,7 +20330,7 @@ $client->fileStorage->modifyFileStorageLabel(
 <dl>
 <dd>
 
-Returns the current state of the File Storage service by given {service_uuid}.
+Returns the latest successfully reported state of the File Storage service identified by `{service-uuid}` after configuration has been applied to the primary storage instance. Newly requested changes can appear in the regular service response before they appear here. A service without an applied-state snapshot returns `404`; this normally occurs before it has reached the `running` operational state.
 </dd>
 </dl>
 </dd>
@@ -20057,7 +20346,7 @@ Returns the current state of the File Storage service by given {service_uuid}.
 
 ```php
 $client->fileStorage->getFileStorageCurrentState(
-    '17fd43a5-a97e-44f7-98a8-0a787da67069',
+    '17871d62-6964-4336-b68d-4a85a8ee10fe',
 );
 ```
 </dd>
@@ -20073,8 +20362,8 @@ $client->fileStorage->getFileStorageCurrentState(
 <dl>
 <dd>
 
-**$serviceUuid:** `string` — Service UUID
-
+**$serviceUuid:** `string` — UUID of the File Storage service.
+    
 </dd>
 </dl>
 </dd>
@@ -20209,7 +20498,7 @@ $client->database->getDatabaseType(
 <dd>
 
 **$serviceTypeName:** `string` — Service type parameter
-
+    
 </dd>
 </dl>
 </dd>
@@ -20268,7 +20557,7 @@ $client->database->listDatabases(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -20276,7 +20565,7 @@ $client->database->listDatabases(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -20284,7 +20573,7 @@ $client->database->listDatabases(
 <dd>
 
 **$sort:** `?string` — Sort results by the specified field. Prefix with '-' for descending order. Supported fields: `created_at`, `name` (service hostname), `operational_state` (service status), `zone` (location).
-
+    
 </dd>
 </dl>
 </dd>
@@ -20357,7 +20646,7 @@ $client->database->createDatabase(
                 'value' => 'bar',
             ]),
         ],
-        'properties' => new DatabaseServicePropertiesMysql([
+        'properties' => new DatabaseMySql([
             'automaticUtilityNetworkIpFilter' => true,
             'ipFilter' => [
                 'ip_filter',
@@ -20380,7 +20669,7 @@ $client->database->createDatabase(
 <dd>
 
 **$hostnamePrefix:** `string` — Hostname prefix for the service nodes.
-
+    
 </dd>
 </dl>
 
@@ -20388,15 +20677,15 @@ $client->database->createDatabase(
 <dd>
 
 **$title:** `string` — Human-readable title for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$type:** `string`
-
+**$type:** `string` 
+    
 </dd>
 </dl>
 
@@ -20404,7 +20693,7 @@ $client->database->createDatabase(
 <dd>
 
 **$zone:** `string` — Zone where the service is created.
-
+    
 </dd>
 </dl>
 
@@ -20412,7 +20701,7 @@ $client->database->createDatabase(
 <dd>
 
 **$setServiceUuid:** `?string` — Optional UUID to assign to the created service.
-
+    
 </dd>
 </dl>
 
@@ -20420,7 +20709,7 @@ $client->database->createDatabase(
 <dd>
 
 **$plan:** `?string` — Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
-
+    
 </dd>
 </dl>
 
@@ -20428,7 +20717,7 @@ $client->database->createDatabase(
 <dd>
 
 **$planCompute:** `?string` — Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
-
+    
 </dd>
 </dl>
 
@@ -20436,7 +20725,7 @@ $client->database->createDatabase(
 <dd>
 
 **$planNodeCount:** `?int` — Plan selection: number of nodes.
-
+    
 </dd>
 </dl>
 
@@ -20444,7 +20733,7 @@ $client->database->createDatabase(
 <dd>
 
 **$planStorageGib:** `?int` — Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
-
+    
 </dd>
 </dl>
 
@@ -20452,7 +20741,7 @@ $client->database->createDatabase(
 <dd>
 
 **$planBackups:** `?string` — Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
-
+    
 </dd>
 </dl>
 
@@ -20460,7 +20749,7 @@ $client->database->createDatabase(
 <dd>
 
 **$additionalDiskSpaceGib:** `?int` — Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
-
+    
 </dd>
 </dl>
 
@@ -20468,7 +20757,7 @@ $client->database->createDatabase(
 <dd>
 
 **$terminationProtection:** `?bool` — When enabled, the service cannot be deleted until termination protection is disabled.
-
+    
 </dd>
 </dl>
 
@@ -20476,7 +20765,7 @@ $client->database->createDatabase(
 <dd>
 
 **$maintenance:** `?DatabaseServiceCreateOpenApiMaintenance` — Weekly maintenance window.
-
+    
 </dd>
 </dl>
 
@@ -20484,7 +20773,7 @@ $client->database->createDatabase(
 <dd>
 
 **$networks:** `?array` — SDN networks to attach to the service.
-
+    
 </dd>
 </dl>
 
@@ -20492,7 +20781,7 @@ $client->database->createDatabase(
 <dd>
 
 **$labels:** `?array` — Labels used for service filtering.
-
+    
 </dd>
 </dl>
 
@@ -20500,15 +20789,15 @@ $client->database->createDatabase(
 <dd>
 
 **$serviceIntegrations:** `?array` — Service integrations to configure on creation.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null` — Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
-
+**$properties:** `DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null` — Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
+    
 </dd>
 </dl>
 </dd>
@@ -20564,7 +20853,7 @@ $client->database->getDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -20620,7 +20909,7 @@ $client->database->deleteDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -20677,7 +20966,7 @@ $client->database->modifyDatabase(
                 'family' => DatabaseNetworkFamily::IPv4->value,
             ]),
         ],
-        'properties' => new DatabaseServicePropertiesMysql([
+        'properties' => new DatabaseMySql([
             'automaticUtilityNetworkIpFilter' => true,
             'ipFilter' => [
                 'ip_filter',
@@ -20700,7 +20989,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -20708,15 +20997,15 @@ $client->database->modifyDatabase(
 <dd>
 
 **$title:** `?string` — Human-readable title for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$type:** `?string`
-
+**$type:** `?string` 
+    
 </dd>
 </dl>
 
@@ -20724,7 +21013,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$powered:** `?bool` — Desired power state of the service.
-
+    
 </dd>
 </dl>
 
@@ -20732,7 +21021,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$zone:** `?string` — Zone to migrate the service to.
-
+    
 </dd>
 </dl>
 
@@ -20740,7 +21029,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$plan:** `?string` — Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
-
+    
 </dd>
 </dl>
 
@@ -20748,7 +21037,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$planCompute:** `?string` — Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
-
+    
 </dd>
 </dl>
 
@@ -20756,7 +21045,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$planNodeCount:** `?int` — Plan selection: number of nodes.
-
+    
 </dd>
 </dl>
 
@@ -20764,7 +21053,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$planStorageGib:** `?int` — Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
-
+    
 </dd>
 </dl>
 
@@ -20772,7 +21061,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$planBackups:** `?string` — Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
-
+    
 </dd>
 </dl>
 
@@ -20780,7 +21069,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$additionalDiskSpaceGib:** `?int` — Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
-
+    
 </dd>
 </dl>
 
@@ -20788,7 +21077,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$terminationProtection:** `?bool` — When enabled, the service cannot be deleted until termination protection is disabled.
-
+    
 </dd>
 </dl>
 
@@ -20796,7 +21085,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$maintenance:** `?DatabaseServiceModifyOpenApiMaintenance` — Weekly maintenance window.
-
+    
 </dd>
 </dl>
 
@@ -20804,7 +21093,7 @@ $client->database->modifyDatabase(
 <dd>
 
 **$networks:** `?array` — SDN networks attached to the service.
-
+    
 </dd>
 </dl>
 
@@ -20812,15 +21101,15 @@ $client->database->modifyDatabase(
 <dd>
 
 **$labels:** `?array` — Labels used for service filtering.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null` — Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
-
+**$properties:** `DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null` — Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
+    
 </dd>
 </dl>
 </dd>
@@ -20879,7 +21168,7 @@ $client->database->modifyDatabaseType(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -20887,7 +21176,7 @@ $client->database->modifyDatabaseType(
 <dd>
 
 **$targetType:** `string` — Service type
-
+    
 </dd>
 </dl>
 </dd>
@@ -20928,13 +21217,13 @@ Creates a clone of a Managed Database service based on its {uuid}. It is possibl
 $client->database->cloneDatabase(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CloneDatabaseRequest([
-        'body' => new DatabaseServiceCloneMysql([
+        'body' => new DatabaseMysqlClone([
             'hostnamePrefix' => 'dev',
             'cloneTime' => new DateTime('2024-01-30T15:04:05Z'),
             'backupName' => 'daily-backup-2024-01-30',
             'zone' => 'fi-hel1',
             'terminationProtection' => false,
-            'maintenance' => new DatabaseServiceCloneMysqlMaintenance([
+            'maintenance' => new DatabaseMysqlCloneMaintenance([
                 'dow' => DatabaseMaintenanceDow::Monday->value,
                 'time' => '03:00:00',
             ]),
@@ -20956,15 +21245,15 @@ $client->database->cloneDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `DatabaseServiceCloneMysql|DatabaseServiceClonePg|DatabaseServiceCloneRedis|DatabaseServiceCloneOpensearch|DatabaseServiceCloneValkey`
-
+**$request:** `DatabaseMysqlClone|DatabasePostgresqlClone|DatabaseRedisClone|DatabaseOpensearchClone|DatabaseValkeyClone` 
+    
 </dd>
 </dl>
 </dd>
@@ -21020,7 +21309,7 @@ $client->database->listDatabaseNetworks(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21083,15 +21372,15 @@ $client->database->createDatabaseNetwork(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `DatabaseNetworkCreate`
-
+**$request:** `DatabaseNetworkCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -21148,7 +21437,7 @@ $client->database->getDatabaseNetwork(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21156,7 +21445,7 @@ $client->database->getDatabaseNetwork(
 <dd>
 
 **$networkName:** `string` — Network UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21213,7 +21502,7 @@ $client->database->deleteDatabaseNetwork(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21221,7 +21510,7 @@ $client->database->deleteDatabaseNetwork(
 <dd>
 
 **$networkName:** `string` — Network UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21280,7 +21569,7 @@ $client->database->upgradeDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21288,7 +21577,7 @@ $client->database->upgradeDatabase(
 <dd>
 
 **$targetVersion:** `string` — Version to upgrade the service
-
+    
 </dd>
 </dl>
 </dd>
@@ -21344,7 +21633,7 @@ $client->database->listDatabaseLabels(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21406,15 +21695,15 @@ $client->database->createDatabaseLabel(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `DatabaseLabelCreate`
-
+**$request:** `DatabaseLabelCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -21471,7 +21760,7 @@ $client->database->getDatabaseLabel(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21479,7 +21768,7 @@ $client->database->getDatabaseLabel(
 <dd>
 
 **$labelKey:** `string` — Label ID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21536,7 +21825,7 @@ $client->database->deleteDatabaseLabel(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21544,7 +21833,7 @@ $client->database->deleteDatabaseLabel(
 <dd>
 
 **$labelKey:** `string` — Label ID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21605,7 +21894,7 @@ $client->database->modifyDatabaseLabel(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21613,23 +21902,23 @@ $client->database->modifyDatabaseLabel(
 <dd>
 
 **$labelKey:** `string` — Label ID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$key:** `?string`
-
+**$key:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$value:** `?string`
-
+**$value:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -21685,7 +21974,7 @@ $client->database->getDatabaseAvailableExtensions(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21819,7 +22108,7 @@ $client->database->getDatabaseAccessControl(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -21878,7 +22167,7 @@ $client->database->modifyDatabaseAccessControl(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -21886,7 +22175,7 @@ $client->database->modifyDatabaseAccessControl(
 <dd>
 
 **$accessControl:** `?bool` — Enables OpenSearch access control
-
+    
 </dd>
 </dl>
 
@@ -21894,7 +22183,7 @@ $client->database->modifyDatabaseAccessControl(
 <dd>
 
 **$extendedAccessControl:** `?bool` — Enables OpenSearch extended access control
-
+    
 </dd>
 </dl>
 </dd>
@@ -21950,7 +22239,7 @@ $client->database->getDatabaseSecurity(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22009,7 +22298,7 @@ $client->database->enableDatabaseSecurityAdmin(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -22017,7 +22306,7 @@ $client->database->enableDatabaseSecurityAdmin(
 <dd>
 
 **$adminPassword:** `string` — Security admin password
-
+    
 </dd>
 </dl>
 </dd>
@@ -22077,7 +22366,7 @@ $client->database->modifyDatabaseSecurityAdmin(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -22085,7 +22374,7 @@ $client->database->modifyDatabaseSecurityAdmin(
 <dd>
 
 **$adminPassword:** `string` — Current admin password
-
+    
 </dd>
 </dl>
 
@@ -22093,7 +22382,7 @@ $client->database->modifyDatabaseSecurityAdmin(
 <dd>
 
 **$newPassword:** `string` — New admin password
-
+    
 </dd>
 </dl>
 </dd>
@@ -22190,8 +22479,8 @@ $client->database->createDatabaseIntegrationEndpoint(
 <dl>
 <dd>
 
-**$type:** `string`
-
+**$type:** `string` 
+    
 </dd>
 </dl>
 
@@ -22199,7 +22488,7 @@ $client->database->createDatabaseIntegrationEndpoint(
 <dd>
 
 **$name:** `string` — The name of the integration endpoint.
-
+    
 </dd>
 </dl>
 
@@ -22207,7 +22496,7 @@ $client->database->createDatabaseIntegrationEndpoint(
 <dd>
 
 **$properties:** `?array` — A key-value map of properties specific to the integration endpoint type.
-
+    
 </dd>
 </dl>
 </dd>
@@ -22263,7 +22552,7 @@ $client->database->getDatabaseIntegrationEndpoint(
 <dd>
 
 **$integrationUuid:** `string` — Integration UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22319,7 +22608,7 @@ $client->database->deleteDatabaseIntegrationEndpoint(
 <dd>
 
 **$integrationUuid:** `string` — Integration UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22376,15 +22665,15 @@ $client->database->modifyDatabaseIntegrationEndpoint(
 <dd>
 
 **$integrationUuid:** `string` — Integration UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?array`
-
+**$properties:** `?array` 
+    
 </dd>
 </dl>
 </dd>
@@ -22518,7 +22807,7 @@ $client->database->getDatabaseStatus(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22574,7 +22863,7 @@ $client->database->getDatabaseVersions(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22630,7 +22919,7 @@ $client->database->startDatabaseManualMaintenance(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22686,7 +22975,7 @@ $client->database->enableDatabaseTemporaryWrites(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22742,7 +23031,7 @@ $client->database->getDatabaseMigrationStatus(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22798,7 +23087,7 @@ $client->database->getDatabaseAlerts(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22854,7 +23143,7 @@ $client->database->getDatabaseMetrics(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -22915,7 +23204,7 @@ $client->database->getDatabaseQueryStatistics(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -22923,7 +23212,7 @@ $client->database->getDatabaseQueryStatistics(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -22931,7 +23220,7 @@ $client->database->getDatabaseQueryStatistics(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -22939,7 +23228,7 @@ $client->database->getDatabaseQueryStatistics(
 <dd>
 
 **$order:** `?string` — Sort order
-
+    
 </dd>
 </dl>
 </dd>
@@ -23000,7 +23289,7 @@ $client->database->getDatabaseLogs(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23008,7 +23297,7 @@ $client->database->getDatabaseLogs(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -23016,7 +23305,7 @@ $client->database->getDatabaseLogs(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -23024,7 +23313,7 @@ $client->database->getDatabaseLogs(
 <dd>
 
 **$order:** `?string` — Sort order
-
+    
 </dd>
 </dl>
 </dd>
@@ -23083,7 +23372,7 @@ $client->database->listDatabaseConnectionPools(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23091,7 +23380,7 @@ $client->database->listDatabaseConnectionPools(
 <dd>
 
 **$sort:** `?string` — Order of returned results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -23154,7 +23443,7 @@ $client->database->createDatabaseConnectionPool(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23162,7 +23451,7 @@ $client->database->createDatabaseConnectionPool(
 <dd>
 
 **$database:** `string` — Database
-
+    
 </dd>
 </dl>
 
@@ -23170,7 +23459,7 @@ $client->database->createDatabaseConnectionPool(
 <dd>
 
 **$poolMode:** `string` — Connection Pool mode
-
+    
 </dd>
 </dl>
 
@@ -23178,7 +23467,7 @@ $client->database->createDatabaseConnectionPool(
 <dd>
 
 **$poolName:** `string` — Connection Pool name
-
+    
 </dd>
 </dl>
 
@@ -23186,7 +23475,7 @@ $client->database->createDatabaseConnectionPool(
 <dd>
 
 **$poolSize:** `int` — Connection Pool size
-
+    
 </dd>
 </dl>
 
@@ -23194,7 +23483,7 @@ $client->database->createDatabaseConnectionPool(
 <dd>
 
 **$username:** `?string` — Connection Pool username
-
+    
 </dd>
 </dl>
 </dd>
@@ -23251,7 +23540,7 @@ $client->database->getDatabaseConnectionPool(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23259,7 +23548,7 @@ $client->database->getDatabaseConnectionPool(
 <dd>
 
 **$poolName:** `string` — Connection Pool Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -23316,7 +23605,7 @@ $client->database->deleteDatabaseConnectionPool(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23324,7 +23613,7 @@ $client->database->deleteDatabaseConnectionPool(
 <dd>
 
 **$poolName:** `string` — Connection Pool Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -23387,7 +23676,7 @@ $client->database->modifyDatabaseConnectionPool(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23395,7 +23684,7 @@ $client->database->modifyDatabaseConnectionPool(
 <dd>
 
 **$poolName:** `string` — Connection Pool Name
-
+    
 </dd>
 </dl>
 
@@ -23403,7 +23692,7 @@ $client->database->modifyDatabaseConnectionPool(
 <dd>
 
 **$database:** `?string` — Database
-
+    
 </dd>
 </dl>
 
@@ -23411,7 +23700,7 @@ $client->database->modifyDatabaseConnectionPool(
 <dd>
 
 **$poolMode:** `?string` — Connection Pool mode
-
+    
 </dd>
 </dl>
 
@@ -23419,7 +23708,7 @@ $client->database->modifyDatabaseConnectionPool(
 <dd>
 
 **$poolSize:** `?int` — Connection Pool size
-
+    
 </dd>
 </dl>
 
@@ -23427,7 +23716,7 @@ $client->database->modifyDatabaseConnectionPool(
 <dd>
 
 **$username:** `?string` — Connection Pool username
-
+    
 </dd>
 </dl>
 </dd>
@@ -23483,7 +23772,7 @@ $client->database->listDatabaseIndices(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -23540,7 +23829,7 @@ $client->database->deleteDatabaseIndex(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23548,7 +23837,7 @@ $client->database->deleteDatabaseIndex(
 <dd>
 
 **$indexName:** `string` — OpenSearch Index Name
-
+    
 </dd>
 </dl>
 </dd>
@@ -23604,7 +23893,7 @@ $client->database->listDatabaseIntegrations(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -23670,15 +23959,15 @@ $client->database->createDatabaseIntegration(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `DatabaseServiceIntegrationCreate`
-
+**$request:** `DatabaseServiceIntegrationCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -23735,7 +24024,7 @@ $client->database->getDatabaseIntegration(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23743,7 +24032,7 @@ $client->database->getDatabaseIntegration(
 <dd>
 
 **$integrationUuid:** `string` — Integration UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -23800,7 +24089,7 @@ $client->database->deleteDatabaseIntegration(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23808,7 +24097,7 @@ $client->database->deleteDatabaseIntegration(
 <dd>
 
 **$integrationUuid:** `string` — Integration UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -23870,7 +24159,7 @@ $client->database->modifyDatabaseIntegration(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -23878,15 +24167,15 @@ $client->database->modifyDatabaseIntegration(
 <dd>
 
 **$integrationUuid:** `string` — Integration UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?array`
-
+**$properties:** `?array` 
+    
 </dd>
 </dl>
 </dd>
@@ -23942,7 +24231,7 @@ $client->database->listDatabaseLogicalDatabases(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -24003,7 +24292,7 @@ $client->database->createDatabaseLogicalDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24011,7 +24300,7 @@ $client->database->createDatabaseLogicalDatabase(
 <dd>
 
 **$name:** `string` — logical database name
-
+    
 </dd>
 </dl>
 
@@ -24019,7 +24308,7 @@ $client->database->createDatabaseLogicalDatabase(
 <dd>
 
 **$lcCollate:** `?string` — Collation order
-
+    
 </dd>
 </dl>
 
@@ -24027,7 +24316,7 @@ $client->database->createDatabaseLogicalDatabase(
 <dd>
 
 **$lcCtype:** `?string` — Category of a locale definition source file
-
+    
 </dd>
 </dl>
 </dd>
@@ -24084,7 +24373,7 @@ $client->database->deleteDatabaseLogicalDatabase(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24092,7 +24381,7 @@ $client->database->deleteDatabaseLogicalDatabase(
 <dd>
 
 **$databaseName:** `string` — Database name
-
+    
 </dd>
 </dl>
 </dd>
@@ -24148,7 +24437,7 @@ $client->database->getDatabasePeeringsStatus(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -24209,7 +24498,7 @@ $client->database->getDatabaseSessions(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24217,7 +24506,7 @@ $client->database->getDatabaseSessions(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -24225,7 +24514,7 @@ $client->database->getDatabaseSessions(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -24233,7 +24522,7 @@ $client->database->getDatabaseSessions(
 <dd>
 
 **$order:** `?string` — Sort order
-
+    
 </dd>
 </dl>
 </dd>
@@ -24290,7 +24579,7 @@ $client->database->terminateDatabaseSession(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24298,7 +24587,7 @@ $client->database->terminateDatabaseSession(
 <dd>
 
 **$pid:** `int` — Session PID
-
+    
 </dd>
 </dl>
 </dd>
@@ -24360,31 +24649,31 @@ $client->database->createDatabaseTask(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$datasetImport:** `?DatabaseServiceTaskCreateDatasetImport`
-
+**$datasetImport:** `?DatabaseServiceTaskCreateDatasetImport` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$migrationCheck:** `?DatabaseServiceTaskCreateMigrationCheck`
-
+**$migrationCheck:** `?DatabaseServiceTaskCreateMigrationCheck` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$upgradeCheck:** `?DatabaseServiceTaskCreateUpgradeCheck`
-
+**$upgradeCheck:** `?DatabaseServiceTaskCreateUpgradeCheck` 
+    
 </dd>
 </dl>
 
@@ -24392,7 +24681,7 @@ $client->database->createDatabaseTask(
 <dd>
 
 **$targetVersion:** `?string` — The target version for upgrade operations.
-
+    
 </dd>
 </dl>
 
@@ -24400,7 +24689,7 @@ $client->database->createDatabaseTask(
 <dd>
 
 **$operation:** `string` — The operation to be performed.
-
+    
 </dd>
 </dl>
 </dd>
@@ -24457,7 +24746,7 @@ $client->database->getDatabaseTask(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24465,7 +24754,7 @@ $client->database->getDatabaseTask(
 <dd>
 
 **$taskId:** `int` — Task ID
-
+    
 </dd>
 </dl>
 </dd>
@@ -24521,7 +24810,7 @@ $client->database->listDatabaseUsers(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -24582,7 +24871,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24590,7 +24879,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$username:** `string` — The username of the service user
-
+    
 </dd>
 </dl>
 
@@ -24598,7 +24887,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$password:** `?string` — The password of the service user
-
+    
 </dd>
 </dl>
 
@@ -24606,7 +24895,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$authentication:** `?string` — The authentication method for the service user
-
+    
 </dd>
 </dl>
 
@@ -24614,7 +24903,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$redisAccessControl:** `?DatabaseServiceUserCreateRedisAccessControl` — Redis access control settings
-
+    
 </dd>
 </dl>
 
@@ -24622,7 +24911,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$pgAccessControl:** `?DatabaseServiceUserCreatePgAccessControl` — PostgreSQL access control settings
-
+    
 </dd>
 </dl>
 
@@ -24630,7 +24919,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$opensearchAccessControl:** `?DatabaseServiceUserCreateOpensearchAccessControl` — OpenSearch access control settings
-
+    
 </dd>
 </dl>
 
@@ -24638,7 +24927,7 @@ $client->database->createDatabaseUser(
 <dd>
 
 **$valkeyAccessControl:** `?DatabaseServiceUserCreateValkeyAccessControl` — Valkey access control settings
-
+    
 </dd>
 </dl>
 </dd>
@@ -24695,7 +24984,7 @@ $client->database->getDatabaseUser(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24703,7 +24992,7 @@ $client->database->getDatabaseUser(
 <dd>
 
 **$username:** `string` — Username identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -24760,7 +25049,7 @@ $client->database->deleteDatabaseUser(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24768,7 +25057,7 @@ $client->database->deleteDatabaseUser(
 <dd>
 
 **$username:** `string` — Username identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -24829,7 +25118,7 @@ $client->database->modifyDatabaseUser(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24837,7 +25126,7 @@ $client->database->modifyDatabaseUser(
 <dd>
 
 **$username:** `string` — Username identifier
-
+    
 </dd>
 </dl>
 
@@ -24845,7 +25134,7 @@ $client->database->modifyDatabaseUser(
 <dd>
 
 **$password:** `?string` — New password for the service user
-
+    
 </dd>
 </dl>
 
@@ -24853,7 +25142,7 @@ $client->database->modifyDatabaseUser(
 <dd>
 
 **$authentication:** `?string` — Authentication method for the service user
-
+    
 </dd>
 </dl>
 </dd>
@@ -24955,7 +25244,7 @@ $client->database->modifyDatabaseUserAccessControl(
 <dd>
 
 **$uuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -24963,7 +25252,7 @@ $client->database->modifyDatabaseUserAccessControl(
 <dd>
 
 **$username:** `string` — Username identifier
-
+    
 </dd>
 </dl>
 
@@ -24971,7 +25260,7 @@ $client->database->modifyDatabaseUserAccessControl(
 <dd>
 
 **$redisAccessControl:** `?DatabaseServiceUserAclModifyRedisAccessControl` — Redis ACL modification schema
-
+    
 </dd>
 </dl>
 
@@ -24979,7 +25268,7 @@ $client->database->modifyDatabaseUserAccessControl(
 <dd>
 
 **$pgAccessControl:** `?DatabaseServiceUserAclModifyPgAccessControl` — PostgreSQL replication permission modification schema
-
+    
 </dd>
 </dl>
 
@@ -24987,7 +25276,7 @@ $client->database->modifyDatabaseUserAccessControl(
 <dd>
 
 **$opensearchAccessControl:** `?DatabaseServiceUserAclModifyOpensearchAccessControl` — OpenSearch index permission modification schema
-
+    
 </dd>
 </dl>
 
@@ -24995,7 +25284,7 @@ $client->database->modifyDatabaseUserAccessControl(
 <dd>
 
 **$valkeyAccessControl:** `?DatabaseServiceUserAclModifyValkeyAccessControl` — Valkey ACL modification schema
-
+    
 </dd>
 </dl>
 </dd>
@@ -25055,7 +25344,7 @@ $client->gateway->listGatewayPlans(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -25063,7 +25352,7 @@ $client->gateway->listGatewayPlans(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -25119,7 +25408,7 @@ $client->gateway->getGatewayPlan(
 <dd>
 
 **$planName:** `string` — Plan identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -25178,7 +25467,7 @@ $client->gateway->listGatewayServices(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -25186,7 +25475,7 @@ $client->gateway->listGatewayServices(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -25194,7 +25483,7 @@ $client->gateway->listGatewayServices(
 <dd>
 
 **$sort:** `?string` — Sort resources by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -25314,7 +25603,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$name:** `string` — Name of the service
-
+    
 </dd>
 </dl>
 
@@ -25322,7 +25611,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$plan:** `string` — Plan
-
+    
 </dd>
 </dl>
 
@@ -25330,7 +25619,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$zone:** `string` — Zone
-
+    
 </dd>
 </dl>
 
@@ -25338,7 +25627,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$features:** `array` — Active features
-
+    
 </dd>
 </dl>
 
@@ -25346,7 +25635,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$routers:** `array` — Service routers
-
+    
 </dd>
 </dl>
 
@@ -25354,7 +25643,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$addresses:** `?array` — Service addresses
-
+    
 </dd>
 </dl>
 
@@ -25362,7 +25651,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$connections:** `?array` — Service connections
-
+    
 </dd>
 </dl>
 
@@ -25370,15 +25659,15 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
@@ -25386,7 +25675,7 @@ $client->gateway->createGatewayService(
 <dd>
 
 **$automaticTunnelInternalIpAllocation:** `?bool` — Allocate and use tunnel internal IPs automatically
-
+    
 </dd>
 </dl>
 </dd>
@@ -25442,7 +25731,7 @@ $client->gateway->getGatewayService(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -25510,7 +25799,7 @@ $client->gateway->replaceGatewayService(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -25518,7 +25807,7 @@ $client->gateway->replaceGatewayService(
 <dd>
 
 **$name:** `string` — Name of the service
-
+    
 </dd>
 </dl>
 
@@ -25526,15 +25815,15 @@ $client->gateway->replaceGatewayService(
 <dd>
 
 **$plan:** `?string` — Plan
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
@@ -25542,7 +25831,7 @@ $client->gateway->replaceGatewayService(
 <dd>
 
 **$connections:** `mixed` — Service connections
-
+    
 </dd>
 </dl>
 
@@ -25550,7 +25839,7 @@ $client->gateway->replaceGatewayService(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
@@ -25558,7 +25847,7 @@ $client->gateway->replaceGatewayService(
 <dd>
 
 **$automaticTunnelInternalIpAllocation:** `?bool` — Allocate and use tunnel internal IPs automatically
-
+    
 </dd>
 </dl>
 </dd>
@@ -25614,7 +25903,7 @@ $client->gateway->deleteGatewayService(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -25699,7 +25988,7 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -25707,7 +25996,7 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$name:** `?string` — Name of the service
-
+    
 </dd>
 </dl>
 
@@ -25715,7 +26004,7 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$features:** `?array` — Active features
-
+    
 </dd>
 </dl>
 
@@ -25723,15 +26012,15 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$plan:** `?string` — Plan
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `?string`
-
+**$configuredStatus:** `?string` 
+    
 </dd>
 </dl>
 
@@ -25739,7 +26028,7 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$connections:** `?array` — Service connections
-
+    
 </dd>
 </dl>
 
@@ -25747,7 +26036,7 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
@@ -25755,7 +26044,7 @@ $client->gateway->modifyGatewayService(
 <dd>
 
 **$automaticTunnelInternalIpAllocation:** `?bool` — Allocate and use tunnel internal IPs automatically
-
+    
 </dd>
 </dl>
 </dd>
@@ -25811,7 +26100,7 @@ $client->gateway->flushGatewayNat(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -25867,7 +26156,7 @@ $client->gateway->listGatewayConnections(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -25962,15 +26251,15 @@ $client->gateway->createGatewayConnection(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `GatewayConnectionCreateRequest`
-
+**$request:** `GatewayConnectionCreateRequest` 
+    
 </dd>
 </dl>
 </dd>
@@ -26027,7 +26316,7 @@ $client->gateway->getGatewayConnection(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26035,7 +26324,7 @@ $client->gateway->getGatewayConnection(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -26092,7 +26381,7 @@ $client->gateway->deleteGatewayConnection(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26100,7 +26389,7 @@ $client->gateway->deleteGatewayConnection(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -26171,7 +26460,7 @@ $client->gateway->modifyGatewayConnection(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26179,15 +26468,15 @@ $client->gateway->modifyGatewayConnection(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `GatewayConnectionModifyRequest`
-
+**$request:** `GatewayConnectionModifyRequest` 
+    
 </dd>
 </dl>
 </dd>
@@ -26244,7 +26533,7 @@ $client->gateway->listGatewayTunnels(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26252,7 +26541,7 @@ $client->gateway->listGatewayTunnels(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -26361,7 +26650,7 @@ $client->gateway->createGatewayTunnel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26369,15 +26658,15 @@ $client->gateway->createGatewayTunnel(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `GatewayTunnelCreateRequest`
-
+**$request:** `GatewayTunnelCreateRequest` 
+    
 </dd>
 </dl>
 </dd>
@@ -26435,7 +26724,7 @@ $client->gateway->getGatewayTunnel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26443,7 +26732,7 @@ $client->gateway->getGatewayTunnel(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 
@@ -26451,7 +26740,7 @@ $client->gateway->getGatewayTunnel(
 <dd>
 
 **$tunnelUuid:** `string` — Tunnel UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -26509,7 +26798,7 @@ $client->gateway->deleteGatewayTunnel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26517,7 +26806,7 @@ $client->gateway->deleteGatewayTunnel(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 
@@ -26525,7 +26814,7 @@ $client->gateway->deleteGatewayTunnel(
 <dd>
 
 **$tunnelUuid:** `string` — Tunnel UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -26630,7 +26919,7 @@ $client->gateway->modifyGatewayTunnel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26638,7 +26927,7 @@ $client->gateway->modifyGatewayTunnel(
 <dd>
 
 **$connectionUuid:** `string` — Connection UUID
-
+    
 </dd>
 </dl>
 
@@ -26646,15 +26935,15 @@ $client->gateway->modifyGatewayTunnel(
 <dd>
 
 **$tunnelUuid:** `string` — Tunnel UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `GatewayTunnelModifyRequest`
-
+**$request:** `GatewayTunnelModifyRequest` 
+    
 </dd>
 </dl>
 </dd>
@@ -26710,7 +26999,7 @@ $client->gateway->listGatewayServiceLabels(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -26772,15 +27061,15 @@ $client->gateway->createGatewayServiceLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `GatewayLabelCreateRequest`
-
+**$request:** `GatewayLabelCreateRequest` 
+    
 </dd>
 </dl>
 </dd>
@@ -26837,7 +27126,7 @@ $client->gateway->getGatewayServiceLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26845,7 +27134,7 @@ $client->gateway->getGatewayServiceLabel(
 <dd>
 
 **$labelKey:** `string` — Label identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -26902,7 +27191,7 @@ $client->gateway->deleteGatewayServiceLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26910,7 +27199,7 @@ $client->gateway->deleteGatewayServiceLabel(
 <dd>
 
 **$labelKey:** `string` — Label identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -26971,7 +27260,7 @@ $client->gateway->modifyGatewayServiceLabel(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -26979,23 +27268,23 @@ $client->gateway->modifyGatewayServiceLabel(
 <dd>
 
 **$labelKey:** `string` — Label identifier
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$key:** `?string`
-
+**$key:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$value:** `?string`
-
+**$value:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -27051,7 +27340,7 @@ $client->gateway->listGatewayAddresses(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -27108,7 +27397,7 @@ $client->gateway->getGatewayAddress(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -27116,7 +27405,7 @@ $client->gateway->getGatewayAddress(
 <dd>
 
 **$addressName:** `string` — Address identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -27176,7 +27465,7 @@ $client->gateway->modifyGatewayAddress(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -27184,7 +27473,7 @@ $client->gateway->modifyGatewayAddress(
 <dd>
 
 **$addressName:** `string` — Address identifier
-
+    
 </dd>
 </dl>
 
@@ -27192,7 +27481,7 @@ $client->gateway->modifyGatewayAddress(
 <dd>
 
 **$address:** `string` — Floating IP address to assign to the service address.
-
+    
 </dd>
 </dl>
 </dd>
@@ -27249,7 +27538,7 @@ $client->gateway->releaseGatewayFloatingIp(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
@@ -27257,7 +27546,7 @@ $client->gateway->releaseGatewayFloatingIp(
 <dd>
 
 **$addressName:** `string` — Address identifier
-
+    
 </dd>
 </dl>
 </dd>
@@ -27313,7 +27602,7 @@ $client->gateway->getGatewayMetrics(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -27372,15 +27661,15 @@ $client->gateway->createGatewayServiceLogSession(
 <dd>
 
 **$serviceUuid:** `string` — Service UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sessionType:** `string`
-
+**$sessionType:** `string` 
+    
 </dd>
 </dl>
 </dd>
@@ -27440,7 +27729,7 @@ $client->loadBalancer->listLoadBalancers(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -27448,7 +27737,7 @@ $client->loadBalancer->listLoadBalancers(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -27456,7 +27745,7 @@ $client->loadBalancer->listLoadBalancers(
 <dd>
 
 **$sort:** `?string` — Sort resources by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 
@@ -27464,7 +27753,7 @@ $client->loadBalancer->listLoadBalancers(
 <dd>
 
 **$label:** `?string` — Filter resources by label. Can be provided multiple times for multiple labels. Format: 'key=value' for exact match or 'key' for existence check.
-
+    
 </dd>
 </dl>
 </dd>
@@ -27533,7 +27822,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$name:** `string` — Name of the service
-
+    
 </dd>
 </dl>
 
@@ -27541,7 +27830,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$zone:** `string` — Zone
-
+    
 </dd>
 </dl>
 
@@ -27549,15 +27838,15 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$plan:** `string` — Plan
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
@@ -27565,7 +27854,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$frontends:** `array` — Service frontends
-
+    
 </dd>
 </dl>
 
@@ -27573,7 +27862,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$backends:** `?array` — Service backends
-
+    
 </dd>
 </dl>
 
@@ -27581,7 +27870,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$resolvers:** `?array` — Service resolvers
-
+    
 </dd>
 </dl>
 
@@ -27589,7 +27878,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$networkUuid:** `?string` — Private Network UUID
-
+    
 </dd>
 </dl>
 
@@ -27597,7 +27886,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$networks:** `?array` — Service networks
-
+    
 </dd>
 </dl>
 
@@ -27605,23 +27894,23 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$maintenanceDow:** `?string`
-
+**$maintenanceDow:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$maintenanceTime:** `?string`
-
+**$maintenanceTime:** `?string` 
+    
 </dd>
 </dl>
 
@@ -27629,7 +27918,7 @@ $client->loadBalancer->createLoadBalancer(
 <dd>
 
 **$ipAddresses:** `?array` — List of IP addresses for the network
-
+    
 </dd>
 </dl>
 </dd>
@@ -27685,7 +27974,7 @@ $client->loadBalancer->getLoadBalancer(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -27746,7 +28035,7 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -27754,7 +28043,7 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$name:** `string` — Name of the service
-
+    
 </dd>
 </dl>
 
@@ -27762,15 +28051,15 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$plan:** `string` — Plan
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `string`
-
+**$configuredStatus:** `string` 
+    
 </dd>
 </dl>
 
@@ -27778,7 +28067,7 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$frontends:** `?array` — Service frontends
-
+    
 </dd>
 </dl>
 
@@ -27786,7 +28075,7 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$backends:** `?array` — Service backends
-
+    
 </dd>
 </dl>
 
@@ -27794,7 +28083,7 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$resolvers:** `?array` — Service resolvers
-
+    
 </dd>
 </dl>
 
@@ -27802,23 +28091,23 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$maintenanceDow:** `?string`
-
+**$maintenanceDow:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$maintenanceTime:** `?string`
-
+**$maintenanceTime:** `?string` 
+    
 </dd>
 </dl>
 
@@ -27826,7 +28115,7 @@ $client->loadBalancer->replaceLoadBalancer(
 <dd>
 
 **$ipAddresses:** `?array` — List of IP addresses for the network
-
+    
 </dd>
 </dl>
 </dd>
@@ -27882,7 +28171,7 @@ $client->loadBalancer->deleteLoadBalancer(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -27941,7 +28230,7 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -27949,7 +28238,7 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$name:** `?string` — Name of the service
-
+    
 </dd>
 </dl>
 
@@ -27957,15 +28246,15 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$plan:** `?string` — Plan
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$configuredStatus:** `?string`
-
+**$configuredStatus:** `?string` 
+    
 </dd>
 </dl>
 
@@ -27973,7 +28262,7 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$frontends:** `?array` — Service frontends
-
+    
 </dd>
 </dl>
 
@@ -27981,7 +28270,7 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$backends:** `?array` — Service backends
-
+    
 </dd>
 </dl>
 
@@ -27989,7 +28278,7 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$resolvers:** `?array` — Service resolvers
-
+    
 </dd>
 </dl>
 
@@ -27997,23 +28286,23 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$maintenanceDow:** `?string`
-
+**$maintenanceDow:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$maintenanceTime:** `?string`
-
+**$maintenanceTime:** `?string` 
+    
 </dd>
 </dl>
 
@@ -28021,7 +28310,7 @@ $client->loadBalancer->modifyLoadBalancer(
 <dd>
 
 **$ipAddresses:** `?array` — List of IP addresses for the network
-
+    
 </dd>
 </dl>
 </dd>
@@ -28077,7 +28366,7 @@ $client->loadBalancer->listLoadBalancerFrontends(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28141,15 +28430,15 @@ $client->loadBalancer->createLoadBalancerFrontend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerFrontendCreate`
-
+**$request:** `LoadBalancerFrontendCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -28206,7 +28495,7 @@ $client->loadBalancer->getLoadBalancerFrontend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28214,7 +28503,7 @@ $client->loadBalancer->getLoadBalancerFrontend(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28271,7 +28560,7 @@ $client->loadBalancer->deleteLoadBalancerFrontend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28279,7 +28568,7 @@ $client->loadBalancer->deleteLoadBalancerFrontend(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28340,7 +28629,7 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28348,7 +28637,7 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -28356,7 +28645,7 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$name:** `?string` — Name of the frontend
-
+    
 </dd>
 </dl>
 
@@ -28364,15 +28653,15 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$port:** `?int` — Port to listen
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$mode:** `?string`
-
+**$mode:** `?string` 
+    
 </dd>
 </dl>
 
@@ -28380,15 +28669,15 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$defaultBackend:** `?string` — Default backend
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?LoadBalancerFrontendPropertiesCreate`
-
+**$properties:** `?LoadBalancerFrontendPropertiesCreate` 
+    
 </dd>
 </dl>
 
@@ -28396,7 +28685,7 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$networks:** `?array` — Network names
-
+    
 </dd>
 </dl>
 
@@ -28404,7 +28693,7 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$tlsConfigs:** `?array` — TLS Configs
-
+    
 </dd>
 </dl>
 
@@ -28412,7 +28701,7 @@ $client->loadBalancer->modifyLoadBalancerFrontend(
 <dd>
 
 **$rules:** `?array` — Rules
-
+    
 </dd>
 </dl>
 </dd>
@@ -28469,7 +28758,7 @@ $client->loadBalancer->listLoadBalancerFrontendTlsConfigs(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28477,7 +28766,7 @@ $client->loadBalancer->listLoadBalancerFrontendTlsConfigs(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28540,7 +28829,7 @@ $client->loadBalancer->createLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28548,15 +28837,15 @@ $client->loadBalancer->createLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerTlsConfigCreate`
-
+**$request:** `LoadBalancerTlsConfigCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -28614,7 +28903,7 @@ $client->loadBalancer->getLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28622,7 +28911,7 @@ $client->loadBalancer->getLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -28630,7 +28919,7 @@ $client->loadBalancer->getLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$tlsConfigName:** `string` — The unique identifier for the TLS configuration.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28688,7 +28977,7 @@ $client->loadBalancer->deleteLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28696,7 +28985,7 @@ $client->loadBalancer->deleteLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -28704,7 +28993,7 @@ $client->loadBalancer->deleteLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$tlsConfigName:** `string` — The unique identifier for the TLS configuration.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28768,7 +29057,7 @@ $client->loadBalancer->modifyLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28776,7 +29065,7 @@ $client->loadBalancer->modifyLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -28784,15 +29073,15 @@ $client->loadBalancer->modifyLoadBalancerFrontendTlsConfig(
 <dd>
 
 **$tlsConfigName:** `string` — The unique identifier for the TLS configuration.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerTlsConfigModify`
-
+**$request:** `LoadBalancerTlsConfigModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -28849,7 +29138,7 @@ $client->loadBalancer->listLoadBalancerRules(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28857,7 +29146,7 @@ $client->loadBalancer->listLoadBalancerRules(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -28937,7 +29226,7 @@ $client->loadBalancer->createLoadBalancerRule(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -28945,15 +29234,15 @@ $client->loadBalancer->createLoadBalancerRule(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerRuleCreate`
-
+**$request:** `LoadBalancerRuleCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -29011,7 +29300,7 @@ $client->loadBalancer->getLoadBalancerRule(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29019,7 +29308,7 @@ $client->loadBalancer->getLoadBalancerRule(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -29027,7 +29316,7 @@ $client->loadBalancer->getLoadBalancerRule(
 <dd>
 
 **$ruleName:** `string` — The unique identifier for the rule.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29108,7 +29397,7 @@ $client->loadBalancer->replaceLoadBalancerRule(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29116,7 +29405,7 @@ $client->loadBalancer->replaceLoadBalancerRule(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -29124,15 +29413,15 @@ $client->loadBalancer->replaceLoadBalancerRule(
 <dd>
 
 **$ruleName:** `string` — The unique identifier for the rule.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerRuleCreate`
-
+**$request:** `LoadBalancerRuleCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -29190,7 +29479,7 @@ $client->loadBalancer->deleteLoadBalancerRule(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29198,7 +29487,7 @@ $client->loadBalancer->deleteLoadBalancerRule(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -29206,7 +29495,7 @@ $client->loadBalancer->deleteLoadBalancerRule(
 <dd>
 
 **$ruleName:** `string` — The unique identifier for the rule.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29268,7 +29557,7 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29276,7 +29565,7 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -29284,7 +29573,7 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$ruleName:** `string` — The unique identifier for the rule.
-
+    
 </dd>
 </dl>
 
@@ -29292,7 +29581,7 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$name:** `?string` — Name of the rule
-
+    
 </dd>
 </dl>
 
@@ -29300,15 +29589,15 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$priority:** `?int` — Priority
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$matchingCondition:** `?string`
-
+**$matchingCondition:** `?string` 
+    
 </dd>
 </dl>
 
@@ -29316,7 +29605,7 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$matchers:** `?array` — Rule matchers
-
+    
 </dd>
 </dl>
 
@@ -29324,7 +29613,7 @@ $client->loadBalancer->modifyLoadBalancerRule(
 <dd>
 
 **$actions:** `?array` — Rule actions
-
+    
 </dd>
 </dl>
 </dd>
@@ -29380,7 +29669,7 @@ $client->loadBalancer->listLoadBalancerBackends(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29448,15 +29737,15 @@ $client->loadBalancer->createLoadBalancerBackend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerBackendCreate`
-
+**$request:** `LoadBalancerBackendCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -29513,7 +29802,7 @@ $client->loadBalancer->getLoadBalancerBackend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29521,7 +29810,7 @@ $client->loadBalancer->getLoadBalancerBackend(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29578,7 +29867,7 @@ $client->loadBalancer->deleteLoadBalancerBackend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29586,7 +29875,7 @@ $client->loadBalancer->deleteLoadBalancerBackend(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29646,7 +29935,7 @@ $client->loadBalancer->modifyLoadBalancerBackend(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29654,7 +29943,7 @@ $client->loadBalancer->modifyLoadBalancerBackend(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -29662,7 +29951,7 @@ $client->loadBalancer->modifyLoadBalancerBackend(
 <dd>
 
 **$name:** `?string` — Name of the backend
-
+    
 </dd>
 </dl>
 
@@ -29670,7 +29959,7 @@ $client->loadBalancer->modifyLoadBalancerBackend(
 <dd>
 
 **$members:** `?array` — Backend members
-
+    
 </dd>
 </dl>
 
@@ -29678,7 +29967,7 @@ $client->loadBalancer->modifyLoadBalancerBackend(
 <dd>
 
 **$tlsConfigs:** `?array` — TLS Configs
-
+    
 </dd>
 </dl>
 
@@ -29686,15 +29975,15 @@ $client->loadBalancer->modifyLoadBalancerBackend(
 <dd>
 
 **$resolver:** `?string` — Resolver reference
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$properties:** `?LoadBalancerBackendPropertiesCreate`
-
+**$properties:** `?LoadBalancerBackendPropertiesCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -29751,7 +30040,7 @@ $client->loadBalancer->listLoadBalancerMembers(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29759,7 +30048,7 @@ $client->loadBalancer->listLoadBalancerMembers(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29823,7 +30112,7 @@ $client->loadBalancer->createLoadBalancerMember(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29831,15 +30120,15 @@ $client->loadBalancer->createLoadBalancerMember(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerMemberCreateZero|LoadBalancerMemberCreateOne`
-
+**$request:** `LoadBalancerMemberCreateZero|LoadBalancerMemberCreateOne` 
+    
 </dd>
 </dl>
 </dd>
@@ -29897,7 +30186,7 @@ $client->loadBalancer->getLoadBalancerMember(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29905,7 +30194,7 @@ $client->loadBalancer->getLoadBalancerMember(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -29913,7 +30202,7 @@ $client->loadBalancer->getLoadBalancerMember(
 <dd>
 
 **$memberName:** `string` — The unique identifier for the member.
-
+    
 </dd>
 </dl>
 </dd>
@@ -29971,7 +30260,7 @@ $client->loadBalancer->deleteLoadBalancerMember(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -29979,7 +30268,7 @@ $client->loadBalancer->deleteLoadBalancerMember(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -29987,7 +30276,7 @@ $client->loadBalancer->deleteLoadBalancerMember(
 <dd>
 
 **$memberName:** `string` — The unique identifier for the member.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30048,7 +30337,7 @@ $client->loadBalancer->modifyLoadBalancerMember(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30056,7 +30345,7 @@ $client->loadBalancer->modifyLoadBalancerMember(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -30064,15 +30353,15 @@ $client->loadBalancer->modifyLoadBalancerMember(
 <dd>
 
 **$memberName:** `string` — The unique identifier for the member.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerMemberModifyZero|LoadBalancerMemberModifyOne`
-
+**$request:** `LoadBalancerMemberModifyZero|LoadBalancerMemberModifyOne` 
+    
 </dd>
 </dl>
 </dd>
@@ -30129,7 +30418,7 @@ $client->loadBalancer->listLoadBalancerBackendTlsConfigs(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30137,7 +30426,7 @@ $client->loadBalancer->listLoadBalancerBackendTlsConfigs(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30200,7 +30489,7 @@ $client->loadBalancer->createLoadBalancerBackendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30208,15 +30497,15 @@ $client->loadBalancer->createLoadBalancerBackendTlsConfig(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerTlsConfigCreate`
-
+**$request:** `LoadBalancerTlsConfigCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -30274,7 +30563,7 @@ $client->loadBalancer->getLoadBalancerBackendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30282,7 +30571,7 @@ $client->loadBalancer->getLoadBalancerBackendTlsConfig(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -30290,7 +30579,7 @@ $client->loadBalancer->getLoadBalancerBackendTlsConfig(
 <dd>
 
 **$tlsConfigName:** `string` — The unique identifier for the TLS configuration.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30348,7 +30637,7 @@ $client->loadBalancer->deleteLoadBalancerBackendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30356,7 +30645,7 @@ $client->loadBalancer->deleteLoadBalancerBackendTlsConfig(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -30364,7 +30653,7 @@ $client->loadBalancer->deleteLoadBalancerBackendTlsConfig(
 <dd>
 
 **$tlsConfigName:** `string` — The unique identifier for the TLS configuration.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30428,7 +30717,7 @@ $client->loadBalancer->modifyLoadBalancerBackendTlsConfig(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30436,7 +30725,7 @@ $client->loadBalancer->modifyLoadBalancerBackendTlsConfig(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -30444,15 +30733,15 @@ $client->loadBalancer->modifyLoadBalancerBackendTlsConfig(
 <dd>
 
 **$tlsConfigName:** `string` — The unique identifier for the TLS configuration.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerTlsConfigModify`
-
+**$request:** `LoadBalancerTlsConfigModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -30512,7 +30801,7 @@ $client->loadBalancer->modifyLoadBalancerNetwork(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30520,7 +30809,7 @@ $client->loadBalancer->modifyLoadBalancerNetwork(
 <dd>
 
 **$networkName:** `string` — The unique identifier for the network.
-
+    
 </dd>
 </dl>
 
@@ -30528,7 +30817,7 @@ $client->loadBalancer->modifyLoadBalancerNetwork(
 <dd>
 
 **$name:** `?string` — Name of the network
-
+    
 </dd>
 </dl>
 </dd>
@@ -30584,7 +30873,7 @@ $client->loadBalancer->listLoadBalancerIpAddresses(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30648,15 +30937,15 @@ $client->loadBalancer->createLoadBalancerIpAddress(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerIpAddressCreate`
-
+**$request:** `LoadBalancerIpAddressCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -30713,7 +31002,7 @@ $client->loadBalancer->getLoadBalancerIpAddress(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30721,7 +31010,7 @@ $client->loadBalancer->getLoadBalancerIpAddress(
 <dd>
 
 **$ipAddress:** `string` — The unique identifier for the IP address.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30744,8 +31033,8 @@ $client->loadBalancer->getLoadBalancerIpAddress(
 <dl>
 <dd>
 
-Detach a floating public IPv4 address from the service by given {service-uuid} and {address}.
-				Depending on the release policy, the customer retains the floating IP if the policy is set to keep.
+Detach a floating public IPv4 address from the service by given {service-uuid} and {address}. 
+				Depending on the release policy, the customer retains the floating IP if the policy is set to keep. 
 				If the policy is set to release, the floating IP will be deleted.
 </dd>
 </dl>
@@ -30780,7 +31069,7 @@ $client->loadBalancer->deleteLoadBalancerIpAddress(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30788,7 +31077,7 @@ $client->loadBalancer->deleteLoadBalancerIpAddress(
 <dd>
 
 **$ipAddress:** `string` — The unique identifier for the IP address.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30844,7 +31133,7 @@ $client->loadBalancer->listLoadBalancerResolvers(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -30916,15 +31205,15 @@ $client->loadBalancer->createLoadBalancerResolver(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerResolverCreate`
-
+**$request:** `LoadBalancerResolverCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -30981,7 +31270,7 @@ $client->loadBalancer->getLoadBalancerResolver(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -30989,7 +31278,7 @@ $client->loadBalancer->getLoadBalancerResolver(
 <dd>
 
 **$resolverName:** `string` — The unique identifier for the resolver.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31046,7 +31335,7 @@ $client->loadBalancer->deleteLoadBalancerResolver(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31054,7 +31343,7 @@ $client->loadBalancer->deleteLoadBalancerResolver(
 <dd>
 
 **$resolverName:** `string` — The unique identifier for the resolver.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31123,7 +31412,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31131,7 +31420,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$resolverName:** `string` — The unique identifier for the resolver.
-
+    
 </dd>
 </dl>
 
@@ -31139,7 +31428,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$name:** `?string` — Name of the resolver
-
+    
 </dd>
 </dl>
 
@@ -31147,7 +31436,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$nameservers:** `?array` — Nameservers
-
+    
 </dd>
 </dl>
 
@@ -31155,7 +31444,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$retries:** `?int` — Number of retries on failure
-
+    
 </dd>
 </dl>
 
@@ -31163,7 +31452,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$timeout:** `?int` — Timeout for the query in seconds
-
+    
 </dd>
 </dl>
 
@@ -31171,7 +31460,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$timeoutRetry:** `?int` — Timeout for the query retries in seconds
-
+    
 </dd>
 </dl>
 
@@ -31179,7 +31468,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$cacheValid:** `?int` — Time in seconds to cache valid results
-
+    
 </dd>
 </dl>
 
@@ -31187,7 +31476,7 @@ $client->loadBalancer->modifyLoadBalancerResolver(
 <dd>
 
 **$cacheInvalid:** `?int` — Time in seconds to cache invalid results
-
+    
 </dd>
 </dl>
 </dd>
@@ -31243,7 +31532,7 @@ $client->loadBalancer->listLoadBalancerLabels(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31314,15 +31603,15 @@ $client->loadBalancer->createLoadBalancerLabel(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerLabelCreate`
-
+**$request:** `LoadBalancerLabelCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -31379,7 +31668,7 @@ $client->loadBalancer->getLoadBalancerLabel(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31387,7 +31676,7 @@ $client->loadBalancer->getLoadBalancerLabel(
 <dd>
 
 **$labelKey:** `string` — The unique identifier for the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31444,7 +31733,7 @@ $client->loadBalancer->deleteLoadBalancerLabel(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31452,7 +31741,7 @@ $client->loadBalancer->deleteLoadBalancerLabel(
 <dd>
 
 **$labelKey:** `string` — The unique identifier for the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31515,7 +31804,7 @@ $client->loadBalancer->modifyLoadBalancerLabel(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31523,15 +31812,15 @@ $client->loadBalancer->modifyLoadBalancerLabel(
 <dd>
 
 **$labelKey:** `string` — The unique identifier for the label.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerLabelModify`
-
+**$request:** `LoadBalancerLabelModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -31587,7 +31876,7 @@ $client->loadBalancer->getLoadBalancerMetrics(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31643,7 +31932,7 @@ $client->loadBalancer->getLoadBalancerMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31700,7 +31989,7 @@ $client->loadBalancer->getLoadBalancerFrontendCombinedMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31708,7 +31997,7 @@ $client->loadBalancer->getLoadBalancerFrontendCombinedMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Sort metrics by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31766,7 +32055,7 @@ $client->loadBalancer->getLoadBalancerFrontendMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31774,7 +32063,7 @@ $client->loadBalancer->getLoadBalancerFrontendMetricsSeries(
 <dd>
 
 **$frontendName:** `string` — The unique identifier for the frontend.
-
+    
 </dd>
 </dl>
 
@@ -31782,7 +32071,7 @@ $client->loadBalancer->getLoadBalancerFrontendMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Sort metrics by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31839,7 +32128,7 @@ $client->loadBalancer->getLoadBalancerBackendCombinedMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31847,7 +32136,7 @@ $client->loadBalancer->getLoadBalancerBackendCombinedMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Sort metrics by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31905,7 +32194,7 @@ $client->loadBalancer->getLoadBalancerBackendMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31913,7 +32202,7 @@ $client->loadBalancer->getLoadBalancerBackendMetricsSeries(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -31921,7 +32210,7 @@ $client->loadBalancer->getLoadBalancerBackendMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Sort metrics by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -31979,7 +32268,7 @@ $client->loadBalancer->getLoadBalancerMemberCombinedMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -31987,7 +32276,7 @@ $client->loadBalancer->getLoadBalancerMemberCombinedMetricsSeries(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -31995,7 +32284,7 @@ $client->loadBalancer->getLoadBalancerMemberCombinedMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Sort metrics by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32054,7 +32343,7 @@ $client->loadBalancer->getLoadBalancerMemberMetricsSeries(
 <dd>
 
 **$serviceUuid:** `string` — The unique identifier for the service.
-
+    
 </dd>
 </dl>
 
@@ -32062,7 +32351,7 @@ $client->loadBalancer->getLoadBalancerMemberMetricsSeries(
 <dd>
 
 **$backendName:** `string` — The unique identifier for the backend.
-
+    
 </dd>
 </dl>
 
@@ -32070,7 +32359,7 @@ $client->loadBalancer->getLoadBalancerMemberMetricsSeries(
 <dd>
 
 **$memberName:** `string` — The unique identifier for the member.
-
+    
 </dd>
 </dl>
 
@@ -32078,7 +32367,7 @@ $client->loadBalancer->getLoadBalancerMemberMetricsSeries(
 <dd>
 
 **$sort:** `?string` — Sort metrics by field. Prefix with '-' for descending order.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32137,7 +32426,7 @@ $client->loadBalancer->listLoadBalancerCertificateBundles(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -32145,7 +32434,7 @@ $client->loadBalancer->listLoadBalancerCertificateBundles(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -32153,7 +32442,7 @@ $client->loadBalancer->listLoadBalancerCertificateBundles(
 <dd>
 
 **$label:** `?string` — Filter resources by label. Can be provided multiple times for multiple labels. Format: 'key=value' for exact match or 'key' for existence check.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32210,8 +32499,8 @@ $client->loadBalancer->createLoadBalancerCertificateBundle(
 <dl>
 <dd>
 
-**$request:** `LoadBalancerCertificateBundleCreateZero|LoadBalancerCertificateBundleCreateCertificate|LoadBalancerCertificateBundleCreateType`
-
+**$request:** `LoadBalancerCertificateBundleCreateZero|LoadBalancerCertificateBundleCreateCertificate|LoadBalancerCertificateBundleCreateType` 
+    
 </dd>
 </dl>
 </dd>
@@ -32267,7 +32556,7 @@ $client->loadBalancer->getLoadBalancerCertificateBundle(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32323,7 +32612,7 @@ $client->loadBalancer->deleteLoadBalancerCertificateBundle(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32384,15 +32673,15 @@ $client->loadBalancer->modifyLoadBalancerCertificateBundle(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerCertificateBundleManualModify|LoadBalancerCertificateBundleDynamicModify|LoadBalancerCertificateBundleAuthorityModify`
-
+**$request:** `LoadBalancerCertificateBundleManualModify|LoadBalancerCertificateBundleDynamicModify|LoadBalancerCertificateBundleAuthorityModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -32448,7 +32737,7 @@ $client->loadBalancer->listLoadBalancerCertificateBundleLabels(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32519,15 +32808,15 @@ $client->loadBalancer->createLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerLabelCreate`
-
+**$request:** `LoadBalancerLabelCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -32584,7 +32873,7 @@ $client->loadBalancer->getLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 
@@ -32592,7 +32881,7 @@ $client->loadBalancer->getLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$labelKey:** `string` — The unique identifier for the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32649,7 +32938,7 @@ $client->loadBalancer->deleteLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 
@@ -32657,7 +32946,7 @@ $client->loadBalancer->deleteLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$labelKey:** `string` — The unique identifier for the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32720,7 +33009,7 @@ $client->loadBalancer->modifyLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$bundleUuid:** `string` — The unique identifier for the certificate bundle.
-
+    
 </dd>
 </dl>
 
@@ -32728,15 +33017,15 @@ $client->loadBalancer->modifyLoadBalancerCertificateBundleLabel(
 <dd>
 
 **$labelKey:** `string` — The unique identifier for the label.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `LoadBalancerLabelModify`
-
+**$request:** `LoadBalancerLabelModify` 
+    
 </dd>
 </dl>
 </dd>
@@ -32836,7 +33125,7 @@ $client->loadBalancer->listLoadBalancerPlans(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -32844,7 +33133,7 @@ $client->loadBalancer->listLoadBalancerPlans(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32900,7 +33189,7 @@ $client->loadBalancer->getLoadBalancerPlan(
 <dd>
 
 **$planName:** `string` — The unique identifier for the plan.
-
+    
 </dd>
 </dl>
 </dd>
@@ -32961,7 +33250,7 @@ $client->firewallRuleset->listFirewallRulesets(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -32969,7 +33258,7 @@ $client->firewallRuleset->listFirewallRulesets(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -32977,7 +33266,7 @@ $client->firewallRuleset->listFirewallRulesets(
 <dd>
 
 **$sort:** `?string` — Order of returned results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -33016,7 +33305,7 @@ Creates a new firewall ruleset.
 
 ```php
 $client->firewallRuleset->createFirewallRuleset(
-    new CreateFirewallRuleset([
+    new FirewallRulesetCreate([
         'name' => 'example_firewall_ruleset',
         'stateful' => true,
         'enabled' => false,
@@ -33038,7 +33327,7 @@ $client->firewallRuleset->createFirewallRuleset(
 <dd>
 
 **$name:** `string` — Name of the firewall ruleset
-
+    
 </dd>
 </dl>
 
@@ -33046,31 +33335,31 @@ $client->firewallRuleset->createFirewallRuleset(
 <dd>
 
 **$description:** `?string` — Description of the firewall ruleset
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$stateful:** `?bool`
-
+**$stateful:** `?bool` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$enabled:** `?bool`
-
+**$enabled:** `?bool` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$defaultDnsRulesEnabled:** `?bool`
-
+**$defaultDnsRulesEnabled:** `?bool` 
+    
 </dd>
 </dl>
 
@@ -33078,7 +33367,7 @@ $client->firewallRuleset->createFirewallRuleset(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 </dd>
@@ -33134,7 +33423,7 @@ $client->firewallRuleset->getFirewallRuleset(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -33190,7 +33479,7 @@ $client->firewallRuleset->deleteFirewallRuleset(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -33234,7 +33523,7 @@ $client->firewallRuleset->modifyFirewallRuleset(
         'name' => 'modified_example_firewall_ruleset',
         'description' => 'Modified example stateless firewall ruleset',
         'labels' => [
-            new FirewallRulesetCreateLabel([
+            new FirewallRulesetLabelCreate([
                 'key' => 'dev',
                 'value' => 'dev-1',
             ]),
@@ -33257,7 +33546,7 @@ $client->firewallRuleset->modifyFirewallRuleset(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -33265,7 +33554,7 @@ $client->firewallRuleset->modifyFirewallRuleset(
 <dd>
 
 **$name:** `?string` — Name of the ruleset
-
+    
 </dd>
 </dl>
 
@@ -33273,7 +33562,7 @@ $client->firewallRuleset->modifyFirewallRuleset(
 <dd>
 
 **$description:** `?string` — Description of the firewall ruleset
-
+    
 </dd>
 </dl>
 
@@ -33281,7 +33570,7 @@ $client->firewallRuleset->modifyFirewallRuleset(
 <dd>
 
 **$labels:** `?array` — Labels
-
+    
 </dd>
 </dl>
 
@@ -33289,15 +33578,15 @@ $client->firewallRuleset->modifyFirewallRuleset(
 <dd>
 
 **$enabled:** `?bool` — Enabled
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$defaultDnsRulesEnabled:** `?bool`
-
+**$defaultDnsRulesEnabled:** `?bool` 
+    
 </dd>
 </dl>
 </dd>
@@ -33354,7 +33643,7 @@ $client->firewallRuleset->restoreFirewallRuleset(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -33362,7 +33651,7 @@ $client->firewallRuleset->restoreFirewallRuleset(
 <dd>
 
 **$rulesetVersion:** `int` — Firewall ruleset version
-
+    
 </dd>
 </dl>
 </dd>
@@ -33423,7 +33712,7 @@ $client->firewallRuleset->listFirewallRulesetRules(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -33431,7 +33720,7 @@ $client->firewallRuleset->listFirewallRulesetRules(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -33439,7 +33728,7 @@ $client->firewallRuleset->listFirewallRulesetRules(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -33447,7 +33736,7 @@ $client->firewallRuleset->listFirewallRulesetRules(
 <dd>
 
 **$sort:** `?string` — Order of returned results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -33488,7 +33777,7 @@ Creates a new firewall ruleset rule by the given {ruleset-uuid}.
 $client->firewallRuleset->createFirewallRulesetRule(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CreateFirewallRulesetRuleRequest([
-        'body' => new FirewallRulesetFirewallRuleCreate([
+        'body' => new FirewallRulesetRuleCreate([
             'enabled' => false,
             'action' => FirewallRulesetRuleAction::Accept->value,
             'direction' => FirewallRulesetRuleDirection::In->value,
@@ -33512,15 +33801,15 @@ $client->firewallRuleset->createFirewallRulesetRule(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `FirewallRulesetFirewallRuleCreate`
-
+**$request:** `FirewallRulesetRuleCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -33560,9 +33849,9 @@ Creates multiple firewall ruleset rules by the given {ruleset-uuid}.
 ```php
 $client->firewallRuleset->createMultipleFirewallRulesetRule(
     '01234567-89ab-cdef-0123-456789abcdef',
-    new FirewallRulesetFirewallMultipleRuleCreate([
+    new FirewallRulesetMultipleRuleCreate([
         'rules' => [
-            new FirewallRulesetFirewallRuleCreate([
+            new FirewallRulesetRuleCreate([
                 'enabled' => false,
                 'action' => FirewallRulesetRuleAction::Accept->value,
                 'direction' => FirewallRulesetRuleDirection::In->value,
@@ -33587,15 +33876,15 @@ $client->firewallRuleset->createMultipleFirewallRulesetRule(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$rules:** `array`
-
+**$rules:** `array` 
+    
 </dd>
 </dl>
 </dd>
@@ -33652,7 +33941,7 @@ $client->firewallRuleset->getFirewallRulesetRule(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -33660,7 +33949,7 @@ $client->firewallRuleset->getFirewallRulesetRule(
 <dd>
 
 **$ruleId:** `string` — Firewall ruleset rule UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -33717,7 +34006,7 @@ $client->firewallRuleset->deleteFirewallRulesetRule(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -33725,7 +34014,7 @@ $client->firewallRuleset->deleteFirewallRulesetRule(
 <dd>
 
 **$ruleId:** `string` — Firewall ruleset rule UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -33766,7 +34055,7 @@ Modifies existing firewall ruleset rule by given {ruleset_uuid} and {rule-uuid}.
 $client->firewallRuleset->modifyFirewallRulesetRule(
     '01234567-89ab-cdef-0123-456789abcdef',
     '01234567-89ab-cdef-0123-456789abcdef',
-    new FirewallRulesetFirewallRuleModify([
+    new FirewallRulesetRuleModify([
         'enabled' => false,
         'action' => FirewallRulesetRuleAction::Accept->value,
         'direction' => FirewallRulesetRuleDirection::In->value,
@@ -33789,7 +34078,7 @@ $client->firewallRuleset->modifyFirewallRulesetRule(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -33797,7 +34086,7 @@ $client->firewallRuleset->modifyFirewallRulesetRule(
 <dd>
 
 **$ruleId:** `string` — Firewall ruleset rule UUID
-
+    
 </dd>
 </dl>
 
@@ -33805,15 +34094,15 @@ $client->firewallRuleset->modifyFirewallRulesetRule(
 <dd>
 
 **$enabled:** `?bool` — Enabled
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$action:** `?string`
-
+**$action:** `?string` 
+    
 </dd>
 </dl>
 
@@ -33821,127 +34110,127 @@ $client->firewallRuleset->modifyFirewallRulesetRule(
 <dd>
 
 **$comment:** `?string` — Comments
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$destinationAddressStart:** `?string`
-
+**$destinationAddressStart:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$destinationAddressEnd:** `?string`
-
+**$destinationAddressEnd:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$destinationPortStart:** `?int`
-
+**$destinationPortStart:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$destinationPortEnd:** `?int`
-
+**$destinationPortEnd:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$destinationAddressCidr:** `?string`
-
+**$destinationAddressCidr:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$direction:** `?string`
-
+**$direction:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$family:** `?string`
-
+**$family:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$icmpType:** `?int`
-
+**$icmpType:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$position:** `?int`
-
+**$position:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$protocol:** `?string`
-
+**$protocol:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sourceAddressStart:** `?string`
-
+**$sourceAddressStart:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sourceAddressEnd:** `?string`
-
+**$sourceAddressEnd:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sourcePortStart:** `?int`
-
+**$sourcePortStart:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sourcePortEnd:** `?int`
-
+**$sourcePortEnd:** `?int` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$sourceAddressCidr:** `?string`
-
+**$sourceAddressCidr:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -33997,7 +34286,7 @@ $client->firewallRuleset->listFirewallRulesetLabels(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -34038,7 +34327,7 @@ Creates a new label by given {ruleset-uuid}. Labels are used for group filtering
 $client->firewallRuleset->createFirewallRulesetLabel(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CreateFirewallRulesetLabelRequest([
-        'body' => new FirewallRulesetCreateLabel([
+        'body' => new FirewallRulesetLabelCreate([
             'key' => 'dev',
             'value' => 'dev-1',
         ]),
@@ -34059,15 +34348,15 @@ $client->firewallRuleset->createFirewallRulesetLabel(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$request:** `FirewallRulesetCreateLabel`
-
+**$request:** `FirewallRulesetLabelCreate` 
+    
 </dd>
 </dl>
 </dd>
@@ -34123,7 +34412,7 @@ $client->firewallRuleset->listFirewallRulesetAttachedServers(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 </dd>
@@ -34180,7 +34469,7 @@ $client->firewallRuleset->getFirewallRulesetLabel(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -34188,7 +34477,7 @@ $client->firewallRuleset->getFirewallRulesetLabel(
 <dd>
 
 **$labelKey:** `string` — The key of the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -34245,7 +34534,7 @@ $client->firewallRuleset->deleteFirewallRulesetLabel(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -34253,7 +34542,7 @@ $client->firewallRuleset->deleteFirewallRulesetLabel(
 <dd>
 
 **$labelKey:** `string` — The key of the label.
-
+    
 </dd>
 </dl>
 </dd>
@@ -34314,7 +34603,7 @@ $client->firewallRuleset->modifyFirewallRulesetLabel(
 <dd>
 
 **$rulesetUuid:** `string` — Firewall ruleset UUID
-
+    
 </dd>
 </dl>
 
@@ -34322,23 +34611,23 @@ $client->firewallRuleset->modifyFirewallRulesetLabel(
 <dd>
 
 **$labelKey:** `string` — The key of the label.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$key:** `?string`
-
+**$key:** `?string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$value:** `?string`
-
+**$value:** `?string` 
+    
 </dd>
 </dl>
 </dd>
@@ -34399,7 +34688,7 @@ $client->firewallRuleset->listServerFirewallRule(
 <dd>
 
 **$serverUuid:** `string` — Server UUID
-
+    
 </dd>
 </dl>
 
@@ -34407,7 +34696,7 @@ $client->firewallRuleset->listServerFirewallRule(
 <dd>
 
 **$limit:** `?int` — Number of entries to receive at most.
-
+    
 </dd>
 </dl>
 
@@ -34415,7 +34704,7 @@ $client->firewallRuleset->listServerFirewallRule(
 <dd>
 
 **$offset:** `?int` — Offset for retrieved results.
-
+    
 </dd>
 </dl>
 
@@ -34423,7 +34712,7 @@ $client->firewallRuleset->listServerFirewallRule(
 <dd>
 
 **$sort:** `?string` — Order of returned results.
-
+    
 </dd>
 </dl>
 </dd>
@@ -34492,15 +34781,15 @@ $client->firewallRuleset->createServerFirewallRule(
 <dd>
 
 **$serverUuid:** `string` — Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$firewallRule:** `FirewallRulesetServerFirewallRule`
-
+**$firewallRule:** `FirewallRulesetServerFirewallRule` 
+    
 </dd>
 </dl>
 </dd>
@@ -34598,15 +34887,15 @@ $client->firewallRuleset->createMultipleServerFirewallRules(
 <dd>
 
 **$serverUuid:** `string` — Server UUID
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**$firewallRules:** `?FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules`
-
+**$firewallRules:** `?FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules` 
+    
 </dd>
 </dl>
 </dd>
@@ -34663,7 +34952,7 @@ $client->firewallRuleset->getServerFirewallRule(
 <dd>
 
 **$serverUuid:** `string` — Server UUID
-
+    
 </dd>
 </dl>
 
@@ -34671,7 +34960,7 @@ $client->firewallRuleset->getServerFirewallRule(
 <dd>
 
 **$position:** `int|string` — Server firewall rule position
-
+    
 </dd>
 </dl>
 </dd>
@@ -34728,7 +35017,7 @@ $client->firewallRuleset->deleteServerFirewallRule(
 <dd>
 
 **$serverUuid:** `string` — Server UUID
-
+    
 </dd>
 </dl>
 
@@ -34736,7 +35025,7 @@ $client->firewallRuleset->deleteServerFirewallRule(
 <dd>
 
 **$position:** `int|string` — Server firewall rule position
-
+    
 </dd>
 </dl>
 </dd>
@@ -34872,7 +35161,7 @@ $client->zone->listZoneVlaNs(
 <dd>
 
 **$zone:** `string` — The zone identifier.
-
+    
 </dd>
 </dl>
 </dd>

@@ -35,6 +35,30 @@ class LoadBalancerBackendPropertiesResponse extends JsonSerializableType
     public int $timeoutTunnel;
 
     /**
+     * @var int $timeoutConnect Connect timeout in seconds.
+     */
+    #[JsonProperty('timeout_connect')]
+    public int $timeoutConnect;
+
+    /**
+     * @var int $timeoutQueue Queue timeout in seconds.
+     */
+    #[JsonProperty('timeout_queue')]
+    public int $timeoutQueue;
+
+    /**
+     * @var int $retries Number of retries.
+     */
+    #[JsonProperty('retries')]
+    public int $retries;
+
+    /**
+     * @var bool $redispatch Whether the last retry may go to a different member.
+     */
+    #[JsonProperty('redispatch')]
+    public bool $redispatch;
+
+    /**
      * @var string $healthCheckType Type of health check.
      */
     #[JsonProperty('health_check_type')]
@@ -123,6 +147,10 @@ class LoadBalancerBackendPropertiesResponse extends JsonSerializableType
      *   backendId: int,
      *   timeoutServer: int,
      *   timeoutTunnel: int,
+     *   timeoutConnect: int,
+     *   timeoutQueue: int,
+     *   retries: int,
+     *   redispatch: bool,
      *   healthCheckType: string,
      *   healthCheckInterval: int,
      *   healthCheckFall: int,
@@ -147,6 +175,10 @@ class LoadBalancerBackendPropertiesResponse extends JsonSerializableType
         $this->outboundProxyProtocol = $values['outboundProxyProtocol'] ?? null;
         $this->timeoutServer = $values['timeoutServer'];
         $this->timeoutTunnel = $values['timeoutTunnel'];
+        $this->timeoutConnect = $values['timeoutConnect'];
+        $this->timeoutQueue = $values['timeoutQueue'];
+        $this->retries = $values['retries'];
+        $this->redispatch = $values['redispatch'];
         $this->healthCheckType = $values['healthCheckType'];
         $this->healthCheckInterval = $values['healthCheckInterval'];
         $this->healthCheckFall = $values['healthCheckFall'];

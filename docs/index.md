@@ -75,6 +75,7 @@ Latest follows the generated SDK on main, including prerelease development. Stab
 
 Versioned SDK reference snapshots. The v0.0.x snapshots predate migration and are not legacy Packagist v1-v3 releases.
 
+- [v4.0.0-alpha.1](v4.0.0-alpha.1/reference.html)
 - [v0.0.105](v0.0.105/reference.html)
 - [v0.0.65](v0.0.65/reference.html)
 - [v0.0.11](v0.0.11/reference.html)

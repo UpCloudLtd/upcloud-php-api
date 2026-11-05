@@ -36,7 +36,10 @@ class FileStorageWireTest extends WireMockTestCase
     public function testListFileStorages(): void {
         $testId = 'file_storage.list_file_storages.0';
         $this->client->fileStorage->listFileStorages(
-            new ListFileStoragesRequest([]),
+            new ListFileStoragesRequest([
+                'limit' => 25,
+                'offset' => 20,
+            ]),
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.list_file_storages.0',
@@ -47,7 +50,7 @@ class FileStorageWireTest extends WireMockTestCase
             $testId,
             "GET",
             "/1.3/file-storage",
-            null,
+            ['limit' => '25', 'offset' => '20'],
             1
         );
     }
@@ -58,7 +61,7 @@ class FileStorageWireTest extends WireMockTestCase
         $testId = 'file_storage.create_file_storage.0';
         $this->client->fileStorage->createFileStorage(
             new FileStorageServiceCreate([
-                'name' => 'test-name',
+                'name' => 'production-files',
                 'zone' => 'fi-hel2',
                 'configuredStatus' => FileStorageConfiguredStatus::Started->value,
                 'sizeGib' => 250,
@@ -66,35 +69,19 @@ class FileStorageWireTest extends WireMockTestCase
                 'networks' => [
                     new FileStorageNetworkCreate([
                         'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                        'name' => 'net',
+                        'name' => 'private-net',
                         'family' => FileStorageNetworkFamily::IPv4->value,
                         'ipAddress' => '192.168.147.120',
                     ]),
                 ],
                 'shares' => [
                     new FileStorageShareCreate([
-                        'name' => 'read',
-                        'path' => '/public',
-                        'acl' => [
-                            new FileStorageAclCreate([
-                                'name' => 'test-name',
-                                'target' => '*',
-                                'permission' => FileStoragePermission::Ro->value,
-                            ]),
-                        ],
-                    ]),
-                    new FileStorageShareCreate([
-                        'name' => 'write',
+                        'name' => 'project-data',
                         'path' => '/project/data',
                         'acl' => [
                             new FileStorageAclCreate([
-                                'name' => 'test-name',
+                                'name' => 'office-write',
                                 'target' => '192.168.147.0/24',
-                                'permission' => FileStoragePermission::Rw->value,
-                            ]),
-                            new FileStorageAclCreate([
-                                'name' => 'test-name',
-                                'target' => 'local.domain',
                                 'permission' => FileStoragePermission::Rw->value,
                             ]),
                         ],
@@ -127,7 +114,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testGetFileStorage(): void {
         $testId = 'file_storage.get_file_storage.0';
         $this->client->fileStorage->getFileStorage(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.get_file_storage.0',
@@ -137,7 +124,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe",
             null,
             1
         );
@@ -148,15 +135,15 @@ class FileStorageWireTest extends WireMockTestCase
     public function testReplaceFileStorage(): void {
         $testId = 'file_storage.replace_file_storage.0';
         $this->client->fileStorage->replaceFileStorage(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             new FileStorageServiceReplace([
-                'name' => 'test-name',
+                'name' => 'production-files',
                 'configuredStatus' => FileStorageConfiguredStatus::Started->value,
                 'sizeGib' => 250,
                 'networks' => [
                     new FileStorageNetworkCreate([
                         'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                        'name' => 'net',
+                        'name' => 'private-net',
                         'family' => FileStorageNetworkFamily::IPv4->value,
                         'ipAddress' => '192.168.147.120',
                     ]),
@@ -177,7 +164,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PUT",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe",
             null,
             1
         );
@@ -188,7 +175,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testDeleteFileStorage(): void {
         $testId = 'file_storage.delete_file_storage.0';
         $this->client->fileStorage->deleteFileStorage(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.delete_file_storage.0',
@@ -198,7 +185,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "DELETE",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe",
             null,
             1
         );
@@ -209,25 +196,10 @@ class FileStorageWireTest extends WireMockTestCase
     public function testModifyFileStorage(): void {
         $testId = 'file_storage.modify_file_storage.0';
         $this->client->fileStorage->modifyFileStorage(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             new FileStorageServiceModify([
-                'name' => 'test-name',
-                'configuredStatus' => FileStorageConfiguredStatus::Started->value,
-                'sizeGib' => 250,
-                'networks' => [
-                    new FileStorageNetworkCreate([
-                        'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                        'name' => 'net',
-                        'family' => FileStorageNetworkFamily::IPv4->value,
-                        'ipAddress' => '192.168.147.120',
-                    ]),
-                ],
-                'labels' => [
-                    new FileStorageLabelCreate([
-                        'key' => 'environment',
-                        'value' => 'production',
-                    ]),
-                ],
+                'name' => 'production-files',
+                'sizeGib' => 500,
             ]),
             [
                 'headers' => [
@@ -238,7 +210,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PATCH",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe",
             null,
             1
         );
@@ -249,7 +221,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testListFileStorageNetworks(): void {
         $testId = 'file_storage.list_file_storage_networks.0';
         $this->client->fileStorage->listFileStorageNetworks(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.list_file_storage_networks.0',
@@ -259,7 +231,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/networks",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/networks",
             null,
             1
         );
@@ -270,13 +242,13 @@ class FileStorageWireTest extends WireMockTestCase
     public function testCreateFileStorageNetwork(): void {
         $testId = 'file_storage.create_file_storage_network.0';
         $this->client->fileStorage->createFileStorageNetwork(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             new CreateFileStorageNetworkRequest([
                 'body' => new FileStorageNetworkCreate([
                     'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                    'name' => 'test-name',
+                    'name' => 'private-net',
                     'family' => FileStorageNetworkFamily::IPv4->value,
-                    'ipAddress' => '10.20.30.40',
+                    'ipAddress' => '192.168.147.120',
                 ]),
             ]),
             [
@@ -288,7 +260,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/networks",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/networks",
             null,
             1
         );
@@ -299,8 +271,8 @@ class FileStorageWireTest extends WireMockTestCase
     public function testGetFileStorageNetwork(): void {
         $testId = 'file_storage.get_file_storage_network.0';
         $this->client->fileStorage->getFileStorageNetwork(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'production-files',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.get_file_storage_network.0',
@@ -310,7 +282,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/networks/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/networks/production-files",
             null,
             1
         );
@@ -321,8 +293,8 @@ class FileStorageWireTest extends WireMockTestCase
     public function testDeleteFileStorageNetwork(): void {
         $testId = 'file_storage.delete_file_storage_network.0';
         $this->client->fileStorage->deleteFileStorageNetwork(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'production-files',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.delete_file_storage_network.0',
@@ -332,7 +304,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "DELETE",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/networks/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/networks/production-files",
             null,
             1
         );
@@ -343,13 +315,10 @@ class FileStorageWireTest extends WireMockTestCase
     public function testModifyFileStorageNetwork(): void {
         $testId = 'file_storage.modify_file_storage_network.0';
         $this->client->fileStorage->modifyFileStorageNetwork(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'production-files',
             new FileStorageNetworkModify([
-                'uuid' => '03720d07-80a9-41ac-90b0-68a932109339',
-                'name' => 'test-name',
-                'family' => FileStorageNetworkFamily::IPv4->value,
-                'ipAddress' => '10.20.30.40',
+                'ipAddress' => '192.168.147.121',
             ]),
             [
                 'headers' => [
@@ -360,7 +329,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PATCH",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/networks/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/networks/production-files",
             null,
             1
         );
@@ -371,7 +340,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testListFileStorageShares(): void {
         $testId = 'file_storage.list_file_storage_shares.0';
         $this->client->fileStorage->listFileStorageShares(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.list_file_storage_shares.0',
@@ -381,7 +350,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares",
             null,
             1
         );
@@ -392,16 +361,16 @@ class FileStorageWireTest extends WireMockTestCase
     public function testCreateFileStorageShare(): void {
         $testId = 'file_storage.create_file_storage_share.0';
         $this->client->fileStorage->createFileStorageShare(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             new CreateFileStorageShareRequest([
                 'body' => new FileStorageShareCreate([
-                    'name' => 'read',
-                    'path' => '/public',
+                    'name' => 'project-data',
+                    'path' => '/project/data',
                     'acl' => [
                         new FileStorageAclCreate([
-                            'name' => 'test-name',
+                            'name' => 'office-write',
                             'target' => '192.168.147.0/24',
-                            'permission' => FileStoragePermission::Ro->value,
+                            'permission' => FileStoragePermission::Rw->value,
                         ]),
                     ],
                 ]),
@@ -415,7 +384,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares",
             null,
             1
         );
@@ -426,8 +395,8 @@ class FileStorageWireTest extends WireMockTestCase
     public function testGetFileStorageShare(): void {
         $testId = 'file_storage.get_file_storage_share.0';
         $this->client->fileStorage->getFileStorageShare(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.get_file_storage_share.0',
@@ -437,7 +406,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data",
             null,
             1
         );
@@ -448,8 +417,8 @@ class FileStorageWireTest extends WireMockTestCase
     public function testDeleteFileStorageShare(): void {
         $testId = 'file_storage.delete_file_storage_share.0';
         $this->client->fileStorage->deleteFileStorageShare(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.delete_file_storage_share.0',
@@ -459,7 +428,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "DELETE",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data",
             null,
             1
         );
@@ -470,14 +439,13 @@ class FileStorageWireTest extends WireMockTestCase
     public function testModifyFileStorageShare(): void {
         $testId = 'file_storage.modify_file_storage_share.0';
         $this->client->fileStorage->modifyFileStorageShare(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
             new FileStorageShareModify([
-                'name' => 'test-name',
                 'acl' => [
                     new FileStorageAclCreate([
-                        'name' => 'test-name',
-                        'target' => '192.168.25.0/24',
+                        'name' => 'office-read',
+                        'target' => '192.168.147.0/24',
                         'permission' => FileStoragePermission::Ro->value,
                     ]),
                 ],
@@ -491,7 +459,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PATCH",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data",
             null,
             1
         );
@@ -502,8 +470,8 @@ class FileStorageWireTest extends WireMockTestCase
     public function testListFileStorageAcls(): void {
         $testId = 'file_storage.list_file_storage_acls.0';
         $this->client->fileStorage->listFileStorageAcls(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.list_file_storage_acls.0',
@@ -513,7 +481,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name/acl",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data/acl",
             null,
             1
         );
@@ -524,13 +492,13 @@ class FileStorageWireTest extends WireMockTestCase
     public function testCreateFileStorageAcl(): void {
         $testId = 'file_storage.create_file_storage_acl.0';
         $this->client->fileStorage->createFileStorageAcl(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
             new CreateFileStorageAclRequest([
                 'body' => new FileStorageAclCreate([
-                    'name' => 'test-name',
-                    'target' => '192.168.25.147',
-                    'permission' => FileStoragePermission::Ro->value,
+                    'name' => 'office-write',
+                    'target' => '192.168.147.0/24',
+                    'permission' => FileStoragePermission::Rw->value,
                 ]),
             ]),
             [
@@ -542,7 +510,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name/acl",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data/acl",
             null,
             1
         );
@@ -553,9 +521,9 @@ class FileStorageWireTest extends WireMockTestCase
     public function testGetFileStorageAcl(): void {
         $testId = 'file_storage.get_file_storage_acl.0';
         $this->client->fileStorage->getFileStorageAcl(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
+            'production-files',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.get_file_storage_acl.0',
@@ -565,7 +533,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name/acl/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data/acl/production-files",
             null,
             1
         );
@@ -576,9 +544,9 @@ class FileStorageWireTest extends WireMockTestCase
     public function testDeleteFileStorageAcl(): void {
         $testId = 'file_storage.delete_file_storage_acl.0';
         $this->client->fileStorage->deleteFileStorageAcl(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
+            'production-files',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.delete_file_storage_acl.0',
@@ -588,7 +556,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "DELETE",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name/acl/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data/acl/production-files",
             null,
             1
         );
@@ -599,13 +567,11 @@ class FileStorageWireTest extends WireMockTestCase
     public function testModifyFileStorageAcl(): void {
         $testId = 'file_storage.modify_file_storage_acl.0';
         $this->client->fileStorage->modifyFileStorageAcl(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
-            'test-name',
-            'test-name',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
+            'project-data',
+            'production-files',
             new FileStorageAclModify([
-                'name' => 'test-name',
-                'target' => '192.168.25.0/24',
-                'permission' => FileStoragePermission::Rw->value,
+                'permission' => FileStoragePermission::Ro->value,
             ]),
             [
                 'headers' => [
@@ -616,7 +582,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PATCH",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/shares/test-name/acl/test-name",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/shares/project-data/acl/production-files",
             null,
             1
         );
@@ -627,7 +593,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testListFileStorageLabels(): void {
         $testId = 'file_storage.list_file_storage_labels.0';
         $this->client->fileStorage->listFileStorageLabels(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.list_file_storage_labels.0',
@@ -637,7 +603,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/labels",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/labels",
             null,
             1
         );
@@ -648,7 +614,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testCreateFileStorageLabel(): void {
         $testId = 'file_storage.create_file_storage_label.0';
         $this->client->fileStorage->createFileStorageLabel(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             new CreateFileStorageLabelRequest([
                 'body' => new FileStorageLabelCreate([
                     'key' => 'environment',
@@ -664,7 +630,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/labels",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/labels",
             null,
             1
         );
@@ -675,7 +641,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testGetFileStorageLabel(): void {
         $testId = 'file_storage.get_file_storage_label.0';
         $this->client->fileStorage->getFileStorageLabel(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             'environment',
             [
                 'headers' => [
@@ -686,7 +652,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/labels/environment",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/labels/environment",
             null,
             1
         );
@@ -697,7 +663,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testDeleteFileStorageLabel(): void {
         $testId = 'file_storage.delete_file_storage_label.0';
         $this->client->fileStorage->deleteFileStorageLabel(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             'environment',
             [
                 'headers' => [
@@ -708,7 +674,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "DELETE",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/labels/environment",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/labels/environment",
             null,
             1
         );
@@ -719,7 +685,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testModifyFileStorageLabel(): void {
         $testId = 'file_storage.modify_file_storage_label.0';
         $this->client->fileStorage->modifyFileStorageLabel(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             'environment',
             new FileStorageLabelModify([
                 'key' => 'environment',
@@ -734,7 +700,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PATCH",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/labels/environment",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/labels/environment",
             null,
             1
         );
@@ -745,7 +711,7 @@ class FileStorageWireTest extends WireMockTestCase
     public function testGetFileStorageCurrentState(): void {
         $testId = 'file_storage.get_file_storage_current_state.0';
         $this->client->fileStorage->getFileStorageCurrentState(
-            '17fd43a5-a97e-44f7-98a8-0a787da67069',
+            '17871d62-6964-4336-b68d-4a85a8ee10fe',
             [
                 'headers' => [
                     'X-Test-Id' => 'file_storage.get_file_storage_current_state.0',
@@ -755,7 +721,7 @@ class FileStorageWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/1.3/file-storage/17fd43a5-a97e-44f7-98a8-0a787da67069/current-state",
+            "/1.3/file-storage/17871d62-6964-4336-b68d-4a85a8ee10fe/current-state",
             null,
             1
         );

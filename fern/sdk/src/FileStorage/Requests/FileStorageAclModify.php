@@ -15,7 +15,7 @@ class FileStorageAclModify extends JsonSerializableType
     public ?string $name;
 
     /**
-     * @var ?string $target The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
+     * @var ?string $target Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients.
      */
     #[JsonProperty('target')]
     public ?string $target;

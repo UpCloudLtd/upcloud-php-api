@@ -4,7 +4,7 @@ namespace Upcloud\FirewallRuleset\Requests;
 
 use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
-use Upcloud\Types\FirewallRulesetCreateLabel;
+use Upcloud\Types\FirewallRulesetLabelCreate;
 use Upcloud\Core\Types\ArrayType;
 
 class FirewallRulesetModify extends JsonSerializableType
@@ -22,9 +22,9 @@ class FirewallRulesetModify extends JsonSerializableType
     public ?string $description;
 
     /**
-     * @var ?array<FirewallRulesetCreateLabel> $labels Labels
+     * @var ?array<FirewallRulesetLabelCreate> $labels Labels
      */
-    #[JsonProperty('labels'), ArrayType([FirewallRulesetCreateLabel::class])]
+    #[JsonProperty('labels'), ArrayType([FirewallRulesetLabelCreate::class])]
     public ?array $labels;
 
     /**
@@ -43,7 +43,7 @@ class FirewallRulesetModify extends JsonSerializableType
      * @param array{
      *   name?: ?string,
      *   description?: ?string,
-     *   labels?: ?array<FirewallRulesetCreateLabel>,
+     *   labels?: ?array<FirewallRulesetLabelCreate>,
      *   enabled?: ?bool,
      *   defaultDnsRulesEnabled?: ?bool,
      * } $values

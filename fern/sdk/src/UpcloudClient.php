@@ -7,6 +7,7 @@ use Upcloud\Kubernetes\KubernetesClient;
 use Upcloud\Currency\CurrencyClient;
 use Upcloud\Device\DeviceClient;
 use Upcloud\Events\EventsClient;
+use Upcloud\Host\HostClient;
 use Upcloud\IpAddress\IpAddressClient;
 use Upcloud\NetworkPeering\NetworkPeeringClient;
 use Upcloud\Network\NetworkClient;
@@ -60,6 +61,11 @@ class UpcloudClient
      * @var EventsClient $events
      */
     public EventsClient $events;
+
+    /**
+     * @var HostClient $host
+     */
+    public HostClient $host;
 
     /**
      * @var IpAddressClient $ipAddress
@@ -233,6 +239,7 @@ class UpcloudClient
         $this->currency = new CurrencyClient($this->client, $this->options);
         $this->device = new DeviceClient($this->client, $this->options);
         $this->events = new EventsClient($this->client, $this->options);
+        $this->host = new HostClient($this->client, $this->options);
         $this->ipAddress = new IpAddressClient($this->client, $this->options);
         $this->networkPeering = new NetworkPeeringClient($this->client, $this->options);
         $this->network = new NetworkClient($this->client, $this->options);

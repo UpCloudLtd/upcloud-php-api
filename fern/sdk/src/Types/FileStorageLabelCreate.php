@@ -6,7 +6,7 @@ use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
 /**
- * Schema for creating a new label.
+ * Service label used as metadata and for filtering File Storage service list results. A service can have at most 255 labels, and the key must be unique within the service regardless of case.
  */
 class FileStorageLabelCreate extends JsonSerializableType
 {
