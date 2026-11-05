@@ -39,6 +39,7 @@ No stable v4 SDK reference has been published yet. Choose a version under Tagged
 
 Versioned SDK reference snapshots. The v0.0.x snapshots predate migration and are not legacy Packagist v1-v3 releases.
 
+- [v4.0.0-alpha.2](v4.0.0-alpha.2/reference.html)
 - [v4.0.0-alpha.1](v4.0.0-alpha.1/reference.html)
 - [v0.0.105](v0.0.105/reference.html)
 - [v0.0.65](v0.0.65/reference.html)
