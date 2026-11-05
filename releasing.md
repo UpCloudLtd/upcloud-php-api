@@ -64,6 +64,10 @@ The release workflow uploads the tag and exact commit in a release-identity arti
 
 ### Supported Version Channels
 
+Documentation `latest` contains only the newest stable v4-or-later SDK reference. Alpha, beta, and RC releases add versioned references and appear in the release index, but never replace `latest`. Retrying an older stable release does not downgrade it. Until a stable v4 reference exists, `latest` displays a notice linking to tagged releases and legacy v3 documentation; historical v0.0.x snapshots are not treated as stable v4 SDK releases.
+
+The docs workflow runs the current preparation script from the default branch and reads the reference from the exact release tag. Merge its docs PR and wait for Pages deployment to publish the updated release index and stable-only `latest`.
+
 The release procedure is the same for every supported tag. The tag suffix selects the release type and Composer stability:
 
 | Tag pattern | Release type | Composer install stability |
