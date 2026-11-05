@@ -3,7 +3,7 @@ name: Validate PHP SDK
 on:
   push:
     branches: [main]
-  pull_request:
+  pull_request_target:
     paths:
       - ".gitattributes"
       - "composer.json"
@@ -21,25 +21,52 @@ on:
         description: "Generated pull request number"
         required: false
         type: string
+      repository:
+        description: "Repository containing the ref (defaults to this repository)"
+        required: false
+        type: string
 
 permissions:
   contents: read
 
 jobs:
+  dispatch-pr-validation:
+    if: >-
+      github.event_name == 'pull_request_target' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !(github.actor == 'github-actions[bot]' && startsWith(github.head_ref, 'regen/'))
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Dispatch read-only validation for the exact PR commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          TARGET_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh workflow run php-sdk-validation.yml --ref "$DEFAULT_BRANCH" \
+            -f "ref=$TARGET_SHA" -f "pr_number=$PR_NUMBER"
+
   validate:
+    if: github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-version: ["8.1", "8.2"]
     env:
-      TARGET_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || inputs.ref || github.sha }}
-      TARGET_REPOSITORY: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+      TARGET_REF: ${{ inputs.ref || github.sha }}
+      TARGET_REPOSITORY: ${{ inputs.repository || github.repository }}
     steps:
       - name: Check out target
         uses: actions/checkout@v4
         with:
           repository: ${{ env.TARGET_REPOSITORY }}
           ref: ${{ env.TARGET_REF }}
+          persist-credentials: false
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2

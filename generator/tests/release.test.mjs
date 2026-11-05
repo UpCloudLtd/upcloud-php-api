@@ -90,6 +90,38 @@ test('tag-based documentation PRs explicitly target the default branch', () => {
   assert.match(creation, /base: \$\{\{ github.event.repository.default_branch \}\}/);
 });
 
+test('PR validation avoids generated-run duplicates and isolates privileged dispatch from SDK execution', () => {
+  const workflow = readFileSync(resolve(root, '.github/workflows/php-sdk-validation.yml'), 'utf8');
+  assert.doesNotMatch(workflow, /^  pull_request:/m);
+  assert.match(workflow, /^  pull_request_target:/m);
+  const dispatcher = workflow.split('  dispatch-pr-validation:\n')[1].split('\n  validate:')[0];
+  const condition = dispatcher.match(/    if: >-\n([\s\S]*?)    runs-on:/)[1];
+  const shouldDispatch = new Function('github', 'startsWith', `return (${condition});`);
+  const event = (eventName, actor, branch, headRepository = repository) => ({
+    event_name: eventName, actor, head_ref: branch, repository,
+    event: { pull_request: { head: { repo: { full_name: headRepository } } } },
+  });
+  const startsWith = (value, prefix) => value.startsWith(prefix);
+  assert.equal(shouldDispatch(event('pull_request_target', 'github-actions[bot]', 'regen/0.0.114'), startsWith), false);
+  assert.equal(shouldDispatch(event('pull_request_target', 'maintainer', 'regen/0.0.114'), startsWith), true);
+  assert.equal(shouldDispatch(event('pull_request_target', 'maintainer', 'fix/request'), startsWith), true);
+  assert.equal(shouldDispatch(event('pull_request_target', 'contributor', 'fix/request', 'contributor/fork'), startsWith), false);
+  for (const eventName of ['push', 'workflow_dispatch']) {
+    assert.equal(shouldDispatch(event(eventName, 'maintainer', 'main'), startsWith), false);
+  }
+  assert.doesNotMatch(dispatcher, /uses:|checkout|composer|phpunit/);
+  assert.match(dispatcher, /actions: write/);
+  assert.match(dispatcher, /--ref "\$DEFAULT_BRANCH"/);
+  assert.match(dispatcher, /-f "ref=\$TARGET_SHA"/);
+  const worker = workflow.split('\n  validate:\n')[1];
+  assert.match(worker, /if: github.event_name != 'pull_request_target'/);
+  assert.doesNotMatch(worker, /actions: write|contents: write|secrets\./);
+  assert.match(worker, /persist-credentials: false/);
+  assert.match(worker, /php-version: \["8.1", "8.2"\]/);
+  assert.match(worker, /composer test/);
+  assert.match(worker, /composer analyze/);
+});
+
 test('verified alpha source and archive produce an evidence-based receipt', context => {
   const { result, receipt } = publish(context, [packageVersion()]);
   assert.equal(result.status, 0, result.stdout + result.stderr);
