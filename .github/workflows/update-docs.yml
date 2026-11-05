@@ -15,14 +15,21 @@ jobs:
 
     env:
       VERSION: ${{ github.event.client_payload.version  }}
-      REFERENCE_FILE: "fern/sdk/reference.md"
-      REFERENCE_SOURCE_DIR: "fern/sdk"
+      REFERENCE_FILE: "release-source/fern/sdk/reference.md"
+      REFERENCE_SOURCE_DIR: "release-source/fern/sdk"
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Checkout released SDK reference
+        uses: actions/checkout@v4
+        with:
           ref: ${{ env.VERSION }}
+          path: release-source
           persist-credentials: false
 
       - name: Validate reference.md exists
@@ -43,13 +50,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: ${{ github.event.repository.default_branch }}
+          add-paths: docs
           commit-message: "docs: update docs for ${{ env.VERSION }}"
           branch: "docs/update-${{ env.VERSION }}"
           title: "docs: update docs for ${{ env.VERSION }}"
           body: |
             Automated documentation update for release **${{ env.VERSION }}**.
 
-            - Updated `docs/latest/reference.md`
+            - Refreshed `docs/latest/reference.md` from the newest stable v4-or-later snapshot only (or a no-stable-release notice)
             - Added/updated `docs/${{ env.VERSION }}/reference.md`
             - Regenerated `docs/index.md` with all versioned docs
 
