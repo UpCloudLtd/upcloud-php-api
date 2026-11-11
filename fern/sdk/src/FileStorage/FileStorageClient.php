@@ -27,7 +27,7 @@ use Upcloud\FileStorage\Requests\FileStorageShareModify;
 use Upcloud\Types\FileStorageAclDetailResponse;
 use Upcloud\FileStorage\Requests\CreateFileStorageAclRequest;
 use Upcloud\FileStorage\Requests\FileStorageAclModify;
-use Upcloud\Types\FileStorageLabelDetails;
+use Upcloud\Types\FileStorageLabelDetailResponse;
 use Upcloud\FileStorage\Requests\CreateFileStorageLabelRequest;
 use Upcloud\FileStorage\Requests\FileStorageLabelModify;
 use Upcloud\Types\FileStorageServiceCurrentStateResponse;
@@ -1264,7 +1264,7 @@ class FileStorageClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<FileStorageLabelDetails>
+     * @return array<FileStorageLabelDetailResponse>
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
@@ -1283,7 +1283,7 @@ class FileStorageClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, [FileStorageLabelDetails::class]); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, [FileStorageLabelDetailResponse::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -1320,11 +1320,11 @@ class FileStorageClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FileStorageLabelDetails
+     * @return FileStorageLabelDetailResponse
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function createFileStorageLabel(string $serviceUuid, CreateFileStorageLabelRequest $request, ?array $options = null): FileStorageLabelDetails
+    public function createFileStorageLabel(string $serviceUuid, CreateFileStorageLabelRequest $request, ?array $options = null): FileStorageLabelDetailResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -1340,7 +1340,7 @@ class FileStorageClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return FileStorageLabelDetails::fromJson($json);
+                return FileStorageLabelDetailResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -1377,11 +1377,11 @@ class FileStorageClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FileStorageLabelDetails
+     * @return FileStorageLabelDetailResponse
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function getFileStorageLabel(string $serviceUuid, string $labelKey, ?array $options = null): FileStorageLabelDetails
+    public function getFileStorageLabel(string $serviceUuid, string $labelKey, ?array $options = null): FileStorageLabelDetailResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -1396,7 +1396,7 @@ class FileStorageClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return FileStorageLabelDetails::fromJson($json);
+                return FileStorageLabelDetailResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -1486,11 +1486,11 @@ class FileStorageClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return FileStorageLabelDetails
+     * @return FileStorageLabelDetailResponse
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function modifyFileStorageLabel(string $serviceUuid, string $labelKey, FileStorageLabelModify $request = new FileStorageLabelModify(), ?array $options = null): FileStorageLabelDetails
+    public function modifyFileStorageLabel(string $serviceUuid, string $labelKey, FileStorageLabelModify $request = new FileStorageLabelModify(), ?array $options = null): FileStorageLabelDetailResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -1506,7 +1506,7 @@ class FileStorageClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return FileStorageLabelDetails::fromJson($json);
+                return FileStorageLabelDetailResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

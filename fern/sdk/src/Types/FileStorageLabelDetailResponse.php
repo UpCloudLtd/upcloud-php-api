@@ -8,7 +8,7 @@ use Upcloud\Core\Json\JsonProperty;
 /**
  * Service label used as metadata and for filtering File Storage service list results. Both fields are always returned; an empty value is represented as an empty string.
  */
-class FileStorageLabelDetails extends JsonSerializableType
+class FileStorageLabelDetailResponse extends JsonSerializableType
 {
     /**
      * @var ?string $key

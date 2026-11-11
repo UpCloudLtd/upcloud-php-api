@@ -4,7 +4,7 @@ namespace Upcloud\FileStorage\Requests;
 
 use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
-use Upcloud\Types\FileStoragePermission;
+use Upcloud\Types\FileStorageAclPermission;
 
 class FileStorageAclModify extends JsonSerializableType
 {
@@ -21,7 +21,7 @@ class FileStorageAclModify extends JsonSerializableType
     public ?string $target;
 
     /**
-     * @var ?value-of<FileStoragePermission> $permission
+     * @var ?value-of<FileStorageAclPermission> $permission
      */
     #[JsonProperty('permission')]
     public ?string $permission;
@@ -30,7 +30,7 @@ class FileStorageAclModify extends JsonSerializableType
      * @param array{
      *   name?: ?string,
      *   target?: ?string,
-     *   permission?: ?value-of<FileStoragePermission>,
+     *   permission?: ?value-of<FileStorageAclPermission>,
      * } $values
      */
     public function __construct(
