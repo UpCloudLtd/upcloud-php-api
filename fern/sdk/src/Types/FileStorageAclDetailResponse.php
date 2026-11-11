@@ -23,7 +23,7 @@ class FileStorageAclDetailResponse extends JsonSerializableType
     public string $target;
 
     /**
-     * @var value-of<FileStoragePermission> $permission
+     * @var value-of<FileStorageAclPermission> $permission
      */
     #[JsonProperty('permission')]
     public string $permission;
@@ -32,7 +32,7 @@ class FileStorageAclDetailResponse extends JsonSerializableType
      * @param array{
      *   name: string,
      *   target: string,
-     *   permission: value-of<FileStoragePermission>,
+     *   permission: value-of<FileStorageAclPermission>,
      * } $values
      */
     public function __construct(

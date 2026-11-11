@@ -11,7 +11,7 @@ use Upcloud\Types\FileStorageNetworkCreate;
 use Upcloud\Types\FileStorageNetworkFamily;
 use Upcloud\Types\FileStorageShareCreate;
 use Upcloud\Types\FileStorageAclCreate;
-use Upcloud\Types\FileStoragePermission;
+use Upcloud\Types\FileStorageAclPermission;
 use Upcloud\Types\FileStorageLabelCreate;
 use Upcloud\FileStorage\Requests\FileStorageServiceReplace;
 use Upcloud\FileStorage\Requests\FileStorageServiceModify;
@@ -82,7 +82,7 @@ class FileStorageWireTest extends WireMockTestCase
                             new FileStorageAclCreate([
                                 'name' => 'office-write',
                                 'target' => '192.168.147.0/24',
-                                'permission' => FileStoragePermission::Rw->value,
+                                'permission' => FileStorageAclPermission::Rw->value,
                             ]),
                         ],
                     ]),
@@ -370,7 +370,7 @@ class FileStorageWireTest extends WireMockTestCase
                         new FileStorageAclCreate([
                             'name' => 'office-write',
                             'target' => '192.168.147.0/24',
-                            'permission' => FileStoragePermission::Rw->value,
+                            'permission' => FileStorageAclPermission::Rw->value,
                         ]),
                     ],
                 ]),
@@ -446,7 +446,7 @@ class FileStorageWireTest extends WireMockTestCase
                     new FileStorageAclCreate([
                         'name' => 'office-read',
                         'target' => '192.168.147.0/24',
-                        'permission' => FileStoragePermission::Ro->value,
+                        'permission' => FileStorageAclPermission::Ro->value,
                     ]),
                 ],
             ]),
@@ -498,7 +498,7 @@ class FileStorageWireTest extends WireMockTestCase
                 'body' => new FileStorageAclCreate([
                     'name' => 'office-write',
                     'target' => '192.168.147.0/24',
-                    'permission' => FileStoragePermission::Rw->value,
+                    'permission' => FileStorageAclPermission::Rw->value,
                 ]),
             ]),
             [
@@ -571,7 +571,7 @@ class FileStorageWireTest extends WireMockTestCase
             'project-data',
             'production-files',
             new FileStorageAclModify([
-                'permission' => FileStoragePermission::Ro->value,
+                'permission' => FileStorageAclPermission::Ro->value,
             ]),
             [
                 'headers' => [
