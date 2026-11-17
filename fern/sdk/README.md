@@ -100,6 +100,10 @@ Supported options include `baseUrl`, `timeout` in seconds, `maxRetries`,
 additional `headers`, and a custom Guzzle-compatible `client`. The retry limit
 defaults to two retries after the initial request.
 
+Every request includes a `User-Agent: upcloud-php-api/<version>` header that
+identifies the SDK version. To identify your application instead, pass your own
+`User-Agent` value in `headers`; it replaces the SDK default.
+
 ```php
 $client = new UpcloudClient(
     token: $token,
