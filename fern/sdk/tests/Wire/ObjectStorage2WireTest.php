@@ -54,6 +54,11 @@ use Upcloud\ObjectStorage2\Requests\CreateObjectStorageRolePermissionsBoundaryRe
 use Upcloud\ObjectStorage2\Requests\ObjectStorage2AssumeRolePolicyRequest;
 use Upcloud\ObjectStorage2\Requests\AttachObjectStoragePolicyToRoleRequest;
 use Upcloud\ObjectStorage2\Requests\ReplaceObjectStorageRoleTagsRequest;
+use Upcloud\ObjectStorage2\Requests\ListJobsRequest;
+use Upcloud\ObjectStorage2\Requests\ObjectStorage2JobInputCreate;
+use Upcloud\ObjectStorage2\Types\ObjectStorage2JobInputCreateType;
+use Upcloud\Types\ObjectStorage2JobInputItemCreate;
+use Upcloud\ObjectStorage2\Requests\CancelJobRequest;
 
 class ObjectStorage2WireTest extends WireMockTestCase
 {
@@ -2331,6 +2336,111 @@ class ObjectStorage2WireTest extends WireMockTestCase
             "DELETE",
             "/1.3/object-storage-2/01234567-89ab-cdef-0123-456789abcdef/roles/my-object-storage/tags/environment",
             null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testListJobs(): void {
+        $testId = 'object_storage_2.list_jobs.0';
+        $this->client->objectStorage2->listJobs(
+            new ListJobsRequest([
+                'limit' => 10,
+                'offset' => 0,
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'object_storage_2.list_jobs.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "GET",
+            "/1.3/object-storage-2/jobs",
+            ['limit' => '10', 'offset' => '0'],
+            1
+        );
+    }
+
+    /**
+     */
+    public function testCreateJob(): void {
+        $testId = 'object_storage_2.create_job.0';
+        $this->client->objectStorage2->createJob(
+            new ObjectStorage2JobInputCreate([
+                'validateOnly' => '',
+                'type' => ObjectStorage2JobInputCreateType::Copy->value,
+                'source' => new ObjectStorage2JobInputItemCreate([
+                    'accessKeyId' => 'AKIAEXAMPLE123',
+                    'secretAccessKey' => 'exampleSecretKey123',
+                    'endpointUrl' => 'https://s3.example.com',
+                    'bucket' => 'my-bucket',
+                ]),
+                'target' => new ObjectStorage2JobInputItemCreate([
+                    'accessKeyId' => 'UCEXAMPLE456',
+                    'secretAccessKey' => 'exampleTargetSecret456',
+                    'endpointUrl' => 'https://example.upcloudobjects.com',
+                    'bucket' => 'my-bucket',
+                ]),
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'object_storage_2.create_job.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/1.3/object-storage-2/jobs",
+            ['validate_only' => ''],
+            1
+        );
+    }
+
+    /**
+     */
+    public function testGetJob(): void {
+        $testId = 'object_storage_2.get_job.0';
+        $this->client->objectStorage2->getJob(
+            '01234567-89ab-cdef-0123-456789abcdef',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'object_storage_2.get_job.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "GET",
+            "/1.3/object-storage-2/jobs/01234567-89ab-cdef-0123-456789abcdef",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testCancelJob(): void {
+        $testId = 'object_storage_2.cancel_job.0';
+        $this->client->objectStorage2->cancelJob(
+            '01234567-89ab-cdef-0123-456789abcdef',
+            new CancelJobRequest([
+                'validateOnly' => '',
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'object_storage_2.cancel_job.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/1.3/object-storage-2/jobs/01234567-89ab-cdef-0123-456789abcdef/cancel",
+            ['validate_only' => ''],
             1
         );
     }

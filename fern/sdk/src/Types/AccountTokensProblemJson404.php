@@ -9,10 +9,10 @@ use Upcloud\Core\Types\ArrayType;
 /**
  * JSON Problem Details for HTTP APIs
  */
-class AccountTokensProblem404 extends JsonSerializableType
+class AccountTokensProblemJson404 extends JsonSerializableType
 {
     /**
-     * @var value-of<AccountTokensProblem404Type> $type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+     * @var value-of<AccountTokensProblemJson404Type> $type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
      */
     #[JsonProperty('type')]
     public string $type;
@@ -36,9 +36,9 @@ class AccountTokensProblem404 extends JsonSerializableType
     public int $status;
 
     /**
-     * @var ?array<AccountTokensProblem404InvalidParamsItem> $invalidParams
+     * @var ?array<AccountTokensProblemJson404InvalidParamsItem> $invalidParams
      */
-    #[JsonProperty('invalid_params'), ArrayType([AccountTokensProblem404InvalidParamsItem::class])]
+    #[JsonProperty('invalid_params'), ArrayType([AccountTokensProblemJson404InvalidParamsItem::class])]
     public ?array $invalidParams;
 
     /**
@@ -49,11 +49,11 @@ class AccountTokensProblem404 extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: value-of<AccountTokensProblem404Type>,
+     *   type: value-of<AccountTokensProblemJson404Type>,
      *   title: string,
      *   status: int,
      *   detail?: ?string,
-     *   invalidParams?: ?array<AccountTokensProblem404InvalidParamsItem>,
+     *   invalidParams?: ?array<AccountTokensProblemJson404InvalidParamsItem>,
      *   correlationId?: ?string,
      * } $values
      */

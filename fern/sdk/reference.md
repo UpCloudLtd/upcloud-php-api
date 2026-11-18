@@ -1907,7 +1907,15 @@ $client->kubernetes->modifyKubernetesClusterNodeGroup(
 <dl>
 <dd>
 
-**$count:** `int` 
+**$count:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$healthCheck:** `?KubernetesNodeGroupHealthCheck` 
     
 </dd>
 </dl>
@@ -18316,6 +18324,299 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;objectStorage2-&gt;listJobs($request) -> array</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of jobs. Jobs are used to sync S3-compatible object storages with UpCloud managed object storages.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->listJobs(
+    new ListJobsRequest([
+        'limit' => 10,
+        'offset' => 0,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$limit:** `?int` — Number of entries to receive at most.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$offset:** `?int` — Number of entries to skip.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sort:** `?string` — Sort field. Prefix with '-' for descending order.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;objectStorage2-&gt;createJob($request) -> ObjectStorage2JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new job.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->createJob(
+    new ObjectStorage2JobInputCreate([
+        'validateOnly' => '',
+        'type' => ObjectStorage2JobInputCreateType::Copy->value,
+        'source' => new ObjectStorage2JobInputItemCreate([
+            'accessKeyId' => 'AKIAEXAMPLE123',
+            'secretAccessKey' => 'exampleSecretKey123',
+            'endpointUrl' => 'https://s3.example.com',
+            'bucket' => 'my-bucket',
+        ]),
+        'target' => new ObjectStorage2JobInputItemCreate([
+            'accessKeyId' => 'UCEXAMPLE456',
+            'secretAccessKey' => 'exampleTargetSecret456',
+            'endpointUrl' => 'https://example.upcloudobjects.com',
+            'bucket' => 'my-bucket',
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$validateOnly:** `?string` — Only validate the request without applying any changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$type:** `string` — The type of the job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$source:** `ObjectStorage2JobInputItemCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$target:** `ObjectStorage2JobInputItemCreate` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;objectStorage2-&gt;getJob($jobName) -> ObjectStorage2JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns object storage job details by given job UUID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->getJob(
+    '01234567-89ab-cdef-0123-456789abcdef',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$jobName:** `string` — Job UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;objectStorage2-&gt;cancelJob($jobName, $request) -> ObjectStorage2JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels ongoing job by given job UUID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->cancelJob(
+    '01234567-89ab-cdef-0123-456789abcdef',
+    new CancelJobRequest([
+        'validateOnly' => '',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$jobName:** `string` — Job UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$validateOnly:** `?string` — Only validate the request without applying any changes.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## file-storage
 <details><summary><code>$client-&gt;fileStorage-&gt;listFileStorages($request) -> array</code></summary>
 <dl>
@@ -18450,7 +18751,7 @@ $client->fileStorage->createFileStorage(
                     new FileStorageAclCreate([
                         'name' => 'office-write',
                         'target' => '192.168.147.0/24',
-                        'permission' => FileStoragePermission::Rw->value,
+                        'permission' => FileStorageAclPermission::Rw->value,
                     ]),
                 ],
             ]),
@@ -19323,7 +19624,7 @@ $client->fileStorage->createFileStorageShare(
                 new FileStorageAclCreate([
                     'name' => 'office-write',
                     'target' => '192.168.147.0/24',
-                    'permission' => FileStoragePermission::Rw->value,
+                    'permission' => FileStorageAclPermission::Rw->value,
                 ]),
             ],
         ]),
@@ -19528,7 +19829,7 @@ $client->fileStorage->modifyFileStorageShare(
             new FileStorageAclCreate([
                 'name' => 'office-read',
                 'target' => '192.168.147.0/24',
-                'permission' => FileStoragePermission::Ro->value,
+                'permission' => FileStorageAclPermission::Ro->value,
             ]),
         ],
     ]),
@@ -19682,7 +19983,7 @@ $client->fileStorage->createFileStorageAcl(
         'body' => new FileStorageAclCreate([
             'name' => 'office-write',
             'target' => '192.168.147.0/24',
-            'permission' => FileStoragePermission::Rw->value,
+            'permission' => FileStorageAclPermission::Rw->value,
         ]),
     ]),
 );
@@ -19908,7 +20209,7 @@ $client->fileStorage->modifyFileStorageAcl(
     'project-data',
     'production-files',
     new FileStorageAclModify([
-        'permission' => FileStoragePermission::Ro->value,
+        'permission' => FileStorageAclPermission::Ro->value,
     ]),
 );
 ```
@@ -20033,7 +20334,7 @@ $client->fileStorage->listFileStorageLabels(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;createFileStorageLabel($serviceUuid, $request) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;createFileStorageLabel($serviceUuid, $request) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20103,7 +20404,7 @@ $client->fileStorage->createFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageLabel($serviceUuid, $labelKey) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageLabel($serviceUuid, $labelKey) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20233,7 +20534,7 @@ $client->fileStorage->deleteFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;modifyFileStorageLabel($serviceUuid, $labelKey, $request) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;modifyFileStorageLabel($serviceUuid, $labelKey, $request) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 

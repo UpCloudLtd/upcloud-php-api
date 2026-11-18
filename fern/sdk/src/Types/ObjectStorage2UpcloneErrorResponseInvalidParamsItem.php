@@ -5,16 +5,16 @@ namespace Upcloud\Types;
 use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
-class AccountTokensProblem403InvalidParamsItem extends JsonSerializableType
+class ObjectStorage2UpcloneErrorResponseInvalidParamsItem extends JsonSerializableType
 {
     /**
-     * @var string $name
+     * @var string $name Name of the invalid parameter or field.
      */
     #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var string $reason
+     * @var string $reason Why the value was invalid.
      */
     #[JsonProperty('reason')]
     public string $reason;
