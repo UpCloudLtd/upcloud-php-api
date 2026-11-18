@@ -756,7 +756,7 @@ class KubernetesClient
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function modifyKubernetesClusterNodeGroup(string $uuid, string $name, KubernetesNodeGroupPatch $request, ?array $options = null): KubernetesNodeGroup
+    public function modifyKubernetesClusterNodeGroup(string $uuid, string $name, KubernetesNodeGroupPatch $request = new KubernetesNodeGroupPatch(), ?array $options = null): KubernetesNodeGroup
     {
         $options = array_merge($this->options, $options ?? []);
         try {
