@@ -55,4 +55,7 @@ cp README.md fern/sdk/README.md
 echo "Patching generated PHP for strict null checks..."
 python3 generator/scripts/patch_generated_php.py fern/sdk/src
 
+echo "Adding User-Agent default header to the generated client..."
+python3 generator/scripts/patch_generated_user_agent.py fern/sdk/src
+
 echo "Generation complete."

@@ -217,18 +217,35 @@ class UpcloudClient
         string $token,
         ?array $options = null,
     ) {
+        $version = null;
+        if (class_exists(\Composer\InstalledVersions::class) && \Composer\InstalledVersions::isInstalled('upcloudltd/upcloud-php-api')) {
+            $version = \Composer\InstalledVersions::getPrettyVersion('upcloudltd/upcloud-php-api');
+        }
+        if (!is_string($version) || preg_match('/^[A-Za-z0-9][A-Za-z0-9.+_-]*$/D', $version) !== 1) {
+            $version = 'unknown';
+        }
+
         $defaultHeaders = [
             'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Upcloud',
+            'User-Agent' => 'upcloud-php-api/' . $version,
         ];
 
         $this->options = $options ?? [];
 
-        $this->options['headers'] = array_merge(
-            $defaultHeaders,
-            $this->options['headers'] ?? [],
-        );
+        $headers = $this->options['headers'] ?? [];
+        $userAgent = null;
+        foreach ($headers as $name => $value) {
+            if (strcasecmp($name, 'User-Agent') === 0) {
+                $userAgent = trim($value, " \t");
+                unset($headers[$name]);
+            }
+        }
+        if ($userAgent !== null && $userAgent !== '') {
+            $defaultHeaders['User-Agent'] .= ' ' . $userAgent;
+        }
+        $this->options['headers'] = array_merge($defaultHeaders, $headers);
 
         $this->client = new RawClient(
             options: $this->options,

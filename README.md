@@ -100,6 +100,14 @@ Supported options include `baseUrl`, `timeout` in seconds, `maxRetries`,
 additional `headers`, and a custom Guzzle-compatible `client`. The retry limit
 defaults to two retries after the initial request.
 
+By default, requests include `User-Agent: upcloud-php-api/<version>`. A
+`User-Agent` value supplied in the constructor's `headers` is appended, regardless
+of header-name casing: `upcloud-php-api/<version> myapp/1.0`. Empty or
+space/tab-only values leave the SDK default unchanged. Per-operation headers can
+still override this default; SDK identification is not enforced on every request.
+Invalid header values, including CR/LF characters, are rejected by the HTTP
+library when building a request, before it is sent.
+
 ```php
 $client = new UpcloudClient(
     token: $token,
