@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 CLIENT_FILE_NAME = "UpcloudClient.php"
+DEFAULT_HEADERS_ANCHOR = "        $defaultHeaders = [\n"
 ANCHOR = "            'X-Fern-SDK-Name' => 'Upcloud',\n"
 VERSION_LINES = (
     "        $version = null;\n"
@@ -28,12 +29,12 @@ HEADER_NORMALIZATION = (
     "        $userAgent = null;\n"
     "        foreach ($headers as $name => $value) {\n"
     "            if (strcasecmp($name, 'User-Agent') === 0) {\n"
-    "                $userAgent = $value;\n"
+    '                $userAgent = trim($value, " \\t");\n'
     "                unset($headers[$name]);\n"
     "            }\n"
     "        }\n"
-    "        if ($userAgent !== null) {\n"
-    "            $defaultHeaders['User-Agent'] = $userAgent;\n"
+    "        if ($userAgent !== null && $userAgent !== '') {\n"
+    "            $defaultHeaders['User-Agent'] .= ' ' . $userAgent;\n"
     "        }\n"
     "        $this->options['headers'] = array_merge($defaultHeaders, $headers);\n"
 )
@@ -41,13 +42,16 @@ HEADER_NORMALIZATION_MARKER = "$userAgent = null;"
 
 
 def patch_user_agent(client_file: Path) -> bool:
-    """Insert the User-Agent default and case-insensitive override handling."""
+    """Insert the User-Agent default and case-insensitive application suffix handling."""
     source = client_file.read_text(encoding="utf-8")
     original = source
     if USER_AGENT_MARKER not in source:
         if source.count(ANCHOR) != 1:
             raise ValueError(f"{client_file}: expected exactly one X-Fern-SDK-Name default header")
-        source = source.replace(ANCHOR, ANCHOR + VERSION_LINES + USER_AGENT_LINE, 1)
+        if source.count(DEFAULT_HEADERS_ANCHOR) != 1:
+            raise ValueError(f"{client_file}: expected exactly one default header array")
+        source = source.replace(DEFAULT_HEADERS_ANCHOR, VERSION_LINES + "\n" + DEFAULT_HEADERS_ANCHOR, 1)
+        source = source.replace(ANCHOR, ANCHOR + USER_AGENT_LINE, 1)
     if HEADER_NORMALIZATION_MARKER not in source:
         if source.count(HEADER_MERGE_BLOCK) != 1:
             raise ValueError(f"{client_file}: expected exactly one default header merge")
@@ -59,15 +63,15 @@ def patch_user_agent(client_file: Path) -> bool:
 
 
 def verify_user_agent(client_file: Path) -> list[str]:
-    """Confirm the User-Agent default and override handling are present."""
+    """Confirm the User-Agent default, version lookup, and suffix handling are present."""
     source = client_file.read_text(encoding="utf-8")
     count = source.count(USER_AGENT_MARKER)
     if count != 1:
         return [f"{client_file}: expected one User-Agent default header, found {count}"]
-    if HEADER_NORMALIZATION_MARKER not in source:
-        return [f"{client_file}: User-Agent override normalization is missing"]
-    if "preg_match('/^[A-Za-z0-9][A-Za-z0-9.+_-]*$/D', $version)" not in source:
-        return [f"{client_file}: User-Agent version validation is missing"]
+    if source.count(HEADER_NORMALIZATION) != 1:
+        return [f"{client_file}: User-Agent application suffix handling is missing or outdated"]
+    if source.count(VERSION_LINES + "\n" + DEFAULT_HEADERS_ANCHOR) != 1:
+        return [f"{client_file}: User-Agent version lookup must precede the default header array"]
     return []
 
 

@@ -238,12 +238,12 @@ class UpcloudClient
         $userAgent = null;
         foreach ($headers as $name => $value) {
             if (strcasecmp($name, 'User-Agent') === 0) {
-                $userAgent = $value;
+                $userAgent = trim($value, " \t");
                 unset($headers[$name]);
             }
         }
-        if ($userAgent !== null) {
-            $defaultHeaders['User-Agent'] = $userAgent;
+        if ($userAgent !== null && $userAgent !== '') {
+            $defaultHeaders['User-Agent'] .= ' ' . $userAgent;
         }
         $this->options['headers'] = array_merge($defaultHeaders, $headers);
 
