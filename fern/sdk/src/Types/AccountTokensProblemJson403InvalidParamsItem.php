@@ -5,7 +5,7 @@ namespace Upcloud\Types;
 use Upcloud\Core\Json\JsonSerializableType;
 use Upcloud\Core\Json\JsonProperty;
 
-class AccountTokensProblem403InvalidParamsItem extends JsonSerializableType
+class AccountTokensProblemJson403InvalidParamsItem extends JsonSerializableType
 {
     /**
      * @var string $name

@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://spdx.org/licenses/MIT.html"
     },
-    "version": "0.0.114"
+    "version": "0.0.115"
   },
   "servers": [
     {
@@ -28234,7 +28234,8 @@
         "required": [
           "name"
         ],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-upcloud-short-key": "createTokenRequest"
       },
       "accountTokensIpRange": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -28248,14 +28249,15 @@
           "2001:db8::1-2001:db8::ff"
         ],
         "title": "IP Range",
-        "description": "IP range from where to accept the token"
+        "description": "IP range from where to accept the token",
+        "x-upcloud-short-key": "ipRange"
       },
       "accountTokensToken": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/accountTokensUuidOfTheToken"
+            "$ref": "#/components/schemas/accountTokensId"
           },
           "name": {
             "type": "string",
@@ -28312,9 +28314,10 @@
         },
         "title": "Token",
         "additionalProperties": false,
-        "description": "A token."
+        "description": "A token.",
+        "x-upcloud-short-key": "token"
       },
-      "accountTokensUuidOfTheToken": {
+      "accountTokensId": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string",
         "examples": [
@@ -28324,9 +28327,10 @@
         ],
         "title": "UUID of the token",
         "format": "uuid",
-        "description": "UUID of the token"
+        "description": "UUID of the token",
+        "x-upcloud-short-key": "id"
       },
-      "accountTokensProblem400": {
+      "accountTokensProblemJson400": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "examples": [
@@ -28413,9 +28417,10 @@
           "status"
         ],
         "additionalProperties": false,
-        "description": "JSON Problem Details for HTTP APIs"
+        "description": "JSON Problem Details for HTTP APIs",
+        "x-upcloud-short-key": "problemJson400"
       },
-      "accountTokensProblem401": {
+      "accountTokensProblemJson401": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "examples": [
@@ -28496,9 +28501,10 @@
           "status"
         ],
         "additionalProperties": false,
-        "description": "JSON Problem Details for HTTP APIs"
+        "description": "JSON Problem Details for HTTP APIs",
+        "x-upcloud-short-key": "problemJson401"
       },
-      "accountTokensProblem403": {
+      "accountTokensProblemJson403": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "examples": [
@@ -28579,9 +28585,10 @@
           "status"
         ],
         "additionalProperties": false,
-        "description": "JSON Problem Details for HTTP APIs"
+        "description": "JSON Problem Details for HTTP APIs",
+        "x-upcloud-short-key": "problemJson403"
       },
-      "accountTokensProblem": {
+      "accountTokensProblemJson": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "examples": [
@@ -28669,7 +28676,8 @@
           "status"
         ],
         "additionalProperties": false,
-        "description": "JSON Problem Details for HTTP APIs"
+        "description": "JSON Problem Details for HTTP APIs",
+        "x-upcloud-short-key": "problemJson"
       },
       "accountTokensListTokensResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -28703,13 +28711,14 @@
             ],
             "gui": false
           }
-        ]
+        ],
+        "x-upcloud-short-key": "listTokensResponse"
       },
       "accountTokensGetTokenResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/accountTokensUuidOfTheToken"
+            "$ref": "#/components/schemas/accountTokensId"
           },
           "name": {
             "type": "string",
@@ -28778,9 +28787,10 @@
             "1.2.3.4"
           ],
           "gui": false
-        }
+        },
+        "x-upcloud-short-key": "getTokenResponse"
       },
-      "accountTokensProblem404": {
+      "accountTokensProblemJson404": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "examples": [
@@ -28861,7 +28871,8 @@
           "status"
         ],
         "additionalProperties": false,
-        "description": "JSON Problem Details for HTTP APIs"
+        "description": "JSON Problem Details for HTTP APIs",
+        "x-upcloud-short-key": "problemJson404"
       },
       "objectStorage2QueryParamLimit": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32081,7 +32092,7 @@
         "title": "AssumeRolePolicyResponse",
         "description": "Response schema for assuming a role with a policy document."
       },
-      "fileStorageQueryParameterLimit": {
+      "fileStorageQueryParamLimit": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "integer",
         "examples": [
@@ -32091,7 +32102,8 @@
         "maximum": 100,
         "minimum": 0,
         "description": "Maximum number of entries to return. The default is 10 and the maximum is 100. Set to 0 to return an empty page while still receiving the total count where supported.",
-        "default": 10
+        "default": 10,
+        "x-upcloud-short-key": "queryParamLimit"
       },
       "fileStorageQueryParamOffset": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32102,7 +32114,8 @@
         "title": "QueryParamOffset",
         "minimum": 0,
         "description": "Number of matching entries to skip before returning a page. The default is 0.",
-        "default": 0
+        "default": 0,
+        "x-upcloud-short-key": "queryParamOffset"
       },
       "fileStorageQueryParamSort": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32116,9 +32129,10 @@
           "-created_at"
         ],
         "description": "Creation-time order for returned entries. `created_at` sorts oldest first and `-created_at` sorts newest first. The default is `created_at`.",
-        "default": "created_at"
+        "default": "created_at",
+        "x-upcloud-short-key": "queryParamSort"
       },
-      "fileStorageQueryParameterLabel": {
+      "fileStorageQueryParamLabel": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "array",
         "examples": [
@@ -32133,9 +32147,10 @@
         },
         "title": "QueryParameterLabel",
         "minItems": 1,
-        "description": "Label filters in `key` or `key=value` form. A key filters by label existence; a key-value pair filters by an exact value. Label keys are matched case-insensitively and values are case-sensitive. Services must match every filter."
+        "description": "Label filters in `key` or `key=value` form. A key filters by label existence; a key-value pair filters by an exact value. Label keys are matched case-insensitively and values are case-sensitive. Services must match every filter.",
+        "x-upcloud-short-key": "queryParamLabel"
       },
-      "fileStorageEntityUUID": {
+      "fileStorageEntityUuid": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string",
         "examples": [
@@ -32143,7 +32158,8 @@
         ],
         "title": "EntityUUID",
         "format": "uuid",
-        "description": "UUID of the File Storage resource."
+        "description": "UUID of the File Storage resource.",
+        "x-upcloud-short-key": "entityUuid"
       },
       "fileStorageName": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32155,7 +32171,8 @@
         "maxLength": 64,
         "minLength": 1,
         "pattern": "^[a-zA-Z0-9_-]+$",
-        "description": "A 1-64 character service, network, or ACL name containing only letters, digits, underscores, and hyphens. Names must be unique within the resource's documented scope."
+        "description": "A 1-64 character service, network, or ACL name containing only letters, digits, underscores, and hyphens. Names must be unique within the resource's documented scope.",
+        "x-upcloud-short-key": "name"
       },
       "fileStorageShareName": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32167,7 +32184,8 @@
         "maxLength": 128,
         "minLength": 1,
         "pattern": "^[a-zA-Z0-9_-]+$",
-        "description": "Service-scoped share name. It must contain 1-128 letters, digits, underscores, or hyphens and be unique within the service."
+        "description": "Service-scoped share name. It must contain 1-128 letters, digits, underscores, or hyphens and be unique within the service.",
+        "x-upcloud-short-key": "shareName"
       },
       "fileStorageLabelKey": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32179,7 +32197,8 @@
         "maxLength": 32,
         "minLength": 2,
         "pattern": "^[\\x20-\\x5E\\x60-\\x7E][\\x20-\\x7E]+$",
-        "description": "Service-scoped label key. It must contain 2-32 printable ASCII characters, must not start with `_`, and must be unique within the service regardless of case."
+        "description": "Service-scoped label key. It must contain 2-32 printable ASCII characters, must not start with `_`, and must be unique within the service regardless of case.",
+        "x-upcloud-short-key": "labelKey"
       },
       "fileStorageServiceCreate": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32237,7 +32256,7 @@
             "$ref": "#/components/schemas/fileStorageConfiguredStatus"
           },
           "size_gib": {
-            "$ref": "#/components/schemas/fileStorageSizeGiB"
+            "$ref": "#/components/schemas/fileStorageServiceSizeGib"
           },
           "encrypted": {
             "type": "boolean",
@@ -32282,7 +32301,8 @@
           "size_gib"
         ],
         "additionalProperties": false,
-        "description": "Configuration for a new File Storage service. The name, zone, configured status, and size are required. The service name must be unique within the customer account."
+        "description": "Configuration for a new File Storage service. The name, zone, configured status, and size are required. The service name must be unique within the customer account.",
+        "x-upcloud-short-key": "serviceCreate"
       },
       "fileStorageConfiguredStatus": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32295,9 +32315,10 @@
           "started",
           "stopped"
         ],
-        "description": "Customer-managed intended service status. `started` requests an available service; `stopped` requests that the service be stopped while retaining its configuration and data."
+        "description": "Customer-managed intended service status. `started` requests an available service; `stopped` requests that the service be stopped while retaining its configuration and data.",
+        "x-upcloud-short-key": "configuredStatus"
       },
-      "fileStorageSizeGiB": {
+      "fileStorageServiceSizeGib": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "integer",
         "examples": [
@@ -32307,7 +32328,8 @@
         "maximum": 25000,
         "minimum": 250,
         "format": "int32",
-        "description": "Allocated File Storage capacity in gibibytes (GiB), from 250 to 25000. After creation, capacity can be increased but not reduced."
+        "description": "Allocated File Storage capacity in gibibytes (GiB), from 250 to 25000. After creation, capacity can be increased but not reduced.",
+        "x-upcloud-short-key": "serviceSizeGib"
       },
       "fileStorageNetworkCreate": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32322,7 +32344,7 @@
         ],
         "properties": {
           "uuid": {
-            "$ref": "#/components/schemas/fileStorageNetworkUUID"
+            "$ref": "#/components/schemas/fileStorageNetworkUuid"
           },
           "name": {
             "$ref": "#/components/schemas/fileStorageName"
@@ -32331,7 +32353,7 @@
             "$ref": "#/components/schemas/fileStorageNetworkFamily"
           },
           "ip_address": {
-            "$ref": "#/components/schemas/fileStorageIPAddress"
+            "$ref": "#/components/schemas/fileStorageIpAddress"
           }
         },
         "title": "NetworkCreate",
@@ -32341,9 +32363,10 @@
           "family"
         ],
         "additionalProperties": false,
-        "description": "Private network attachment to create for a File Storage service. A service can have at most one attachment. Its name must be unique within the service, and the selected network must be an accessible private network in the service zone. Only IPv4 is supported."
+        "description": "Private network attachment to create for a File Storage service. A service can have at most one attachment. Its name must be unique within the service, and the selected network must be an accessible private network in the service zone. Only IPv4 is supported.",
+        "x-upcloud-short-key": "networkCreate"
       },
-      "fileStorageNetworkUUID": {
+      "fileStorageNetworkUuid": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string",
         "examples": [
@@ -32351,7 +32374,8 @@
         ],
         "title": "NetworkUUID",
         "format": "uuid",
-        "description": "UUID of an accessible private network in the same zone as the File Storage service."
+        "description": "UUID of an accessible private network in the same zone as the File Storage service.",
+        "x-upcloud-short-key": "networkUuid"
       },
       "fileStorageNetworkFamily": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32364,9 +32388,10 @@
           "IPv4",
           "IPv6"
         ],
-        "description": "Address family of the private network attachment. Only IPv4 is currently supported."
+        "description": "Address family of the private network attachment. Only IPv4 is currently supported.",
+        "x-upcloud-short-key": "networkFamily"
       },
-      "fileStorageIPAddress": {
+      "fileStorageIpAddress": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string",
         "examples": [
@@ -32374,7 +32399,8 @@
         ],
         "title": "IPAddress",
         "format": "ipv4",
-        "description": "IPv4 address assigned to the File Storage service in the private network. When creating an attachment, omission allocates a free address from the network's IPv4 pool. When modifying an attachment, omission preserves the current address and `null` is not accepted; supply an address from the replacement network when changing `uuid`. A supplied address must be available."
+        "description": "IPv4 address assigned to the File Storage service in the private network. When creating an attachment, omission allocates a free address from the network's IPv4 pool. When modifying an attachment, omission preserves the current address and `null` is not accepted; supply an address from the replacement network when changing `uuid`. A supplied address must be available.",
+        "x-upcloud-short-key": "ipAddress"
       },
       "fileStorageShareCreate": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32397,7 +32423,7 @@
             "$ref": "#/components/schemas/fileStorageShareName"
           },
           "path": {
-            "$ref": "#/components/schemas/fileStoragePath"
+            "$ref": "#/components/schemas/fileStorageSharePath"
           },
           "acl": {
             "type": "array",
@@ -32415,9 +32441,10 @@
           "acl"
         ],
         "additionalProperties": false,
-        "description": "NFS share to create. Its name and path must be unique within the service, which can have at most 50 active shares. The immutable path must be absolute, normalized, and contain at most 32 segments. The system creates the backing directory; deleting the share later permanently deletes that directory and all content below it."
+        "description": "NFS share to create. Its name and path must be unique within the service, which can have at most 50 active shares. The immutable path must be absolute, normalized, and contain at most 32 segments. The system creates the backing directory; deleting the share later permanently deletes that directory and all content below it.",
+        "x-upcloud-short-key": "shareCreate"
       },
-      "fileStoragePath": {
+      "fileStorageSharePath": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string",
         "examples": [
@@ -32427,7 +32454,8 @@
         "maxLength": 512,
         "minLength": 1,
         "pattern": "^/[a-zA-Z0-9/_-]*$",
-        "description": "Absolute path of the system-managed backing directory. The path is immutable after creation. Deleting the share permanently deletes this directory and all content below it."
+        "description": "Absolute path of the system-managed backing directory. The path is immutable after creation. Deleting the share permanently deletes this directory and all content below it.",
+        "x-upcloud-short-key": "sharePath"
       },
       "fileStorageAclCreate": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32455,7 +32483,7 @@
             "description": "Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients."
           },
           "permission": {
-            "$ref": "#/components/schemas/fileStoragePermission"
+            "$ref": "#/components/schemas/fileStorageAclPermission"
           }
         },
         "title": "AclCreate",
@@ -32465,9 +32493,10 @@
           "permission"
         ],
         "additionalProperties": false,
-        "description": "Access-control entry for a share's NFS export. Names and targets must each be unique within the share. For nested shares, matching parent and child entries combine and the most permissive permission determines effective access."
+        "description": "Access-control entry for a share's NFS export. Names and targets must each be unique within the share. For nested shares, matching parent and child entries combine and the most permissive permission determines effective access.",
+        "x-upcloud-short-key": "aclCreate"
       },
-      "fileStoragePermission": {
+      "fileStorageAclPermission": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string",
         "examples": [
@@ -32478,7 +32507,8 @@
           "ro",
           "rw"
         ],
-        "description": "NFS export permission granted to the ACL target: `ro` for read-only access or `rw` for read-write access."
+        "description": "NFS export permission granted to the ACL target: `ro` for read-only access or `rw` for read-write access.",
+        "x-upcloud-short-key": "aclPermission"
       },
       "fileStorageLabelCreate": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32503,7 +32533,8 @@
           "value"
         ],
         "additionalProperties": false,
-        "description": "Service label used as metadata and for filtering File Storage service list results. A service can have at most 255 labels, and the key must be unique within the service regardless of case."
+        "description": "Service label used as metadata and for filtering File Storage service list results. A service can have at most 255 labels, and the key must be unique within the service regardless of case.",
+        "x-upcloud-short-key": "labelCreate"
       },
       "fileStorageLabelValue": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32517,7 +32548,8 @@
         "title": "LabelValue",
         "maxLength": 255,
         "pattern": "\\A[\\p{L}\\p{N}\\p{P}\\p{S}\\p{M}\\p{Z}]*\\z",
-        "description": "Label value supplied when modifying a label. A string may be empty and can contain up to 255 Unicode letters, numbers, punctuation, symbols, marks, and separators. `null` is accepted and stored as an empty string; it does not delete the label."
+        "description": "Label value supplied when modifying a label. A string may be empty and can contain up to 255 Unicode letters, numbers, punctuation, symbols, marks, and separators. `null` is accepted and stored as an empty string; it does not delete the label.",
+        "x-upcloud-short-key": "labelValue"
       },
       "fileStorageServiceReplace": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32551,7 +32583,7 @@
             "$ref": "#/components/schemas/fileStorageConfiguredStatus"
           },
           "size_gib": {
-            "$ref": "#/components/schemas/fileStorageSizeGiB"
+            "$ref": "#/components/schemas/fileStorageServiceSizeGib"
           },
           "networks": {
             "type": "array",
@@ -32577,7 +32609,8 @@
           "size_gib"
         ],
         "additionalProperties": false,
-        "description": "Complete replacement for a File Storage service's mutable configuration. `name`, `configured_status`, and `size_gib` are required. The service can be expanded but not reduced. The `networks` and `labels` collections replace their existing collections in full; omitting either collection clears it. Zone, encryption, and shares are unchanged because they are not accepted by this operation."
+        "description": "Complete replacement for a File Storage service's mutable configuration. `name`, `configured_status`, and `size_gib` are required. The service can be expanded but not reduced. The `networks` and `labels` collections replace their existing collections in full; omitting either collection clears it. Zone, encryption, and shares are unchanged because they are not accepted by this operation.",
+        "x-upcloud-short-key": "serviceReplace"
       },
       "fileStorageServiceModify": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32596,7 +32629,7 @@
             "$ref": "#/components/schemas/fileStorageConfiguredStatus"
           },
           "size_gib": {
-            "$ref": "#/components/schemas/fileStorageSizeGiB"
+            "$ref": "#/components/schemas/fileStorageServiceSizeGib"
           },
           "networks": {
             "type": [
@@ -32623,7 +32656,8 @@
         },
         "title": "ServiceModify",
         "additionalProperties": false,
-        "description": "JSON Merge Patch document for a File Storage service's mutable configuration. Omitted properties remain unchanged. A supplied `networks` or `labels` value replaces the complete collection; an empty array or `null` clears it. The service can be expanded but not reduced. Zone, encryption, and shares cannot be modified."
+        "description": "JSON Merge Patch document for a File Storage service's mutable configuration. Omitted properties remain unchanged. A supplied `networks` or `labels` value replaces the complete collection; an empty array or `null` clears it. The service can be expanded but not reduced. Zone, encryption, and shares cannot be modified.",
+        "x-upcloud-short-key": "serviceModify"
       },
       "fileStorageNetworkModify": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32635,7 +32669,7 @@
         ],
         "properties": {
           "uuid": {
-            "$ref": "#/components/schemas/fileStorageNetworkUUID"
+            "$ref": "#/components/schemas/fileStorageNetworkUuid"
           },
           "name": {
             "$ref": "#/components/schemas/fileStorageName"
@@ -32644,12 +32678,13 @@
             "$ref": "#/components/schemas/fileStorageNetworkFamily"
           },
           "ip_address": {
-            "$ref": "#/components/schemas/fileStorageIPAddress"
+            "$ref": "#/components/schemas/fileStorageIpAddress"
           }
         },
         "title": "NetworkModify",
         "additionalProperties": false,
-        "description": "Fields to modify on an existing private network attachment. Omitted fields remain unchanged, including `ip_address`, and `null` is not accepted for any field. When changing `uuid`, supply an `ip_address` that belongs to the replacement network. The name must remain unique within the service. A replacement network must be accessible, private, and in the service zone; only IPv4 is supported."
+        "description": "Fields to modify on an existing private network attachment. Omitted fields remain unchanged, including `ip_address`, and `null` is not accepted for any field. When changing `uuid`, supply an `ip_address` that belongs to the replacement network. The name must remain unique within the service. A replacement network must be accessible, private, and in the service zone; only IPv4 is supported.",
+        "x-upcloud-short-key": "networkModify"
       },
       "fileStorageShareModify": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32680,7 +32715,8 @@
         },
         "title": "ShareModify",
         "additionalProperties": false,
-        "description": "Partial modification of an NFS share. Omitted fields remain unchanged and `null` is not accepted. The immutable share path cannot be modified."
+        "description": "Partial modification of an NFS share. Omitted fields remain unchanged and `null` is not accepted. The immutable share path cannot be modified.",
+        "x-upcloud-short-key": "shareModify"
       },
       "fileStorageAclModify": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32706,12 +32742,13 @@
             "description": "Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients."
           },
           "permission": {
-            "$ref": "#/components/schemas/fileStoragePermission"
+            "$ref": "#/components/schemas/fileStorageAclPermission"
           }
         },
         "title": "AclModify",
         "additionalProperties": false,
-        "description": "Partial modification of an access-control entry for a share's NFS export. Omitted fields remain unchanged, `null` is not accepted, and the resulting name and target must each remain unique within the share."
+        "description": "Partial modification of an access-control entry for a share's NFS export. Omitted fields remain unchanged, `null` is not accepted, and the resulting name and target must each remain unique within the share.",
+        "x-upcloud-short-key": "aclModify"
       },
       "fileStorageLabelModify": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32732,7 +32769,8 @@
         },
         "title": "LabelModify",
         "additionalProperties": false,
-        "description": "Replacement values for an existing service label. Supply both properties: the current implementation replaces an omitted property with an empty string. A `null` value is also stored as an empty string and does not delete the label. The resulting key must be unique within the service regardless of case."
+        "description": "Replacement values for an existing service label. Supply both properties: the current implementation replaces an omitted property with an empty string. A `null` value is also stored as an empty string and does not delete the label. The resulting key must be unique within the service regardless of case.",
+        "x-upcloud-short-key": "labelModify"
       },
       "fileStorageServiceListResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32789,7 +32827,8 @@
           "$ref": "#/components/schemas/fileStorageServiceDetailResponse"
         },
         "title": "ServiceListResponse",
-        "description": "File Storage services in the customer account."
+        "description": "File Storage services in the customer account.",
+        "x-upcloud-short-key": "serviceListResponse"
       },
       "fileStorageServiceDetailResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32842,7 +32881,7 @@
         ],
         "properties": {
           "uuid": {
-            "$ref": "#/components/schemas/fileStorageEntityUUID"
+            "$ref": "#/components/schemas/fileStorageEntityUuid"
           },
           "name": {
             "$ref": "#/components/schemas/fileStorageName"
@@ -32862,7 +32901,7 @@
             "$ref": "#/components/schemas/fileStorageOperationalState"
           },
           "size_gib": {
-            "$ref": "#/components/schemas/fileStorageSizeGiB"
+            "$ref": "#/components/schemas/fileStorageServiceSizeGib"
           },
           "encrypted": {
             "type": "boolean",
@@ -32888,7 +32927,7 @@
           "labels": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/fileStorageLabelDetails"
+              "$ref": "#/components/schemas/fileStorageLabelDetailResponse"
             },
             "description": "Labels attached to the service."
           },
@@ -32929,7 +32968,8 @@
           "updated_at"
         ],
         "additionalProperties": false,
-        "description": "Desired configuration, current lifecycle information, and latest available capacity metrics for a File Storage service. The effective configuration currently applied to storage is available from the current-state endpoint."
+        "description": "Desired configuration, current lifecycle information, and latest available capacity metrics for a File Storage service. The effective configuration currently applied to storage is available from the current-state endpoint.",
+        "x-upcloud-short-key": "serviceDetailResponse"
       },
       "fileStorageOperationalState": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32949,7 +32989,8 @@
           "delete-network",
           "deleting"
         ],
-        "description": "System-managed service lifecycle state. Transitional states describe provisioning or deletion work; `running` and `stopped` are stable states."
+        "description": "System-managed service lifecycle state. Transitional states describe provisioning or deletion work; `running` and `stopped` are stable states.",
+        "x-upcloud-short-key": "operationalState"
       },
       "fileStorageNetworkDetailResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -32967,13 +33008,13 @@
             "$ref": "#/components/schemas/fileStorageNetworkFamily"
           },
           "ip_address": {
-            "$ref": "#/components/schemas/fileStorageIPAddress"
+            "$ref": "#/components/schemas/fileStorageIpAddress"
           },
           "name": {
             "$ref": "#/components/schemas/fileStorageName"
           },
           "uuid": {
-            "$ref": "#/components/schemas/fileStorageNetworkUUID"
+            "$ref": "#/components/schemas/fileStorageNetworkUuid"
           }
         },
         "title": "NetworkDetailResponse",
@@ -32984,7 +33025,8 @@
           "ip_address"
         ],
         "additionalProperties": false,
-        "description": "Private network attachment through which clients access a File Storage service"
+        "description": "Private network attachment through which clients access a File Storage service",
+        "x-upcloud-short-key": "networkDetailResponse"
       },
       "fileStorageShareDetailResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33007,7 +33049,7 @@
             "$ref": "#/components/schemas/fileStorageShareName"
           },
           "path": {
-            "$ref": "#/components/schemas/fileStoragePath"
+            "$ref": "#/components/schemas/fileStorageSharePath"
           },
           "acl": {
             "type": "array",
@@ -33031,7 +33073,8 @@
           "acl"
         ],
         "additionalProperties": false,
-        "description": "NFS share and its access-control entries."
+        "description": "NFS share and its access-control entries.",
+        "x-upcloud-short-key": "shareDetailResponse"
       },
       "fileStorageAclDetailResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33057,7 +33100,7 @@
             "description": "Client allowed to access the export, expressed as an IP address, a CIDR network prefix, or `*` for all clients."
           },
           "permission": {
-            "$ref": "#/components/schemas/fileStoragePermission"
+            "$ref": "#/components/schemas/fileStorageAclPermission"
           }
         },
         "title": "AclDetailResponse",
@@ -33067,9 +33110,10 @@
           "permission"
         ],
         "additionalProperties": false,
-        "description": "Access-control entry applied to a share's NFS export. For nested shares, matching parent and child entries combine and the most permissive permission determines effective access."
+        "description": "Access-control entry applied to a share's NFS export. For nested shares, matching parent and child entries combine and the most permissive permission determines effective access.",
+        "x-upcloud-short-key": "aclDetailResponse"
       },
-      "fileStorageLabelDetails": {
+      "fileStorageLabelDetailResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "examples": [
@@ -33087,7 +33131,8 @@
           }
         },
         "title": "LabelDetails",
-        "description": "Service label used as metadata and for filtering File Storage service list results. Both fields are always returned; an empty value is represented as an empty string."
+        "description": "Service label used as metadata and for filtering File Storage service list results. Both fields are always returned; an empty value is represented as an empty string.",
+        "x-upcloud-short-key": "labelDetailResponse"
       },
       "fileStorageMetricsDetailResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33145,7 +33190,8 @@
           "updated_at"
         ],
         "additionalProperties": false,
-        "description": "Latest capacity and inode usage measurements for the File Storage service."
+        "description": "Latest capacity and inode usage measurements for the File Storage service.",
+        "x-upcloud-short-key": "metricsDetailResponse"
       },
       "fileStorageErrorResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33267,7 +33313,8 @@
           "status"
         ],
         "additionalProperties": false,
-        "description": "RFC 9457 problem details returned by the API."
+        "description": "RFC 9457 problem details returned by the API.",
+        "x-upcloud-short-key": "errorResponse"
       },
       "fileStorageNetworkListResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33287,7 +33334,8 @@
         },
         "title": "NetworkListResponse",
         "maxItems": 1,
-        "description": "Private networks attached to a File Storage service. A service can have at most one attached network."
+        "description": "Private networks attached to a File Storage service. A service can have at most one attached network.",
+        "x-upcloud-short-key": "networkListResponse"
       },
       "fileStorageShareListResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33323,7 +33371,8 @@
           "$ref": "#/components/schemas/fileStorageShareDetailResponse"
         },
         "title": "ShareListResponse",
-        "description": "NFS shares configured on a File Storage service, ordered by path. Shares undergoing asynchronous deletion remain present with `deleting` set to `true` until cleanup finishes."
+        "description": "NFS shares configured on a File Storage service, ordered by path. Shares undergoing asynchronous deletion remain present with `deleting` set to `true` until cleanup finishes.",
+        "x-upcloud-short-key": "shareListResponse"
       },
       "fileStorageAclListResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33346,9 +33395,10 @@
           "$ref": "#/components/schemas/fileStorageAclDetailResponse"
         },
         "title": "AclListResponse",
-        "description": "Access-control entries configured for a share's NFS export, ordered by target."
+        "description": "Access-control entries configured for a share's NFS export, ordered by target.",
+        "x-upcloud-short-key": "aclListResponse"
       },
-      "fileStorageLabelsListResponse": {
+      "fileStorageLabelListResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "array",
         "examples": [
@@ -33364,10 +33414,11 @@
           ]
         ],
         "items": {
-          "$ref": "#/components/schemas/fileStorageLabelDetails"
+          "$ref": "#/components/schemas/fileStorageLabelDetailResponse"
         },
         "title": "LabelsListResponse",
-        "description": "Labels attached to a File Storage service. An empty collection is returned as an empty array."
+        "description": "Labels attached to a File Storage service. An empty collection is returned as an empty array.",
+        "x-upcloud-short-key": "labelListResponse"
       },
       "fileStorageServiceCurrentStateResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33420,7 +33471,7 @@
         ],
         "properties": {
           "uuid": {
-            "$ref": "#/components/schemas/fileStorageEntityUUID"
+            "$ref": "#/components/schemas/fileStorageEntityUuid"
           },
           "name": {
             "$ref": "#/components/schemas/fileStorageName"
@@ -33448,7 +33499,7 @@
             "description": "Operational state reported for the applied instance configuration."
           },
           "size_gib": {
-            "$ref": "#/components/schemas/fileStorageSizeGiB"
+            "$ref": "#/components/schemas/fileStorageServiceSizeGib"
           },
           "encrypted": {
             "type": "boolean",
@@ -33474,7 +33525,7 @@
           "labels": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/fileStorageLabelDetails"
+              "$ref": "#/components/schemas/fileStorageLabelDetailResponse"
             },
             "description": "Labels copied from the control-plane service when this snapshot was created."
           },
@@ -33515,7 +33566,8 @@
           "updated_at"
         ],
         "additionalProperties": false,
-        "description": "Latest successfully reported state applied to the primary storage instance. Instance-reported fields include configured and operational status, size, encryption, networks, shares, metrics, and timestamps. UUID, name, zone, and labels are copied from the control-plane service when the snapshot is created. The snapshot can therefore lag behind the regular service response while a change is being applied."
+        "description": "Latest successfully reported state applied to the primary storage instance. Instance-reported fields include configured and operational status, size, encryption, networks, shares, metrics, and timestamps. UUID, name, zone, and labels are copied from the control-plane service when the snapshot is created. The snapshot can therefore lag behind the regular service response while a change is being applied.",
+        "x-upcloud-short-key": "serviceCurrentStateResponse"
       },
       "LogicalDatabaseCreate": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -62462,7 +62514,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem400"
+              "$ref": "#/components/schemas/accountTokensProblemJson400"
             }
           }
         }
@@ -62472,7 +62524,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem401"
+              "$ref": "#/components/schemas/accountTokensProblemJson401"
             }
           }
         }
@@ -62482,7 +62534,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem403"
+              "$ref": "#/components/schemas/accountTokensProblemJson403"
             }
           }
         }
@@ -62492,7 +62544,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem"
+              "$ref": "#/components/schemas/accountTokensProblemJson"
             }
           }
         }
@@ -62512,7 +62564,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem401"
+              "$ref": "#/components/schemas/accountTokensProblemJson401"
             }
           }
         }
@@ -62522,7 +62574,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem"
+              "$ref": "#/components/schemas/accountTokensProblemJson"
             }
           }
         }
@@ -62542,7 +62594,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem401"
+              "$ref": "#/components/schemas/accountTokensProblemJson401"
             }
           }
         }
@@ -62552,7 +62604,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem404"
+              "$ref": "#/components/schemas/accountTokensProblemJson404"
             }
           }
         }
@@ -62562,7 +62614,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem"
+              "$ref": "#/components/schemas/accountTokensProblemJson"
             }
           }
         }
@@ -62575,7 +62627,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem401"
+              "$ref": "#/components/schemas/accountTokensProblemJson401"
             }
           }
         }
@@ -62585,7 +62637,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem404"
+              "$ref": "#/components/schemas/accountTokensProblemJson404"
             }
           }
         }
@@ -62595,7 +62647,7 @@
         "content": {
           "application/problem+json": {
             "schema": {
-              "$ref": "#/components/schemas/accountTokensProblem"
+              "$ref": "#/components/schemas/accountTokensProblemJson"
             }
           }
         }
@@ -65098,7 +65150,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/fileStorageLabelsListResponse"
+              "$ref": "#/components/schemas/fileStorageLabelListResponse"
             }
           }
         }
@@ -65128,7 +65180,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/fileStorageLabelDetails"
+              "$ref": "#/components/schemas/fileStorageLabelDetailResponse"
             }
           }
         }
@@ -65178,7 +65230,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/fileStorageLabelDetails"
+              "$ref": "#/components/schemas/fileStorageLabelDetailResponse"
             }
           }
         }
@@ -65231,7 +65283,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/fileStorageLabelDetails"
+              "$ref": "#/components/schemas/fileStorageLabelDetailResponse"
             }
           }
         }
@@ -73081,7 +73133,7 @@
         "description": "Maximum number of services to return.",
         "required": false,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageQueryParameterLimit"
+          "$ref": "#/components/schemas/fileStorageQueryParamLimit"
         }
       },
       "listFileStoragesOffset": {
@@ -73109,7 +73161,7 @@
         "required": false,
         "style": "form",
         "schema": {
-          "$ref": "#/components/schemas/fileStorageQueryParameterLabel"
+          "$ref": "#/components/schemas/fileStorageQueryParamLabel"
         }
       },
       "getFileStorageServiceUuid": {
@@ -73118,7 +73170,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "replaceFileStorageServiceUuid": {
@@ -73127,7 +73179,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "deleteFileStorageServiceUuid": {
@@ -73136,7 +73188,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "modifyFileStorageServiceUuid": {
@@ -73145,7 +73197,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "listFileStorageNetworksServiceUuid": {
@@ -73154,7 +73206,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "createFileStorageNetworkServiceUuid": {
@@ -73163,7 +73215,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageNetworkServiceUuid": {
@@ -73172,7 +73224,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageNetworkNetworkName": {
@@ -73190,7 +73242,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "deleteFileStorageNetworkNetworkName": {
@@ -73208,7 +73260,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "modifyFileStorageNetworkNetworkName": {
@@ -73226,7 +73278,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "createFileStorageShareServiceUuid": {
@@ -73235,7 +73287,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageShareServiceUuid": {
@@ -73244,7 +73296,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageShareShareName": {
@@ -73262,7 +73314,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "deleteFileStorageShareShareName": {
@@ -73280,7 +73332,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "modifyFileStorageShareShareName": {
@@ -73298,7 +73350,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "listFileStorageAclsShareName": {
@@ -73316,7 +73368,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "createFileStorageAclShareName": {
@@ -73334,7 +73386,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageAclShareName": {
@@ -73361,7 +73413,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "deleteFileStorageAclShareName": {
@@ -73388,7 +73440,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "modifyFileStorageAclShareName": {
@@ -73415,7 +73467,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "createFileStorageLabelServiceUuid": {
@@ -73424,7 +73476,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageLabelServiceUuid": {
@@ -73433,7 +73485,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getFileStorageLabelLabelKey": {
@@ -73451,7 +73503,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "deleteFileStorageLabelLabelKey": {
@@ -73469,7 +73521,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "modifyFileStorageLabelLabelKey": {
@@ -73487,7 +73539,7 @@
         "description": "UUID of the File Storage service.",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/fileStorageEntityUUID"
+          "$ref": "#/components/schemas/fileStorageEntityUuid"
         }
       },
       "getDatabaseTypeServiceTypeName": {

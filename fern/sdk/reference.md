@@ -18450,7 +18450,7 @@ $client->fileStorage->createFileStorage(
                     new FileStorageAclCreate([
                         'name' => 'office-write',
                         'target' => '192.168.147.0/24',
-                        'permission' => FileStoragePermission::Rw->value,
+                        'permission' => FileStorageAclPermission::Rw->value,
                     ]),
                 ],
             ]),
@@ -19323,7 +19323,7 @@ $client->fileStorage->createFileStorageShare(
                 new FileStorageAclCreate([
                     'name' => 'office-write',
                     'target' => '192.168.147.0/24',
-                    'permission' => FileStoragePermission::Rw->value,
+                    'permission' => FileStorageAclPermission::Rw->value,
                 ]),
             ],
         ]),
@@ -19528,7 +19528,7 @@ $client->fileStorage->modifyFileStorageShare(
             new FileStorageAclCreate([
                 'name' => 'office-read',
                 'target' => '192.168.147.0/24',
-                'permission' => FileStoragePermission::Ro->value,
+                'permission' => FileStorageAclPermission::Ro->value,
             ]),
         ],
     ]),
@@ -19682,7 +19682,7 @@ $client->fileStorage->createFileStorageAcl(
         'body' => new FileStorageAclCreate([
             'name' => 'office-write',
             'target' => '192.168.147.0/24',
-            'permission' => FileStoragePermission::Rw->value,
+            'permission' => FileStorageAclPermission::Rw->value,
         ]),
     ]),
 );
@@ -19908,7 +19908,7 @@ $client->fileStorage->modifyFileStorageAcl(
     'project-data',
     'production-files',
     new FileStorageAclModify([
-        'permission' => FileStoragePermission::Ro->value,
+        'permission' => FileStorageAclPermission::Ro->value,
     ]),
 );
 ```
@@ -20033,7 +20033,7 @@ $client->fileStorage->listFileStorageLabels(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;createFileStorageLabel($serviceUuid, $request) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;createFileStorageLabel($serviceUuid, $request) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20103,7 +20103,7 @@ $client->fileStorage->createFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageLabel($serviceUuid, $labelKey) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageLabel($serviceUuid, $labelKey) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20233,7 +20233,7 @@ $client->fileStorage->deleteFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;modifyFileStorageLabel($serviceUuid, $labelKey, $request) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;modifyFileStorageLabel($serviceUuid, $labelKey, $request) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 

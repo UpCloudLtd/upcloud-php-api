@@ -68,9 +68,9 @@ class FileStorageServiceCurrentStateResponse extends JsonSerializableType
     public array $shares;
 
     /**
-     * @var array<FileStorageLabelDetails> $labels Labels copied from the control-plane service when this snapshot was created.
+     * @var array<FileStorageLabelDetailResponse> $labels Labels copied from the control-plane service when this snapshot was created.
      */
-    #[JsonProperty('labels'), ArrayType([FileStorageLabelDetails::class])]
+    #[JsonProperty('labels'), ArrayType([FileStorageLabelDetailResponse::class])]
     public array $labels;
 
     /**
@@ -102,7 +102,7 @@ class FileStorageServiceCurrentStateResponse extends JsonSerializableType
      *   encrypted: bool,
      *   networks: array<FileStorageNetworkDetailResponse>,
      *   shares: array<FileStorageShareDetailResponse>,
-     *   labels: array<FileStorageLabelDetails>,
+     *   labels: array<FileStorageLabelDetailResponse>,
      *   metrics: FileStorageMetricsDetailResponse,
      *   createdAt: DateTime,
      *   updatedAt: DateTime,

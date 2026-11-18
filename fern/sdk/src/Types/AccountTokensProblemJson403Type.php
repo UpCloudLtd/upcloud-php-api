@@ -2,7 +2,7 @@
 
 namespace Upcloud\Types;
 
-enum AccountTokensProblem403Type: string
+enum AccountTokensProblemJson403Type: string
 {
     case HttpsDevelopersUpcloudCom13ErrorsErrorForbidden = "https://developers.upcloud.com/1.3/errors#ERROR_FORBIDDEN";
 }
