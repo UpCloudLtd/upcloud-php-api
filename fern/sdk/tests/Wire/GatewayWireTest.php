@@ -28,8 +28,8 @@ use Upcloud\Types\GatewayConnectionModifyRequest;
 use Upcloud\Gateway\Requests\CreateGatewayConnectionRequest;
 use Upcloud\Gateway\Requests\ModifyGatewayConnectionRequest;
 use Upcloud\Gateway\Requests\CreateGatewayTunnelRequest;
-use Upcloud\Types\GatewaySupportedProposalAlgorithms;
-use Upcloud\Types\GatewaySupportedIntegrityAlgorithms;
+use Upcloud\Types\GatewayIpsecAlgorithm;
+use Upcloud\Types\GatewayIpsecIntegrityAlgorithm;
 use Upcloud\Gateway\Requests\ModifyGatewayTunnelRequest;
 use Upcloud\Types\GatewayTunnelModifyRequest;
 use Upcloud\Types\GatewayTunnelModifyRequestLocalAddress;
@@ -40,7 +40,7 @@ use Upcloud\Gateway\Requests\CreateGatewayServiceLabelRequest;
 use Upcloud\Gateway\Requests\GatewayLabelModifyRequest;
 use Upcloud\Gateway\Requests\GatewayAddressModifyRequest;
 use Upcloud\Gateway\Requests\GatewayServiceLogSessionCreateRequest;
-use Upcloud\Types\GatewayServiceLogSessionTypes;
+use Upcloud\Types\GatewayServiceLogSessionType;
 
 class GatewayWireTest extends WireMockTestCase
 {
@@ -554,26 +554,26 @@ class GatewayWireTest extends WireMockTestCase
                             'psk' => 'MySecretPsk123',
                         ]),
                         'phase1Algorithms' => [
-                            GatewaySupportedProposalAlgorithms::Aes128->value,
-                            GatewaySupportedProposalAlgorithms::Aes256->value,
-                            GatewaySupportedProposalAlgorithms::Aes128Gcm128->value,
-                            GatewaySupportedProposalAlgorithms::Aes256Gcm128->value,
+                            GatewayIpsecAlgorithm::Aes128->value,
+                            GatewayIpsecAlgorithm::Aes256->value,
+                            GatewayIpsecAlgorithm::Aes128Gcm128->value,
+                            GatewayIpsecAlgorithm::Aes256Gcm128->value,
                         ],
                         'phase2Algorithms' => [
-                            GatewaySupportedProposalAlgorithms::Aes128->value,
-                            GatewaySupportedProposalAlgorithms::Aes256->value,
-                            GatewaySupportedProposalAlgorithms::Aes128Gcm128->value,
-                            GatewaySupportedProposalAlgorithms::Aes256Gcm128->value,
+                            GatewayIpsecAlgorithm::Aes128->value,
+                            GatewayIpsecAlgorithm::Aes256->value,
+                            GatewayIpsecAlgorithm::Aes128Gcm128->value,
+                            GatewayIpsecAlgorithm::Aes256Gcm128->value,
                         ],
                         'phase1IntegrityAlgorithms' => [
-                            GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha512->value,
                         ],
                         'phase2IntegrityAlgorithms' => [
-                            GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha512->value,
                         ],
                         'phase1DhGroupNumbers' => [
                             16,
@@ -676,20 +676,20 @@ class GatewayWireTest extends WireMockTestCase
                             'psk' => 'MySecretPsk123',
                         ]),
                         'phase1Algorithms' => [
-                            GatewaySupportedProposalAlgorithms::Aes128Gcm16->value,
+                            GatewayIpsecAlgorithm::Aes128Gcm16->value,
                         ],
                         'phase2Algorithms' => [
-                            GatewaySupportedProposalAlgorithms::Aes128Gcm16->value,
+                            GatewayIpsecAlgorithm::Aes128Gcm16->value,
                         ],
                         'phase1IntegrityAlgorithms' => [
-                            GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha512->value,
                         ],
                         'phase2IntegrityAlgorithms' => [
-                            GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                            GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                            GatewayIpsecIntegrityAlgorithm::Sha512->value,
                         ],
                         'phase1DhGroupNumbers' => [
                             16,
@@ -958,7 +958,7 @@ class GatewayWireTest extends WireMockTestCase
         $this->client->gateway->createGatewayServiceLogSession(
             '01234567-89ab-cdef-0123-456789abcdef',
             new GatewayServiceLogSessionCreateRequest([
-                'sessionType' => GatewayServiceLogSessionTypes::Vpn->value,
+                'sessionType' => GatewayServiceLogSessionType::Vpn->value,
             ]),
             [
                 'headers' => [

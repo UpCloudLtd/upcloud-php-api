@@ -18,25 +18,25 @@ class GatewayTunnelCreateRequestIpsec extends JsonSerializableType
     public GatewayTunnelCreateRequestIpsecAuthentication $authentication;
 
     /**
-     * @var ?array<value-of<GatewaySupportedProposalAlgorithms>> $phase1Algorithms Phase 1 proposal algorithms
+     * @var ?array<value-of<GatewayIpsecAlgorithm>> $phase1Algorithms Phase 1 proposal algorithms
      */
     #[JsonProperty('phase1_algorithms'), ArrayType(['string'])]
     public ?array $phase1Algorithms;
 
     /**
-     * @var ?array<value-of<GatewaySupportedProposalAlgorithms>> $phase2Algorithms Phase 2 security association algorithms
+     * @var ?array<value-of<GatewayIpsecAlgorithm>> $phase2Algorithms Phase 2 security association algorithms
      */
     #[JsonProperty('phase2_algorithms'), ArrayType(['string'])]
     public ?array $phase2Algorithms;
 
     /**
-     * @var ?array<value-of<GatewaySupportedIntegrityAlgorithms>> $phase1IntegrityAlgorithms Phase 1 integrity algorithms
+     * @var ?array<value-of<GatewayIpsecIntegrityAlgorithm>> $phase1IntegrityAlgorithms Phase 1 integrity algorithms
      */
     #[JsonProperty('phase1_integrity_algorithms'), ArrayType(['string'])]
     public ?array $phase1IntegrityAlgorithms;
 
     /**
-     * @var ?array<value-of<GatewaySupportedIntegrityAlgorithms>> $phase2IntegrityAlgorithms Phase 2 integrity algorithms
+     * @var ?array<value-of<GatewayIpsecIntegrityAlgorithm>> $phase2IntegrityAlgorithms Phase 2 integrity algorithms
      */
     #[JsonProperty('phase2_integrity_algorithms'), ArrayType(['string'])]
     public ?array $phase2IntegrityAlgorithms;
@@ -86,10 +86,10 @@ class GatewayTunnelCreateRequestIpsec extends JsonSerializableType
     /**
      * @param array{
      *   authentication: GatewayTunnelCreateRequestIpsecAuthentication,
-     *   phase1Algorithms?: ?array<value-of<GatewaySupportedProposalAlgorithms>>,
-     *   phase2Algorithms?: ?array<value-of<GatewaySupportedProposalAlgorithms>>,
-     *   phase1IntegrityAlgorithms?: ?array<value-of<GatewaySupportedIntegrityAlgorithms>>,
-     *   phase2IntegrityAlgorithms?: ?array<value-of<GatewaySupportedIntegrityAlgorithms>>,
+     *   phase1Algorithms?: ?array<value-of<GatewayIpsecAlgorithm>>,
+     *   phase2Algorithms?: ?array<value-of<GatewayIpsecAlgorithm>>,
+     *   phase1IntegrityAlgorithms?: ?array<value-of<GatewayIpsecIntegrityAlgorithm>>,
+     *   phase2IntegrityAlgorithms?: ?array<value-of<GatewayIpsecIntegrityAlgorithm>>,
      *   phase1DhGroupNumbers?: ?array<int>,
      *   phase2DhGroupNumbers?: ?array<int>,
      *   ikeLifetime?: ?int,

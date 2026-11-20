@@ -102,6 +102,12 @@ class KubernetesNodeGroupDetails extends JsonSerializableType
     public ?bool $antiAffinity;
 
     /**
+     * @var ?KubernetesNodeGroupHealthCheck $healthCheck
+     */
+    #[JsonProperty('health_check')]
+    public ?KubernetesNodeGroupHealthCheck $healthCheck;
+
+    /**
      * @var ?bool $utilityNetworkAccess
      */
     #[JsonProperty('utility_network_access')]
@@ -130,6 +136,7 @@ class KubernetesNodeGroupDetails extends JsonSerializableType
      *   storageEncryption?: ?value-of<KubernetesStorageEncryption>,
      *   taints?: ?array<KubernetesTaint>,
      *   antiAffinity?: ?bool,
+     *   healthCheck?: ?KubernetesNodeGroupHealthCheck,
      *   utilityNetworkAccess?: ?bool,
      *   nodeUpdates?: ?KubernetesNodeUpdates,
      * } $values
@@ -152,6 +159,7 @@ class KubernetesNodeGroupDetails extends JsonSerializableType
         $this->storageEncryption = $values['storageEncryption'] ?? null;
         $this->taints = $values['taints'] ?? null;
         $this->antiAffinity = $values['antiAffinity'] ?? null;
+        $this->healthCheck = $values['healthCheck'] ?? null;
         $this->utilityNetworkAccess = $values['utilityNetworkAccess'] ?? null;
         $this->nodeUpdates = $values['nodeUpdates'] ?? null;
     }

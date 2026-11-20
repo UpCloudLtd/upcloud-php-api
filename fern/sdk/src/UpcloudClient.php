@@ -29,6 +29,7 @@ use Upcloud\FileStorage\FileStorageClient;
 use Upcloud\Database\DatabaseClient;
 use Upcloud\Gateway\GatewayClient;
 use Upcloud\LoadBalancer\LoadBalancerClient;
+use Upcloud\ContainerRegistry\ContainerRegistryClient;
 use Upcloud\FirewallRuleset\FirewallRulesetClient;
 use Upcloud\VncKeymap\VncKeymapClient;
 use Upcloud\Zone\ZoneClient;
@@ -173,6 +174,11 @@ class UpcloudClient
     public LoadBalancerClient $loadBalancer;
 
     /**
+     * @var ContainerRegistryClient $containerRegistry
+     */
+    public ContainerRegistryClient $containerRegistry;
+
+    /**
      * @var FirewallRulesetClient $firewallRuleset
      */
     public FirewallRulesetClient $firewallRuleset;
@@ -278,6 +284,7 @@ class UpcloudClient
         $this->database = new DatabaseClient($this->client, $this->options);
         $this->gateway = new GatewayClient($this->client, $this->options);
         $this->loadBalancer = new LoadBalancerClient($this->client, $this->options);
+        $this->containerRegistry = new ContainerRegistryClient($this->client, $this->options);
         $this->firewallRuleset = new FirewallRulesetClient($this->client, $this->options);
         $this->vncKeymap = new VncKeymapClient($this->client, $this->options);
         $this->zone = new ZoneClient($this->client, $this->options);

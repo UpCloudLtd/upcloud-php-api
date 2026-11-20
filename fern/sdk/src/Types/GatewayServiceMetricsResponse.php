@@ -18,15 +18,15 @@ class GatewayServiceMetricsResponse extends JsonSerializableType
     public ?array $gateways;
 
     /**
-     * @var ?GatewayIpsecMetricsDetailsResponse $ipsecMetrics
+     * @var ?GatewayIpsecIkeSaMetricsDetailsResponse $ipsecMetrics
      */
     #[JsonProperty('ipsec_metrics')]
-    public ?GatewayIpsecMetricsDetailsResponse $ipsecMetrics;
+    public ?GatewayIpsecIkeSaMetricsDetailsResponse $ipsecMetrics;
 
     /**
      * @param array{
      *   gateways?: ?array<GatewayMetricsDetailsResponse>,
-     *   ipsecMetrics?: ?GatewayIpsecMetricsDetailsResponse,
+     *   ipsecMetrics?: ?GatewayIpsecIkeSaMetricsDetailsResponse,
      * } $values
      */
     public function __construct(

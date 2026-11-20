@@ -1907,7 +1907,15 @@ $client->kubernetes->modifyKubernetesClusterNodeGroup(
 <dl>
 <dd>
 
-**$count:** `int` 
+**$count:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$healthCheck:** `?KubernetesNodeGroupHealthCheck` 
     
 </dd>
 </dl>
@@ -18316,6 +18324,299 @@ $client->objectStorage2->deleteObjectStorageRoleTag(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;objectStorage2-&gt;listJobs($request) -> array</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of jobs. Jobs are used to sync S3-compatible object storages with UpCloud managed object storages.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->listJobs(
+    new ListJobsRequest([
+        'limit' => 10,
+        'offset' => 0,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$limit:** `?int` — Number of entries to receive at most.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$offset:** `?int` — Number of entries to skip.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sort:** `?string` — Sort field. Prefix with '-' for descending order.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;objectStorage2-&gt;createJob($request) -> ObjectStorage2JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new job.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->createJob(
+    new ObjectStorage2JobInputCreate([
+        'validateOnly' => '',
+        'type' => ObjectStorage2JobInputCreateType::Copy->value,
+        'source' => new ObjectStorage2JobInputItemCreate([
+            'accessKeyId' => 'AKIAEXAMPLE123',
+            'secretAccessKey' => 'exampleSecretKey123',
+            'endpointUrl' => 'https://s3.example.com',
+            'bucket' => 'my-bucket',
+        ]),
+        'target' => new ObjectStorage2JobInputItemCreate([
+            'accessKeyId' => 'UCEXAMPLE456',
+            'secretAccessKey' => 'exampleTargetSecret456',
+            'endpointUrl' => 'https://example.upcloudobjects.com',
+            'bucket' => 'my-bucket',
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$validateOnly:** `?string` — Only validate the request without applying any changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$type:** `string` — The type of the job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$source:** `ObjectStorage2JobInputItemCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$target:** `ObjectStorage2JobInputItemCreate` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;objectStorage2-&gt;getJob($jobName) -> ObjectStorage2JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns object storage job details by given job UUID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->getJob(
+    '01234567-89ab-cdef-0123-456789abcdef',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$jobName:** `string` — Job UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;objectStorage2-&gt;cancelJob($jobName, $request) -> ObjectStorage2JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels ongoing job by given job UUID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->objectStorage2->cancelJob(
+    '01234567-89ab-cdef-0123-456789abcdef',
+    new CancelJobRequest([
+        'validateOnly' => '',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$jobName:** `string` — Job UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$validateOnly:** `?string` — Only validate the request without applying any changes.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## file-storage
 <details><summary><code>$client-&gt;fileStorage-&gt;listFileStorages($request) -> array</code></summary>
 <dl>
@@ -18450,7 +18751,7 @@ $client->fileStorage->createFileStorage(
                     new FileStorageAclCreate([
                         'name' => 'office-write',
                         'target' => '192.168.147.0/24',
-                        'permission' => FileStoragePermission::Rw->value,
+                        'permission' => FileStorageAclPermission::Rw->value,
                     ]),
                 ],
             ]),
@@ -19323,7 +19624,7 @@ $client->fileStorage->createFileStorageShare(
                 new FileStorageAclCreate([
                     'name' => 'office-write',
                     'target' => '192.168.147.0/24',
-                    'permission' => FileStoragePermission::Rw->value,
+                    'permission' => FileStorageAclPermission::Rw->value,
                 ]),
             ],
         ]),
@@ -19528,7 +19829,7 @@ $client->fileStorage->modifyFileStorageShare(
             new FileStorageAclCreate([
                 'name' => 'office-read',
                 'target' => '192.168.147.0/24',
-                'permission' => FileStoragePermission::Ro->value,
+                'permission' => FileStorageAclPermission::Ro->value,
             ]),
         ],
     ]),
@@ -19682,7 +19983,7 @@ $client->fileStorage->createFileStorageAcl(
         'body' => new FileStorageAclCreate([
             'name' => 'office-write',
             'target' => '192.168.147.0/24',
-            'permission' => FileStoragePermission::Rw->value,
+            'permission' => FileStorageAclPermission::Rw->value,
         ]),
     ]),
 );
@@ -19908,7 +20209,7 @@ $client->fileStorage->modifyFileStorageAcl(
     'project-data',
     'production-files',
     new FileStorageAclModify([
-        'permission' => FileStoragePermission::Ro->value,
+        'permission' => FileStorageAclPermission::Ro->value,
     ]),
 );
 ```
@@ -20033,7 +20334,7 @@ $client->fileStorage->listFileStorageLabels(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;createFileStorageLabel($serviceUuid, $request) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;createFileStorageLabel($serviceUuid, $request) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20103,7 +20404,7 @@ $client->fileStorage->createFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageLabel($serviceUuid, $labelKey) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;getFileStorageLabel($serviceUuid, $labelKey) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20233,7 +20534,7 @@ $client->fileStorage->deleteFileStorageLabel(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;fileStorage-&gt;modifyFileStorageLabel($serviceUuid, $labelKey, $request) -> FileStorageLabelDetails</code></summary>
+<details><summary><code>$client-&gt;fileStorage-&gt;modifyFileStorageLabel($serviceUuid, $labelKey, $request) -> FileStorageLabelDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -20612,13 +20913,13 @@ Creates a new Managed Database instance. New databases are started by default. A
 
 ```php
 $client->database->createDatabase(
-    new DatabaseServiceCreateOpenApi([
+    new DatabaseServiceCreateOpenapi([
         'hostnamePrefix' => 'doc-api-unique-prefix',
         'title' => 'my-managed-database',
         'type' => DatabaseServiceType::Mysql->value,
         'zone' => 'de-fra1',
         'terminationProtection' => false,
-        'maintenance' => new DatabaseServiceCreateOpenApiMaintenance([
+        'maintenance' => new DatabaseServiceCreateOpenapiMaintenance([
             'dow' => DatabaseMaintenanceDow::Sunday->value,
             'time' => '05:00:00',
         ]),
@@ -20646,7 +20947,7 @@ $client->database->createDatabase(
                 'value' => 'bar',
             ]),
         ],
-        'properties' => new DatabaseMySql([
+        'properties' => new DatabaseServicePropertiesMysql([
             'automaticUtilityNetworkIpFilter' => true,
             'ipFilter' => [
                 'ip_filter',
@@ -20764,7 +21065,7 @@ $client->database->createDatabase(
 <dl>
 <dd>
 
-**$maintenance:** `?DatabaseServiceCreateOpenApiMaintenance` — Weekly maintenance window.
+**$maintenance:** `?DatabaseServiceCreateOpenapiMaintenance` — Weekly maintenance window.
     
 </dd>
 </dl>
@@ -20796,7 +21097,7 @@ $client->database->createDatabase(
 <dl>
 <dd>
 
-**$properties:** `DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null` — Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
+**$properties:** `DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null` — Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
     
 </dd>
 </dl>
@@ -20949,12 +21250,12 @@ Modifies Managed Database service details by its {uuid} including upgrading plan
 ```php
 $client->database->modifyDatabase(
     '01234567-89ab-cdef-0123-456789abcdef',
-    new DatabaseServiceModifyOpenApi([
+    new DatabaseServiceModifyOpenapi([
         'title' => 'my-managed-database',
         'powered' => true,
         'zone' => 'de-fra1',
         'terminationProtection' => false,
-        'maintenance' => new DatabaseServiceModifyOpenApiMaintenance([
+        'maintenance' => new DatabaseServiceModifyOpenapiMaintenance([
             'dow' => DatabaseMaintenanceDow::Sunday->value,
             'time' => '12:00:00',
         ]),
@@ -20966,7 +21267,7 @@ $client->database->modifyDatabase(
                 'family' => DatabaseNetworkFamily::IPv4->value,
             ]),
         ],
-        'properties' => new DatabaseMySql([
+        'properties' => new DatabaseServicePropertiesMysql([
             'automaticUtilityNetworkIpFilter' => true,
             'ipFilter' => [
                 'ip_filter',
@@ -21084,7 +21385,7 @@ $client->database->modifyDatabase(
 <dl>
 <dd>
 
-**$maintenance:** `?DatabaseServiceModifyOpenApiMaintenance` — Weekly maintenance window.
+**$maintenance:** `?DatabaseServiceModifyOpenapiMaintenance` — Weekly maintenance window.
     
 </dd>
 </dl>
@@ -21108,7 +21409,7 @@ $client->database->modifyDatabase(
 <dl>
 <dd>
 
-**$properties:** `DatabaseMySql|DatabasePostgreSql|DatabaseRedis|DatabaseOpenSearch|DatabaseValkey|null` — Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
+**$properties:** `DatabaseServicePropertiesMysql|DatabaseServicePropertiesPg|DatabaseServicePropertiesRedis|DatabaseServicePropertiesOpensearch|DatabaseServicePropertiesValkey|null` — Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
     
 </dd>
 </dl>
@@ -21217,13 +21518,13 @@ Creates a clone of a Managed Database service based on its {uuid}. It is possibl
 $client->database->cloneDatabase(
     '01234567-89ab-cdef-0123-456789abcdef',
     new CloneDatabaseRequest([
-        'body' => new DatabaseMysqlClone([
+        'body' => new DatabaseServiceCloneMysql([
             'hostnamePrefix' => 'dev',
             'cloneTime' => new DateTime('2024-01-30T15:04:05Z'),
             'backupName' => 'daily-backup-2024-01-30',
             'zone' => 'fi-hel1',
             'terminationProtection' => false,
-            'maintenance' => new DatabaseMysqlCloneMaintenance([
+            'maintenance' => new DatabaseServiceCloneMysqlMaintenance([
                 'dow' => DatabaseMaintenanceDow::Monday->value,
                 'time' => '03:00:00',
             ]),
@@ -21252,7 +21553,7 @@ $client->database->cloneDatabase(
 <dl>
 <dd>
 
-**$request:** `DatabaseMysqlClone|DatabasePostgresqlClone|DatabaseRedisClone|DatabaseOpensearchClone|DatabaseValkeyClone` 
+**$request:** `DatabaseServiceCloneMysql|DatabaseServiceClonePg|DatabaseServiceCloneRedis|DatabaseServiceCloneOpensearch|DatabaseServiceCloneValkey` 
     
 </dd>
 </dl>
@@ -22874,7 +23175,7 @@ $client->database->getDatabaseVersions(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;database-&gt;startDatabaseManualMaintenance($uuid) -> DatabaseUpCloudApiResponse</code></summary>
+<details><summary><code>$client-&gt;database-&gt;startDatabaseManualMaintenance($uuid) -> DatabaseUpcloudApiResponse</code></summary>
 <dl>
 <dd>
 
@@ -22930,7 +23231,7 @@ $client->database->startDatabaseManualMaintenance(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;database-&gt;enableDatabaseTemporaryWrites($uuid) -> DatabaseUpCloudApiResponse</code></summary>
+<details><summary><code>$client-&gt;database-&gt;enableDatabaseTemporaryWrites($uuid) -> DatabaseUpcloudApiResponse</code></summary>
 <dl>
 <dd>
 
@@ -26597,26 +26898,26 @@ $client->gateway->createGatewayTunnel(
                     'psk' => 'MySecretPsk123',
                 ]),
                 'phase1Algorithms' => [
-                    GatewaySupportedProposalAlgorithms::Aes128->value,
-                    GatewaySupportedProposalAlgorithms::Aes256->value,
-                    GatewaySupportedProposalAlgorithms::Aes128Gcm128->value,
-                    GatewaySupportedProposalAlgorithms::Aes256Gcm128->value,
+                    GatewayIpsecAlgorithm::Aes128->value,
+                    GatewayIpsecAlgorithm::Aes256->value,
+                    GatewayIpsecAlgorithm::Aes128Gcm128->value,
+                    GatewayIpsecAlgorithm::Aes256Gcm128->value,
                 ],
                 'phase2Algorithms' => [
-                    GatewaySupportedProposalAlgorithms::Aes128->value,
-                    GatewaySupportedProposalAlgorithms::Aes256->value,
-                    GatewaySupportedProposalAlgorithms::Aes128Gcm128->value,
-                    GatewaySupportedProposalAlgorithms::Aes256Gcm128->value,
+                    GatewayIpsecAlgorithm::Aes128->value,
+                    GatewayIpsecAlgorithm::Aes256->value,
+                    GatewayIpsecAlgorithm::Aes128Gcm128->value,
+                    GatewayIpsecAlgorithm::Aes256Gcm128->value,
                 ],
                 'phase1IntegrityAlgorithms' => [
-                    GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha512->value,
                 ],
                 'phase2IntegrityAlgorithms' => [
-                    GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha512->value,
                 ],
                 'phase1DhGroupNumbers' => [
                     16,
@@ -26872,20 +27173,20 @@ $client->gateway->modifyGatewayTunnel(
                     'psk' => 'MySecretPsk123',
                 ]),
                 'phase1Algorithms' => [
-                    GatewaySupportedProposalAlgorithms::Aes128Gcm16->value,
+                    GatewayIpsecAlgorithm::Aes128Gcm16->value,
                 ],
                 'phase2Algorithms' => [
-                    GatewaySupportedProposalAlgorithms::Aes128Gcm16->value,
+                    GatewayIpsecAlgorithm::Aes128Gcm16->value,
                 ],
                 'phase1IntegrityAlgorithms' => [
-                    GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha512->value,
                 ],
                 'phase2IntegrityAlgorithms' => [
-                    GatewaySupportedIntegrityAlgorithms::Sha256->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha384->value,
-                    GatewaySupportedIntegrityAlgorithms::Sha512->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha256->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha384->value,
+                    GatewayIpsecIntegrityAlgorithm::Sha512->value,
                 ],
                 'phase1DhGroupNumbers' => [
                     16,
@@ -27643,7 +27944,7 @@ Create a new service log session.
 $client->gateway->createGatewayServiceLogSession(
     '01234567-89ab-cdef-0123-456789abcdef',
     new GatewayServiceLogSessionCreateRequest([
-        'sessionType' => GatewayServiceLogSessionTypes::Vpn->value,
+        'sessionType' => GatewayServiceLogSessionType::Vpn->value,
     ]),
 );
 ```
@@ -33189,6 +33490,2984 @@ $client->loadBalancer->getLoadBalancerPlan(
 <dd>
 
 **$planName:** `string` — The unique identifier for the plan.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## container-registry
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistries($request) -> ContainerRegistryServiceListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the list of container registry services for the authenticated account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistries(
+    new ListContainerRegistriesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$regionName:** `?string` — Filter by region name. Same value as region_name on the service, and as region on create.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$operationalState:** `?string` — Filter by operational state.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$configuredStatus:** `?string` — Filter by configured status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tier:** `?string` — Filter by service tier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;createContainerRegistry($request) -> ContainerRegistryServiceDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new managed container registry service.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->createContainerRegistry(
+    new ContainerRegistryServiceCreate([
+        'name' => 'my-registry',
+        'tier' => ContainerRegistryTier::StarterBeta->value,
+        'region' => 'fi-hel1',
+        'labels' => [
+            new ContainerRegistryServiceCreateLabelsItem([
+                'key' => 'env',
+                'value' => 'prod',
+            ]),
+            new ContainerRegistryServiceCreateLabelsItem([
+                'key' => 'team',
+                'value' => 'platform',
+            ]),
+        ],
+        'properties' => new ContainerRegistryServiceCreateProperties([
+            'anonymousPullsAllowed' => false,
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$name:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tier:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$region:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$labels:** `?array` — Key/value labels for organising and filtering services.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$properties:** `?ContainerRegistryServiceCreateProperties` — Customer-facing typed config block. Feature toggles land here as they ship; mirrors the same object returned by GET.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$networks:** `?array` — Customer SDN networks to peer to this service's private gateway. Non-empty list implies private access (dual mode).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryRegions() -> ContainerRegistryRegionListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the regions a container registry can be created in. The `name` is the value to send as `region` on create; it is not interchangeable with a zone.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryRegions();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryPlans() -> ContainerRegistryPlanListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the plans a container registry can be created on and what each allows. The `name` is the value to send as `tier` on create.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryPlans();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistry($uuid) -> ContainerRegistryServiceDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns details of a container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistry(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistry($uuid)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an existing container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistry(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;modifyContainerRegistry($uuid, $request) -> ContainerRegistryServiceDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modifies an existing container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->modifyContainerRegistry(
+    'uuid',
+    new ContainerRegistryServiceModify([
+        'tier' => ContainerRegistryTier::ProBeta->value,
+        'labels' => [
+            new ContainerRegistryServiceModifyLabelsItem([
+                'key' => 'env',
+                'value' => 'prod',
+            ]),
+            new ContainerRegistryServiceModifyLabelsItem([
+                'key' => 'criticality',
+                'value' => 'high',
+            ]),
+        ],
+        'properties' => new ContainerRegistryServiceModifyProperties([
+            'anonymousPullsAllowed' => true,
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tier:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$labels:** `?array` — Replace the labels list. Send an empty array to clear all labels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$properties:** `?ContainerRegistryServiceModifyProperties` — Patch the typed config block. Omit inner fields to keep their current value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$networks:** `?array` — Reconcile customer SDN peerings. Adding triggers peering creation; removal goes through DELETE /networks/{peering_uuid}.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryProvisioning($uuid) -> ContainerRegistryProvisioningProgressResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the provisioning phase and state for a container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryProvisioning(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryMetrics($uuid, $request) -> ContainerRegistryMetricsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns usage metrics for a container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryMetrics(
+    'uuid',
+    new GetContainerRegistryMetricsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$from:** `?DateTime` — Start of the window. Defaults to 24 hours before to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$to:** `?DateTime` — End of the window. Defaults to now.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$resolution:** `?string` — Bucket width.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryTrafficMetrics($uuid, $request) -> ContainerRegistryTrafficMetricsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns network traffic (ingress/egress bytes) for a container registry service as a bucketed series plus totals. Supports year-long windows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryTrafficMetrics(
+    'uuid',
+    new GetContainerRegistryTrafficMetricsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$from:** `?DateTime` — Start of the window. Defaults to 7 days before to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$to:** `?DateTime` — End of the window. Defaults to now.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$resolution:** `?string` — Bucket width.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;syncContainerRegistryStorage($uuid) -> ContainerRegistryStorageSyncResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Calculates actual storage usage from object storage and updates the service record.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->syncContainerRegistryStorage(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryEvents($uuid, $request) -> ContainerRegistryServiceEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Activity feed for a container registry service: repository, tag and manifest changes, user changes, and auth events. Newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryEvents(
+    'uuid',
+    new ListContainerRegistryEventsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$action:** `?string` — Event type to keep, such as registry.tag.create or user.create.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$actor:** `?string` — Actor identifier to keep.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$status:** `?string` — Outcome to keep.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$limit:** `?int` — How many events to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$offset:** `?int` — How many events to skip. The feed is newest first.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryConnection($uuid) -> ContainerRegistryConnectionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns connection details for a container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryConnection(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryCredentials($uuid) -> ContainerRegistryCredentialsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns admin credentials for the container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryCredentials(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;rotateContainerRegistryCredentials($uuid) -> ContainerRegistryCredentialsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates new admin credentials and revokes the previous ones.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->rotateContainerRegistryCredentials(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryUsers($uuid) -> ContainerRegistryUserListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of users for the container registry service by given {uuid}, including the service owner upadmin, which is marked managed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryUsers(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;createContainerRegistryUser($uuid, $request) -> ContainerRegistryUserDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new user for the container registry service by given {uuid}. Its permissions (read, create, update, delete) apply to every repository; read is the minimum and create, update and delete each require it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->createContainerRegistryUser(
+    'uuid',
+    new ContainerRegistryUserCreate([
+        'username' => 'deploy-bot',
+        'password' => 'change-me-please',
+        'permissions' => [
+            ContainerRegistryPermissionsItem::Read->value,
+            ContainerRegistryPermissionsItem::Create->value,
+            ContainerRegistryPermissionsItem::Update->value,
+        ],
+        'displayName' => 'Deployment Bot',
+        'email' => 'deploy-bot@example.com',
+        'description' => 'CI service account used by the deploy pipeline.',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$password:** `string` — Password for authentication. At most 72 bytes; the registry stores it as a bcrypt hash, which refuses anything longer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$permissions:** `array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$displayName:** `?string` — Human-readable display name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$email:** `?string` — Email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$description:** `?string` — Description of the user or their purpose
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryUser($uuid, $username) -> ContainerRegistryUserDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns user details by given service {uuid} and {user_id}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryUser(
+    'uuid',
+    'username',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `string` — Registry user's username.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryUser($uuid, $username)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an existing user by given service {uuid} and {user_id}. The service owner upadmin cannot be deleted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryUser(
+    'uuid',
+    'username',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `string` — Registry user's username.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;modifyContainerRegistryUser($uuid, $username, $request) -> ContainerRegistryUserDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modifies an existing user by given service {uuid} and {user_id}. Sending permissions replaces the whole set. The service owner upadmin is managed by the platform and cannot be modified.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->modifyContainerRegistryUser(
+    'uuid',
+    'username',
+    new ContainerRegistryUserModify([
+        'permissions' => [
+            ContainerRegistryPermissionsItem::Read->value,
+        ],
+        'active' => true,
+        'displayName' => 'Deployment Bot (read-only)',
+        'email' => 'deploy-bot@example.com',
+        'description' => 'Demoted to read-only after rotation.',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `string` — Registry user's username.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$permissions:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$active:** `?bool` — Whether the user account is active
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$displayName:** `?string` — Human-readable display name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$email:** `?string` — Email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$description:** `?string` — Description of the user or their purpose
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;changeContainerRegistryUserPassword($uuid, $username, $request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Changes the password for a user by given service {uuid} and {user_id}. Works for the service owner upadmin too; GET /{uuid}/credentials then returns the new password.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->changeContainerRegistryUserPassword(
+    'uuid',
+    'username',
+    new ContainerRegistryChangePassword([
+        'newPassword' => 'new-strong-password',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `string` — Registry user's username.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$newPassword:** `string` — At most 72 bytes; the registry stores it as a bcrypt hash, which refuses anything longer.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryNetworkPeerings($uuid) -> ContainerRegistryNetworkPeeringListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of network peerings for the container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryNetworkPeerings(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;createContainerRegistryNetworkPeering($uuid, $request) -> ContainerRegistryNetworkPeeringDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new network peering for the container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->createContainerRegistryNetworkPeering(
+    'uuid',
+    new ContainerRegistryNetworkPeeringCreate([
+        'networkUuid' => '00000000-0000-0000-0000-000000000001',
+        'networkCidr' => '10.20.0.0/16',
+        'zone' => 'fi-hel1',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$networkUuid:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$networkCidr:** `string` — CIDR block of the customer network
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$zone:** `string` — Availability zone for the peering connection
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryNetworkPeering($uuid, $peeringUuid) -> ContainerRegistryNetworkPeeringDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns network peering details by given service {uuid} and {peering_uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryNetworkPeering(
+    'uuid',
+    'peering_uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$peeringUuid:** `string` — Network peering UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryNetworkPeering($uuid, $peeringUuid)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a network peering by given service {uuid} and {peering_uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryNetworkPeering(
+    'uuid',
+    'peering_uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$peeringUuid:** `string` — Network peering UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;getContainerRegistryAccessMode($uuid) -> ContainerRegistryAccessModeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the current access mode and network information for the service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->getContainerRegistryAccessMode(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;modifyContainerRegistryAccessMode($uuid, $request) -> ContainerRegistryAccessModeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the access mode for the container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->modifyContainerRegistryAccessMode(
+    'uuid',
+    new ContainerRegistryAccessModeModify([
+        'accessMode' => ContainerRegistryAccessModeModifyAccessMode::Dual->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$accessMode:** `string` — Desired network access mode
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryIpAllowlist($uuid) -> ContainerRegistryIpAllowlistResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the IP allowlist for the container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryIpAllowlist(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;createContainerRegistryIpAllowlistEntry($uuid, $request) -> ContainerRegistryIpAllowlistEntryResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Adds an IP CIDR to the allowlist for the container registry service by given {uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->createContainerRegistryIpAllowlistEntry(
+    'uuid',
+    new ContainerRegistryIpAllowlistCreate([
+        'cidr' => '203.0.113.0/24',
+        'description' => 'Office egress range',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$cidr:** `string` — CIDR block to allow
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$description:** `?string` — Human-readable description of the allowlist entry
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryIpAllowlistEntry($uuid, $entryUuid)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes an IP CIDR from the allowlist by given service {uuid} and {entry_uuid}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryIpAllowlistEntry(
+    'uuid',
+    'entry_uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$entryUuid:** `string` — Allowlist entry UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryWebhooks($uuid) -> ContainerRegistryWebhookListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the webhooks configured for the registry. Secrets are not returned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryWebhooks(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;createContainerRegistryWebhook($uuid, $request) -> ContainerRegistryWebhookWithSecretResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Registers a webhook receiving every registry event. The secret is delivered as a bearer token on each request; requests are not signed. The number of webhooks a service may hold comes from its plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->createContainerRegistryWebhook(
+    'uuid',
+    new ContainerRegistryWebhookCreate([
+        'name' => 'audit-stream',
+        'url' => 'https://events.example.com/upregistry-audit',
+        'headers' => [
+            'X-Tenant' => 'prod',
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$name:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$url:** `string` — http or https endpoint we POST to on each event. https is strongly recommended: the secret travels as a bearer token, so plain http exposes it to anyone on the path.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$headers:** `?array` — Extra HTTP headers sent with every delivery, for routing or tenancy tags. Do not set `Authorization` here: the webhook secret is already sent in it, and a second value is appended rather than replacing ours, which most receivers ignore and some reject.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$secret:** `?string` — Shared secret the receiver authenticates deliveries with. Sent as `Authorization: Bearer <secret>` on every delivery; it is not a signing key and nothing is signed. Optional: omit it, or send an empty string, and a fresh 64-character hex secret is generated. It is returned in the clear only in this response and from rotate-secret, and is stored encrypted.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryWebhook($uuid, $name)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes a webhook by service {uuid} and webhook {name}.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryWebhook(
+    'uuid',
+    'name',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$name:** `string` — Webhook name (unique within a service).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;modifyContainerRegistryWebhook($uuid, $name, $request) -> ContainerRegistryWebhookResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates URL or headers by webhook {name}. Secret rotation has its own endpoint.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->modifyContainerRegistryWebhook(
+    'uuid',
+    'name',
+    new ContainerRegistryWebhookModify([
+        'url' => 'https://events.example.com/upregistry-audit-v2',
+        'headers' => [
+            'X-Tenant' => 'prod',
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$name:** `string` — Webhook name (unique within a service).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$url:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$headers:** `?array` — Replaces the existing headers map outright when present. Do not set `Authorization` here: the webhook secret is already sent in it, and a second value is appended rather than replacing ours.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;rotateContainerRegistryWebhookSecret($uuid, $name) -> ContainerRegistryWebhookWithSecretResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates a fresh Bearer-token secret. Returned once in the response; not retrievable later.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->rotateContainerRegistryWebhookSecret(
+    'uuid',
+    'name',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$name:** `string` — Webhook name (unique within a service).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryRepositories($uuid, $request) -> ContainerRegistryRepositoryListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns one alphabetical page of repositories in the container registry identified by {uuid}. When search returns the page, total_count is the number of repositories in the registry, so stop when offset reaches it. Each repository describes its newest tag: kind, artifact_type, media_type, size, last update, and that tag's platforms. repository_size_bytes is the total size of the repository. tag_count is the number of tags in the repository. A repository can hold other kinds under other tags. When search cannot return the page, the first page is names only and total_count is omitted. Passing last uses the OCI catalog, which also omits total_count; follow next_link for the next page.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryRepositories(
+    'uuid',
+    new ListContainerRegistryRepositoriesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$n:** `?int` — How many repositories to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$offset:** `?int` — How many repositories to skip. The page is alphabetical. Ignored when last is set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$last:** `?string` — Return the OCI catalog page after this repository name. Each entry then carries only its name. Omit it to use the search page selected by n and offset.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;listContainerRegistryRepositoryTags($uuid, $repo) -> ContainerRegistryTagListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the tags of one repository. Each tag includes digest and size when available, its artifact_type, media_type, and kind, and the OS/CPU platforms the image index covers (os, architecture, optional variant, child-manifest digest, and that platform's size). kind is multi-arch, image, chart, or artifact. multi-arch means two or more distinct os/architecture/variant values after unknown/unknown attestations are left out. An index with one real platform is image. When an index omits artifactType, artifact_type is an empty string. When registry search is unavailable, the list is tag names with an empty artifact_type and no kind, media_type, digest, size, or platforms.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->listContainerRegistryRepositoryTags(
+    'uuid',
+    'repo',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$repo:** `string` — OCI repository name. A slash is part of the name (team-a/myapp), not a path separator. Percent-encode each slash as %2F, so that repository is team-a%2Fmyapp.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryRepository($uuid, $repo) -> ContainerRegistryRepositoryDeleteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes the repository, including every tag and manifest. The response counts the manifests deleted. The bytes stay until garbage collection, which waits 1 hour after they become untagged and then runs every 24 hours, so storage and billing can take up to a day to drop.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryRepository(
+    'uuid',
+    'repo',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$repo:** `string` — OCI repository name. A slash is part of the name (team-a/myapp), not a path separator. Percent-encode each slash as %2F, so that repository is team-a%2Fmyapp.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;tagContainerRegistryDigest($uuid, $repo, $tag, $request) -> ContainerRegistryTagCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a tag pointing at an already-pushed manifest. Use it to promote a tested digest to latest or prod without re-uploading. The digest must already exist in the same repository.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->tagContainerRegistryDigest(
+    'uuid',
+    'repo',
+    'tag',
+    new ContainerRegistryTagDigestRequest([
+        'digest' => 'sha256:1111111111111111111111111111111111111111111111111111111111111111',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$repo:** `string` — OCI repository name. A slash is part of the name (team-a/myapp), not a path separator. Percent-encode each slash as %2F, so that repository is team-a%2Fmyapp.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tag:** `string` — Tag name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$digest:** `string` — OCI manifest digest the tag should point at. The digest must already exist in the same repository.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryRepositoryTag($uuid, $repo, $tag)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes one tag. The manifest stays while another tag still points at it. When no tag points at it, the manifest stays untagged until garbage collection. Collection waits 1 hour after the manifest is untagged and then runs every 24 hours, so storage and billing can take up to a day to drop.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryRepositoryTag(
+    'uuid',
+    'repo',
+    'tag',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$repo:** `string` — OCI repository name. A slash is part of the name (team-a/myapp), not a path separator. Percent-encode each slash as %2F, so that repository is team-a%2Fmyapp.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tag:** `string` — Tag name.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;deleteContainerRegistryRepositoryManifest($uuid, $repo, $digest)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes one manifest by digest, whichever tags reference it. The bytes stay until garbage collection, which waits 1 hour after the manifest is untagged and then runs every 24 hours, so storage and billing can take up to a day to drop.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->deleteContainerRegistryRepositoryManifest(
+    'uuid',
+    'repo',
+    'digest',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$repo:** `string` — OCI repository name. A slash is part of the name (team-a/myapp), not a path separator. Percent-encode each slash as %2F, so that repository is team-a%2Fmyapp.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$digest:** `string` — Manifest digest, sha256: followed by 64 lowercase hex characters. Percent-encode the colon as %3A.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;containerRegistry-&gt;restartContainerRegistry($uuid) -> ContainerRegistryRestartResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Restarts the container registry service. On a running service this triggers a rolling restart; on a failed service it re-runs reconciliation to recover.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->containerRegistry->restartContainerRegistry(
+    'uuid',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$uuid:** `string` — Service UUID
     
 </dd>
 </dl>
