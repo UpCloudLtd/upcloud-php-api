@@ -68,9 +68,9 @@ class FileStorageServiceDetailResponse extends JsonSerializableType
     public array $shares;
 
     /**
-     * @var array<FileStorageLabelDetails> $labels Labels attached to the service.
+     * @var array<FileStorageLabelDetailResponse> $labels Labels attached to the service.
      */
-    #[JsonProperty('labels'), ArrayType([FileStorageLabelDetails::class])]
+    #[JsonProperty('labels'), ArrayType([FileStorageLabelDetailResponse::class])]
     public array $labels;
 
     /**
@@ -102,7 +102,7 @@ class FileStorageServiceDetailResponse extends JsonSerializableType
      *   encrypted: bool,
      *   networks: array<FileStorageNetworkDetailResponse>,
      *   shares: array<FileStorageShareDetailResponse>,
-     *   labels: array<FileStorageLabelDetails>,
+     *   labels: array<FileStorageLabelDetailResponse>,
      *   metrics: FileStorageMetricsDetailResponse,
      *   createdAt: DateTime,
      *   updatedAt: DateTime,

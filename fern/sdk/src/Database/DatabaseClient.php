@@ -18,8 +18,8 @@ use Upcloud\Types\DatabasePlansResponse;
 use Upcloud\Types\DatabaseServiceType;
 use Upcloud\Database\Requests\ListDatabasesRequest;
 use Upcloud\Types\DatabaseServiceInformationResponse;
-use Upcloud\Database\Requests\DatabaseServiceCreateOpenApi;
-use Upcloud\Database\Requests\DatabaseServiceModifyOpenApi;
+use Upcloud\Database\Requests\DatabaseServiceCreateOpenapi;
+use Upcloud\Database\Requests\DatabaseServiceModifyOpenapi;
 use Upcloud\Database\Requests\DatabaseServiceTypeModify;
 use Upcloud\Database\Requests\CloneDatabaseRequest;
 use Upcloud\Types\DatabaseNetworkInformationDetailsResponse;
@@ -42,7 +42,7 @@ use Upcloud\Database\Requests\DatabaseIntegrationEndpointModify;
 use Upcloud\Types\DatabaseAccountCaResponse;
 use Upcloud\Types\DatabaseProjectAlertResponse;
 use Upcloud\Types\DatabaseServiceStatusResponse;
-use Upcloud\Types\DatabaseUpCloudApiResponse;
+use Upcloud\Types\DatabaseUpcloudApiResponse;
 use Upcloud\Types\DatabaseServiceMigrationStatusResponse;
 use Upcloud\Types\DatabaseServiceAlertResponse;
 use Upcloud\Types\DatabaseMetricsItemResponse;
@@ -339,7 +339,7 @@ class DatabaseClient
     /**
      * Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
      *
-     * @param DatabaseServiceCreateOpenApi $request
+     * @param DatabaseServiceCreateOpenapi $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -352,7 +352,7 @@ class DatabaseClient
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function createDatabase(DatabaseServiceCreateOpenApi $request, ?array $options = null): DatabaseServiceInformationResponse
+    public function createDatabase(DatabaseServiceCreateOpenapi $request, ?array $options = null): DatabaseServiceInformationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -502,7 +502,7 @@ class DatabaseClient
      * Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
      *
      * @param string $uuid Service UUID
-     * @param DatabaseServiceModifyOpenApi $request
+     * @param DatabaseServiceModifyOpenapi $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -515,7 +515,7 @@ class DatabaseClient
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function modifyDatabase(string $uuid, DatabaseServiceModifyOpenApi $request = new DatabaseServiceModifyOpenApi(), ?array $options = null): DatabaseServiceInformationResponse
+    public function modifyDatabase(string $uuid, DatabaseServiceModifyOpenapi $request = new DatabaseServiceModifyOpenapi(), ?array $options = null): DatabaseServiceInformationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -2171,11 +2171,11 @@ class DatabaseClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return DatabaseUpCloudApiResponse
+     * @return DatabaseUpcloudApiResponse
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function startDatabaseManualMaintenance(string $uuid, ?array $options = null): DatabaseUpCloudApiResponse
+    public function startDatabaseManualMaintenance(string $uuid, ?array $options = null): DatabaseUpcloudApiResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -2190,7 +2190,7 @@ class DatabaseClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return DatabaseUpCloudApiResponse::fromJson($json);
+                return DatabaseUpcloudApiResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -2226,11 +2226,11 @@ class DatabaseClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return DatabaseUpCloudApiResponse
+     * @return DatabaseUpcloudApiResponse
      * @throws UpcloudException
      * @throws UpcloudApiException
      */
-    public function enableDatabaseTemporaryWrites(string $uuid, ?array $options = null): DatabaseUpCloudApiResponse
+    public function enableDatabaseTemporaryWrites(string $uuid, ?array $options = null): DatabaseUpcloudApiResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -2245,7 +2245,7 @@ class DatabaseClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return DatabaseUpCloudApiResponse::fromJson($json);
+                return DatabaseUpcloudApiResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new UpcloudException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

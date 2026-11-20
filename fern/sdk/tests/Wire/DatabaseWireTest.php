@@ -6,21 +6,21 @@ use Upcloud\Tests\Wire\WireMockTestCase;
 use Upcloud\UpcloudClient;
 use Upcloud\Types\DatabaseServiceType;
 use Upcloud\Database\Requests\ListDatabasesRequest;
-use Upcloud\Database\Requests\DatabaseServiceCreateOpenApi;
-use Upcloud\Database\Types\DatabaseServiceCreateOpenApiMaintenance;
+use Upcloud\Database\Requests\DatabaseServiceCreateOpenapi;
+use Upcloud\Database\Types\DatabaseServiceCreateOpenapiMaintenance;
 use Upcloud\Types\DatabaseMaintenanceDow;
 use Upcloud\Types\DatabaseNetworkCreate;
 use Upcloud\Types\DatabaseNetworkType;
 use Upcloud\Types\DatabaseNetworkFamily;
 use Upcloud\Types\DatabaseLabelCreate;
-use Upcloud\Types\DatabaseMySql;
-use Upcloud\Database\Requests\DatabaseServiceModifyOpenApi;
-use Upcloud\Database\Types\DatabaseServiceModifyOpenApiMaintenance;
+use Upcloud\Types\DatabaseServicePropertiesMysql;
+use Upcloud\Database\Requests\DatabaseServiceModifyOpenapi;
+use Upcloud\Database\Types\DatabaseServiceModifyOpenapiMaintenance;
 use Upcloud\Database\Requests\DatabaseServiceTypeModify;
 use Upcloud\Database\Requests\CloneDatabaseRequest;
-use Upcloud\Types\DatabaseMysqlClone;
+use Upcloud\Types\DatabaseServiceCloneMysql;
 use DateTime;
-use Upcloud\Types\DatabaseMysqlCloneMaintenance;
+use Upcloud\Types\DatabaseServiceCloneMysqlMaintenance;
 use Upcloud\Database\Requests\CreateDatabaseNetworkRequest;
 use Upcloud\Database\Requests\DatabaseServiceUpgrade;
 use Upcloud\Database\Requests\CreateDatabaseLabelRequest;
@@ -152,13 +152,13 @@ class DatabaseWireTest extends WireMockTestCase
     public function testCreateDatabase(): void {
         $testId = 'database.create_database.0';
         $this->client->database->createDatabase(
-            new DatabaseServiceCreateOpenApi([
+            new DatabaseServiceCreateOpenapi([
                 'hostnamePrefix' => 'doc-api-unique-prefix',
                 'title' => 'my-managed-database',
                 'type' => DatabaseServiceType::Mysql->value,
                 'zone' => 'de-fra1',
                 'terminationProtection' => false,
-                'maintenance' => new DatabaseServiceCreateOpenApiMaintenance([
+                'maintenance' => new DatabaseServiceCreateOpenapiMaintenance([
                     'dow' => DatabaseMaintenanceDow::Sunday->value,
                     'time' => '05:00:00',
                 ]),
@@ -186,7 +186,7 @@ class DatabaseWireTest extends WireMockTestCase
                         'value' => 'bar',
                     ]),
                 ],
-                'properties' => new DatabaseMySql([
+                'properties' => new DatabaseServicePropertiesMysql([
                     'automaticUtilityNetworkIpFilter' => true,
                     'ipFilter' => [
                         'ip_filter',
@@ -256,12 +256,12 @@ class DatabaseWireTest extends WireMockTestCase
         $testId = 'database.modify_database.0';
         $this->client->database->modifyDatabase(
             '01234567-89ab-cdef-0123-456789abcdef',
-            new DatabaseServiceModifyOpenApi([
+            new DatabaseServiceModifyOpenapi([
                 'title' => 'my-managed-database',
                 'powered' => true,
                 'zone' => 'de-fra1',
                 'terminationProtection' => false,
-                'maintenance' => new DatabaseServiceModifyOpenApiMaintenance([
+                'maintenance' => new DatabaseServiceModifyOpenapiMaintenance([
                     'dow' => DatabaseMaintenanceDow::Sunday->value,
                     'time' => '12:00:00',
                 ]),
@@ -273,7 +273,7 @@ class DatabaseWireTest extends WireMockTestCase
                         'family' => DatabaseNetworkFamily::IPv4->value,
                     ]),
                 ],
-                'properties' => new DatabaseMySql([
+                'properties' => new DatabaseServicePropertiesMysql([
                     'automaticUtilityNetworkIpFilter' => true,
                     'ipFilter' => [
                         'ip_filter',
@@ -326,13 +326,13 @@ class DatabaseWireTest extends WireMockTestCase
         $this->client->database->cloneDatabase(
             '01234567-89ab-cdef-0123-456789abcdef',
             new CloneDatabaseRequest([
-                'body' => new DatabaseMysqlClone([
+                'body' => new DatabaseServiceCloneMysql([
                     'hostnamePrefix' => 'dev',
                     'cloneTime' => new DateTime('2024-01-30T15:04:05Z'),
                     'backupName' => 'daily-backup-2024-01-30',
                     'zone' => 'fi-hel1',
                     'terminationProtection' => false,
-                    'maintenance' => new DatabaseMysqlCloneMaintenance([
+                    'maintenance' => new DatabaseServiceCloneMysqlMaintenance([
                         'dow' => DatabaseMaintenanceDow::Monday->value,
                         'time' => '03:00:00',
                     ]),

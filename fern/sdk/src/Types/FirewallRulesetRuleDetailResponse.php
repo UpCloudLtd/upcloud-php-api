@@ -23,10 +23,10 @@ class FirewallRulesetRuleDetailResponse extends JsonSerializableType
     public ?bool $enabled;
 
     /**
-     * @var mixed $action
+     * @var value-of<FirewallRulesetRuleAction> $action
      */
     #[JsonProperty('action')]
-    public mixed $action;
+    public string $action;
 
     /**
      * @var ?string $comment Comments
@@ -65,16 +65,16 @@ class FirewallRulesetRuleDetailResponse extends JsonSerializableType
     public ?string $destinationAddressCidr;
 
     /**
-     * @var mixed $direction
+     * @var value-of<FirewallRulesetRuleDirection> $direction
      */
     #[JsonProperty('direction')]
-    public mixed $direction;
+    public string $direction;
 
     /**
-     * @var mixed $family
+     * @var value-of<FirewallRulesetRuleFamily> $family
      */
     #[JsonProperty('family')]
-    public mixed $family;
+    public string $family;
 
     /**
      * @var ?int $icmpType
@@ -89,10 +89,10 @@ class FirewallRulesetRuleDetailResponse extends JsonSerializableType
     public ?int $position;
 
     /**
-     * @var mixed $protocol
+     * @var ?value-of<FirewallRulesetRuleProtocol> $protocol
      */
     #[JsonProperty('protocol')]
-    public mixed $protocol;
+    public ?string $protocol;
 
     /**
      * @var ?string $sourceAddressStart
@@ -126,9 +126,9 @@ class FirewallRulesetRuleDetailResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   action: mixed,
-     *   direction: mixed,
-     *   family: mixed,
+     *   action: value-of<FirewallRulesetRuleAction>,
+     *   direction: value-of<FirewallRulesetRuleDirection>,
+     *   family: value-of<FirewallRulesetRuleFamily>,
      *   uuid?: ?string,
      *   enabled?: ?bool,
      *   comment?: ?string,
@@ -139,7 +139,7 @@ class FirewallRulesetRuleDetailResponse extends JsonSerializableType
      *   destinationAddressCidr?: ?string,
      *   icmpType?: ?int,
      *   position?: ?int,
-     *   protocol?: mixed,
+     *   protocol?: ?value-of<FirewallRulesetRuleProtocol>,
      *   sourceAddressStart?: ?string,
      *   sourceAddressEnd?: ?string,
      *   sourcePortStart?: ?int,

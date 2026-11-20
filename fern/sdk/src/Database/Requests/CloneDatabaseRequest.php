@@ -3,33 +3,33 @@
 namespace Upcloud\Database\Requests;
 
 use Upcloud\Core\Json\JsonSerializableType;
-use Upcloud\Types\DatabaseMysqlClone;
-use Upcloud\Types\DatabasePostgresqlClone;
-use Upcloud\Types\DatabaseRedisClone;
-use Upcloud\Types\DatabaseOpensearchClone;
-use Upcloud\Types\DatabaseValkeyClone;
+use Upcloud\Types\DatabaseServiceCloneMysql;
+use Upcloud\Types\DatabaseServiceClonePg;
+use Upcloud\Types\DatabaseServiceCloneRedis;
+use Upcloud\Types\DatabaseServiceCloneOpensearch;
+use Upcloud\Types\DatabaseServiceCloneValkey;
 
 class CloneDatabaseRequest extends JsonSerializableType
 {
     /**
      * @var (
-     *    DatabaseMysqlClone
-     *   |DatabasePostgresqlClone
-     *   |DatabaseRedisClone
-     *   |DatabaseOpensearchClone
-     *   |DatabaseValkeyClone
+     *    DatabaseServiceCloneMysql
+     *   |DatabaseServiceClonePg
+     *   |DatabaseServiceCloneRedis
+     *   |DatabaseServiceCloneOpensearch
+     *   |DatabaseServiceCloneValkey
      * ) $body
      */
-    public DatabaseMysqlClone|DatabasePostgresqlClone|DatabaseRedisClone|DatabaseOpensearchClone|DatabaseValkeyClone $body;
+    public DatabaseServiceCloneMysql|DatabaseServiceClonePg|DatabaseServiceCloneRedis|DatabaseServiceCloneOpensearch|DatabaseServiceCloneValkey $body;
 
     /**
      * @param array{
      *   body: (
-     *    DatabaseMysqlClone
-     *   |DatabasePostgresqlClone
-     *   |DatabaseRedisClone
-     *   |DatabaseOpensearchClone
-     *   |DatabaseValkeyClone
+     *    DatabaseServiceCloneMysql
+     *   |DatabaseServiceClonePg
+     *   |DatabaseServiceCloneRedis
+     *   |DatabaseServiceCloneOpensearch
+     *   |DatabaseServiceCloneValkey
      * ),
      * } $values
      */
