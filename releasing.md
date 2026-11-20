@@ -17,22 +17,25 @@ The release workflow uploads the tag and exact commit in a release-identity arti
 
 ## Create a Release
 
-1. Make sure the release changes are merged and the default branch is up to date.
-2. Choose any tag accepted by the release workflow and push it as an annotated tag. The same process applies to stable and prerelease tags:
+1. Make sure the changes you want to release are merged into `main`. Choose an unused release tag accepted by the workflow (see [Supported Version Channels](#supported-version-channels)).
+2. Before tagging, confirm that [CHANGELOG.md](./CHANGELOG.md) on `main` already has an up-to-date entry for the exact release version. If it does, no separate preparation PR is needed. If the entry is missing or incomplete, open a PR against `main` to add or update it. Use a heading such as `## vX.Y.Z - YYYY-MM-DD`, move the changes being released out of `Unreleased` into that section, and leave an `Unreleased` section for future changes. **Merge that PR before tagging.**
+3. Update your local `main` and verify that the commit you will tag contains the release entry. Then create and push the annotated tag. The same process applies to stable and prerelease tags:
 
    ```sh
    read -r -p "Release tag (stable or alpha/beta/rc prerelease): " RELEASE_TAG
    git checkout main
    git pull --ff-only
+   git --no-pager show HEAD:CHANGELOG.md
+   # Confirm the entry for RELEASE_TAG is present and complete before continuing.
    git tag -a "$RELEASE_TAG" -m "Release $RELEASE_TAG"
    git push origin "$RELEASE_TAG"
    ```
 
    Stable versions use `vX.Y.Z`; prereleases use `vX.Y.Z-alpha`, `vX.Y.Z-beta`, or `vX.Y.Z-rc`, optionally followed by a numeric iteration such as `.2`. For stable releases, choose the next version according to the change: patch, minor, or major.
 
-3. In **Actions**, watch **Build PHP SDK Release**, then **Publish PHP SDK**. The GitHub Release is created before Packagist verification; its existence alone is not proof that publishing succeeded.
-4. Check the publish job's receipt: both source and archive must match the tag's commit. Prereleases are marked as such and are not set as GitHub's latest release.
-5. Install the exact version just published in a fresh Composer project and verify the generated client autoloads. The following commands derive the Composer stability from whichever valid tag you set above; stable tags use Composer's default stability.
+4. In **Actions**, watch **Build PHP SDK Release**, then **Publish PHP SDK**. The GitHub Release is created before Packagist verification; its existence alone is not proof that publishing succeeded.
+5. Check the publish job's receipt: both source and archive must match the tag's commit. Prereleases are marked as such and are not set as GitHub's latest release.
+6. Install the exact version just published in a fresh Composer project and verify the generated client autoloads. The following commands derive the Composer stability from whichever valid tag you set above; stable tags use Composer's default stability.
 
    ```sh
    read -r -p "Release tag to test: " RELEASE_TAG
@@ -60,7 +63,7 @@ The release workflow uploads the tag and exact commit in a release-identity arti
 
    This confirms the v4 release did not disturb the old Packagist release. It is a one-time migration check, not a step to repeat for every later v4 release. For each release, test the exact newly published version using the generic command above.
 
-6. Review the documentation PR generated for this release and merge it after confirming the reference and version links look right. `update-docs.yml` dispatches **Validate documentation** manually because a PR created with `GITHUB_TOKEN` does not start normal pull-request workflows. Check that manual run's result; an automatic `action_required` run has no test jobs and can be ignored. The PHP SDK validation workflow does not run for docs-only changes; SDK code is validated separately on PHP 8.1 and 8.2.
+7. Review the documentation PR generated for this release and merge it after confirming the reference and version links look right. `update-docs.yml` dispatches **Validate documentation** manually because a PR created with `GITHUB_TOKEN` does not start normal pull-request workflows. Check that manual run's result; an automatic `action_required` run has no test jobs and can be ignored. The PHP SDK validation workflow does not run for docs-only changes; SDK code is validated separately on PHP 8.1 and 8.2.
 
 ### Supported Version Channels
 
@@ -79,11 +82,7 @@ The release procedure is the same for every supported tag. The tag suffix select
 
 An optional prerelease iteration is numeric and must not have leading zeros. Other suffixes or extra components are rejected by the workflow.
 
-```sh
-read -r -p "Release tag: " RELEASE_TAG
-git tag -a "$RELEASE_TAG" -m "Release $RELEASE_TAG"
-git push origin "$RELEASE_TAG"
-```
+For any channel, follow [Create a Release](#create-a-release), including the changelog check before tagging.
 
 Stable releases remain the default for consumers who do not opt into prerelease stability. The generic install test above derives the correct Composer stability from the selected tag. See the package at <https://packagist.org/packages/upcloudltd/upcloud-php-api>.
 
